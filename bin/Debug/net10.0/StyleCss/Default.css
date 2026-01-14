@@ -1,0 +1,188 @@
+/* Назва програми у заголовку */
+headerbar .title {
+    font-weight: normal;
+}
+
+/* Опис програми у заголовку */
+headerbar .subtitle {
+    font-size: small;
+}
+
+/* Кнопки лівого меню */
+button.left-menu {
+    padding: 2px;
+}
+
+button.left-menu:hover {
+    background-color: rgba(219, 219, 195, 0.541);
+}
+
+/* Вкладки блокноту */
+notebook tab {
+    padding: 3px;
+    border: 0;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+/* Кнопка закриття вкладки блокноту */
+notebook tab button {
+    font-size: x-small;
+    padding: 1px;
+    margin-left: 12px;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 6px;
+}
+
+/* Табличний список */
+columnview {
+    border: 1px solid shade(#b8b8b8, 1.2);
+}
+
+columnview header button {
+    padding: 1px 6px;
+    border-left: 1px solid shade(#b8b8b8, 1.2);
+    border-bottom: 1px solid shade(#b8b8b8, 1.2);
+}
+
+columnview header button:first-child {
+    border-left: 0;
+}
+
+columnview listview row cell {
+    padding: 0;
+}
+
+columnview listview row cell:not(:first-child) {
+    border-left: 1px solid shade(#b8b8b8, 1.2);
+}
+
+/* ------------------ Клітинки табличної частини --------------->>> */
+
+/* Базовий клас для *TablePartCell */
+columnview listview row cell box.base {
+    padding: 3px 6px;
+}
+
+/* 
+Варіант відображення для типу даних numeric для LabelTablePartCell 
+Відображення числа як текст
+*/
+columnview listview row cell box.numeric {
+    color: green;
+    background-color: rgba(238, 238, 220, 0.2);
+}
+
+/* Кнопки для PointerTablePartCell */
+columnview listview row cell box.pointer .button {
+    padding-left: 3px;
+    padding-right: 3px;
+    margin: 0;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+}
+
+/* Текст для PointerTablePartCell */
+columnview listview row cell box.pointer .text {
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+/* IntegerTablePartCell */
+columnview listview row cell box.integer entry,
+columnview listview row cell box.numeric entry {
+    padding-left: 3px;
+    padding-right: 3px;
+    margin: 0;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+}
+
+/* Для підсвітки помилки */
+columnview listview row cell box.integer entry.error,
+columnview listview row cell box.numeric entry.error {
+    border: 1px solid red;
+}
+
+/* Для ComboTextTablePartCell */
+columnview listview row cell box.combotext combobox button.combo {
+    padding: 0px 3px;
+    margin: 0;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+}
+
+/* Для TextTablePartCell */
+columnview listview row cell box.text entry {
+    padding: 0px 3px;
+    margin: 0;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+}
+
+/* <<<--------------- Клітинки табличної частини ------------------ */
+
+
+
+/* Для Log */
+textview.log_text_terminal {
+    font: 11px Arial;
+}
+
+/* Для LinkButton */
+button.link {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/*
+columnview listview row:nth-child(odd) {
+   background-color: shade(#b8b8b8, 1.2);
+}
+
+columnview listview row:nth-child(even) {
+      background-color: #f6f6f6;  
+}
+*/
+
+/*-------------------------------------------------------------------*/
+
+/* Кнопка закриття вкладки блокноту */
+/*notebook tab button {
+    font-size: x-small;
+    padding: 2px 1px 2px 1px;
+    margin-left: 10px;
+    min-height: 0;
+    min-width: 0;
+    border: 0;
+    border-radius: 3px;
+    background-color: transparent;
+}*/
+
+
+/*notebook tab button:hover {
+    background-color: lightgray;
+}*/
+
+/* Ліве меню головного вікна */
+/*
+button.left-menu {
+    border: 0;
+    background-color: transparent;
+}
+*/

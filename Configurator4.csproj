@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>4.0.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GirCore.GObject-2.0.Integration" Version="0.7.0" />
+    <PackageReference Include="GirCore.Gtk-4.0" Version="0.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AccountingSoftwareLib\AccountingSoftware\AccountingSoftware.csproj" />
+    <ProjectReference Include="..\AccountingSoftwareLib\InterfaceGtk4\InterfaceGtk4.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="xslt/*.xslt" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="StyleCss/*.css" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
