@@ -18,8 +18,8 @@ mono_crash.*
 
 *.sh
 
-Configurator3
-Configurator3.*
+Configurator4
+Configurator4.*
 *.dll
 Comparison.xml
 ComparisonAllData.xml
