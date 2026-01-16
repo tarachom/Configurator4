@@ -150,39 +150,3 @@ button.link {
     margin-bottom: 0;
 }
 
-/*
-columnview listview row:nth-child(odd) {
-   background-color: shade(#b8b8b8, 1.2);
-}
-
-columnview listview row:nth-child(even) {
-      background-color: #f6f6f6;  
-}
-*/
-
-/*-------------------------------------------------------------------*/
-
-/* Кнопка закриття вкладки блокноту */
-/*notebook tab button {
-    font-size: x-small;
-    padding: 2px 1px 2px 1px;
-    margin-left: 10px;
-    min-height: 0;
-    min-width: 0;
-    border: 0;
-    border-radius: 3px;
-    background-color: transparent;
-}*/
-
-
-/*notebook tab button:hover {
-    background-color: lightgray;
-}*/
-
-/* Ліве меню головного вікна */
-/*
-button.left-menu {
-    border: 0;
-    background-color: transparent;
-}
-*/

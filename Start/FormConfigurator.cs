@@ -20,4 +20,14 @@ public class FormConfigurator : InterfaceGtk4.FormConfigurator
         NotebookFunc?.CreatePage("Стартова", () => page, false, null, null, true);
         await page.SetValue();
     }
+
+    protected override void Settings(LinkButton linkButton)
+    {
+
+    }
+
+    protected override void Service(LinkButton linkButton)
+    {
+
+    }
 }
