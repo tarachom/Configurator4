@@ -29,7 +29,7 @@ namespace Configurator;
 
 class Program
 {
-    public static readonly Application BasicApp = Application.New("ua.org.accounting.configurator", Gio.ApplicationFlags.FlagsNone);
+    public static readonly Application BasicApp = Application.New("ua.org.accounting.configurator4", Gio.ApplicationFlags.FlagsNone);
 
     /// <summary>
     /// Основна форма

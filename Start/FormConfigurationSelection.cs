@@ -35,7 +35,7 @@ class FormConfigurationSelection : InterfaceGtk4.FormConfigurationSelection
 
     public override async ValueTask<bool> OpenConfigurator(ConfigurationParam? openConfigurationParam)
     {
-        FormConfigurator form = new() { OpenConfigurationParam = openConfigurationParam };
+        FormConfigurator form = new(Program.BasicApp) { OpenConfigurationParam = openConfigurationParam };
         form.SetStatusBar();
         form.Show();
 
