@@ -15,13 +15,15 @@ class PageDirectory : FormPageConfigurator
     Configuration Conf = Program.Kernel.Conf;
     ConfigurationDirectories ConfDirectory = new();
 
-    Entry entryName = new Entry() { WidthRequest = 500 };
-    Entry entryFullName = new Entry() { WidthRequest = 500 };
-    Entry entryTable = new Entry() { WidthRequest = 500 };
+    Entry entryName = Entry.New();
+    Entry entryFullName = Entry.New();
+    Entry entryTable = Entry.New();
 
     public PageDirectory() : base(Program.BasicForm?.NotebookFunc)
     {
-
+        entryName.WidthRequest = 500;
+        entryFullName.WidthRequest = 500;
+        entryTable.WidthRequest = 500;
     }
 
     protected override void CreateStart(Box vBox)
