@@ -11,14 +11,14 @@ namespace Configurator;
 
 class PageHome : Form
 {
-    public ActiveUsersView activeUsersView = new(Program.Kernel, 800, 300);
-
     public PageHome() : base(Program.BasicForm?.NotebookFunc)
     {
         {
+            ActiveUsersView view = ActiveUsersView.New(Program.Kernel, 800, 300);
+
             Box hBox = New(Orientation.Horizontal, 0);
             hBox.MarginBottom = 10;
-            hBox.Append(activeUsersView);
+            hBox.Append(view);
             Append(hBox);
         }
     }
