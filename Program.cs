@@ -29,7 +29,7 @@ namespace Configurator;
 
 class Program
 {
-    public static readonly Application BasicApp = Application.New("ua.org.accounting.configurator4", Gio.ApplicationFlags.FlagsNone);
+    public static Application BasicApp { get; set; } = Application.New("ua.org.accounting.configurator4", Gio.ApplicationFlags.FlagsNone);
 
     /// <summary>
     /// Основна форма
@@ -40,7 +40,13 @@ class Program
 
     static void Main()
     {
-        BasicApp.OnActivate += (app, args) => new FormConfigurationSelection().Show();
+        BasicApp.OnActivate += (app, args) =>
+        {
+            FormConfigurationSelection.New().Show();
+            //FormConfigurationSelection window = FormConfigurationSelection.New().Show();
+            //window.Show();
+        };
+
         BasicApp.OnShutdown += (app, args) => { };
 
         Display? display = Display.GetDefault();

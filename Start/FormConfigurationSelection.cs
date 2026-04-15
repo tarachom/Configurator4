@@ -29,13 +29,22 @@ namespace Configurator;
 /// <summary>
 /// Переоприділення форми вибору бази
 /// </summary>
-class FormConfigurationSelection : InterfaceGtk4.FormConfigurationSelection
+[GObject.Subclass<InterfaceGtk4.FormConfigurationSelection>]
+partial class FormConfigurationSelection : InterfaceGtk4.FormConfigurationSelection
 {
-    public FormConfigurationSelection() : base(Program.BasicApp, null, Program.Kernel, TypeForm.Configurator) { }
+    public static new FormConfigurationSelection New()
+    {
+        FormConfigurationSelection window = NewWithProperties([]);
+        window.Application = Program.BasicApp;
+        window.Init(null, Program.Kernel, TypeForm.Configurator);
+
+        return window;
+    }
 
     public override async ValueTask<bool> OpenConfigurator(ConfigurationParam? openConfigurationParam)
     {
-        FormConfigurator form = new(Program.BasicApp) { OpenConfigurationParam = openConfigurationParam };
+        FormConfigurator form = FormConfigurator.NewWithConfiguratorStart();
+        form.OpenConfigurationParam = openConfigurationParam;
         form.SetStatusBar();
         form.Show();
 

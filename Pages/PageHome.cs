@@ -9,9 +9,10 @@ using InterfaceGtk4;
 
 namespace Configurator;
 
-class PageHome : Form
+[GObject.Subclass<Form>]
+partial class PageHome : Form
 {
-    public PageHome() : base(Program.BasicForm?.NotebookFunc)
+    partial void Initialize()
     {
         {
             ActiveUsersView view = ActiveUsersView.New(Program.Kernel, 800, 300);
@@ -21,6 +22,13 @@ class PageHome : Form
             hBox.Append(view);
             Append(hBox);
         }
+    }
+
+    public static PageHome New() 
+    {
+        PageHome page = NewWithProperties([]);
+        page.NotebookFunc = Program.BasicForm?.NotebookFunc;
+        return page;
     }
 
     public async ValueTask SetValue()

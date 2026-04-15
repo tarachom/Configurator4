@@ -10,7 +10,8 @@ using AccountingSoftware;
 
 namespace Configurator;
 
-class PageDirectory : FormPageConfigurator
+[GObject.Subclass<FormPageConfigurator>]
+partial class PageDirectory : FormPageConfigurator
 {
     Configuration Conf = Program.Kernel.Conf;
     ConfigurationDirectories ConfDirectory = new();
@@ -19,11 +20,19 @@ class PageDirectory : FormPageConfigurator
     Entry entryFullName = Entry.New();
     Entry entryTable = Entry.New();
 
-    public PageDirectory() : base(Program.BasicForm?.NotebookFunc)
+    partial void Initialize()
     {
         entryName.WidthRequest = 500;
         entryFullName.WidthRequest = 500;
         entryTable.WidthRequest = 500;
+    }
+
+    public static PageDirectory New()
+    {
+        PageDirectory view = NewWithProperties([]);
+        view.NotebookFunc = Program.BasicForm?.NotebookFunc;
+
+        return view;
     }
 
     protected override void CreateStart(Box vBox)
