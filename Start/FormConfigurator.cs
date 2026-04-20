@@ -7,26 +7,10 @@ namespace Configurator;
 [GObject.Subclass<InterfaceGtk4.FormConfigurator>]
 public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
 {
-    /*public static new FormConfigurator New()
-    {
-        FormConfigurator window = NewWithProperties([]);
-        window.Application = Program.BasicApp;
-        window.Init(Program.Kernel);
-
-        return page;
-    }*/
-
-    //public FormConfigurator() : base(Program.BasicApp, Program.Kernel) { }
-
     /// <summary>
     /// Викликається із конфігуратора при запуску
     /// </summary>
-    /*public FormConfigurator(Application app) : base(app, Program.Kernel)
-    {
-        Program.BasicForm = this;
-    }*/
-
-    public static FormConfigurator NewWithConfiguratorStart()
+    public static FormConfigurator NewConfiguratorStart()
     {
         FormConfigurator window = NewWithProperties([]);
         window.Application = Program.BasicApp;
@@ -40,13 +24,7 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
     /// <summary>
     /// Викликається із зовнішньої програми при запуску конфігуратора
     /// </summary>
-    /*public FormConfigurator(Application app, Kernel kernel) : base(app, kernel)
-    {
-        Program.BasicForm = this;
-        Program.Kernel = kernel;
-    }*/
-
-    public static FormConfigurator NewWithProgramStart(Application app, Kernel kernel)
+    public static FormConfigurator NewProgramStart(Application app, Kernel kernel)
     {
         FormConfigurator window = NewWithProperties([]);
         window.Application = app;

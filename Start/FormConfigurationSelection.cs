@@ -43,7 +43,7 @@ partial class FormConfigurationSelection : InterfaceGtk4.FormConfigurationSelect
 
     public override async ValueTask<bool> OpenConfigurator(ConfigurationParam? openConfigurationParam)
     {
-        FormConfigurator form = FormConfigurator.NewWithConfiguratorStart();
+        FormConfigurator form = FormConfigurator.NewConfiguratorStart();
         form.OpenConfigurationParam = openConfigurationParam;
         form.SetStatusBar();
         form.Show();

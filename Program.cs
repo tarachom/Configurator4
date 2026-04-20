@@ -34,20 +34,22 @@ class Program
     /// <summary>
     /// Основна форма
     /// </summary>
-    public static FormConfigurator? BasicForm { get; set; }
+    public static FormConfigurator? BasicForm { get; set; } = null;
 
-    public static Kernel Kernel { get; set; } = new Kernel();
+    /// <summary>
+    /// Ядро
+    /// </summary>
+    public static Kernel Kernel { get; set; } = new();
 
     static void Main()
     {
-        BasicApp.OnActivate += (app, args) =>
+        BasicApp.OnActivate += (app, _) =>
         {
-            FormConfigurationSelection.New().Show();
-            //FormConfigurationSelection window = FormConfigurationSelection.New().Show();
-            //window.Show();
+            var window = FormConfigurationSelection.New();
+            window.Show();
         };
 
-        BasicApp.OnShutdown += (app, args) => { };
+        BasicApp.OnShutdown += (app, _) => { };
 
         Display? display = Display.GetDefault();
         if (display != null)
