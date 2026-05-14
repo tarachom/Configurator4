@@ -47,12 +47,12 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
 
     protected override void Settings(LinkButton linkButton)
     {
-        
+
     }
 
     protected override void Service(LinkButton linkButton)
     {
-        
+
     }
 
     protected override async ValueTask PageDirectory(string name, bool isNew = false)
@@ -73,6 +73,8 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
     {
         PageSaveConfiguration page = Configurator.PageSaveConfiguration.New();
         NotebookFunc?.CreatePage("Зберегти конфігурацію", page);
+
+        page.SetValue();
     }
 
     #endregion

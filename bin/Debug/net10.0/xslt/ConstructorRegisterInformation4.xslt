@@ -291,7 +291,11 @@ namespace <xsl:value-of select="$NameSpace"/>
     <!-- Список -->
     <xsl:template name="RegisterInformationList">
         <xsl:variable name="RegisterInformationName" select="RegisterInformation/Name"/>
+        <xsl:variable name="SubclassName" select="concat('List_', RegisterInformation/Alias)"/>
         <xsl:variable name="TabularList" select="RegisterInformation/TabularList"/>
+
+        <!-- Додатова інформація -->
+        <xsl:variable name="RegisterInformationType" select="RegisterInformation/Type"/>
 
 /*     
         <xsl:value-of select="$RegisterInformationName"/>.cs
@@ -300,99 +304,55 @@ namespace <xsl:value-of select="$NameSpace"/>
         Табличний список - <xsl:value-of select="$TabularList"/>
 */
 
-using InterfaceGtk3;
+using InterfaceGtk4;
 using AccountingSoftware;
 using <xsl:value-of select="$NameSpaceGeneratedCode"/>.РегістриВідомостей;
-using ТабличніСписки = <xsl:value-of select="$NameSpaceGeneratedCode"/>.РегістриВідомостей.ТабличніСписки;
 
-namespace <xsl:value-of select="$NameSpace"/>.РегістриВідомостей
+using ТабличнийСписок = <xsl:value-of select="$NameSpaceGeneratedCode"/>.РегістриВідомостей.ТабличніСписки.<xsl:value-of select="$RegisterInformationName"/>_<xsl:value-of select="$TabularList"/>;
+
+namespace <xsl:value-of select="$NameSpace"/>.РегістриВідомостей;
+
+[GObject.Subclass&lt;RegisterInformationFormJournalBase&gt;("<xsl:value-of select="$SubclassName"/>")]
+public partial class <xsl:value-of select="$RegisterInformationName"/>_Список : RegisterInformationFormJournalBase
 {
-    public class <xsl:value-of select="$RegisterInformationName"/> : РегістриВідомостейЖурнал
+    partial void Initialize()
     {
-        public <xsl:value-of select="$RegisterInformationName"/>() : base()
-        {
-            ТабличніСписки.<xsl:value-of select="$RegisterInformationName"/>_<xsl:value-of select="$TabularList"/>.AddColumns(TreeViewGrid);
-        }
-
-        #region Override
-
-        public override async ValueTask LoadRecords()
-        {
-            ТабличніСписки.<xsl:value-of select="$RegisterInformationName"/>_<xsl:value-of select="$TabularList"/>.SelectPointerItem = SelectPointerItem;
-            ТабличніСписки.<xsl:value-of select="$RegisterInformationName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбірПоПеріоду(TreeViewGrid, Період.Period, Період.DateStart, Період.DateStop);
-
-            await ТабличніСписки.<xsl:value-of select="$RegisterInformationName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid);
-        }
-
-        public override async ValueTask LoadRecords_OnSearch(string searchText)
-        {
-            ТабличніСписки.<xsl:value-of select="$RegisterInformationName"/>_<xsl:value-of select="$TabularList"/>.ОчиститиВідбір(TreeViewGrid);
-
-             //period
-            ТабличніСписки.<xsl:value-of select="$RegisterInformationName"/>_<xsl:value-of select="$TabularList"/>.ДодатиВідбір(TreeViewGrid,
-                new Where("period", Comparison.LIKE, searchText) { FuncToField = "to_char", FuncToField_Param1 = "'DD.MM.YYYY'" });
-
-            await ТабличніСписки.<xsl:value-of select="$RegisterInformationName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid);
-        }
-
-        protected override async ValueTask OpenPageElement(bool IsNew, UniqueID? uniqueID = null)
-        {
-            <xsl:value-of select="$RegisterInformationName"/>_Елемент page = new <xsl:value-of select="$RegisterInformationName"/>_Елемент
-            {
-                CallBack_LoadRecords = CallBack_LoadRecords
-            };
-
-            if (IsNew)
-                await page.Елемент.New();
-            else if (uniqueID == null || !await page.Елемент.Read(uniqueID))
-            {
-                Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
-                return;
-            }
-
-            NotebookFunction.CreateNotebookPage(Program.GeneralNotebook, page.Caption, () =&gt; page);
-            page.SetValue();
-        }
-        protected override async ValueTask Delete(UniqueID uniqueID)
-        {
-            <xsl:value-of select="$RegisterInformationName"/>_Objest Обєкт = new <xsl:value-of select="$RegisterInformationName"/>_Objest();
-            if (await Обєкт.Read(uniqueID))
-                await Обєкт.Delete();
-            else
-                Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
-        }
-
-        protected override async ValueTask&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
-        {
-            <xsl:value-of select="$RegisterInformationName"/>_Objest Обєкт = new <xsl:value-of select="$RegisterInformationName"/>_Objest();
-            if (await Обєкт.Read(uniqueID))
-            {
-                <xsl:value-of select="$RegisterInformationName"/>_Objest Новий = Обєкт.Copy();
-                await Новий.Save();
-                return Новий.UniqueID;
-            }
-            else
-            {
-                Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
-                return null;
-            }
-        }
-
-        const string КлючНалаштуванняКористувача = "РегістриВідомостей.<xsl:value-of select="$RegisterInformationName"/>";
-
-        protected override async ValueTask BeforeSetValue()
-        {
-            await ФункціїНалаштуванняКористувача.ОтриматиПеріодДляЖурналу(КлючНалаштуванняКористувача, Період);
-        }
-
-        protected override async void PeriodChanged()
-        {
-            ФункціїНалаштуванняКористувача.ЗаписатиПеріодДляЖурналу(КлючНалаштуванняКористувача, Період.Period.ToString(), Період.DateStart, Період.DateStop);
-            await BeforeLoadRecords();
-        }
-
-        #endregion
+        TypeName = <xsl:value-of select="$RegisterInformationName"/>_Const.TYPENAME;
+        ТабличнийСписок.AddColumn(this);
+        SetPagesSettings(50);
     }
+
+    public static <xsl:value-of select="$RegisterInformationName"/>_Список New()
+    {
+        <xsl:value-of select="$RegisterInformationName"/>_Список list = NewWithProperties([]);
+        list.NotebookFunc = Program.BasicForm?.NotebookFunc;
+
+        return list;
+    }
+
+    #region Override
+
+    public override async ValueTask LoadRecords()
+    {
+        await ТабличнийСписок.LoadRecords(this);
+    }
+
+    protected override void FillFilter(FilterControl filterControl)
+    {
+        ТабличнийСписок.CreateFilter(this);
+    }
+
+    protected override async ValueTask BeforeSetValue()
+    {
+        await ФункціїНалаштуванняКористувача.ОтриматиПеріодДляЖурналу(FormKey, Period);
+    }
+
+    protected override async void PeriodChanged()
+    {
+        ФункціїНалаштуванняКористувача.ЗаписатиПеріодДляЖурналу(FormKey, Period.Period.ToString(), Period.DateStart, Period.DateStop);
+    }
+
+    #endregion
 }
     </xsl:template>
 

@@ -126,8 +126,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 
         public <xsl:value-of select="$RegisterInformationName"/>_Елемент() : base() 
         { 
-            //Елемент.UnigueIDChanged += UnigueIDChanged;
-            //Елемент.CaptionChanged += CaptionChanged;
+            Element = Елемент;
 
             <xsl:for-each select="$FieldsTL[Type = 'enum']">
                 foreach (var field in ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_List())
@@ -275,7 +274,7 @@ namespace <xsl:value-of select="$NameSpace"/>
             }
             catch (Exception ex)
             {
-                ФункціїДляПовідомлень.ДодатиПовідомлення(new UuidAndText(UnigueID.UGuid), Caption, ex);
+                ФункціїДляПовідомлень.ДодатиПовідомлення(new UuidAndText(UniqueID.UGuid), Caption, ex);
             }
             return isSaved;
         }
@@ -336,17 +335,16 @@ namespace <xsl:value-of select="$NameSpace"/>.РегістриВідомосте
             await ТабличніСписки.<xsl:value-of select="$RegisterInformationName"/>_<xsl:value-of select="$TabularList"/>.LoadRecords(TreeViewGrid);
         }
 
-        protected override async ValueTask OpenPageElement(bool IsNew, UnigueID? unigueID = null)
+        protected override async ValueTask OpenPageElement(bool IsNew, UniqueID? uniqueID = null)
         {
             <xsl:value-of select="$RegisterInformationName"/>_Елемент page = new <xsl:value-of select="$RegisterInformationName"/>_Елемент
             {
-                CallBack_LoadRecords = CallBack_LoadRecords,
-                IsNew = IsNew
+                CallBack_LoadRecords = CallBack_LoadRecords
             };
 
             if (IsNew)
                 await page.Елемент.New();
-            else if (unigueID == null || !await page.Елемент.Read(unigueID))
+            else if (uniqueID == null || !await page.Елемент.Read(uniqueID))
             {
                 Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
                 return;
@@ -355,23 +353,23 @@ namespace <xsl:value-of select="$NameSpace"/>.РегістриВідомосте
             NotebookFunction.CreateNotebookPage(Program.GeneralNotebook, page.Caption, () =&gt; page);
             page.SetValue();
         }
-        protected override async ValueTask Delete(UnigueID unigueID)
+        protected override async ValueTask Delete(UniqueID uniqueID)
         {
             <xsl:value-of select="$RegisterInformationName"/>_Objest Обєкт = new <xsl:value-of select="$RegisterInformationName"/>_Objest();
-            if (await Обєкт.Read(unigueID))
+            if (await Обєкт.Read(uniqueID))
                 await Обєкт.Delete();
             else
                 Message.Error(Program.GeneralForm, "Не вдалось прочитати!");
         }
 
-        protected override async ValueTask&lt;UnigueID?&gt; Copy(UnigueID unigueID)
+        protected override async ValueTask&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
         {
             <xsl:value-of select="$RegisterInformationName"/>_Objest Обєкт = new <xsl:value-of select="$RegisterInformationName"/>_Objest();
-            if (await Обєкт.Read(unigueID))
+            if (await Обєкт.Read(uniqueID))
             {
                 <xsl:value-of select="$RegisterInformationName"/>_Objest Новий = Обєкт.Copy();
                 await Новий.Save();
-                return Новий.UnigueID;
+                return Новий.UniqueID;
             }
             else
             {
