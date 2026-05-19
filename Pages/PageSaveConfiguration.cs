@@ -25,11 +25,11 @@ partial class PageSaveConfiguration : Form
     CheckButton checkButtonIsGenerate = CheckButton.NewWithLabel("Генерувати код");
     Entry entryGenerateCodePath = Entry.New();
     Entry entryCompileProgramPath = Entry.New();
-    Button bSaveParam = Button.NewWithLabel("Зберегти параметри");
+    Button buttonSaveParam = Button.NewWithLabel("Зберегти параметри");
 
-    Button bAnalize = Button.NewWithLabel("Аналіз змін");
-    Button bAnalizeAndCreateSQL = Button.NewWithLabel("Збереження змін. Крок 1");
-    Button bExecuteSQLAndGenerateCode = Button.NewWithLabel("Збереження змін. Крок 2");
+    Button buttonAnalize = Button.NewWithLabel("Аналіз змін");
+    Button buttonAnalizeAndCreateSQL = Button.NewWithLabel("Збереження змін. Крок 1");
+    Button buttonExecuteSQLAndGenCode = Button.NewWithLabel("Збереження змін. Крок 2");
 
     ScrolledWindow scrollListBoxTerminal = ScrolledWindow.New();
     TextView textTerminal = TextView.New();
@@ -38,85 +38,118 @@ partial class PageSaveConfiguration : Form
 
     partial void Initialize()
     {
-        Expander expanderParams = Expander.New("Параметри та додаткові налаштування");
-        expanderParams.MarginStart = expanderParams.MarginEnd = 10;
-        Append(expanderParams);
+        Expander expander = Expander.New("Параметри");
+        expander.MarginTop = 5;
+        expander.MarginBottom = 20;
+        Append(expander);
 
-        Box vBoxParams = Box.New(Orientation.Vertical, 0);
-        expanderParams.SetChild(vBoxParams);
+        //Параметри
+        {
+            Box vBoxParams = Box.New(Orientation.Vertical, 0);
+            vBoxParams.MarginStart = vBoxParams.MarginTop = vBoxParams.MarginBottom = 10;
+            expander.SetChild(vBoxParams);
 
-        //Параметри 1
-        Box hBoxParamIsGenerate = Box.New(Orientation.Horizontal, 0);
-        vBoxParams.Append(hBoxParamIsGenerate);
+            //1
+            {
+                Box hBox = Box.New(Orientation.Horizontal, 0);
+                hBox.MarginBottom = 5;
+                vBoxParams.Append(hBox);
 
-        hBoxParamIsGenerate.Append(checkButtonIsGenerate);
+                hBox.Append(checkButtonIsGenerate);
+            }
 
-        //Параметри 2
-        Box hBoxParamPath = Box.New(Orientation.Horizontal, 0);
-        vBoxParams.Append(hBoxParamPath);
+            //2
+            {
+                Box hBox = Box.New(Orientation.Horizontal, 0);
+                hBox.MarginBottom = 5;
+                vBoxParams.Append(hBox);
 
-        entryGenerateCodePath.WidthRequest = 500;
+                entryGenerateCodePath.WidthRequest = 500;
 
-        hBoxParamPath.Append(Label.New("Шлях до папки куди генерувати код:"));
-        hBoxParamPath.Append(entryGenerateCodePath);
+                Label label = Label.New("Шлях до папки куди генерувати код:");
+                label.MarginEnd = 5;
+                hBox.Append(label);
 
-        Button bSelectFolderGenerateCode = Button.NewWithLabel("...");
-        //bSelectFolderGenerateCode.OnClicked += OnSelectFolderGenerateCode;
-        hBoxParamPath.Append(bSelectFolderGenerateCode);
+                entryGenerateCodePath.MarginEnd = 5;
+                hBox.Append(entryGenerateCodePath);
 
-        hBoxParamPath.Append(Label.New("За замовчуванням код генерується в каталог програми"));
+                Button buttonSelectFolderGenerateCode = Button.NewWithLabel("...");
+                buttonSelectFolderGenerateCode.MarginEnd = 5;
+                //buttonSelectFolderGenerateCode.OnClicked += OnSelectFolderGenerateCode;
+                hBox.Append(buttonSelectFolderGenerateCode);
 
-        //Параметри 3
-        Box hBoxParamCompileProgram = Box.New(Orientation.Horizontal, 0);
-        vBoxParams.Append(hBoxParamCompileProgram);
+                hBox.Append(Label.New("Стандартно код генерується в каталог програми"));
+            }
 
-        entryCompileProgramPath.WidthRequest = 500;
+            //3
+            {
+                Box hBox = Box.New(Orientation.Horizontal, 0);
+                hBox.MarginBottom = 5;
+                vBoxParams.Append(hBox);
 
-        hBoxParamCompileProgram.Append(Label.New("Шлях до папки скомпільованої програми:"));
-        hBoxParamCompileProgram.Append(entryCompileProgramPath);
+                entryCompileProgramPath.WidthRequest = 500;
 
-        Button bSelectFolderCompileProgram = Button.NewWithLabel("...");
-        //bSelectFolderCompileProgram.OnClicked += OnSelectFolderCompileProgram;
-        hBoxParamCompileProgram.Append(bSelectFolderCompileProgram);
+                Label label = Label.New("Шлях до папки скомпільованої програми:");
+                label.MarginEnd = 5;
+                hBox.Append(label);
 
-        hBoxParamCompileProgram.Append(Label.New("Наприклад 'bin/Debug/net10.0/'. В цю папку буде скопійований файл Confa.xml"));
+                entryCompileProgramPath.MarginEnd = 5;
+                hBox.Append(entryCompileProgramPath);
 
-        //Save
-        Box hBoxSaveParam = Box.New(Orientation.Horizontal, 0);
-        vBoxParams.Append(hBoxSaveParam);
+                Button buttonSelectFolderCompileProgram = Button.NewWithLabel("...");
+                buttonSelectFolderCompileProgram.MarginEnd = 5;
+                //buttonSelectFolderCompileProgram.OnClicked += OnSelectFolderCompileProgram;
+                hBox.Append(buttonSelectFolderCompileProgram);
 
-        bSaveParam.OnClicked += OnSaveParam;
-        hBoxSaveParam.Append(bSaveParam);
+                hBox.Append(Label.New("Наприклад 'bin/Debug/net10.0/'. В цю папку буде скопійований файл Confa.xml"));
+            }
 
-        Append(Separator.New(Orientation.Horizontal));
+            //Save
+            {
+                Box hBox = Box.New(Orientation.Horizontal, 0);
+                hBox.MarginBottom = 5;
+                vBoxParams.Append(hBox);
+
+                buttonSaveParam.OnClicked += OnSaveParam;
+                hBox.Append(buttonSaveParam);
+            }
+        }
+
+        // Append(Separator.New(Orientation.Horizontal));
 
         //Кнопки
-        Box hBox = Box.New(Orientation.Horizontal, 0);
+        {
+            Box hBox = Box.New(Orientation.Horizontal, 0);
+            hBox.MarginBottom = 5;
 
-        bAnalize.OnClicked += async (_, _) => await SaveAndAnalize();
-        hBox.Append(bAnalize);
+            buttonAnalize.OnClicked += async (_, _) => await SaveAndAnalize();
+            buttonAnalize.MarginStart = buttonAnalize.MarginEnd = 5;
+            hBox.Append(buttonAnalize);
 
-        bAnalizeAndCreateSQL.OnClicked += async (_, _) => await SaveAnalizeAndCreateSQL();
-        hBox.Append(bAnalizeAndCreateSQL);
+            buttonAnalizeAndCreateSQL.OnClicked += async (_, _) => await SaveAnalizeAndCreateSQL();
+            buttonAnalizeAndCreateSQL.MarginStart = buttonAnalizeAndCreateSQL.MarginEnd = 5;
+            hBox.Append(buttonAnalizeAndCreateSQL);
 
-        bExecuteSQLAndGenerateCode.OnClicked += async (_, _) => await ExecuteSQLAndGenerateCode();
-        hBox.Append(bExecuteSQLAndGenerateCode);
+            buttonExecuteSQLAndGenCode.OnClicked += async (_, _) => await ExecuteSQLAndGenerateCode();
+            buttonExecuteSQLAndGenCode.MarginStart = buttonExecuteSQLAndGenCode.MarginEnd = 5;
+            hBox.Append(buttonExecuteSQLAndGenCode);
 
-        Append(hBox);
+            Append(hBox);
+        }
 
         //Terminal
-        Box hBoxTerminal = Box.New(Orientation.Horizontal, 0);
-        hBoxTerminal.Vexpand = hBoxTerminal.Hexpand = true;
-        Append(hBoxTerminal);
+        {
+            Box hBox = Box.New(Orientation.Horizontal, 0);
+            hBox.MarginTop = 15;
+            hBox.Vexpand = hBox.Hexpand = true;
+            Append(hBox);
 
-        scrollListBoxTerminal.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-        scrollListBoxTerminal.Vexpand = scrollListBoxTerminal.Hexpand = true;
-        scrollListBoxTerminal.HasFrame = true;
-        scrollListBoxTerminal.SetChild(textTerminal);
+            scrollListBoxTerminal.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
+            scrollListBoxTerminal.Vexpand = scrollListBoxTerminal.Hexpand = true;
+            scrollListBoxTerminal.SetChild(textTerminal);
 
-        textTerminal.Buffer?.Text = "Text Text Text";
-
-        hBoxTerminal.Append(scrollListBoxTerminal);
+            hBox.Append(scrollListBoxTerminal);
+        }
     }
 
     public static PageSaveConfiguration New()
@@ -232,9 +265,9 @@ partial class PageSaveConfiguration : Form
 
     void ButtonSensitive(bool sensitive)
     {
-        bAnalize.Sensitive = sensitive;
-        bAnalizeAndCreateSQL.Sensitive = sensitive;
-        bExecuteSQLAndGenerateCode.Sensitive = sensitive;
+        buttonAnalize.Sensitive = sensitive;
+        buttonAnalizeAndCreateSQL.Sensitive = sensitive;
+        buttonExecuteSQLAndGenCode.Sensitive = sensitive;
         textTerminal.Sensitive = sensitive;
     }
 
