@@ -22,7 +22,7 @@ limitations under the License.
 */
 
 using Gtk;
-using Gdk;
+using InterfaceGtk4;
 using AccountingSoftware;
 
 namespace Configurator;
@@ -43,6 +43,9 @@ class Program
 
     static void Main()
     {
+        //Підключення бібліотек
+        FunctionForNativeMethods.SetMsysDirectory(@"C:\msys64\ucrt64\bin");
+
         BasicApp.OnActivate += (app, _) =>
         {
             var window = FormConfigurationSelection.New();
@@ -51,22 +54,8 @@ class Program
 
         BasicApp.OnShutdown += (app, _) => { };
 
-        Display? display = Display.GetDefault();
-        if (display != null)
-        {
-            //Icon
-            IconTheme iconTheme = IconTheme.GetForDisplay(display);
-            iconTheme.AddSearchPath(Path.Combine(AppContext.BaseDirectory, "images"));
-
-            //Css
-            string styleDefaultFile = Path.Combine(AppContext.BaseDirectory, "StyleCss/Default.css");
-            if (File.Exists(styleDefaultFile))
-            {
-                CssProvider provider = CssProvider.New();
-                provider.LoadFromPath(styleDefaultFile);
-                StyleContext.AddProviderForDisplay(display, provider, 800);
-            }
-        }
+        //Підключення стилів та тем
+        FunctionForStyle.LoadDefault();
 
         BasicApp.RunWithSynchronizationContext(null);
     }
