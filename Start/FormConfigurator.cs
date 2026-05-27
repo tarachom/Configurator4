@@ -37,7 +37,7 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
         return window;
     }
 
-    public async ValueTask OpenFirstPages()
+    public async Task OpenFirstPages()
     {
         PageHome page = PageHome.New();
         NotebookFunc?.CreatePage("Стартова", () => page, false, null, null, true);
@@ -55,7 +55,7 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
 
     }
 
-    protected override async ValueTask PageDirectory(string name, bool isNew = false)
+    protected override async Task PageDirectory(string name, bool isNew = false)
     {
         PageDirectory page = Configurator.PageDirectory.New();
         page.IsNew = isNew;
@@ -69,7 +69,7 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
 
     #region TopMenu
 
-    protected override async ValueTask PageSaveConfiguration()
+    protected override async Task PageSaveConfiguration()
     {
         PageSaveConfiguration page = Configurator.PageSaveConfiguration.New();
         NotebookFunc?.CreatePage("Зберегти конфігурацію", page);

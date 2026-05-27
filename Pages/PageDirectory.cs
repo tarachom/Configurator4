@@ -52,7 +52,7 @@ partial class PageDirectory : FormPageConfigurator
 
     }
 
-    public override async ValueTask AssignValue()
+    public override async Task AssignValue()
     {
         if (IsNew)
         {
@@ -95,16 +95,16 @@ partial class PageDirectory : FormPageConfigurator
         entryTable.SetText(ConfDirectory.Table);
     }
 
-    protected override async ValueTask GetValue()
+    protected override async Task GetValue()
     {
         ConfDirectory.Name = entryName.GetText();
         ConfDirectory.FullName = entryFullName.GetText();
         ConfDirectory.Table = entryTable.GetText();
     }
 
-    protected override async ValueTask<bool> Save()
+    protected override async Task<bool> Save()
     {
         Console.WriteLine("Save");
-        return await ValueTask.FromResult(true); ;
+        return await Task.FromResult(true); ;
     }
 }

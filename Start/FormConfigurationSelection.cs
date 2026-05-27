@@ -41,7 +41,7 @@ partial class FormConfigurationSelection : InterfaceGtk4.FormConfigurationSelect
         return window;
     }
 
-    public override async ValueTask<bool> OpenConfigurator(ConfigurationParam? openConfigurationParam)
+    public override async Task<bool> OpenConfigurator(ConfigurationParam? openConfigurationParam)
     {
         FormConfigurator form = FormConfigurator.NewConfiguratorStart();
         form.OpenConfigurationParam = openConfigurationParam;
