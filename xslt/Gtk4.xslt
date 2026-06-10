@@ -32,7 +32,7 @@ limitations under the License.
     <xsl:param name="ConfTypeName" />
     <xsl:choose>
         <xsl:when test="Type = 'pointer' or Type = 'composite_pointer'">
-            <xsl:text>Fields["</xsl:text><xsl:value-of select="Name"/><xsl:text>"].ToString() ?? ""</xsl:text>
+            <xsl:text>Fields["</xsl:text><xsl:value-of select="Name"/><xsl:text>"].ToString()</xsl:text>
         </xsl:when>
         <xsl:when test="Type = 'enum'">
             <xsl:text>Перелічення.ПсевдонімиПерелічення.</xsl:text><xsl:value-of select="substring-after(Pointer, '.')"/><xsl:text>_Alias((</xsl:text>
@@ -43,7 +43,7 @@ limitations under the License.
             <xsl:text>(Fields[</xsl:text><xsl:value-of select="$ConfTypeName"/><xsl:text>_Const.</xsl:text><xsl:value-of select="Name"/><xsl:text>] != DBNull.Value &amp;&amp; (bool)Fields[</xsl:text><xsl:value-of select="$ConfTypeName"/><xsl:text>_Const.</xsl:text><xsl:value-of select="Name"/><xsl:text>]) ? "Так" : ""</xsl:text>
         </xsl:when>
         <xsl:otherwise>
-            <xsl:text>Fields[</xsl:text><xsl:value-of select="$ConfTypeName"/><xsl:text>_Const.</xsl:text><xsl:value-of select="Name"/>]<xsl:text>.ToString() ?? ""</xsl:text>
+            <xsl:text>Fields[</xsl:text><xsl:value-of select="$ConfTypeName"/><xsl:text>_Const.</xsl:text><xsl:value-of select="Name"/>]<xsl:text>.ToString()</xsl:text>
         </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -613,14 +613,24 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             </xsl:call-template>
         }
 
-        public static async ValueTask UpdateRecords(DirectoryFormJournalBase form)
+        public static async Task UpdateRecords(DirectoryFormJournalBase form)
         {
             <xsl:if test="$DirectoryType != 'Hierarchical'">
             List&lt;ObjectChanged&gt; records = [];
             lock (form.Loсked)
             {
-                while(form.RecordsChangedQueue.Count &gt; 0)
+                while(form.RecordsChangedQueue.Count &gt; 0) //Видобуваю все із черги
                     records.AddRange(form.RecordsChangedQueue.Dequeue());
+            }
+
+            if (records.Count == 0) return;
+
+            //Словник для швидкого пошуку
+            Dictionary&lt;Guid, uint&gt; storeMap = [];
+            for (uint i = 0; i &lt; form.Store.GetNItems(); i++)
+            {
+                <xsl:value-of select="$RowType"/>? item = (<xsl:value-of select="$RowType"/>?)form.Store.GetObject(i);
+                if (item != null) storeMap.Add(item.UniqueID.UGuid, i);
             }
             
             /* Вибірка */
@@ -652,27 +662,16 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                         <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", <xsl:call-template name="FieldValue"><xsl:with-param name="ConfTypeName"><xsl:value-of select="$DirectoryName"/></xsl:with-param></xsl:call-template>);
                     </xsl:for-each>
                     <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
-                        <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", Fields["<xsl:value-of select="Name"/>"].ToString() ?? "");
+                        <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", Fields["<xsl:value-of select="Name"/>"].ToString());
                     </xsl:for-each>
-                    ObjectChanged? objCh = records.Find(x =&gt; x.Uid.Equals(curr.UniqueID.UGuid));
-                    if (objCh != null)
+                    if (storeMap.TryGetValue(curr.UniqueID.UGuid, out uint index))
                     {
-                        bool exist = false;
-                        for (uint i = 0; i &lt; form.Store.GetNItems(); i++)
-                        {
-                            <xsl:value-of select="$RowType"/>? item = (<xsl:value-of select="$RowType"/>?)form.Store.GetObject(i);
-                            if (item != null &amp;&amp; item.UniqueID.Equals(curr.UniqueID))
-                            {
-                                bool sel = form.Grid.Model.IsSelected(i);
-                                form.Store.Splice(i, 1, [row], 1);
-                                if (sel) form.Grid.Model.SelectItem(i, false);
-                                exist = true;
-                                break;
-                            }
-                        }
-                        if (!exist &amp;&amp; objCh.Type == TypeObjectChanged.Add)
-                            form.Store.Append(row);
+                        bool sel = form.Grid.Model.IsSelected(index);
+                        form.Store.Splice(index, 1, [row], 1);
+                        if (sel) form.Grid.Model.SelectItem(index, false);
                     }
+                    else if (records.Find(x =&gt; x.Uid.Equals(curr.UniqueID.UGuid))?.Type == TypeObjectChanged.Add)
+                        form.Store.Append(row);
                 }
             }
             </xsl:if>
@@ -692,7 +691,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             return row;
         }
 
-        public static async ValueTask&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(DirectoryFormJournalBase form, UniqueID[] parents)
+        public static async Task&lt;List&lt;DirectoryHierarchicalRow&gt;&gt; LoadChildren(DirectoryFormJournalBase form, UniqueID[] parents)
         {
             /* Вибірка */
             <xsl:call-template name="Select">
@@ -744,7 +743,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         }
         </xsl:if>
 
-        public static async ValueTask LoadRecords(DirectoryFormJournalBase form)
+        public static async Task LoadRecords(DirectoryFormJournalBase form)
         {
             form.BeforeLoadRecords();
 
@@ -903,7 +902,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             </xsl:call-template>
         }
 
-        public static async ValueTask UpdateRecords(DocumentFormJournalBase form)
+        public static async Task UpdateRecords(DocumentFormJournalBase form)
         {
             List&lt;ObjectChanged&gt; records = [];
             lock (form.Loсked)
@@ -963,7 +962,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             }
         }
 
-        public static async ValueTask LoadRecords(DocumentFormJournalBase form)
+        public static async Task LoadRecords(DocumentFormJournalBase form)
         {
             form.BeforeLoadRecords();
             UniqueID? unigueIDSelect = form.SelectPointerItem ?? form.DocumentPointerItem;
@@ -1068,7 +1067,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             </xsl:call-template>
         }
 
-        public static async ValueTask LoadRecords(RegisterInformationFormJournalBase form)
+        public static async Task LoadRecords(RegisterInformationFormJournalBase form)
         {
             form.BeforeLoadRecords();
             UniqueID? unigueIDSelect = form.SelectPointerItem;
@@ -1174,7 +1173,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             </xsl:call-template>
         }
 
-        public static async ValueTask LoadRecords(RegisterAccumulationFormJournalBase form)
+        public static async Task LoadRecords(RegisterAccumulationFormJournalBase form)
         {
             form.BeforeLoadRecords();
             UniqueID? unigueIDSelect = form.SelectPointerItem;
@@ -1263,7 +1262,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             <xsl:call-template name="AddColumnEmpty" />
         }
 
-        public static async ValueTask LoadRecords(RegisterAccumulationFormJournalSmall form)
+        public static async Task LoadRecords(RegisterAccumulationFormJournalSmall form)
         {
             form.BeforeLoadRecords();
             

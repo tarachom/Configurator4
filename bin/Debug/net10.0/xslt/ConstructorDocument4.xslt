@@ -69,44 +69,45 @@ namespace <xsl:value-of select="$NameSpaceGeneratedCode"/>.Документи;
 
 static class <xsl:value-of select="$DocumentName"/>_Triggers
 {
-    public static async ValueTask <xsl:value-of select="$TriggerFunctions/New"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
+    public static <xsl:if test="$DocumentAutomaticNumeration = '1'">async</xsl:if> Task <xsl:value-of select="$TriggerFunctions/New"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
     {
-        <xsl:if test="$DocumentAutomaticNumeration = '1'">
-            <xsl:text>ДокументОбєкт.НомерДок = (++НумераціяДокументів.</xsl:text>
-            <xsl:value-of select="$DocumentName"/>
-            <xsl:text>_Const).ToString("D8");</xsl:text>
-        </xsl:if>
         ДокументОбєкт.ДатаДок = DateTime.Now;
-        await ValueTask.FromResult(true);
+        <xsl:choose>
+            <xsl:when test="$DocumentAutomaticNumeration = '1'">
+        int number = await НумераціяДокументів.<xsl:value-of select="$DocumentName"/>();
+        ДокументОбєкт.НомерДок = (await НумераціяДокументів.<xsl:value-of select="$DocumentName"/>(++number)).ToString("D8");
+            </xsl:when>
+            <xsl:otherwise>
+        return Task.CompletedTask;
+            </xsl:otherwise>
+        </xsl:choose>        
     }
 
-    public static async ValueTask <xsl:value-of select="$TriggerFunctions/Copying"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт, <xsl:value-of select="$DocumentName"/>_Objest Основа)
+    public static Task <xsl:value-of select="$TriggerFunctions/Copying"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт, <xsl:value-of select="$DocumentName"/>_Objest Основа)
     {
-        <xsl:if test="$Fields[Name = 'Назва']">
-        ДокументОбєкт.Назва += " - Копія";
-        </xsl:if>
-        await ValueTask.FromResult(true);
+        <xsl:if test="$Fields[Name = 'Назва']">ДокументОбєкт.Назва += " - Копія";</xsl:if>
+        return Task.CompletedTask;
     }
 
-    public static async ValueTask <xsl:value-of select="$TriggerFunctions/BeforeSave"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
+    public static Task <xsl:value-of select="$TriggerFunctions/BeforeSave"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
     {
         ДокументОбєкт.Назва = $"{<xsl:value-of select="$DocumentName"/>_Const.FULLNAME} №{ДокументОбєкт.НомерДок} від {ДокументОбєкт.ДатаДок.ToString("dd.MM.yyyy")}";
-        await ValueTask.FromResult(true);
+        return Task.CompletedTask;
     }
 
-    public static async ValueTask <xsl:value-of select="$TriggerFunctions/AfterSave"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
+    public static Task <xsl:value-of select="$TriggerFunctions/AfterSave"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
     {
-        await ValueTask.FromResult(true);
+        return Task.CompletedTask;
     }
 
-    public static async ValueTask <xsl:value-of select="$TriggerFunctions/SetDeletionLabel"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт, bool label)
+    public static Task <xsl:value-of select="$TriggerFunctions/SetDeletionLabel"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт, bool label)
     {
-        await ValueTask.FromResult(true);
+        return Task.CompletedTask;
     }
 
-    public static async ValueTask <xsl:value-of select="$TriggerFunctions/BeforeDelete"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
+    public static Task <xsl:value-of select="$TriggerFunctions/BeforeDelete"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
     {
-        await ValueTask.FromResult(true);
+        return Task.CompletedTask;
     }
 }
     </xsl:template>
@@ -141,7 +142,7 @@ namespace <xsl:value-of select="$NameSpaceGeneratedCode"/>.Документи;
 
 static class <xsl:value-of select="$DocumentName"/>_SpendTheDocument
 {
-    public static async ValueTask&lt;bool&gt; <xsl:value-of select="$SpendFunctions/Spend"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
+    public static async Task&lt;bool&gt; <xsl:value-of select="$SpendFunctions/Spend"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
     {
         try
         {
@@ -152,14 +153,14 @@ static class <xsl:value-of select="$DocumentName"/>_SpendTheDocument
         }
         catch (Exception ex)
         {
-            await ФункціїДляДокументів.ДокументНеПроводиться(ДокументОбєкт, ДокументОбєкт.Назва, ex.Message);
+            await ПроведенняДокументів.ДокументНеПроводиться(ДокументОбєкт, ДокументОбєкт.Назва, ex.Message);
             return false;
         }
     }
 
-    public static async ValueTask <xsl:value-of select="$SpendFunctions/ClearSpend"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
+    public static Task <xsl:value-of select="$SpendFunctions/ClearSpend"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
     {
-        await ValueTask.FromResult(true);
+        return Task.CompletedTask;
     }
 }
     </xsl:template>
@@ -214,14 +215,14 @@ static class <xsl:value-of select="$DocumentName"/>_Функції
                 <xsl:otherwise>
                     <xsl:if test="$FieldsFilter[Name = 'Назва']">
             //Назва
-            new Where(<xsl:if test="$FieldsFilter[Name = 'Код']">Comparison.OR, </xsl:if><xsl:value-of select="$DocumentName"/>_Const.Назва, Comparison.LIKE, searchText) { <xsl:call-template name="Function_FuncToField" /> },
+            new Where(<xsl:value-of select="$DocumentName"/>_Const.Назва, Comparison.LIKE, searchText) { FuncToField = "LOWER" },
                     </xsl:if>
                 </xsl:otherwise>
             </xsl:choose>
         ];
     }
 
-    public static async ValueTask OpenPageElement(bool IsNew, UniqueID? uniqueID = null, 
+    public static async Task OpenPageElement(bool IsNew, UniqueID? uniqueID = null, 
         Action&lt;UniqueID?&gt;? сallBack_LoadRecords = null,
         Action&lt;UniqueID&gt;? сallBack_OnSelectPointer = null)
     {
@@ -241,7 +242,7 @@ static class <xsl:value-of select="$DocumentName"/>_Функції
         await page.SetValue();
     }
 
-    public static async ValueTask OpenPageList(UniqueID? uniqueID = null, Action&lt;UniqueID&gt;? сallBack_OnSelectPointer = null)
+    public static async Task OpenPageList(UniqueID? uniqueID = null, Action&lt;UniqueID&gt;? сallBack_OnSelectPointer = null)
     {
         <xsl:value-of select="$DocumentName"/>_Список page = <xsl:value-of select="$DocumentName"/>_Список.New();
         page.DocumentPointerItem = uniqueID;
@@ -251,14 +252,14 @@ static class <xsl:value-of select="$DocumentName"/>_Функції
         await page.SetValue();
     }
 
-    public static async ValueTask SetDeletionLabel(UniqueID uniqueID)
+    public static async Task SetDeletionLabel(UniqueID uniqueID)
     {
         <xsl:value-of select="$DocumentName"/>_Pointer Вказівник = new(uniqueID);
         bool? label = await Вказівник.GetDeletionLabel();
         if (label.HasValue) await Вказівник.SetDeletionLabel(!label.Value);
     }
 
-    public static async ValueTask&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
+    public static async Task&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
     {
         <xsl:value-of select="$DocumentName"/>_Objest Обєкт = new();
         if (await Обєкт.Read(uniqueID))
@@ -277,7 +278,7 @@ static class <xsl:value-of select="$DocumentName"/>_Функції
         }
     }
 
-    public static async ValueTask SpendTheDocument(UniqueID uniqueID, bool spendDoc)
+    public static async Task SpendTheDocument(UniqueID uniqueID, bool spendDoc)
     {
         <xsl:value-of select="$DocumentName"/>_Objest? Обєкт = await new <xsl:value-of select="$DocumentName"/>_Pointer(uniqueID).GetDocumentObject(true);
         if (Обєкт == null) return;
@@ -483,10 +484,8 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
                 foreach (var field in ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_List())
                     <xsl:value-of select="Name"/>.Append(field.Value.ToString(), field.Name);
 
-                //Заборона прокрутки списку
-                EventControllerScroll controller = EventControllerScroll.New(EventControllerScrollFlags.BothAxes);
-                <xsl:value-of select="Name"/>.AddController(controller);
-                controller.OnScroll += (_, _) =&gt; true;
+                <xsl:value-of select="Name"/>.Active = 0;
+                <xsl:value-of select="Name"/>.AddController(FunctionForComboBox.DisableScrolling());
             }
                 </xsl:when>
             </xsl:choose>
@@ -560,7 +559,7 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
 
     #region Присвоєння / зчитування значень
 
-    public override async ValueTask AssignValue()
+    public override async Task AssignValue()
     {
         <!-- Крім скритого поля Назва яке формується перед збереженням -->
         <xsl:for-each select="$FieldsTL[Name != 'Назва']">
@@ -655,7 +654,7 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
 
     #endregion
     
-    protected override async ValueTask&lt;bool&gt; Save()
+    protected override async Task&lt;bool&gt; Save()
     {
         bool isSaved = false;
         try
@@ -675,7 +674,7 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
         return isSaved;
     }
 
-    protected override async ValueTask&lt;bool&gt; SpendTheDocument(bool spendDoc)
+    protected override async Task&lt;bool&gt; SpendTheDocument(bool spendDoc)
     {
         if (spendDoc)
         {
@@ -695,7 +694,7 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
         CommonForms_DocumentMovementThroughRegisters.Create(new <xsl:value-of select="$DocumentName"/>_Pointer(uniqueID));
     }
 
-    protected override async ValueTask InJournal(UniqueID uniqueID)
+    protected override async Task InJournal(UniqueID uniqueID)
     {
         await Функції.OpenPageList(uniqueID);
     }
@@ -752,12 +751,12 @@ public partial class <xsl:value-of select="$DocumentName"/>_Список : Docum
 
     #region Override
 
-    public override async ValueTask LoadRecords()
+    public override async Task LoadRecords()
     {
         await ТабличнийСписок.LoadRecords(this);
     }
 
-    public override async ValueTask UpdateRecords()
+    public override async Task UpdateRecords()
     {
         await ТабличнийСписок.UpdateRecords(this);
     }
@@ -772,22 +771,22 @@ public partial class <xsl:value-of select="$DocumentName"/>_Список : Docum
         ТабличнийСписок.CreateFilter(this);
     }
 
-    protected override async ValueTask OpenPageElement(bool IsNew, UniqueID? uniqueID = null)
+    protected override async Task OpenPageElement(bool IsNew, UniqueID? uniqueID = null)
     {
         await Функції.OpenPageElement(IsNew, uniqueID, CallBack_LoadRecords, CallBack_OnSelectPointer);
     }
 
-    protected override async ValueTask SetDeletionLabel(UniqueID uniqueID)
+    protected override async Task SetDeletionLabel(UniqueID uniqueID)
     {
         await Функції.SetDeletionLabel(uniqueID);
     }
 
-    protected override async ValueTask&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
+    protected override async Task&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
     {
         return await Функції.Copy(uniqueID);
     }
 
-    protected override async ValueTask BeforeSetValue()
+    protected override async Task BeforeSetValue()
     {
         await ФункціїНалаштуванняКористувача.ОтриматиПеріодДляЖурналу(FormKey, Period);
     }
@@ -797,7 +796,7 @@ public partial class <xsl:value-of select="$DocumentName"/>_Список : Docum
         ФункціїНалаштуванняКористувача.ЗаписатиПеріодДляЖурналу(FormKey, Period.Period.ToString(), Period.DateStart, Period.DateStop);
     }
 
-    protected override async ValueTask SpendTheDocument(UniqueID[] uniqueID, bool spendDoc)
+    protected override async Task SpendTheDocument(UniqueID[] uniqueID, bool spendDoc)
     {
         foreach (var uid in uniqueID)
             await Функції.SpendTheDocument(uid, spendDoc);
@@ -809,7 +808,7 @@ public partial class <xsl:value-of select="$DocumentName"/>_Список : Docum
             CommonForms_DocumentMovementThroughRegisters.Create(new <xsl:value-of select="$DocumentName"/>_Pointer(uid));
     }
 
-    protected override async ValueTask VersionsHistory(UniqueID[] uniqueID)
+    protected override async Task VersionsHistory(UniqueID[] uniqueID)
     {
 
     }
@@ -866,12 +865,12 @@ public partial class <xsl:value-of select="$DocumentName"/>_ШвидкийВиб
 
     #region Override
 
-    public override async ValueTask LoadRecords()
+    public override async Task LoadRecords()
     {
         await ТабличнийСписок.LoadRecords(this);
     }
 
-    public override async ValueTask UpdateRecords()
+    public override async Task UpdateRecords()
     {
         await ТабличнийСписок.UpdateRecords(this);
     }
@@ -886,27 +885,27 @@ public partial class <xsl:value-of select="$DocumentName"/>_ШвидкийВиб
         ТабличнийСписок.CreateFilter(this);
     }
 
-    protected override async ValueTask OpenPageList(UniqueID? uniqueID = null)
+    protected override async Task OpenPageList(UniqueID? uniqueID = null)
     {
         await Функції.OpenPageList(uniqueID, CallBack_OnSelectPointer);
     }
 
-    protected override async ValueTask OpenPageElement(bool IsNew, UniqueID? uniqueID = null)
+    protected override async Task OpenPageElement(bool IsNew, UniqueID? uniqueID = null)
     {
         await Функції.OpenPageElement(IsNew, uniqueID, CallBack_LoadRecords, CallBack_OnSelectPointer);
     }
 
-    protected override async ValueTask SetDeletionLabel(UniqueID uniqueID)
+    protected override async Task SetDeletionLabel(UniqueID uniqueID)
     {
         await Функції.SetDeletionLabel(uniqueID);
     }
 
-    protected override async ValueTask&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
+    protected override async Task&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
     {
         return await Функції.Copy(uniqueID);
     }
 
-    protected override async ValueTask BeforeSetValue()
+    protected override async Task BeforeSetValue()
     {
         await ФункціїНалаштуванняКористувача.ОтриматиПеріодДляЖурналу(FormKey, Period);
     }
@@ -916,7 +915,7 @@ public partial class <xsl:value-of select="$DocumentName"/>_ШвидкийВиб
         ФункціїНалаштуванняКористувача.ЗаписатиПеріодДляЖурналу(FormKey, Period.Period.ToString(), Period.DateStart, Period.DateStop);
     }
 
-    protected override async ValueTask SpendTheDocument(UniqueID[] uniqueID, bool spendDoc)
+    protected override async Task SpendTheDocument(UniqueID[] uniqueID, bool spendDoc)
     {
         foreach (var uid in uniqueID)
             await Функції.SpendTheDocument(uid, spendDoc);
@@ -1049,9 +1048,9 @@ public partial class <xsl:value-of select="$DocumentName"/>_PointerTablePartCell
         }
     }
 
-    public async ValueTask GetPresentation() =&gt; Presentation = pointer != null ? await pointer.GetPresentation() : "";
+    public async Task GetPresentation() =&gt; Presentation = pointer != null ? await pointer.GetPresentation() : "";
 
-    async ValueTask PointerChange(UniqueID? p)
+    async Task PointerChange(UniqueID? p)
     {
         Pointer = new <xsl:value-of select="$DocumentName"/>_Pointer(p ?? new UniqueID());
         await GetPresentation();
@@ -1117,7 +1116,7 @@ namespace <xsl:value-of select="$NameSpace"/>
 {
     public static class <xsl:value-of select="$DocumentName"/>_Звіт
     {
-        public static async ValueTask Сформувати()
+        public static async Task Сформувати()
         {
             <xsl:variable name="CountFieldsTL" select="count($FieldsTL)"/>
             string query = $@"
@@ -1175,7 +1174,7 @@ FROM
                 ReportName = "<xsl:value-of select="$DocumentName"/>_Звіт",
                 Caption = "<xsl:value-of select="$DocumentName"/>",
                 Query = query,
-                GetInfo = () =&gt; ValueTask.FromResult("")
+                GetInfo = () =&gt; Task.FromResult("")
             };
 
             <xsl:for-each select="$FieldsTL">
