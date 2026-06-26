@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Полегшений інтерфейс для сторінки елементу довідника
+-->
+<interface>
+  <!-- Основний вертикальний бокс -->
+  <object class="GtkBox" id="MainBox">
+    <property name="orientation">vertical</property>
+    <property name="hexpand">1</property>
+    <property name="vexpand">1</property>
+
+    <!-- Верхній горизонтальний бокс -->
+    <child>
+      <object class="GtkBox" id="TopBox">
+        <property name="orientation">horizontal</property>
+
+        <!-- Лівий вертикальний бокс -->
+        <child>
+          <object class="GtkBox" id="TopStartBox">
+            <property name="orientation">vertical</property>
+            <property name="width-request">500</property>
+          </object>
+        </child>
+
+        <!-- Правий вертикальний бокс -->
+        <child>
+          <object class="GtkBox" id="TopEndBox">
+            <property name="orientation">vertical</property>
+            <property name="width-request">500</property>
+          </object>
+        </child>
+
+      </object>
+    </child>
+
+  </object>
+</interface>
