@@ -44,7 +44,7 @@ class Program
     static void Main()
     {
         //Підключення бібліотек
-        FunctionForNativeMethods.SetMsysDirectory(@"C:\msys64\ucrt64\bin");
+        FunctionForNativeMethods.SetMsysDirectory();
 
         BasicApp.OnActivate += (app, _) =>
         {

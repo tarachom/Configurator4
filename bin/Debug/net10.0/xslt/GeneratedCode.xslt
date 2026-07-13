@@ -726,9 +726,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         public const string <xsl:value-of select="Name"/> = "<xsl:value-of select="NameInTable"/>";</xsl:for-each>
     }
 
-    public class <xsl:value-of select="$DirectoryName"/>_Objest : DirectoryObject
+    public class <xsl:value-of select="$DirectoryName"/>_Object : DirectoryObject
     {
-        public <xsl:value-of select="$DirectoryName"/>_Objest() : base(Config.Kernel, "<xsl:value-of select="Table"/>", <xsl:value-of select="$DirectoryName"/>_Const.TYPE,
+        public <xsl:value-of select="$DirectoryName"/>_Object() : base(Config.Kernel, "<xsl:value-of select="Table"/>", <xsl:value-of select="$DirectoryName"/>_Const.TYPE,
              <xsl:text>[</xsl:text>
              <xsl:for-each select="Fields/Field">
                <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
@@ -815,9 +815,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             return result;
         }
 
-        public async Task&lt;<xsl:value-of select="$DirectoryName"/>_Objest&gt; Copy(bool copyTableParts = false)
+        public async Task&lt;<xsl:value-of select="$DirectoryName"/>_Object&gt; Copy(bool copyTableParts = false)
         {
-            <xsl:value-of select="$DirectoryName"/>_Objest copy = new()
+            <xsl:value-of select="$DirectoryName"/>_Object copy = new()
             {
                 <xsl:for-each select="Fields/Field">
                     <xsl:value-of select="Name"/><xsl:text> = </xsl:text><xsl:value-of select="Name"/>
@@ -890,10 +890,10 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         public <xsl:value-of select="$DirectoryName"/>_Pointer(UniqueID uid) : base(Config.Kernel, "<xsl:value-of select="Table"/>", <xsl:value-of select="$DirectoryName"/>_Const.TYPE) =&gt; base.Init(uid);
         public <xsl:value-of select="$DirectoryName"/>_Pointer(UniqueID uid, Dictionary&lt;string, object&gt;? fields) : base(Config.Kernel, "<xsl:value-of select="Table"/>", <xsl:value-of select="$DirectoryName"/>_Const.TYPE) =&gt; base.Init(uid, fields);
         public <xsl:value-of select="$DirectoryName"/>_Pointer(UniqueID uid, Dictionary&lt;string, object&gt;? fields, object? name) : base(Config.Kernel, "<xsl:value-of select="Table"/>", <xsl:value-of select="$DirectoryName"/>_Const.TYPE) =&gt; base.Init(uid, fields, name?.ToString());
-        public async Task&lt;<xsl:value-of select="$DirectoryName"/>_Objest?&gt; GetDirectoryObject(bool readAllTablePart = false)
+        public async Task&lt;<xsl:value-of select="$DirectoryName"/>_Object?&gt; GetDirectoryObject(bool readAllTablePart = false)
         {
             if (this.IsEmpty()) return null;
-            <xsl:value-of select="$DirectoryName"/>_Objest obj = new();
+            <xsl:value-of select="$DirectoryName"/>_Object obj = new();
             return await obj.Read(base.UniqueID, readAllTablePart) ? obj : null;
         }
         public <xsl:value-of select="$DirectoryName"/>_Pointer Copy() =&gt; new(base.UniqueID, base.Fields, Name);
@@ -910,7 +910,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         public async Task SetDeletionLabel(bool label = true)
         {
             <xsl:if test="normalize-space(TriggerFunctions/SetDeletionLabel) != '' and TriggerFunctions/SetDeletionLabel[@Action = '1']">
-              <xsl:value-of select="$DirectoryName"/>_Objest? obj = await GetDirectoryObject();
+              <xsl:value-of select="$DirectoryName"/>_Object? obj = await GetDirectoryObject();
               if (obj != null) await <xsl:value-of select="$DirectoryName"/>_Triggers.<xsl:value-of select="TriggerFunctions/SetDeletionLabel"/>(obj, label);
             </xsl:if>
             await base.BaseDeletionLabel(label);
@@ -977,7 +977,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
     
     public class <xsl:value-of select="$TablePartFullName"/>_TablePart : DirectoryTablePart
     {
-        public <xsl:value-of select="$TablePartFullName"/>_TablePart(<xsl:value-of select="$DirectoryName"/>_Objest owner) : base(Config.Kernel, "<xsl:value-of select="Table"/>",
+        public <xsl:value-of select="$TablePartFullName"/>_TablePart(<xsl:value-of select="$DirectoryName"/>_Object owner) : base(Config.Kernel, "<xsl:value-of select="Table"/>",
              <xsl:text>[</xsl:text>
              <xsl:for-each select="Fields/Field">
                <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
@@ -994,7 +994,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         <xsl:for-each select="Fields/Field">
         public const string <xsl:value-of select="Name"/> = "<xsl:value-of select="NameInTable"/>";</xsl:for-each>
 
-        public <xsl:value-of select="$DirectoryName"/>_Objest Owner { get; private set; }
+        public <xsl:value-of select="$DirectoryName"/>_Object Owner { get; private set; }
         
         public List&lt;Record&gt; Records { get; set; } = [];
 
@@ -1217,10 +1217,11 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Пере
             return name switch
             {
                 <xsl:for-each select="Fields/Field">
-                  <xsl:text>"</xsl:text><xsl:value-of select="normalize-space(Name)"/>" =&gt; <xsl:value-of select="$EnumName"/>.<xsl:value-of select="Name"/>,
-                  <xsl:if test="normalize-space(Desc) != '' and normalize-space(Name) != normalize-space(Desc)">
-                      <xsl:text>"</xsl:text><xsl:value-of select="normalize-space(Desc)"/>" =&gt; <xsl:value-of select="$EnumName"/>.<xsl:value-of select="Name"/>,
-                  </xsl:if>
+                  <xsl:variable name="NameNormalize" select="normalize-space(Name)" />
+                  <xsl:variable name="DescNormalize" select="normalize-space(Desc)" />
+                  <xsl:text>"</xsl:text><xsl:value-of select="$NameNormalize"/><xsl:text>"</xsl:text> <xsl:if test="$DescNormalize != '' and $NameNormalize != $DescNormalize">
+                      <xsl:text> or "</xsl:text><xsl:value-of select="$DescNormalize"/><xsl:text>"</xsl:text>
+                  </xsl:if> =&gt; <xsl:value-of select="$EnumName"/>.<xsl:value-of select="Name"/>,
                 </xsl:for-each>
                 <xsl:text>_ =&gt; 0</xsl:text>
             };
@@ -1230,18 +1231,38 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Пере
         {
             return [
             <xsl:for-each select="Fields/Field">
-              <xsl:variable name="ReturnValue">
+              <xsl:variable name="NameNormalize" select="normalize-space(Name)" />
+              <xsl:variable name="DescNormalize">
                   <xsl:choose>
                       <xsl:when test="normalize-space(Desc) != ''">
                           <xsl:value-of select="normalize-space(Desc)"/>
                       </xsl:when>
                       <xsl:otherwise>
-                          <xsl:value-of select="normalize-space(Name)"/>
+                          <xsl:value-of select="$NameNormalize"/>
                       </xsl:otherwise>
                   </xsl:choose>
               </xsl:variable>
-              <xsl:text>new NameValue&lt;</xsl:text><xsl:value-of select="$EnumName"/>&gt;("<xsl:value-of select="$ReturnValue"/>", <xsl:value-of select="$EnumName"/>.<xsl:value-of select="Name"/>),
+              <xsl:text>new NameValue&lt;</xsl:text><xsl:value-of select="$EnumName"/>&gt;("<xsl:value-of select="$DescNormalize"/>", <xsl:value-of select="$EnumName"/>.<xsl:value-of select="$NameNormalize"/>),
             </xsl:for-each>];
+        }
+
+        public static Dictionary&lt;string, string&gt; <xsl:value-of select="$EnumName"/>_Dict()
+        {
+            return new() {
+            <xsl:for-each select="Fields/Field">
+              <xsl:variable name="NameNormalize" select="normalize-space(Name)" />
+              <xsl:variable name="DescNormalize">
+                  <xsl:choose>
+                      <xsl:when test="normalize-space(Desc) != ''">
+                          <xsl:value-of select="normalize-space(Desc)"/>
+                      </xsl:when>
+                      <xsl:otherwise>
+                          <xsl:value-of select="$NameNormalize"/>
+                      </xsl:otherwise>
+                  </xsl:choose>
+              </xsl:variable>
+              <xsl:text>{"</xsl:text><xsl:value-of select="$NameNormalize"/>", "<xsl:value-of select="$DescNormalize"/>"},
+            </xsl:for-each>};
         }
         #endregion
     </xsl:for-each>
@@ -1272,9 +1293,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
         public const string <xsl:value-of select="Name"/> = "<xsl:value-of select="NameInTable"/>";</xsl:for-each>
     }
 
-    public class <xsl:value-of select="$DocumentName"/>_Objest : DocumentObject
+    public class <xsl:value-of select="$DocumentName"/>_Object : DocumentObject
     {
-        public <xsl:value-of select="$DocumentName"/>_Objest() : base(Config.Kernel, "<xsl:value-of select="Table"/>", <xsl:value-of select="$DocumentName"/>_Const.TYPE,
+        public <xsl:value-of select="$DocumentName"/>_Object() : base(Config.Kernel, "<xsl:value-of select="Table"/>", <xsl:value-of select="$DocumentName"/>_Const.TYPE,
              <xsl:text>[</xsl:text>
              <xsl:for-each select="Fields/Field">
                <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
@@ -1391,9 +1412,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             await BaseSpend(false, DateTime.MinValue);
         }
 
-        public async Task&lt;<xsl:value-of select="$DocumentName"/>_Objest&gt; Copy(bool copyTableParts = false)
+        public async Task&lt;<xsl:value-of select="$DocumentName"/>_Object&gt; Copy(bool copyTableParts = false)
         {
-            <xsl:value-of select="$DocumentName"/>_Objest copy = new()
+            <xsl:value-of select="$DocumentName"/>_Object copy = new()
             {
                 <xsl:for-each select="Fields/Field">
                   <xsl:value-of select="Name"/><xsl:text> = </xsl:text><xsl:value-of select="Name"/>
@@ -1481,14 +1502,14 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
         public async Task&lt;(bool? Spend, DateTime SpendDate)&gt; GetSpend() =&gt; await base.BaseGetSpend();
         public async Task&lt;bool&gt; SpendTheDocument(DateTime spendDate)
         {
-            <xsl:value-of select="$DocumentName"/>_Objest? obj = await GetDocumentObject();
+            <xsl:value-of select="$DocumentName"/>_Object? obj = await GetDocumentObject();
             return obj != null &amp;&amp; await obj.SpendTheDocument(spendDate);
         }
         public async Task ClearSpendTheDocument()
         {
             <xsl:choose>
                 <xsl:when test="normalize-space(SpendFunctions/ClearSpend) != '' and SpendFunctions/ClearSpend[@Action = '1']">
-            <xsl:value-of select="$DocumentName"/>_Objest? obj = await GetDocumentObject();
+            <xsl:value-of select="$DocumentName"/>_Object? obj = await GetDocumentObject();
             if (obj != null) await obj.ClearSpendTheDocument();
                 </xsl:when>
                 <xsl:otherwise>
@@ -1504,7 +1525,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
           <xsl:choose>
             <xsl:when test="(normalize-space(TriggerFunctions/SetDeletionLabel) != '' and TriggerFunctions/SetDeletionLabel[@Action = '1']) or 
                             (normalize-space(SpendFunctions/ClearSpend) != '' and SpendFunctions/ClearSpend[@Action = '1'])">
-            <xsl:value-of select="$DocumentName"/>_Objest? obj = await GetDocumentObject();
+            <xsl:value-of select="$DocumentName"/>_Object? obj = await GetDocumentObject();
             if (obj == null) return;
             <xsl:if test="normalize-space(TriggerFunctions/SetDeletionLabel) != '' and TriggerFunctions/SetDeletionLabel[@Action = '1']">
                 await <xsl:value-of select="$DocumentName"/>_Triggers.<xsl:value-of select="TriggerFunctions/SetDeletionLabel"/>(obj, label);
@@ -1523,10 +1544,10 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
         }
         public <xsl:value-of select="$DocumentName"/>_Pointer Copy() =&gt; new(base.UniqueID, base.Fields, Name);
         public <xsl:value-of select="$DocumentName"/>_Pointer GetEmptyPointer() =&gt; new();
-        public async Task&lt;<xsl:value-of select="$DocumentName"/>_Objest?&gt; GetDocumentObject(bool readAllTablePart = false)
+        public async Task&lt;<xsl:value-of select="$DocumentName"/>_Object?&gt; GetDocumentObject(bool readAllTablePart = false)
         {
             if (this.IsEmpty()) return null;
-            <xsl:value-of select="$DocumentName"/>_Objest obj = new();
+            <xsl:value-of select="$DocumentName"/>_Object obj = new();
             return await obj.Read(base.UniqueID, readAllTablePart) ? obj : null;
         }
     }
@@ -1560,7 +1581,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
     
     public class <xsl:value-of select="$TablePartFullName"/>_TablePart : DocumentTablePart
     {
-        public <xsl:value-of select="$TablePartFullName"/>_TablePart(<xsl:value-of select="$DocumentName"/>_Objest owner) : base(Config.Kernel, "<xsl:value-of select="Table"/>",
+        public <xsl:value-of select="$TablePartFullName"/>_TablePart(<xsl:value-of select="$DocumentName"/>_Object owner) : base(Config.Kernel, "<xsl:value-of select="Table"/>",
              <xsl:text>[</xsl:text>
              <xsl:for-each select="Fields/Field">
                <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
@@ -1577,7 +1598,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
         <xsl:for-each select="Fields/Field">
         public const string <xsl:value-of select="Name"/> = "<xsl:value-of select="NameInTable"/>";</xsl:for-each>
 
-        public <xsl:value-of select="$DocumentName"/>_Objest Owner { get; private set; }
+        public <xsl:value-of select="$DocumentName"/>_Object Owner { get; private set; }
         
         public List&lt;Record&gt; Records { get; set; } = [];
 
@@ -1750,7 +1771,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
         {
         <xsl:choose>
           <xsl:when test="ExportXml = '1'">
-            <xsl:value-of select="$DocumentName"/>_Objest? obj = await <xsl:value-of select="$DocumentName"/>.GetDocumentObject(true);
+            <xsl:value-of select="$DocumentName"/>_Object? obj = await <xsl:value-of select="$DocumentName"/>.GetDocumentObject(true);
             if (obj == null) return;
 
             XmlWriter xmlWriter = XmlWriter.Create(pathToSave, new XmlWriterSettings() { Indent = true, Encoding = System.Text.Encoding.UTF8 });
@@ -2053,9 +2074,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
         }
     }
 
-    public class <xsl:value-of select="$RegisterName"/>_Objest : RegisterInformationObject
+    public class <xsl:value-of select="$RegisterName"/>_Object : RegisterInformationObject
     {
-		    public <xsl:value-of select="$RegisterName"/>_Objest() : base(Config.Kernel, "<xsl:value-of select="Table"/>",
+		    public <xsl:value-of select="$RegisterName"/>_Object() : base(Config.Kernel, "<xsl:value-of select="Table"/>",
              <xsl:text>[</xsl:text>
              <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
                <xsl:text>"</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
@@ -2105,9 +2126,9 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             return result;
         }
 
-        public <xsl:value-of select="$RegisterName"/>_Objest Copy()
+        public <xsl:value-of select="$RegisterName"/>_Object Copy()
         {
-            <xsl:value-of select="$RegisterName"/>_Objest copy = new <xsl:value-of select="$RegisterName"/>_Objest()
+            <xsl:value-of select="$RegisterName"/>_Object copy = new <xsl:value-of select="$RegisterName"/>_Object()
             {
                 Period = Period, /* Базове поле */
                 <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">

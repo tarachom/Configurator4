@@ -107,12 +107,12 @@ namespace <xsl:value-of select="$NameSpaceGeneratedCode"/>.<xsl:value-of select=
 
 static class <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_Triggers
 {
-    public static Task <xsl:value-of select="$TriggerFunctions/BeforeSave"/>(<xsl:value-of select="$OwnerName"/>_Objest <xsl:value-of select="$OwnerTypeName"/>Обєкт, <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_TablePart ТабличнаЧастина)
+    public static Task <xsl:value-of select="$TriggerFunctions/BeforeSave"/>(<xsl:value-of select="$OwnerName"/>_Object <xsl:value-of select="$OwnerTypeName"/>Обєкт, <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_TablePart ТабличнаЧастина)
     {
         return Task.CompletedTask;
     }
 
-    public static Task <xsl:value-of select="$TriggerFunctions/AfterSave"/>(<xsl:value-of select="$OwnerName"/>_Objest <xsl:value-of select="$OwnerTypeName"/>Обєкт, <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_TablePart ТабличнаЧастина)
+    public static Task <xsl:value-of select="$TriggerFunctions/AfterSave"/>(<xsl:value-of select="$OwnerName"/>_Object <xsl:value-of select="$OwnerTypeName"/>Обєкт, <xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_TablePart ТабличнаЧастина)
     {
         return Task.CompletedTask;
     }
@@ -240,7 +240,7 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
     <xsl:value-of select="$OwnerBlockName"/><xsl:value-of select="$OwnerName"/>_<xsl:value-of select="$TablePartName"/>_TablePart Таблиця { get; set; } = new();
         </xsl:when>
         <xsl:otherwise>
-    public <xsl:value-of select="$OwnerName"/>_Objest? ЕлементВласник { get; set; }
+    public <xsl:value-of select="$OwnerName"/>_Object? ЕлементВласник { get; set; }
         </xsl:otherwise>
     </xsl:choose>
     
@@ -291,10 +291,11 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
                     <xsl:when test="Type = 'numeric' and ReadOnly = '0'">NumericTablePartCell.New()</xsl:when>
                     <xsl:when test="Type = 'boolean'">CheckTablePartCell.New()</xsl:when>
                     <xsl:when test="Type = 'pointer'"><xsl:value-of select="substring-after(Pointer, '.')"/>_PointerTablePartCell.New()</xsl:when>
-                    <xsl:when test="Type = 'enum'">ComboTextTablePartCell.New();
+                    <xsl:when test="Type = 'enum'">DropDownTablePartCell.NewWithValues(ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_Dict())</xsl:when>
+                <!--<xsl:when test="Type = 'enum'">ComboTextTablePartCell.New();
                 foreach (var field in ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_List())
                     cell.Combo.Append(field.Value.ToString(), field.Name);
-                cell.Combo.AddController(FunctionForComboBox.DisableScrolling())</xsl:when>
+                cell.Combo.AddController(FunctionForComboBox.DisableScrolling())</xsl:when>-->
                     <xsl:when test="Type = 'date' or Type = 'datetime'">DateTimeTablePartCell.New()</xsl:when>
                     <xsl:when test="Type = 'time'">TimeTablePartCell.New()</xsl:when>
                     <xsl:when test="Type = 'composite_pointer'">CompositePointerControlTablePartCell.New()</xsl:when>
@@ -325,7 +326,8 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
                     <xsl:when test="Type = 'numeric'">NumericTablePartCell</xsl:when>
                     <xsl:when test="Type = 'boolean'">CheckTablePartCell</xsl:when>
                     <xsl:when test="Type = 'pointer'"><xsl:value-of select="substring-after(Pointer, '.')"/>_PointerTablePartCell</xsl:when>
-                    <xsl:when test="Type = 'enum'">ComboTextTablePartCell</xsl:when>
+                    <xsl:when test="Type = 'enum'">DropDownTablePartCell</xsl:when>
+                <!--<xsl:when test="Type = 'enum'">ComboTextTablePartCell</xsl:when>-->
                     <xsl:when test="Type = 'date' or Type = 'datetime'">DateTimeTablePartCell</xsl:when>
                     <xsl:when test="Type = 'time'">TimeTablePartCell</xsl:when>
                     <xsl:when test="Type = 'composite_pointer'">CompositePointerControlTablePartCell</xsl:when>
@@ -352,7 +354,7 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
                 (row.Сhanged_<xsl:value-of select="Name"/> = () =&gt; cell.Pointer = row.<xsl:value-of select="Name"/>).Invoke();
                     </xsl:when>
                     <xsl:when test="Type = 'enum'">
-                cell.OnСhanged = () =&gt; row.<xsl:value-of select="Name"/> = ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_FindByName(cell.Combo.ActiveId);
+                cell.OnСhanged = () =&gt; row.<xsl:value-of select="Name"/> = ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_FindByName(cell.Value);
                 (row.Сhanged_<xsl:value-of select="Name"/> = () =&gt; cell.Value = row.<xsl:value-of select="Name"/>.ToString()).Invoke();
                     </xsl:when>
                     <xsl:when test="Type = 'date' or Type = 'datetime' or Type = 'time'">

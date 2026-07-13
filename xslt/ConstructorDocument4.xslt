@@ -69,7 +69,7 @@ namespace <xsl:value-of select="$NameSpaceGeneratedCode"/>.Документи;
 
 static class <xsl:value-of select="$DocumentName"/>_Triggers
 {
-    public static <xsl:if test="$DocumentAutomaticNumeration = '1'">async</xsl:if> Task <xsl:value-of select="$TriggerFunctions/New"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
+    public static <xsl:if test="$DocumentAutomaticNumeration = '1'">async</xsl:if> Task <xsl:value-of select="$TriggerFunctions/New"/>(<xsl:value-of select="$DocumentName"/>_Object ДокументОбєкт)
     {
         ДокументОбєкт.ДатаДок = DateTime.Now;
         <xsl:choose>
@@ -83,29 +83,29 @@ static class <xsl:value-of select="$DocumentName"/>_Triggers
         </xsl:choose>        
     }
 
-    public static Task <xsl:value-of select="$TriggerFunctions/Copying"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт, <xsl:value-of select="$DocumentName"/>_Objest Основа)
+    public static Task <xsl:value-of select="$TriggerFunctions/Copying"/>(<xsl:value-of select="$DocumentName"/>_Object ДокументОбєкт, <xsl:value-of select="$DocumentName"/>_Object Основа)
     {
         <xsl:if test="$Fields[Name = 'Назва']">ДокументОбєкт.Назва += " - Копія";</xsl:if>
         return Task.CompletedTask;
     }
 
-    public static Task <xsl:value-of select="$TriggerFunctions/BeforeSave"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
+    public static Task <xsl:value-of select="$TriggerFunctions/BeforeSave"/>(<xsl:value-of select="$DocumentName"/>_Object ДокументОбєкт)
     {
         ДокументОбєкт.Назва = $"{<xsl:value-of select="$DocumentName"/>_Const.FULLNAME} №{ДокументОбєкт.НомерДок} від {ДокументОбєкт.ДатаДок.ToString("dd.MM.yyyy")}";
         return Task.CompletedTask;
     }
 
-    public static Task <xsl:value-of select="$TriggerFunctions/AfterSave"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
+    public static Task <xsl:value-of select="$TriggerFunctions/AfterSave"/>(<xsl:value-of select="$DocumentName"/>_Object ДокументОбєкт)
     {
         return Task.CompletedTask;
     }
 
-    public static Task <xsl:value-of select="$TriggerFunctions/SetDeletionLabel"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт, bool label)
+    public static Task <xsl:value-of select="$TriggerFunctions/SetDeletionLabel"/>(<xsl:value-of select="$DocumentName"/>_Object ДокументОбєкт, bool label)
     {
         return Task.CompletedTask;
     }
 
-    public static Task <xsl:value-of select="$TriggerFunctions/BeforeDelete"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
+    public static Task <xsl:value-of select="$TriggerFunctions/BeforeDelete"/>(<xsl:value-of select="$DocumentName"/>_Object ДокументОбєкт)
     {
         return Task.CompletedTask;
     }
@@ -142,7 +142,7 @@ namespace <xsl:value-of select="$NameSpaceGeneratedCode"/>.Документи;
 
 static class <xsl:value-of select="$DocumentName"/>_SpendTheDocument
 {
-    public static async Task&lt;bool&gt; <xsl:value-of select="$SpendFunctions/Spend"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
+    public static async Task&lt;bool&gt; <xsl:value-of select="$SpendFunctions/Spend"/>(<xsl:value-of select="$DocumentName"/>_Object ДокументОбєкт)
     {
         try
         {
@@ -158,7 +158,7 @@ static class <xsl:value-of select="$DocumentName"/>_SpendTheDocument
         }
     }
 
-    public static Task <xsl:value-of select="$SpendFunctions/ClearSpend"/>(<xsl:value-of select="$DocumentName"/>_Objest ДокументОбєкт)
+    public static Task <xsl:value-of select="$SpendFunctions/ClearSpend"/>(<xsl:value-of select="$DocumentName"/>_Object ДокументОбєкт)
     {
         return Task.CompletedTask;
     }
@@ -261,10 +261,10 @@ static class <xsl:value-of select="$DocumentName"/>_Функції
 
     public static async Task&lt;UniqueID?&gt; Copy(UniqueID uniqueID)
     {
-        <xsl:value-of select="$DocumentName"/>_Objest Обєкт = new();
+        <xsl:value-of select="$DocumentName"/>_Object Обєкт = new();
         if (await Обєкт.Read(uniqueID))
         {
-            <xsl:value-of select="$DocumentName"/>_Objest Новий = await Обєкт.Copy(true);
+            <xsl:value-of select="$DocumentName"/>_Object Новий = await Обєкт.Copy(true);
             await Новий.Save();
             <xsl:for-each select="$TabularParts">
                 await Новий.<xsl:value-of select="Name"/>_TablePart.Save(false); // Таблична частина "<xsl:value-of select="Name"/>"
@@ -280,7 +280,7 @@ static class <xsl:value-of select="$DocumentName"/>_Функції
 
     public static async Task SpendTheDocument(UniqueID uniqueID, bool spendDoc)
     {
-        <xsl:value-of select="$DocumentName"/>_Objest? Обєкт = await new <xsl:value-of select="$DocumentName"/>_Pointer(uniqueID).GetDocumentObject(true);
+        <xsl:value-of select="$DocumentName"/>_Object? Обєкт = await new <xsl:value-of select="$DocumentName"/>_Pointer(uniqueID).GetDocumentObject(true);
         if (Обєкт == null) return;
 
         if (spendDoc)
@@ -327,7 +327,7 @@ namespace <xsl:value-of select="$NameSpace"/>;
 [GObject.Subclass&lt;DocumentFormElement&gt;("<xsl:value-of select="$SubclassName"/>")]
 partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFormElement
 {
-    public <xsl:value-of select="$DocumentName"/>_Objest Елемент { get; init; } = new();
+    public <xsl:value-of select="$DocumentName"/>_Object Елемент { get; init; } = new();
 
     #region Fields
     <!-- Крім поля Назва -->
@@ -424,17 +424,16 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
 
         CreateDocName(<xsl:value-of select="$DocumentName"/>_Const.FULLNAME, НомерДок, ДатаДок);
         <xsl:if test="$FieldsTL[Name = 'Коментар']">
-        CreateField(HBoxComment, "<xsl:value-of select="$FieldsTL[Name = 'Коментар']/Caption"/>:", Коментар);
+        CreateField(Interface.CommentBox, "<xsl:value-of select="$FieldsTL[Name = 'Коментар']/Caption"/>:", Коментар);
         </xsl:if>
 
         <xsl:if test="count($TabularPartsTL) != 0">
             <xsl:for-each select="$TabularPartsTL">
             // Таблична частина "<xsl:value-of select="Name"/>"
-            <xsl:value-of select="Name"/>.WidthRequest = 500;
             <xsl:value-of select="Name"/>.HeightRequest = 300;
-            NotebookTablePart.InsertPage(<xsl:value-of select="Name"/>, Label.New("<xsl:value-of select="Caption"/>"), <xsl:value-of select="position() - 1"/>);
+            Interface.Notebook.InsertPage(<xsl:value-of select="Name"/>, Label.New("<xsl:value-of select="Caption"/>"), <xsl:value-of select="position() - 1"/>);
             </xsl:for-each>
-            NotebookTablePart.SetCurrentPage(0);
+            Interface.Notebook.SetCurrentPage(0);
         </xsl:if>
 
         <!-- Крім поля Назва -->
@@ -500,17 +499,31 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
         return element;
     }
 
-    protected override void CreateTopStart(Box vBox)
+    #region Interface
+
+    FunctionForInterfaces.DocumentElement Interface = FunctionForInterfaces.ForDocument();
+
+    protected override void BuildInterface()
+    {
+        Append(Interface.MainBox);
+
+        CreateTopStart(Interface.TopStartBox);
+        CreateTopEnd(Interface.TopEndBox);
+        CreateBottomStart(Interface.BottomStartBox);
+        CreateBottomEnd(Interface.BottomEndBox);
+    }
+
+    void CreateTopStart(Box vBox)
     {
         
     }
 
-    protected override void CreateTopEnd(Box vBox)
+    void CreateTopEnd(Box vBox)
     {
         
     }
 
-    protected override void CreateBottomStart(Box vBox)
+    void CreateBottomStart(Box vBox)
     {
         <!-- Крім полів які зразу добавляються в шапку НомерДок, ДатаДок, Коментар -->
         <!-- та скритого поля Назва яке формується перед збереженням -->
@@ -552,10 +565,12 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
         </xsl:for-each>
     }
 
-    protected override void CreateBottomEnd(Box vBox)
+    void CreateBottomEnd(Box vBox)
     {
         
     }
+
+    #endregion
 
     #region Присвоєння / зчитування значень
 
@@ -961,7 +976,7 @@ public partial class <xsl:value-of select="$DocumentName"/>_PointerControl : Poi
     {
         WidthPresentation = 300;
         Caption = $"{<xsl:value-of select="$DocumentName"/>_Const.FULLNAME}:";
-        PointerChanged += async (_, pointer) =&gt; Presentation = pointer != null ? await pointer.GetPresentation() : "";
+        PointerChanged += async (_, pointer) =&gt; Presentation = !pointer.IsEmpty() ? await pointer.GetPresentation() : "";
     }
 
     public static <xsl:value-of select="$DocumentName"/>_PointerControl New() =&gt; NewWithProperties([]);
@@ -1048,7 +1063,7 @@ public partial class <xsl:value-of select="$DocumentName"/>_PointerTablePartCell
         }
     }
 
-    public async Task GetPresentation() =&gt; Presentation = pointer != null ? await pointer.GetPresentation() : "";
+    public async Task GetPresentation() =&gt; Presentation = !pointer.IsEmpty() ? await pointer.GetPresentation() : "";
 
     async Task PointerChange(UniqueID? p)
     {
