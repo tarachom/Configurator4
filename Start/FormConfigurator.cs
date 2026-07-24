@@ -1,40 +1,45 @@
 
 using Gtk;
 using AccountingSoftware;
+using InterfaceGtkLib;
 
 namespace Configurator;
 
 [GObject.Subclass<InterfaceGtk4.FormConfigurator>]
 public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
 {
+    protected override Kernel Kernel { get; set; } = Program.Kernel;
+
     /// <summary>
     /// Викликається із конфігуратора при запуску
     /// </summary>
-    public static FormConfigurator NewConfiguratorStart()
+    public static FormConfigurator NewConfiguratorStart(ConfigurationParam? openConfigurationParam)
     {
-        FormConfigurator window = NewWithProperties([]);
-        window.Application = Program.BasicApp;
-        window.Init(Program.Kernel);
+        FormConfigurator form = NewWithProperties([]);
+        form.Application = Program.BasicApp;
+        form.OpenConfigurationParam = openConfigurationParam;
 
-        Program.BasicForm = window;
+        form.SetValue();
 
-        return window;
+        return form;
     }
 
     /// <summary>
     /// Викликається із зовнішньої програми при запуску конфігуратора
     /// </summary>
-    public static FormConfigurator NewProgramStart(Application app, Kernel kernel)
+    public static FormConfigurator NewProgramStart(Application app, Kernel kernel, ConfigurationParam? openConfigurationParam)
     {
-        FormConfigurator window = NewWithProperties([]);
-        window.Application = app;
-        window.Init(kernel);
+        FormConfigurator form = NewWithProperties([]);
+        form.Application = app;
+        form.OpenConfigurationParam = openConfigurationParam;
+
+        form.SetValue();
 
         Program.BasicApp = app;
-        Program.BasicForm = window;
+        Program.BasicForm = form;
         Program.Kernel = kernel;
 
-        return window;
+        return form;
     }
 
     public async Task OpenFirstPages()

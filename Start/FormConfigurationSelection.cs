@@ -32,21 +32,23 @@ namespace Configurator;
 [GObject.Subclass<InterfaceGtk4.FormConfigurationSelection>]
 partial class FormConfigurationSelection : InterfaceGtk4.FormConfigurationSelection
 {
+    public override TypeForm TypeOpenForm { get; set; } = TypeForm.Configurator;
+
     public static new FormConfigurationSelection New()
     {
-        FormConfigurationSelection window = NewWithProperties([]);
-        window.Application = Program.BasicApp;
-        window.Init(null, Program.Kernel, TypeForm.Configurator);
+        FormConfigurationSelection form = NewWithProperties([]);
+        form.Application = Program.BasicApp;
+        form.ConfiguratorKernel = Program.Kernel;
 
-        return window;
+        return form;
     }
 
     public override async Task<bool> OpenConfigurator(ConfigurationParam? openConfigurationParam)
     {
-        FormConfigurator form = FormConfigurator.NewConfiguratorStart();
-        form.OpenConfigurationParam = openConfigurationParam;
-        form.SetStatusBar();
+        FormConfigurator form = FormConfigurator.NewConfiguratorStart(openConfigurationParam);
         form.Show();
+
+        Program.BasicForm = form;
 
         //Відкрити перші сторінки
         await form.OpenFirstPages();
