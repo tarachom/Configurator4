@@ -31,6 +31,7 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
     {
         FormConfigurator form = NewWithProperties([]);
         form.Application = app;
+        form.Kernel = kernel;
         form.OpenConfigurationParam = openConfigurationParam;
 
         form.SetValue();
