@@ -24,4 +24,11 @@
     <Content Include="StyleCss/*.css" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="**\*.xml" />
+    <EmbeddedResource Include="**\*.xml">
+      <LogicalName>%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

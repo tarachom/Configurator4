@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="Configurator.PageDirectory" parent="InterfaceGtk4.FormPageConfigurator">
+        <property name="orientation">horizontal</property>
+        <property name="spacing">5</property>
+        <property name="margin-start">2</property>
+        <property name="margin-end">2</property>
+        <property name="margin-top">2</property>
+        <property name="margin-bottom">2</property>
+        
+        <child>
+            <object class="GtkImage" id="item_image">
+                <property name="icon-name">image-x-generic-symbolic</property>
+                <property name="pixel-size">20</property>
+            </object>
+        </child>
+
+        <child>
+            <object class="GtkLabel" id="item_label">
+                <property name="hexpand">true</property>
+                <property name="halign">start</property>
+            </object>
+        </child>
+
+    </template>
+</interface>

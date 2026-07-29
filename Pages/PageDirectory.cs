@@ -1,6 +1,6 @@
 /*
 
-Стартова сторінка
+Стартова довідника
 
 */
 
@@ -10,7 +10,7 @@ using AccountingSoftware;
 
 namespace Configurator;
 
-[GObject.Subclass<FormPageConfigurator>]
+[GObject.Subclass<FormPageConfigurator>(nameof(PageDirectory))]
 partial class PageDirectory : FormPageConfigurator
 {
     Configuration Conf = Program.Kernel.Conf;
@@ -19,12 +19,15 @@ partial class PageDirectory : FormPageConfigurator
     Entry entryName = Entry.New();
     Entry entryFullName = Entry.New();
     Entry entryTable = Entry.New();
+    TextView textViewDesc = TextView.New();
 
     partial void Initialize()
     {
         entryName.WidthRequest = 500;
         entryFullName.WidthRequest = 500;
         entryTable.WidthRequest = 500;
+        
+        textViewDesc.WrapMode = WrapMode.Word;
     }
 
     public static PageDirectory New()
@@ -45,6 +48,9 @@ partial class PageDirectory : FormPageConfigurator
 
         // Таблиця
         CreateField(vBox, "Таблиця", entryTable);
+
+        // Опис
+        CreateFieldView(vBox, "Опис", textViewDesc, 500, 100);
     }
 
     protected override void CreateEnd(Box vBox)
