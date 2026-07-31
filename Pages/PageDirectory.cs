@@ -91,7 +91,7 @@ partial class PageDirectory : FormPageConfigurator
                 ConfDirectory = directory;
             else
             {
-                Message.Error(BasicApp, BasicForm, "Помилка", $"Не знайдено довідник {ConfName} в колекції");
+                Message.Error(BasicForm, "Помилка", $"Не знайдено довідник {ConfName} в колекції");
                 return;
             }
         }

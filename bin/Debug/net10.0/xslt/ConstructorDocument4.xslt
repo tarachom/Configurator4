@@ -234,7 +234,7 @@ static class <xsl:value-of select="$DocumentName"/>_Функції
             await page.Елемент.New();
         else if (uniqueID == null || !await page.Елемент.Read(uniqueID))
         {
-            Message.Error(Program.BasicApp, Program.BasicForm, "Не вдалось прочитати!");
+            Message.Error(Program.BasicForm, "Не вдалось прочитати!");
             return;
         }
 
@@ -273,7 +273,7 @@ static class <xsl:value-of select="$DocumentName"/>_Функції
         }
         else
         {
-            Message.Error(Program.BasicApp, Program.BasicForm, "Не вдалось прочитати!");
+            Message.Error(Program.BasicForm, "Не вдалось прочитати!");
             return null;
         }
     }
@@ -430,6 +430,7 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
         <xsl:if test="count($TabularPartsTL) != 0">
             <xsl:for-each select="$TabularPartsTL">
             // Таблична частина "<xsl:value-of select="Name"/>"
+            <xsl:value-of select="Name"/>.ЕлементВласник = Елемент;
             <xsl:value-of select="Name"/>.HeightRequest = 300;
             Interface.Notebook.InsertPage(<xsl:value-of select="Name"/>, Label.New("<xsl:value-of select="Caption"/>"), <xsl:value-of select="position() - 1"/>);
             </xsl:for-each>
@@ -611,9 +612,7 @@ partial class <xsl:value-of select="$DocumentName"/>_Елемент : DocumentFo
         </xsl:for-each>
 
         <xsl:for-each select="$TabularPartsTL">
-            // Таблична частина "<xsl:value-of select="Name"/>" 
-            <xsl:value-of select="Name"/>.ЕлементВласник = Елемент; 
-            <xsl:text>await </xsl:text><xsl:value-of select="Name"/>.LoadRecords();
+            <xsl:text>await </xsl:text><xsl:value-of select="Name"/>.LoadRecords();  // Таблична частина "<xsl:value-of select="Name"/>" 
         </xsl:for-each>
     }
 
