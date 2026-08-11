@@ -13,21 +13,25 @@ namespace Configurator;
 [GObject.Subclass<FormPageConfigurator>(nameof(PageDirectory))]
 partial class PageDirectory : FormPageConfigurator
 {
-    Configuration Conf = Program.Kernel.Conf;
-    ConfigurationDirectories ConfDirectory = new();
+    public override Configuration Conf { get; } = Program.Kernel.Conf;
+    public ConfigurationDirectories ConfDirectory { get; set; } = new();
 
     Entry entryName = Entry.New();
     Entry entryFullName = Entry.New();
     Entry entryTable = Entry.New();
     TextView textViewDesc = TextView.New();
+    Triggers triggers = Triggers.New();
+    DirectoryHierarchy hierarchy = DirectoryHierarchy.New();
 
     partial void Initialize()
     {
         entryName.WidthRequest = 500;
         entryFullName.WidthRequest = 500;
         entryTable.WidthRequest = 500;
-        
+
         textViewDesc.WrapMode = WrapMode.Word;
+
+
     }
 
     public static PageDirectory New()
@@ -51,6 +55,12 @@ partial class PageDirectory : FormPageConfigurator
 
         // Опис
         CreateFieldView(vBox, "Опис", textViewDesc, 500, 100);
+
+        //Ієрархія
+        vBox.Append(hierarchy);
+
+        //Тригери
+        vBox.Append(triggers);
     }
 
     protected override void CreateEnd(Box vBox)
@@ -62,43 +72,48 @@ partial class PageDirectory : FormPageConfigurator
     {
         if (IsNew)
         {
-            entryTable.SetText(await Configuration.GetNewUnigueTableName(Program.Kernel));
+            ConfDirectory.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
             //Заповнення полями
-            string nameInTable_Code = Configuration.GetNewUnigueColumnName(Program.Kernel, entryTable.GetText(), ConfDirectory.Fields);
-            ConfDirectory.AppendField(new ConfigurationField("Код", "Код", nameInTable_Code, "string", "", "Код", false, true, false, true));
+            {
+                //Код
+                {
+                    string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfDirectory.Table, ConfDirectory.Fields);
+                    ConfDirectory.AppendField(new ConfigurationField("Код", "Код", nameInTable, "string", "", "Код", false, true, false, true));
+                }
 
-            string nameInTable_Name = Configuration.GetNewUnigueColumnName(Program.Kernel, entryTable.GetText(), ConfDirectory.Fields);
-            ConfDirectory.AppendField(new ConfigurationField("Назва", "Назва", nameInTable_Name, "string", "", "Назва", true, true, false, true));
+                //Назва
+                {
+                    string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfDirectory.Table, ConfDirectory.Fields);
+                    ConfDirectory.AppendField(new ConfigurationField("Назва", "Назва", nameInTable, "string", "", "Назва", true, true, false, true));
+                }
+            }
 
-            //Заповнення списку
-            ConfDirectory.AppendTableList(new ConfigurationTabularList("Записи"));
+            //Табличний список
+            {
+                ConfigurationTabularList list = new("Записи");
+                int sortNum = 0;
 
-            int sortNum = 0;
+                //Заповнення полями
+                foreach (var item in ConfDirectory.Fields.Values)
+                    list.AppendField(new(item.Name, item.Name, 0, ++sortNum, item.Name == "Назва"));
 
-            //Заповнення полями
-            foreach (var item in ConfDirectory.Fields.Values)
-                ConfDirectory.TabularList["Записи"].AppendField(
-                    new ConfigurationTabularListField(item.Name, item.Name, 0, ++sortNum, item.Name == "Назва"));
+                //Заповнення списку
+                ConfDirectory.AppendTableList(list);
+            }
 
             //Тригери
             ConfDirectory.TriggerFunctions.NewAction = true;
             ConfDirectory.TriggerFunctions.CopyingAction = true;
         }
-        else
-        {
-            if (Conf.Directories.TryGetValue(ConfName, out var directory))
-                ConfDirectory = directory;
-            else
-            {
-                Message.Error(BasicForm, "Помилка", $"Не знайдено довідник {ConfName} в колекції");
-                return;
-            }
-        }
 
         entryName.SetText(ConfDirectory.Name);
         entryFullName.SetText(ConfDirectory.FullName);
         entryTable.SetText(ConfDirectory.Table);
+        textViewDesc.Buffer?.Text = ConfDirectory.Desc;
+
+        triggers.SetValue(ConfDirectory.TriggerFunctions);
+        hierarchy.SetValue(ConfDirectory);
     }
 
     protected override async Task GetValue()
@@ -106,11 +121,29 @@ partial class PageDirectory : FormPageConfigurator
         ConfDirectory.Name = entryName.GetText();
         ConfDirectory.FullName = entryFullName.GetText();
         ConfDirectory.Table = entryTable.GetText();
+        ConfDirectory.Desc = textViewDesc.Buffer?.Text ?? "";
+
+        ConfDirectory.TriggerFunctions = triggers.GetValue();
+        hierarchy.GetValue();
     }
 
     protected override async Task<bool> Save()
     {
-        Console.WriteLine("Save");
-        return await Task.FromResult(true); ;
+        (bool result, string name) = IsValid(entryName.GetText(), ConfDirectory.Name, [.. Conf.Directories.Keys]);
+        entryName.SetText(name);
+
+        if (result)
+        {
+            if (!IsNew)
+                Conf.Directories.Remove(ConfDirectory.Name);
+        }
+        else
+            return false;
+
+        await GetValue();
+        Conf.AppendDirectory(ConfDirectory);
+        IsNew = false;
+
+        return true;
     }
 }

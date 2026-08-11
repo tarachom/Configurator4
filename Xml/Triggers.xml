@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="Triggers" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">10</property>
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+
+        <!-- Заголовок -->
+        <child>
+            <object class="GtkLabel">
+                <property name="label">Тригери</property>
+                <property name="halign">center</property>
+            </object>
+        </child>
+
+        <!-- Таблиця з елементами -->
+        <child>
+            <object class="GtkGrid">
+                <property name="column-spacing">10</property>
+                <property name="row-spacing">10</property>
+
+                <!-- Рядок 0: Новий -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Новий:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">0</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkEntry" id="entry_new">
+                        <property name="text">New</property>
+                        <property name="hexpand">true</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">0</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkSwitch" id="switch_new">
+                        <property name="active">true</property>
+                        <property name="valign">center</property>
+                        <layout>
+                            <property name="column">2</property>
+                            <property name="row">0</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- Рядок 1: Копіювання -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Копіювання:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">1</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkEntry" id="entry_copying">
+                        <property name="text">Copying</property>
+                        <property name="hexpand">true</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">1</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkSwitch" id="switch_copying">
+                        <property name="active">true</property>
+                        <property name="valign">center</property>
+                        <layout>
+                            <property name="column">2</property>
+                            <property name="row">1</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- Рядок 2: Перед записом -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Перед записом:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">2</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkEntry" id="entry_before_save">
+                        <property name="text">BeforeSave</property>
+                        <property name="hexpand">true</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">2</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkSwitch" id="switch_before_save">
+                        <property name="active">true</property>
+                        <property name="valign">center</property>
+                        <layout>
+                            <property name="column">2</property>
+                            <property name="row">2</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- Рядок 3: Після запису -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Після запису:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">3</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkEntry" id="entry_after_save">
+                        <property name="text">AfterSave</property>
+                        <property name="hexpand">true</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">3</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkSwitch" id="switch_after_save">
+                        <property name="active">true</property>
+                        <property name="valign">center</property>
+                        <layout>
+                            <property name="column">2</property>
+                            <property name="row">3</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- Рядок 4: Встановлення мітки -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Встановлення мітки:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">4</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkEntry" id="entry_set_deletion_label">
+                        <property name="text">SetDeletionLabel</property>
+                        <property name="hexpand">true</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">4</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkSwitch" id="switch_set_deletion_label">
+                        <property name="active">true</property>
+                        <property name="valign">center</property>
+                        <layout>
+                            <property name="column">2</property>
+                            <property name="row">4</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- Рядок 5: Перед видаленням -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Перед видаленням:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">5</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkEntry" id="entry_before_delete">
+                        <property name="text">BeforeDelete</property>
+                        <property name="hexpand">true</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">5</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkSwitch" id="switch_before_delete">
+                        <property name="active">true</property>
+                        <property name="valign">center</property>
+                        <layout>
+                            <property name="column">2</property>
+                            <property name="row">5</property>
+                        </layout>
+                    </object>
+                </child>
+
+            </object>
+        </child>
+
+    </template>
+</interface>

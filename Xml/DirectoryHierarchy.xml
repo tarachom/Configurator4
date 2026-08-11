@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="DirectoryHierarchy" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">10</property>
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+
+        <!-- Заголовок -->
+        <child>
+            <object class="GtkLabel">
+                <property name="label">Ієрархія</property>
+                <property name="halign">center</property>
+            </object>
+        </child>
+
+        <!-- Таблиця (GtkGrid) -->
+        <child>
+            <object class="GtkGrid" id="grid_hierarchy">
+                <property name="column-spacing">8</property>
+                <property name="row-spacing">10</property>
+                <property name="halign">end</property>
+
+                <!-- Рядок 0: Тип довідника -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Тип довідника:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">0</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkDropDown" id="dropdown_directory_type">
+                        <property name="model">
+                            <object class="GtkStringList">
+                                <items>
+                                    <item>Звичайний у формі таблиці</item>
+                                    <item>Ієрархічний у формі дерева</item>
+                                    <item>Ієрархія в окремому довіднику</item>
+                                </items>
+                            </object>
+                        </property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">0</property>
+                            <property name="column-span">3</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- Рядок 1: Тип вмісту -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Тип вмісту:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">1</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkDropDown" id="dropdown_allowed_content">
+                        <property name="model">
+                            <object class="GtkStringList">
+                                <items>
+                                    <item>Папки</item>
+                                    <item>Елементи</item>
+                                    <item>Папки та елементи</item>
+                                </items>
+                            </object>
+                        </property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">1</property>
+                            <property name="column-span">3</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- Рядок 2: Поле Родич | Поле ЦеПапка -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="use-markup">true</property>
+                        <property name="label">Поле &lt;b&gt;Родич&lt;/b&gt;:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">2</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkDropDown" id="dropdown_parent_field">
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">2</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkLabel">
+                        <property name="use-markup">true</property>
+                        <property name="label">Поле &lt;b&gt;ЦеПапка&lt;/b&gt;:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">2</property>
+                            <property name="row">2</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkDropDown" id="dropdown_is_folder_field">
+                        <layout>
+                            <property name="column">3</property>
+                            <property name="row">2</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- Рядок 3: Довідник для ієрархії -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Довідник для ієрархії:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">3</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkDropDown" id="dropdown_hierarchy_directory">
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">3</property>
+                            <property name="column-span">3</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- Рядок 4: Кнопка Створити -->
+                <child>
+                    <object class="GtkButton" id="button_create">
+                        <property name="label">Створити</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">4</property>
+                            <property name="column-span">4</property>
+                        </layout>
+                    </object>
+                </child>
+
+            </object>
+        </child>
+    </template>
+</interface>

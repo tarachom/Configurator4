@@ -2,6 +2,7 @@
 using Gtk;
 using AccountingSoftware;
 using InterfaceGtkLib;
+using InterfaceGtk4;
 
 namespace Configurator;
 
@@ -63,13 +64,21 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
 
     protected override async Task PageDirectory(string name, bool isNew = false)
     {
+        ConfigurationDirectories? directory = null;
+        if (!isNew && !Kernel.Conf.Directories.TryGetValue(name, out directory))
+        {
+            Message.Error(Program.BasicForm, "Помилка", $"Не знайдено довідник '{name}' в колекції");
+            return;
+        }
+
         PageDirectory page = Configurator.PageDirectory.New();
         page.IsNew = isNew;
-        page.ConfName = name;
         page.Caption = $"Довідник: {(isNew ? "*" : name)}";
 
-        NotebookFunc?.CreatePage(page.Caption, page);
+        if (!isNew && directory != null)
+            page.ConfDirectory = directory;
 
+        NotebookFunc?.CreatePage(page.Caption, page);
         await page.SetValue();
     }
 
