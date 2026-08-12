@@ -19,7 +19,7 @@ public partial class DirectoryHierarchy
 
     ConfigurationDirectories.TypeDirectories TypeDirectory = ConfigurationDirectories.TypeDirectories.Normal;
     ConfigurationDirectories.HierarchicalContentType AllowedContent = ConfigurationDirectories.HierarchicalContentType.FoldersAndElements;
-    string ParentField, IsFolderField, PointerFolders = "";
+    string ParentField = "", IsFolderField = "", PointerFolders = "";
 
     public static DirectoryHierarchy New()
     {

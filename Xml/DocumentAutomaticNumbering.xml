@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-    <template class="AutomaticNumbering" parent="GtkBox">
+    <template class="DocumentAutomaticNumbering" parent="GtkBox">
         <property name="orientation">vertical</property>
         <property name="spacing">10</property>
         <property name="margin-start">5</property>
@@ -10,7 +10,7 @@
 
         <child>
             <object class="GtkExpander">
-                <property name="label">Нумерація елементів</property>
+                <property name="label">Нумерація</property>
                 <property name="expanded">false</property>
                 
                  <child>
@@ -65,7 +65,7 @@
                                         <property name="wrap">true</property>
                                         <property name="halign">center</property>
                                         <property name="hexpand">true</property>
-                                        <property name="label">Для автоматичної нумерації використовується константа в блоці &lt;b&gt;НумераціяДовідників&lt;/b&gt;. Назва константи - це назва довідника.</property>
+                                        <property name="label">Для автоматичної нумерації використовується константа в блоці &lt;b&gt;НумераціяДокументів&lt;/b&gt;. Назва константи - це назва документу.</property>
                                     </object>
                                 </child>
 

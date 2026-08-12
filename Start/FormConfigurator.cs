@@ -82,6 +82,26 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
         await page.SetValue();
     }
 
+    protected override async Task PageDocument(string name, bool isNew = false)
+    {
+        ConfigurationDocuments? document = null;
+        if (!isNew && !Kernel.Conf.Documents.TryGetValue(name, out document))
+        {
+            Message.Error(Program.BasicForm, "Помилка", $"Не знайдено документ '{name}' в колекції");
+            return;
+        }
+
+        PageDocument page = Configurator.PageDocument.New();
+        page.IsNew = isNew;
+        page.Caption = $"Документ: {(isNew ? "*" : name)}";
+
+        if (!isNew && document != null)
+            page.ConfDocument = document;
+
+        NotebookFunc?.CreatePage(page.Caption, page);
+        await page.SetValue();
+    }
+
     #region TopMenu
 
     protected override async Task PageSaveConfiguration()

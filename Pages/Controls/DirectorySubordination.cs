@@ -13,7 +13,7 @@ public partial class DirectorySubordination
     Configuration Conf { get; } = Program.Kernel.Conf;
     ConfigurationDirectories ConfDirectory { get; set; } = new();
 
-    string DirectoryOwner, PointerFieldOwner = "";
+    string DirectoryOwner = "", PointerFieldOwner = "";
 
     public static DirectorySubordination New()
     {

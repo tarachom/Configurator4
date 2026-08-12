@@ -3,13 +3,13 @@ using GObject;
 using AccountingSoftware;
 using InterfaceGtk4;
 
-[Subclass<Box>("DataTree")]
-[Template<AssemblyResource>("DataTree.xml")]
-public partial class DataTree
+[Subclass<Box>("DirectoryDataTree")]
+[Template<AssemblyResource>("DirectoryDataTree.xml")]
+public partial class DirectoryDataTree
 {
-    public static DataTree New()
+    public static DirectoryDataTree New()
     {
-        DataTree dt = NewWithProperties([]);
+        DirectoryDataTree dt = NewWithProperties([]);
         return dt;
     }
 

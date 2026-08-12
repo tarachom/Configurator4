@@ -4,9 +4,9 @@ using AccountingSoftware;
 using InterfaceGtk4;
 using Configurator;
 
-[Subclass<Box>("AutomaticNumbering")]
-[Template<AssemblyResource>("AutomaticNumbering.xml")]
-public partial class AutomaticNumbering
+[Subclass<Box>("DirectoryAutomaticNumbering")]
+[Template<AssemblyResource>("DirectoryAutomaticNumbering.xml")]
+public partial class DirectoryAutomaticNumbering
 {
     [Connect("check_automatic_numbering")] CheckButton checkAutomaticNumbering;
     [Connect("button_create")] Button buttonCreate;
@@ -14,9 +14,9 @@ public partial class AutomaticNumbering
     Configuration Conf { get; } = Program.Kernel.Conf;
     ConfigurationDirectories ConfDirectory { get; set; } = new();
 
-    public static AutomaticNumbering New()
+    public static DirectoryAutomaticNumbering New()
     {
-        AutomaticNumbering dt = NewWithProperties([]);
+        DirectoryAutomaticNumbering dt = NewWithProperties([]);
         return dt;
     }
 

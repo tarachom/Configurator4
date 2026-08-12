@@ -23,8 +23,8 @@ partial class PageDirectory : FormPageConfigurator
     Triggers triggers = Triggers.New();
     DirectoryHierarchy hierarchy = DirectoryHierarchy.New();
     DirectorySubordination subordination = DirectorySubordination.New();
-    AutomaticNumbering autoNum = AutomaticNumbering.New();
-    DataTree dataTree = DataTree.New();
+    DirectoryAutomaticNumbering autoNum = DirectoryAutomaticNumbering.New();
+    DirectoryDataTree dataTree = DirectoryDataTree.New();
 
     partial void Initialize()
     {
