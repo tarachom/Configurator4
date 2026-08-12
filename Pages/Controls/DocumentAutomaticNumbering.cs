@@ -24,7 +24,7 @@ public partial class DocumentAutomaticNumbering
     {
         buttonCreate.OnClicked += (_, _) =>
         {
-            if (string.IsNullOrEmpty(ConfDocuments.Name) || !Conf.Directories.ContainsKey(ConfDocuments.Name))
+            if (string.IsNullOrEmpty(ConfDocuments.Name) || !Conf.Documents.ContainsKey(ConfDocuments.Name))
             {
                 Message.Error(Program.BasicForm, "Назва документу не задана або документ не збережений! Документ треба спочатку зберегти!");
                 return;
