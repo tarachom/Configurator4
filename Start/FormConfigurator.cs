@@ -93,4 +93,22 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
     }
 
     #endregion
+
+    #region Func
+
+    public Dictionary<string, ConfigurationField> GetConstantsAllFields()
+    {
+        Dictionary<string, ConfigurationField> ConstantsAllFields = [];
+
+        foreach (ConfigurationConstantsBlock block in Kernel.Conf.ConstantsBlock.Values)
+            foreach (ConfigurationConstants constants in block.Constants.Values)
+            {
+                string fullName = block.BlockName + "." + constants.Name;
+                ConstantsAllFields.Add(fullName, new ConfigurationField(fullName, fullName, constants.NameInTable, constants.Type, constants.Pointer, constants.Desc));
+            }
+
+        return ConstantsAllFields;
+    }
+
+    #endregion
 }

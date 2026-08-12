@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="DirectorySubordination" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">10</property>
+        <property name="margin-start">5</property>
+        <property name="margin-end">5</property>
+        <property name="margin-top">5</property>
+        <property name="margin-bottom">5</property>
+
+        <child>
+            <object class="GtkExpander">
+                <property name="label">Підпорядкованість іншим довідникам</property>
+                <property name="expanded">false</property>
+                
+                 <child>
+                    <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">10</property>
+                        <property name="margin-top">10</property>
+
+                        <!-- Заголовок -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="use-markup">true</property>
+                                <property name="label">&lt;b&gt;Підпорядкованість&lt;/b&gt;</property>
+                                <property name="halign">center</property>
+                            </object>
+                        </child>
+
+                        <!-- Таблиця (GtkGrid) -->
+                        <child>
+                            <object class="GtkGrid" id="grid_hierarchy">
+                                <property name="column-spacing">8</property>
+                                <property name="row-spacing">10</property>
+                                <property name="halign">end</property>
+
+                                <!-- Рядок 0: Довідник власник -->
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="label">Довідник власник:</property>
+                                        <property name="halign">end</property>
+                                        <layout>
+                                            <property name="column">0</property>
+                                            <property name="row">0</property>
+                                        </layout>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkDropDown" id="dropdown_directory_owner">
+                                        <layout>
+                                            <property name="column">1</property>
+                                            <property name="row">0</property>
+                                        </layout>
+                                    </object>
+                                </child>
+
+                                <!-- Рядок 1: Поле вказівник на довідник власник -->
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="label">Поле вказівник на довідник власник:</property>
+                                        <property name="halign">end</property>
+                                        <layout>
+                                            <property name="column">0</property>
+                                            <property name="row">1</property>
+                                        </layout>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkDropDown" id="dropdown_pointer_field_owner">
+                                        <layout>
+                                            <property name="column">1</property>
+                                            <property name="row">1</property>
+                                        </layout>
+                                    </object>
+                                </child>
+
+                            </object>
+                        </child>
+
+                    </object>
+                </child>
+
+            </object>
+        </child>
+
+    </template>
+</interface>

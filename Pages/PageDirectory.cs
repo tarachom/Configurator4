@@ -22,6 +22,9 @@ partial class PageDirectory : FormPageConfigurator
     TextView textViewDesc = TextView.New();
     Triggers triggers = Triggers.New();
     DirectoryHierarchy hierarchy = DirectoryHierarchy.New();
+    DirectorySubordination subordination = DirectorySubordination.New();
+    AutomaticNumbering autoNum = AutomaticNumbering.New();
+    DataTree dataTree = DataTree.New();
 
     partial void Initialize()
     {
@@ -30,8 +33,6 @@ partial class PageDirectory : FormPageConfigurator
         entryTable.WidthRequest = 500;
 
         textViewDesc.WrapMode = WrapMode.Word;
-
-
     }
 
     public static PageDirectory New()
@@ -59,13 +60,19 @@ partial class PageDirectory : FormPageConfigurator
         //Ієрархія
         vBox.Append(hierarchy);
 
+        //Підпорядкування
+        vBox.Append(subordination);
+
+        //Автоматична нумерація
+        vBox.Append(autoNum);
+
         //Тригери
         vBox.Append(triggers);
     }
 
     protected override void CreateEnd(Box vBox)
     {
-
+        vBox.Append(dataTree);
     }
 
     public override async Task AssignValue()
@@ -102,6 +109,45 @@ partial class PageDirectory : FormPageConfigurator
                 ConfDirectory.AppendTableList(list);
             }
 
+            //Форми
+            {
+                {
+                    string name = "Функції";
+                    ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.Function);
+                    ConfDirectory.AppendForms(forms);
+                }
+
+                {
+                    string name = "Тригери";
+                    ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.Triggers);
+                    ConfDirectory.AppendForms(forms);
+                }
+
+                {
+                    string name = "Реквізит вибору";
+                    ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.PointerControl);
+                    ConfDirectory.AppendForms(forms);
+                }
+
+                {
+                    string name = "Реквізит вибору для таб частини";
+                    ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.PointerTablePartCell);
+                    ConfDirectory.AppendForms(forms);
+                }
+
+                {
+                    string name = "Швидкий вибір";
+                    ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.ListSmallSelect);
+                    ConfDirectory.AppendForms(forms);
+                }
+
+                {
+                    string name = "Список";
+                    ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.List);
+                    ConfDirectory.AppendForms(forms);
+                }
+            }
+
             //Тригери
             ConfDirectory.TriggerFunctions.NewAction = true;
             ConfDirectory.TriggerFunctions.CopyingAction = true;
@@ -114,6 +160,9 @@ partial class PageDirectory : FormPageConfigurator
 
         triggers.SetValue(ConfDirectory.TriggerFunctions);
         hierarchy.SetValue(ConfDirectory);
+        subordination.SetValue(ConfDirectory);
+        dataTree.SetValue(ConfDirectory);
+        autoNum.SetValue(ConfDirectory);
     }
 
     protected override async Task GetValue()
@@ -125,6 +174,8 @@ partial class PageDirectory : FormPageConfigurator
 
         ConfDirectory.TriggerFunctions = triggers.GetValue();
         hierarchy.GetValue();
+        subordination.GetValue();
+        autoNum.GetValue();
     }
 
     protected override async Task<bool> Save()
