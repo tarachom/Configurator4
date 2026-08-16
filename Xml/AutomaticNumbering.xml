@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-    <template class="DocumentAutomaticNumbering" parent="GtkBox">
+    <template class="AutomaticNumbering" parent="GtkBox">
         <property name="orientation">vertical</property>
         <property name="spacing">10</property>
         <property name="margin-start">5</property>
@@ -63,9 +63,14 @@
                                     <object class="GtkLabel">
                                         <property name="use-markup">true</property>
                                         <property name="wrap">true</property>
-                                        <property name="halign">center</property>
+                                        <property name="halign">start</property>
+                                        <property name="valign">start</property>
                                         <property name="hexpand">true</property>
-                                        <property name="label">Для автоматичної нумерації використовується константа в блоці &lt;b&gt;НумераціяДокументів&lt;/b&gt;. Назва константи - це назва документу.</property>
+                                        <property name="label">Для автоматичної нумерації використовується константа в блоці &lt;b&gt;НумераціяДовідників&lt;/b&gt; або &lt;b&gt;НумераціяДокументів&lt;/b&gt;. 
+
+Назва константи - це назва довідника чи документу.
+
+Перед створенням константи - довідник або документ вже має бути збережений.</property>
                                     </object>
                                 </child>
 

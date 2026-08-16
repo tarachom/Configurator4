@@ -1,17 +1,18 @@
 using Gtk;
 using GObject;
 using AccountingSoftware;
+using InterfaceGtk4;
 using Configurator;
 
 [Subclass<Box>("DirectoryHierarchy")]
 [Template<AssemblyResource>("DirectoryHierarchy.xml")]
 public partial class DirectoryHierarchy
 {
-    [Connect("dropdown_directory_type")] DropDown dropdownDirectoryType;
-    [Connect("dropdown_parent_field")] DropDown dropdownParentField;
-    [Connect("dropdown_allowed_content")] DropDown dropdownAllowedContent;
-    [Connect("dropdown_is_folder_field")] DropDown dropdownIsFolderField;
-    [Connect("dropdown_hierarchy_directory")] DropDown dropdownHierarchyDirectory;
+    [Connect("dropdown_directory_type")] DropDownControl dropdownDirectoryType;
+    [Connect("dropdown_parent_field")] DropDownControl dropdownParentField;
+    [Connect("dropdown_allowed_content")] DropDownControl dropdownAllowedContent;
+    [Connect("dropdown_is_folder_field")] DropDownControl dropdownIsFolderField;
+    [Connect("dropdown_hierarchy_directory")] DropDownControl dropdownHierarchyDirectory;
     [Connect("button_create")] Button buttonCreate;
 
     Configuration Conf { get; } = Program.Kernel.Conf;
@@ -19,108 +20,174 @@ public partial class DirectoryHierarchy
 
     ConfigurationDirectories.TypeDirectories TypeDirectory = ConfigurationDirectories.TypeDirectories.Normal;
     ConfigurationDirectories.HierarchicalContentType AllowedContent = ConfigurationDirectories.HierarchicalContentType.FoldersAndElements;
-    string ParentField = "", IsFolderField = "", PointerFolders = "";
 
     public static DirectoryHierarchy New()
     {
+        //Реєстрація типів
+        DropDownControl.GetGType();
+
         DirectoryHierarchy widget = NewWithProperties([]);
         return widget;
     }
 
     partial void Initialize()
     {
-        dropdownDirectoryType.OnNotify += (_, e) =>
+        dropdownDirectoryType.AllowEmpty = false;
+        dropdownDirectoryType.Fill(ConfigurationDirectories.TypeDirectories_Dict());
+        dropdownDirectoryType.OnСhanged = () =>
         {
-            if (e.Pspec.GetName() == "selected")
-            {
-                TypeDirectory = (ConfigurationDirectories.TypeDirectories)(dropdownDirectoryType.Selected + 1);
-
-                SensitiveFields();
-                SensetiveIsFolderField();
-            }
+            TypeDirectory = Enum.Parse<ConfigurationDirectories.TypeDirectories>(dropdownDirectoryType.Value);
+            SensitiveFields();
+            SensetiveIsFolderField();
         };
 
-        dropdownAllowedContent.OnNotify += (_, e) =>
+        dropdownAllowedContent.AllowEmpty = false;
+        dropdownAllowedContent.Fill(ConfigurationDirectories.HierarchicalContentType_Dict());
+        dropdownAllowedContent.OnСhanged = () =>
         {
-            if (e.Pspec.GetName() == "selected")
-            {
-                AllowedContent = (ConfigurationDirectories.HierarchicalContentType)dropdownAllowedContent.Selected;
-
-                SensetiveIsFolderField();
-            }
+            AllowedContent = Enum.Parse<ConfigurationDirectories.HierarchicalContentType>(dropdownAllowedContent.Value);
+            SensetiveIsFolderField();
         };
 
-        buttonCreate.OnClicked += (_, _) =>
+        buttonCreate.OnClicked += async (_, _) =>
         {
+            if (string.IsNullOrEmpty(ConfDirectory.Name) || !Conf.Directories.ContainsKey(ConfDirectory.Name))
+            {
+                Message.Error(Program.BasicForm, "Назва довідника не задана або довідник не збережений! Довідник потрібно спочатку зберегти!");
+                return;
+            }
 
+            if (TypeDirectory == ConfigurationDirectories.TypeDirectories.HierarchyInAnotherDirectory)
+            {
+                string newConfDirectoryName = ConfDirectory.Name + "_Папки",
+                    newConfDirectoryFullName = ConfDirectory.Name + " Папки",
+                    newConfDirectoryType = "Довідники." + newConfDirectoryName,
+                    folderFieldName = Function.FindNewFieldName(ConfDirectory.Fields, "Папка", (x) => !(x.Type == "pointer" && x.Pointer == newConfDirectoryType));
+
+                //Перевірити і створити новий довідник для ієрархії
+                if (!Conf.Directories.ContainsKey(newConfDirectoryName))
+                {
+                    ConfigurationDirectories newConfDirectory = new()
+                    {
+                        Name = newConfDirectoryName,
+                        FullName = newConfDirectoryFullName,
+                        Desc = newConfDirectoryFullName,
+                        TypeDirectory = ConfigurationDirectories.TypeDirectories.Hierarchical,
+                        AllowedContent_Hierarchical = ConfigurationDirectories.HierarchicalContentType.Folders,
+                        ParentField_Hierarchical = "Папка"
+                    };
+
+                    List<ConfigurationField> otherFields = [
+                        //Поле Папка яке має тип довідника який ми додаємо
+                        new ConfigurationField("Папка", "Папка", "", "pointer", newConfDirectoryType, "Папка", false, true)
+                    ];
+
+                    _ = await Function.FillNewDirectory(newConfDirectory, otherFields);
+
+                    Conf.AppendDirectory(newConfDirectory);
+                    FillPointerFolders();
+
+                    //Встановити створений довідник як вибраний у списку
+                    dropdownHierarchyDirectory.Value = newConfDirectoryType;
+                }
+                else
+                    dropdownHierarchyDirectory.Value = newConfDirectoryType;
+
+                //Додати нове поле Папка в основний довідник
+                if (!ConfDirectory.Fields.ContainsKey(folderFieldName))
+                {
+                    string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfDirectory.Table, ConfDirectory.Fields);
+                    ConfDirectory.AppendField(new ConfigurationField(folderFieldName, "Папка", nameInTable, "pointer", newConfDirectoryType, "Папка", false, true));
+                }
+            }
+            else if (TypeDirectory == ConfigurationDirectories.TypeDirectories.Hierarchical)
+            {
+                string confDirectoryType = "Довідники." + ConfDirectory.Name;
+                string folderFieldName = Function.FindNewFieldName(ConfDirectory.Fields, "Папка", (x) => !(x.Type == "pointer" && x.Pointer == confDirectoryType));
+                string isFolderFieldName = Function.FindNewFieldName(ConfDirectory.Fields, "ЦеПапка", (x) => x.Type != "boolean");
+
+                if (!ConfDirectory.Fields.ContainsKey(folderFieldName))
+                {
+                    // Папка
+                    string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfDirectory.Table, ConfDirectory.Fields);
+                    ConfDirectory.AppendField(new ConfigurationField(folderFieldName, "Папка", nameInTable, "pointer", confDirectoryType, "Папка", false, true));
+                }
+
+                if (AllowedContent == ConfigurationDirectories.HierarchicalContentType.FoldersAndElements && !ConfDirectory.Fields.ContainsKey(isFolderFieldName))
+                {
+                    // ЦеПапка
+                    string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfDirectory.Table, ConfDirectory.Fields);
+                    ConfDirectory.AppendField(new ConfigurationField(isFolderFieldName, "Це папка", nameInTable, "boolean", "", "Це папка", false, true));
+                }
+
+                FillFields();
+
+                dropdownParentField.Value = folderFieldName;
+                dropdownIsFolderField.Value = isFolderFieldName;
+            }
         };
     }
 
+    /// <summary>
+    /// Підбір імені для поля
+    /// Пошук поля із заданою назвою. 
+    /// Якщо інший тип даних тоді до назви поля додається цифра від 1 до 10
+    /// </summary>
+    /*string FindNewFieldName(string fieldName, Func<ConfigurationField, bool> func)
+    {
+        string newFieldName = fieldName;
+        for (int i = 1; i <= 10; i++)
+            if (ConfDirectory.Fields.TryGetValue(newFieldName, out var field))
+            {
+                if (func.Invoke(field))
+                    newFieldName = fieldName + i.ToString();
+                else
+                    break;
+            }
+            else
+                break;
+
+        return newFieldName;
+    }*/
+
     void FillFields()
     {
-        List<string> parent = [], isfolder = [];
+        dropdownParentField.RemoveAll();
+        dropdownIsFolderField.RemoveAll();
 
         foreach (ConfigurationField field in ConfDirectory.Fields.Values)
         {
             //Поля для ієрархії
             if (field.Type == "pointer" && field.Pointer == $"Довідники.{ConfDirectory.Name}")
-                parent.Add(field.Name);
+                dropdownParentField.Append(field.Name);
 
             //Поля для ЦеПапка
             if (field.Type == "boolean")
-                isfolder.Add(field.Name);
+                dropdownIsFolderField.Append(field.Name);
         }
-
-        dropdownParentField.Model = StringList.New([.. parent]);
-        dropdownIsFolderField.Model = StringList.New([.. isfolder]);
     }
 
     void FillPointerFolders()
     {
-        string[] items = [.. Conf.Directories.Values
-           .Where(x => x.TypeDirectory == ConfigurationDirectories.TypeDirectories.Hierarchical)
-           .Select(x => $"Довідники.{x.Name}")];
+        dropdownHierarchyDirectory.RemoveAll();
 
-        dropdownHierarchyDirectory.Model = StringList.New(items);
-    }
-
-    public static void Select(DropDown dropDown, string text)
-    {
-        if (dropDown.Model is StringList model)
-            for (uint i = 0; i < model.GetNItems(); i++)
-            {
-                if (model.GetString(i) == text)
-                {
-                    dropDown.SetSelected(i);
-                    break;
-                }
-            }
+        foreach (var item in Conf.Directories.Values)
+            if (item.TypeDirectory == ConfigurationDirectories.TypeDirectories.Hierarchical)
+                dropdownHierarchyDirectory.Append($"Довідники.{item.Name}", item.Name);
     }
 
     public void SetValue(ConfigurationDirectories confDirectory)
     {
         ConfDirectory = confDirectory;
 
-        TypeDirectory = ConfDirectory.TypeDirectory;
-        AllowedContent = ConfDirectory.AllowedContent_Hierarchical;
-        ParentField = ConfDirectory.ParentField_Hierarchical;
-        IsFolderField = ConfDirectory.IsFolderField_Hierarchical;
-        PointerFolders = ConfDirectory.PointerFolders_HierarchyInAnotherDirectory;
-
-        dropdownDirectoryType.Selected = (uint)(TypeDirectory - 1);
-        dropdownAllowedContent.Selected = (uint)AllowedContent;
-
         FillFields();
         FillPointerFolders();
 
-        if (TypeDirectory == ConfigurationDirectories.TypeDirectories.Hierarchical)
-        {
-            Select(dropdownParentField, ParentField);
-            Select(dropdownIsFolderField, IsFolderField);
-        }
-
-        if (TypeDirectory == ConfigurationDirectories.TypeDirectories.HierarchyInAnotherDirectory)
-            Select(dropdownHierarchyDirectory, PointerFolders);
+        dropdownDirectoryType.Value = (TypeDirectory = ConfDirectory.TypeDirectory).ToString();
+        dropdownAllowedContent.Value = (AllowedContent = ConfDirectory.AllowedContent_Hierarchical).ToString();
+        dropdownParentField.Value = ConfDirectory.ParentField_Hierarchical;
+        dropdownIsFolderField.Value = ConfDirectory.IsFolderField_Hierarchical;
+        dropdownHierarchyDirectory.Value = ConfDirectory.PointerFolders_HierarchyInAnotherDirectory;
 
         SensitiveFields();
         SensetiveIsFolderField();
@@ -128,16 +195,13 @@ public partial class DirectoryHierarchy
 
     public void GetValue()
     {
-        ConfDirectory.TypeDirectory = (ConfigurationDirectories.TypeDirectories)(dropdownDirectoryType.Selected + 1);
-        ConfDirectory.AllowedContent_Hierarchical = (ConfigurationDirectories.HierarchicalContentType)dropdownAllowedContent.Selected;
-        ConfDirectory.ParentField_Hierarchical = (dropdownParentField.SelectedItem as StringObject)?.String ?? "";
-        ConfDirectory.IsFolderField_Hierarchical = (dropdownIsFolderField.SelectedItem as StringObject)?.String ?? "";
-        ConfDirectory.PointerFolders_HierarchyInAnotherDirectory = (dropdownHierarchyDirectory.SelectedItem as StringObject)?.String ?? "";
+        ConfDirectory.TypeDirectory = Enum.Parse<ConfigurationDirectories.TypeDirectories>(dropdownDirectoryType.Value);
+        ConfDirectory.AllowedContent_Hierarchical = Enum.Parse<ConfigurationDirectories.HierarchicalContentType>(dropdownAllowedContent.Value);
+        ConfDirectory.ParentField_Hierarchical = dropdownParentField.Value;
+        ConfDirectory.IsFolderField_Hierarchical = dropdownIsFolderField.Value;
+        ConfDirectory.PointerFolders_HierarchyInAnotherDirectory = dropdownHierarchyDirectory.Value;
     }
 
-    /// <summary>
-    /// Метод для керування доступністю полів (Sensitive) залежно від вибору типу довідника
-    /// </summary>
     void SensitiveFields()
     {
         //Вибір поля тільки для Hierarchical

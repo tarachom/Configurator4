@@ -10,7 +10,7 @@
 
         <child>
             <object class="GtkExpander">
-                <property name="label">Підпорядкованість іншим довідникам</property>
+                <property name="label">Підпорядкованість</property>
                 <property name="expanded">false</property>
                 
                  <child>
@@ -47,7 +47,7 @@
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkDropDown" id="dropdown_directory_owner">
+                                    <object class="DropDownControl" id="dropdown_directory_owner">
                                         <layout>
                                             <property name="column">1</property>
                                             <property name="row">0</property>
@@ -67,10 +67,23 @@
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkDropDown" id="dropdown_pointer_field_owner">
+                                    <object class="DropDownControl" id="dropdown_pointer_field_owner">
                                         <layout>
                                             <property name="column">1</property>
                                             <property name="row">1</property>
+                                        </layout>
+                                    </object>
+                                </child>
+
+                                <!-- Рядок 2: Кнопка Створити -->
+                                <child>
+                                    <object class="GtkButton" id="button_create">
+                                        <property name="label">Створити</property>
+                                        <property name="halign">end</property>
+                                        <layout>
+                                            <property name="column">0</property>
+                                            <property name="row">2</property>
+                                            <property name="column-span">2</property>
                                         </layout>
                                     </object>
                                 </child>

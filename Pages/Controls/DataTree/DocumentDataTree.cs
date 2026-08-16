@@ -3,23 +3,22 @@ using GObject;
 using AccountingSoftware;
 using InterfaceGtk4;
 
-[Subclass<Box>("DirectoryDataTree")]
-[Template<AssemblyResource>("DirectoryDataTree.xml")]
-public partial class DirectoryDataTree
+[Subclass<DataTree>()]
+public partial class DocumentDataTree:DataTree
 {
-    public static DirectoryDataTree New()
+    public static DocumentDataTree New()
     {
-        DirectoryDataTree dt = NewWithProperties([]);
-        return dt;
+        DocumentDataTree w = NewWithProperties([]);
+        return w;
     }
 
-    public void SetValue(ConfigurationDirectories directory)
+    public void SetValue(ConfigurationDocuments documents)
     {
-        async void Activate(string group, string name)
+        async void Activate(ConfiguratorItemRow row)
         {
-            switch (group)
+            switch (row.Group)
             {
-                case "Directories":
+                case "Documents":
                     {
 
                         break;
@@ -49,15 +48,15 @@ public partial class DirectoryDataTree
 
         }
 
-        Box box = new ConfiguratorDirectoriesFieldsTree(directory, Activate, new()
+        Box box = new ConfiguratorDocumentsFieldsTree(documents, Activate, new()
         {
             Add = () => Add(),
-            Edit = (group, name) => Activate(group, name),
-            Copy = (group, name) =>
+            Edit = (row) => Activate(row),
+            Copy = (row) =>
             {
 
             },
-            Delete = (group, name) =>
+            Delete = (row) =>
             {
 
             }

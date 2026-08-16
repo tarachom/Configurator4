@@ -78,80 +78,7 @@ partial class PageDirectory : FormPageConfigurator
     public override async Task AssignValue()
     {
         if (IsNew)
-        {
-            ConfDirectory.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
-
-            //Заповнення полями
-            {
-                //Код
-                {
-                    string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfDirectory.Table, ConfDirectory.Fields);
-                    ConfDirectory.AppendField(new ConfigurationField("Код", "Код", nameInTable, "string", "", "Код", false, true, false, true));
-                }
-
-                //Назва
-                {
-                    string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, ConfDirectory.Table, ConfDirectory.Fields);
-                    ConfDirectory.AppendField(new ConfigurationField("Назва", "Назва", nameInTable, "string", "", "Назва", true, true, false, true));
-                }
-            }
-
-            //Табличний список
-            {
-                ConfigurationTabularList list = new("Записи");
-                int sortNum = 0;
-
-                //Заповнення полями
-                foreach (var item in ConfDirectory.Fields.Values)
-                    list.AppendField(new(item.Name, item.Name, 0, ++sortNum, item.Name == "Назва"));
-
-                //Заповнення списку
-                ConfDirectory.AppendTableList(list);
-            }
-
-            //Форми
-            {
-                {
-                    string name = "Функції";
-                    ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.Function);
-                    ConfDirectory.AppendForms(forms);
-                }
-
-                {
-                    string name = "Тригери";
-                    ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.Triggers);
-                    ConfDirectory.AppendForms(forms);
-                }
-
-                {
-                    string name = "Реквізит вибору";
-                    ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.PointerControl);
-                    ConfDirectory.AppendForms(forms);
-                }
-
-                {
-                    string name = "Реквізит вибору для таб частини";
-                    ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.PointerTablePartCell);
-                    ConfDirectory.AppendForms(forms);
-                }
-
-                {
-                    string name = "Швидкий вибір";
-                    ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.ListSmallSelect);
-                    ConfDirectory.AppendForms(forms);
-                }
-
-                {
-                    string name = "Список";
-                    ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.List);
-                    ConfDirectory.AppendForms(forms);
-                }
-            }
-
-            //Тригери
-            ConfDirectory.TriggerFunctions.NewAction = true;
-            ConfDirectory.TriggerFunctions.CopyingAction = true;
-        }
+            _ = await Function.FillNewDirectory(ConfDirectory);
 
         entryName.SetText(ConfDirectory.Name);
         entryFullName.SetText(ConfDirectory.FullName);
@@ -167,6 +94,9 @@ partial class PageDirectory : FormPageConfigurator
 
     protected override async Task GetValue()
     {
+        if (string.IsNullOrEmpty(entryFullName.GetText())) ///!!!
+            entryFullName.SetText(Configuration.CreateFullName(entryName.GetText()));
+
         ConfDirectory.Name = entryName.GetText();
         ConfDirectory.FullName = entryFullName.GetText();
         ConfDirectory.Table = entryTable.GetText();
@@ -193,6 +123,8 @@ partial class PageDirectory : FormPageConfigurator
 
         await GetValue();
         Conf.AppendDirectory(ConfDirectory);
+
+        Caption = $"Довідник: {ConfDirectory.Name}";
         IsNew = false;
 
         return true;

@@ -10,7 +10,7 @@
 
         <child>
             <object class="GtkExpander">
-                <property name="label">Тип довідника (звичайний або ієрархічний)</property>
+                <property name="label">Ієрархія</property>
                 <property name="expanded">false</property>
                 
                  <child>
@@ -27,7 +27,7 @@
                                 <property name="halign">center</property>
                             </object>
                         </child>
-
+                                            
                         <!-- Таблиця (GtkGrid) -->
                         <child>
                             <object class="GtkGrid" id="grid_hierarchy">
@@ -47,16 +47,7 @@
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkDropDown" id="dropdown_directory_type">
-                                        <property name="model">
-                                            <object class="GtkStringList">
-                                                <items>
-                                                    <item>Звичайний у формі таблиці</item>
-                                                    <item>Ієрархічний у формі дерева</item>
-                                                    <item>Ієрархія в окремому довіднику</item>
-                                                </items>
-                                            </object>
-                                        </property>
+                                    <object class="DropDownControl" id="dropdown_directory_type">
                                         <layout>
                                             <property name="column">1</property>
                                             <property name="row">0</property>
@@ -77,16 +68,7 @@
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkDropDown" id="dropdown_allowed_content">
-                                        <property name="model">
-                                            <object class="GtkStringList">
-                                                <items>
-                                                    <item>Папки</item>
-                                                    <item>Елементи</item>
-                                                    <item>Папки та елементи</item>
-                                                </items>
-                                            </object>
-                                        </property>
+                                    <object class="DropDownControl" id="dropdown_allowed_content">
                                         <layout>
                                             <property name="column">1</property>
                                             <property name="row">1</property>
@@ -95,10 +77,10 @@
                                     </object>
                                 </child>
 
-                                <!-- Рядок 2: Поле Родич | Поле ЦеПапка -->
+                                <!-- Рядок 2: Поле Папка | Поле ЦеПапка -->
                                 <child>
                                     <object class="GtkLabel">
-                                        <property name="label">Поле Родич:</property>
+                                        <property name="label">Поле Папка:</property>
                                         <property name="halign">end</property>
                                         <layout>
                                             <property name="column">0</property>
@@ -107,7 +89,7 @@
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkDropDown" id="dropdown_parent_field">
+                                    <object class="DropDownControl" id="dropdown_parent_field">
                                         <layout>
                                             <property name="column">1</property>
                                             <property name="row">2</property>
@@ -125,7 +107,7 @@
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkDropDown" id="dropdown_is_folder_field">
+                                    <object class="DropDownControl" id="dropdown_is_folder_field">
                                         <layout>
                                             <property name="column">3</property>
                                             <property name="row">2</property>
@@ -145,7 +127,7 @@
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkDropDown" id="dropdown_hierarchy_directory">
+                                    <object class="DropDownControl" id="dropdown_hierarchy_directory">
                                         <layout>
                                             <property name="column">1</property>
                                             <property name="row">3</property>
