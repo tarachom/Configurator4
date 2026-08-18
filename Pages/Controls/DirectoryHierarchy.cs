@@ -19,7 +19,7 @@ public partial class DirectoryHierarchy
     ConfigurationDirectories ConfDirectory { get; set; } = new();
 
     ConfigurationDirectories.TypeDirectories TypeDirectory = ConfigurationDirectories.TypeDirectories.Normal;
-    ConfigurationDirectories.HierarchicalContentType AllowedContent = ConfigurationDirectories.HierarchicalContentType.FoldersAndElements;
+    ConfigurationDirectories.HierarchicalContentType AllowedContent = 0;
 
     public static DirectoryHierarchy New()
     {
@@ -37,15 +37,23 @@ public partial class DirectoryHierarchy
         dropdownDirectoryType.OnСhanged = () =>
         {
             TypeDirectory = Enum.Parse<ConfigurationDirectories.TypeDirectories>(dropdownDirectoryType.Value);
+
+            if (TypeDirectory == ConfigurationDirectories.TypeDirectories.Hierarchical && (string.IsNullOrEmpty(dropdownAllowedContent.Value) || dropdownAllowedContent.Value == "0"))
+                dropdownAllowedContent.Value = ConfigurationDirectories.HierarchicalContentType.Folders.ToString();
+            else
+                dropdownAllowedContent.Value = "";
+
+            if (TypeDirectory != ConfigurationDirectories.TypeDirectories.HierarchyInAnotherDirectory)
+                dropdownHierarchyDirectory.Value = "";
+
             SensitiveFields();
             SensetiveIsFolderField();
         };
 
-        dropdownAllowedContent.AllowEmpty = false;
         dropdownAllowedContent.Fill(ConfigurationDirectories.HierarchicalContentType_Dict());
         dropdownAllowedContent.OnСhanged = () =>
         {
-            AllowedContent = Enum.Parse<ConfigurationDirectories.HierarchicalContentType>(dropdownAllowedContent.Value);
+            AllowedContent = string.IsNullOrEmpty(dropdownAllowedContent.Value) ? 0 : Enum.Parse<ConfigurationDirectories.HierarchicalContentType>(dropdownAllowedContent.Value);
             SensetiveIsFolderField();
         };
 
@@ -128,28 +136,6 @@ public partial class DirectoryHierarchy
         };
     }
 
-    /// <summary>
-    /// Підбір імені для поля
-    /// Пошук поля із заданою назвою. 
-    /// Якщо інший тип даних тоді до назви поля додається цифра від 1 до 10
-    /// </summary>
-    /*string FindNewFieldName(string fieldName, Func<ConfigurationField, bool> func)
-    {
-        string newFieldName = fieldName;
-        for (int i = 1; i <= 10; i++)
-            if (ConfDirectory.Fields.TryGetValue(newFieldName, out var field))
-            {
-                if (func.Invoke(field))
-                    newFieldName = fieldName + i.ToString();
-                else
-                    break;
-            }
-            else
-                break;
-
-        return newFieldName;
-    }*/
-
     void FillFields()
     {
         dropdownParentField.RemoveAll();
@@ -196,7 +182,7 @@ public partial class DirectoryHierarchy
     public void GetValue()
     {
         ConfDirectory.TypeDirectory = Enum.Parse<ConfigurationDirectories.TypeDirectories>(dropdownDirectoryType.Value);
-        ConfDirectory.AllowedContent_Hierarchical = Enum.Parse<ConfigurationDirectories.HierarchicalContentType>(dropdownAllowedContent.Value);
+        ConfDirectory.AllowedContent_Hierarchical = string.IsNullOrEmpty(dropdownAllowedContent.Value) ? 0 : Enum.Parse<ConfigurationDirectories.HierarchicalContentType>(dropdownAllowedContent.Value); ;
         ConfDirectory.ParentField_Hierarchical = dropdownParentField.Value;
         ConfDirectory.IsFolderField_Hierarchical = dropdownIsFolderField.Value;
         ConfDirectory.PointerFolders_HierarchyInAnotherDirectory = dropdownHierarchyDirectory.Value;
