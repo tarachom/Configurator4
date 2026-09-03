@@ -5,7 +5,7 @@ using Configurator;
 using InterfaceGtk4;
 
 [Subclass<Box>("DirectorySubordination")]
-[Template<AssemblyResource>("DirectorySubordination.xml")]
+[Template<AssemblyResource>("DirectorySubordination.ui")]
 public partial class DirectorySubordination
 {
     [Connect("dropdown_directory_owner")] DropDownControl dropdownDirectoryOwner;

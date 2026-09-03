@@ -4,6 +4,11 @@ namespace Configurator;
 
 public static class Function
 {
+    /// <summary>
+    /// Функція формує масив всіх полів констант
+    /// </summary>
+    /// <param name="conf">Конфігурація</param>
+    /// <returns></returns>
     public static Dictionary<string, ConfigurationField> GetConstantsAllFields(Configuration conf)
     {
         Dictionary<string, ConfigurationField> ConstantsAllFields = [];
@@ -18,6 +23,13 @@ public static class Function
         return ConstantsAllFields;
     }
 
+    /// <summary>
+    /// Функція підбирає нову назву для поля якщо вже є таке поле (fieldName) і не спіпадає тип даних (тобто func поверне true)
+    /// </summary>
+    /// <param name="fields">Всі поля</param>
+    /// <param name="fieldName">Поле</param>
+    /// <param name="func"></param>
+    /// <returns></returns>
     public static string FindNewFieldName(Dictionary<string, ConfigurationField> fields, string fieldName, Func<ConfigurationField, bool> func)
     {
         string newFieldName = fieldName;
@@ -120,6 +132,117 @@ public static class Function
         //Тригери
         confDirectory.TriggerFunctions.NewAction = true;
         confDirectory.TriggerFunctions.CopyingAction = true;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Функція заповнює новий документ початковими даними
+    /// </summary>
+    /// <param name="confDirectory">Документ</param>
+    public static async Task<bool> FillNewDocument(ConfigurationDocuments confDocument, List<ConfigurationField>? otherFields = null)
+    {
+        confDocument.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
+
+        //Заповнення полями
+        {
+            confDocument.AppendField(new ConfigurationField("Назва", "Назва", "docname", "string", "", "Назва", true, true));
+            confDocument.AppendField(new ConfigurationField("НомерДок", "Номер", "docnomer", "string", "", "Номер документу", false, true));
+            confDocument.AppendField(new ConfigurationField("ДатаДок", "Дата", "docdate", "datetime", "", "Дата документу", false, true));
+
+            //Коментар
+            {
+                string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, confDocument.Table, confDocument.Fields);
+                confDocument.AppendField(new ConfigurationField("Коментар", "Коментар", nameInTable, "string", "", "Коментар"));
+            }
+
+            //Підстава
+            {
+                string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, confDocument.Table, confDocument.Fields);
+                confDocument.AppendField(new ConfigurationField("Підстава", "Підстава", nameInTable, "composite_pointer", "", "Підстава"));
+            }
+
+            if (otherFields != null)
+                foreach (var otherField in otherFields)
+                {
+                    otherField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, confDocument.Table, confDocument.Fields);
+                    confDocument.AppendField(otherField);
+                }
+        }
+
+        //Табличний список
+        {
+            ConfigurationTabularList list = new("Записи");
+            int sortNum = 0;
+            string[] typesIgnor = ["composite_pointer"];
+
+            //Заповнення полями списків (крім типів які ігноруються)
+            foreach (var item in confDocument.Fields.Values.Where(x => typesIgnor.Contains(x.Type)))
+            {
+                string caption = item.Name switch { "ДатаДок" => "Дата", "НомерДок" => "Номер", _ => item.Name };
+                list.AppendField(new ConfigurationTabularListField(item.Name, caption, 0, ++sortNum, item.Name == "ДатаДок"));
+            }
+
+            //Заповнення списку
+            confDocument.AppendTableList(list);
+        }
+
+        //Форми
+        {
+            {
+                string name = "Функції";
+                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.Function);
+                confDocument.AppendForms(forms);
+            }
+
+            {
+                string name = "Тригери";
+                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.Triggers);
+                confDocument.AppendForms(forms);
+            }
+
+            {
+                string name = "Реквізит вибору";
+                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.PointerControl);
+                confDocument.AppendForms(forms);
+            }
+
+            {
+                string name = "Реквізит вибору для таб частини";
+                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.PointerTablePartCell);
+                confDocument.AppendForms(forms);
+            }
+
+            {
+                string name = "Швидкий вибір";
+                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.ListSmallSelect);
+                confDocument.AppendForms(forms);
+            }
+
+            {
+                string name = "Список";
+                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.List);
+                confDocument.AppendForms(forms);
+            }
+        }
+
+        //Тригери
+        confDocument.TriggerFunctions.NewAction = true;
+        confDocument.TriggerFunctions.CopyingAction = true;
+
+        return true;
+    }
+
+    /// <summary>
+    /// Функція заповнює нове поле
+    /// </summary>
+    /// <param name="confField"></param>
+    /// <param name="parentTable"></param>
+    /// <param name="fields"></param>
+    /// <returns></returns>
+    public static async Task<bool> FillNewField(ConfigurationField confField, string parentTable, Dictionary<string, ConfigurationField> fields)
+    {
+        confField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, parentTable, fields);
 
         return true;
     }

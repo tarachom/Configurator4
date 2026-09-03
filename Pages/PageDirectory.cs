@@ -16,10 +16,7 @@ partial class PageDirectory : FormPageConfigurator
     public override Configuration Conf { get; } = Program.Kernel.Conf;
     public ConfigurationDirectories ConfDirectory { get; set; } = new();
 
-    Entry entryName = Entry.New();
-    Entry entryFullName = Entry.New();
-    Entry entryTable = Entry.New();
-    TextView textViewDesc = TextView.New();
+    BasicFields basicFields = BasicFields.New();
     Triggers triggers = Triggers.New();
     DirectoryHierarchy hierarchy = DirectoryHierarchy.New();
     DirectorySubordination subordination = DirectorySubordination.New();
@@ -28,11 +25,7 @@ partial class PageDirectory : FormPageConfigurator
 
     partial void Initialize()
     {
-        entryName.WidthRequest = 500;
-        entryFullName.WidthRequest = 500;
-        entryTable.WidthRequest = 500;
-
-        textViewDesc.WrapMode = WrapMode.Word;
+        basicFields.TableOrColumnLabel = "Таблиця:";
     }
 
     public static PageDirectory New()
@@ -45,17 +38,8 @@ partial class PageDirectory : FormPageConfigurator
 
     protected override void CreateStart(Box vBox)
     {
-        // Назва
-        CreateField(vBox, "Назва", entryName);
-
-        // Повна назва
-        CreateField(vBox, "Повна назва", entryFullName);
-
-        // Таблиця
-        CreateField(vBox, "Таблиця", entryTable);
-
-        // Опис
-        CreateFieldView(vBox, "Опис", textViewDesc, 500, 100);
+        //Основні поля
+        vBox.Append(basicFields);
 
         //Ієрархія
         vBox.Append(hierarchy);
@@ -80,10 +64,10 @@ partial class PageDirectory : FormPageConfigurator
         if (IsNew)
             _ = await Function.FillNewDirectory(ConfDirectory);
 
-        entryName.SetText(ConfDirectory.Name);
-        entryFullName.SetText(ConfDirectory.FullName);
-        entryTable.SetText(ConfDirectory.Table);
-        textViewDesc.Buffer?.Text = ConfDirectory.Desc;
+        basicFields.ItemName = ConfDirectory.Name;
+        basicFields.FullName = ConfDirectory.FullName;
+        basicFields.TableOrColumn = ConfDirectory.Table;
+        basicFields.Desc = ConfDirectory.Desc;
 
         triggers.SetValue(ConfDirectory.TriggerFunctions);
         hierarchy.SetValue(ConfDirectory);
@@ -94,13 +78,10 @@ partial class PageDirectory : FormPageConfigurator
 
     protected override async Task GetValue()
     {
-        if (string.IsNullOrEmpty(entryFullName.GetText())) ///!!!
-            entryFullName.SetText(Configuration.CreateFullName(entryName.GetText()));
-
-        ConfDirectory.Name = entryName.GetText();
-        ConfDirectory.FullName = entryFullName.GetText();
-        ConfDirectory.Table = entryTable.GetText();
-        ConfDirectory.Desc = textViewDesc.Buffer?.Text ?? "";
+        ConfDirectory.Name = basicFields.ItemName;
+        ConfDirectory.FullName = basicFields.FullName;
+        ConfDirectory.Table = basicFields.TableOrColumn;
+        ConfDirectory.Desc = basicFields.Desc;
 
         ConfDirectory.TriggerFunctions = triggers.GetValue();
         hierarchy.GetValue();
@@ -110,8 +91,8 @@ partial class PageDirectory : FormPageConfigurator
 
     protected override async Task<bool> Save()
     {
-        (bool result, string name) = IsValid(entryName.GetText(), ConfDirectory.Name, [.. Conf.Directories.Keys]);
-        entryName.SetText(name);
+        (bool result, string name) = IsValid(basicFields.ItemName, ConfDirectory.Name, [.. Conf.Directories.Keys]);
+        basicFields.ItemName = name;
 
         if (result)
         {

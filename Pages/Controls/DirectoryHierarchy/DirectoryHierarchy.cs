@@ -5,7 +5,7 @@ using InterfaceGtk4;
 using Configurator;
 
 [Subclass<Box>("DirectoryHierarchy")]
-[Template<AssemblyResource>("DirectoryHierarchy.xml")]
+[Template<AssemblyResource>("DirectoryHierarchy.ui")]
 public partial class DirectoryHierarchy
 {
     [Connect("dropdown_directory_type")] DropDownControl dropdownDirectoryType;

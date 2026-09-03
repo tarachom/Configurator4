@@ -4,7 +4,7 @@ using AccountingSoftware;
 using Configurator;
 
 [Subclass<Box>()]
-[Template<AssemblyResource>("AutomaticNumbering.xml")]
+[Template<AssemblyResource>("AutomaticNumbering.ui")]
 public abstract partial class AutomaticNumbering
 {
     [Connect("check_automatic_numbering")] protected CheckButton checkAutomaticNumbering;

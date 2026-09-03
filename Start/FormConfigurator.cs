@@ -82,6 +82,13 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
         await page.SetValue();
     }
 
+    /*
+    protected override async Task PageField(string name, bool isNew = false)
+    {
+
+    }
+    */
+
     protected override async Task PageDocument(string name, bool isNew = false)
     {
         ConfigurationDocuments? document = null;
@@ -102,6 +109,8 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
         await page.SetValue();
     }
 
+
+
     #region TopMenu
 
     protected override async Task PageSaveConfiguration()
@@ -116,7 +125,7 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
 
     #region Func
 
-    
+
 
     #endregion
 }

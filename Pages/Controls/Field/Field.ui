@@ -13,10 +13,10 @@
                 <property name="column-spacing">10</property>
                 <property name="row-spacing">8</property>
 
-                <!-- Рядок 0: Назва -->
+                <!-- Рядок 0: Тип -->
                 <child>
                     <object class="GtkLabel">
-                        <property name="label">Назва:</property>
+                        <property name="label">Тип даних:</property>
                         <property name="halign">end</property>
                         <layout>
                             <property name="column">0</property>
@@ -25,7 +25,7 @@
                     </object>
                 </child>
                 <child>
-                    <object class="GtkEntry" id="entry_name">
+                    <object class="DropDownControl" id="dropdown_type">
                         <property name="hexpand">true</property>
                         <layout>
                             <property name="column">1</property>
@@ -34,133 +34,88 @@
                     </object>
                 </child>
 
-                <!-- Рядок 1: Повна назва -->
-                <child>
-                    <object class="GtkLabel">
-                        <property name="label">Повна назва:</property>
-                        <property name="halign">end</property>
-                        <layout>
-                            <property name="column">0</property>
-                            <property name="row">1</property>
-                        </layout>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkEntry" id="entry_full_name">
-                        <property name="hexpand">true</property>
-                        <layout>
-                            <property name="column">1</property>
-                            <property name="row">1</property>
-                        </layout>
-                    </object>
-                </child>
-
-                <!-- Рядок 2: В таблиці -->
-                <child>
-                    <object class="GtkLabel">
-                        <property name="label">В таблиці:</property>
-                        <property name="halign">end</property>
-                        <layout>
-                            <property name="column">0</property>
-                            <property name="row">2</property>
-                        </layout>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkEntry" id="entry_table_column">
-                        <property name="hexpand">true</property>
-                        <layout>
-                            <property name="column">1</property>
-                            <property name="row">2</property>
-                        </layout>
-                    </object>
-                </child>
-
-                <!-- Рядок 3: Тип -->
-                <child>
-                    <object class="GtkLabel">
-                        <property name="label">Тип:</property>
-                        <property name="halign">end</property>
-                        <layout>
-                            <property name="column">0</property>
-                            <property name="row">3</property>
-                        </layout>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkDropDown" id="dropdown_type">
-                        <property name="hexpand">true</property>
-                        <layout>
-                            <property name="column">1</property>
-                            <property name="row">3</property>
-                        </layout>
-                    </object>
-                </child>
-
-                <!-- Рядок 4: Вказівник -->
+                <!-- Рядок 1: Вказівник -->
                 <child>
                     <object class="GtkLabel">
                         <property name="label">Вказівник:</property>
                         <property name="halign">end</property>
                         <layout>
                             <property name="column">0</property>
-                            <property name="row">4</property>
+                            <property name="row">1</property>
                         </layout>
                     </object>
                 </child>
                 <child>
-                    <object class="GtkDropDown" id="dropdown_pointer">
+                    <object class="DropDownControl" id="dropdown_pointer">
                         <property name="hexpand">true</property>
                         <property name="sensitive">false</property>
                         <layout>
                             <property name="column">1</property>
-                            <property name="row">4</property>
+                            <property name="row">1</property>
                         </layout>
                     </object>
                 </child>
 
-                <!-- Рядок 5: Перелічення -->
+                <!-- Рядок 2: Перелічення -->
                 <child>
                     <object class="GtkLabel">
                         <property name="label">Перелічення:</property>
                         <property name="halign">end</property>
                         <layout>
                             <property name="column">0</property>
-                            <property name="row">5</property>
+                            <property name="row">2</property>
                         </layout>
                     </object>
                 </child>
                 <child>
-                    <object class="GtkDropDown" id="dropdown_enum">
+                    <object class="DropDownControl" id="dropdown_enum">
                         <property name="hexpand">true</property>
                         <property name="sensitive">false</property>
                         <layout>
                             <property name="column">1</property>
+                            <property name="row">2</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- Рядок 3: Індексувати -->
+                <child>
+                    <object class="GtkCheckButton" id="check_index">
+                        <property name="label">Індексувати</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">3</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- Рядок 4: Використовувати для представлення -->
+                <child>
+                    <object class="GtkCheckButton" id="check_presentation">
+                        <property name="label">Використовувати для представлення</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">4</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- Рядок 5: Повнотекстовий пошук -->
+                <child>
+                    <object class="GtkCheckButton" id="check_fulltext_search">
+                        <property name="label">Повнотекстовий пошук</property>
+                        <layout>
+                            <property name="column">1</property>
                             <property name="row">5</property>
                         </layout>
                     </object>
                 </child>
 
-                <!-- Рядок 6: Опис -->
+                <!-- Рядок 6: Пошук в журналах -->
                 <child>
-                    <object class="GtkLabel">
-                        <property name="label">Опис:</property>
-                        <property name="halign">end</property>
-                        <property name="valign">start</property>
-                        <layout>
-                            <property name="column">0</property>
-                            <property name="row">6</property>
-                        </layout>
-                    </object>
-                </child>
-                <child>
-                    <object class="GtkScrolledWindow">
-                        <property name="height-request">110</property>
-                        <property name="hexpand">true</property>
-                        <property name="has-frame">true</property>
-                        <property name="child">
-                            <object class="GtkTextView" id="textview_description" />
-                        </property>
+                    <object class="GtkCheckButton" id="check_journal_search">
+                        <property name="label">Пошук в журналах</property>
+                        <property name="active">true</property>
                         <layout>
                             <property name="column">1</property>
                             <property name="row">6</property>
@@ -168,10 +123,10 @@
                     </object>
                 </child>
 
-                <!-- Рядок 7: Індексувати -->
+                <!-- Рядок 7: Багатострічкове поле -->
                 <child>
-                    <object class="GtkCheckButton" id="check_index">
-                        <property name="label">Індексувати</property>
+                    <object class="GtkCheckButton" id="check_multiline">
+                        <property name="label">Багатострічкове поле</property>
                         <layout>
                             <property name="column">1</property>
                             <property name="row">7</property>
@@ -179,10 +134,11 @@
                     </object>
                 </child>
 
-                <!-- Рядок 8: Використовувати для представлення -->
+                <!-- Рядок 8: Автоматична нумерація та сортування -->
                 <child>
-                    <object class="GtkCheckButton" id="check_presentation">
-                        <property name="label">Використовувати для представлення</property>
+                    <object class="GtkCheckButton" id="check_auto_numbering">
+                        <property name="label">Автоматична нумерація та сортування</property>
+                        <property name="sensitive">false</property>
                         <layout>
                             <property name="column">1</property>
                             <property name="row">8</property>
@@ -190,10 +146,10 @@
                     </object>
                 </child>
 
-                <!-- Рядок 9: Повнотекстовий пошук -->
+                <!-- Рядок 9: Дозволити експорт -->
                 <child>
-                    <object class="GtkCheckButton" id="check_fulltext_search">
-                        <property name="label">Повнотекстовий пошук</property>
+                    <object class="GtkCheckButton" id="check_allow_export">
+                        <property name="label">Дозволити експорт</property>
                         <layout>
                             <property name="column">1</property>
                             <property name="row">9</property>
@@ -201,69 +157,23 @@
                     </object>
                 </child>
 
-                <!-- Рядок 10: Пошук в журналах -->
-                <child>
-                    <object class="GtkCheckButton" id="check_journal_search">
-                        <property name="label">Пошук в журналах</property>
-                        <property name="active">true</property>
-                        <layout>
-                            <property name="column">1</property>
-                            <property name="row">10</property>
-                        </layout>
-                    </object>
-                </child>
-
-                <!-- Рядок 11: Багатострічкове поле -->
-                <child>
-                    <object class="GtkCheckButton" id="check_multiline">
-                        <property name="label">Багатострічкове поле</property>
-                        <layout>
-                            <property name="column">1</property>
-                            <property name="row">11</property>
-                        </layout>
-                    </object>
-                </child>
-
-                <!-- Рядок 12: Автоматична нумерація та сортування -->
-                <child>
-                    <object class="GtkCheckButton" id="check_auto_numbering">
-                        <property name="label">Автоматична нумерація та сортування</property>
-                        <property name="sensitive">false</property>
-                        <layout>
-                            <property name="column">1</property>
-                            <property name="row">12</property>
-                        </layout>
-                    </object>
-                </child>
-
-                <!-- Рядок 13: Дозволити експорт -->
-                <child>
-                    <object class="GtkCheckButton" id="check_allow_export">
-                        <property name="label">Дозволити експорт</property>
-                        <layout>
-                            <property name="column">1</property>
-                            <property name="row">13</property>
-                        </layout>
-                    </object>
-                </child>
-
-                <!-- Рядок 14: Експандер композитного типу -->
+                <!-- Рядок 10: Експандер композитного типу -->
                 <child>
                     <object class="GtkExpander">
-                        <property name="label">Налаштування для композитного типу даних</property>
+                        <property name="label">Налаштування для композитного типу даних (composite_pointer)</property>
                         <property name="child">
                             <object class="GtkBox">
                                 <property name="orientation">vertical</property>
                                 <property name="spacing">10</property>
-                                <property name="margin-start">5</property>
-                                <property name="margin-top">5</property>
+                                <property name="margin-top">10</property>
+                                <property name="margin-bottom">10</property>
 
                                 <!-- Заголовок секції -->
                                 <child>
                                     <object class="GtkLabel">
                                         <property name="use-markup">true</property>
                                         <property name="label">&lt;b&gt;Довідники або документи доступні для вибору&lt;/b&gt;</property>
-                                        <property name="halign">start</property>
+                                        <property name="halign">center</property>
                                     </object>
                                 </child>
 
@@ -274,7 +184,7 @@
                                         <property name="spacing">10</property>
                                         <property name="homogeneous">true</property>
 
-                                        <!-- === КОЛОНКА 1: ДОВІДНИКИ === -->
+                                        <!-- ДОВІДНИКИ -->
                                         <child>
                                             <object class="GtkBox">
                                                 <property name="orientation">vertical</property>
@@ -290,22 +200,24 @@
                                                 <child>
                                                     <object class="GtkCheckButton" id="check_directories_not_use">
                                                         <property name="label">Не використовувати</property>
+                                                        <property name="sensitive">false</property>
                                                     </object>
                                                 </child>
 
                                                 <child>
                                                     <object class="GtkScrolledWindow">
-                                                        <property name="height-request">260</property>
+                                                        <property name="height-request">500</property>
+                                                        <property name="width-request">300</property>
                                                         <property name="has-frame">true</property>
-                                                        <property name="hscrollbar-policy">never</property>
                                                         <property name="child">
                                                             <!-- ListBox для довідників -->
                                                             <object class="GtkListBox" id="listbox_directories">
                                                                 <property name="selection-mode">none</property>
-                                                                <property name="margin-start">6</property>
-                                                                <property name="margin-end">6</property>
-                                                                <property name="margin-top">6</property>
-                                                                <property name="margin-bottom">6</property>
+                                                                <property name="margin-start">5</property>
+                                                                <property name="margin-end">5</property>
+                                                                <property name="margin-top">5</property>
+                                                                <property name="margin-bottom">5</property>
+                                                                <property name="sensitive">false</property>
                                                             </object>
                                                         </property>
                                                     </object>
@@ -313,7 +225,7 @@
                                             </object>
                                         </child>
 
-                                        <!-- === КОЛОНКА 2: ДОКУМЕНТИ === -->
+                                        <!-- ДОКУМЕНТИ -->
                                         <child>
                                             <object class="GtkBox">
                                                 <property name="orientation">vertical</property>
@@ -329,22 +241,24 @@
                                                 <child>
                                                     <object class="GtkCheckButton" id="check_documents_not_use">
                                                         <property name="label">Не використовувати</property>
+                                                        <property name="sensitive">false</property>
                                                     </object>
                                                 </child>
 
                                                 <child>
                                                     <object class="GtkScrolledWindow">
-                                                        <property name="height-request">260</property>
+                                                        <property name="height-request">500</property>
+                                                        <property name="width-request">300</property>
                                                         <property name="has-frame">true</property>
-                                                        <property name="hscrollbar-policy">never</property>
                                                         <property name="child">
                                                             <!-- ListBox для документів -->
                                                             <object class="GtkListBox" id="listbox_documents">
                                                                 <property name="selection-mode">none</property>
-                                                                <property name="margin-start">6</property>
-                                                                <property name="margin-end">6</property>
-                                                                <property name="margin-top">6</property>
-                                                                <property name="margin-bottom">6</property>
+                                                                <property name="margin-start">5</property>
+                                                                <property name="margin-end">5</property>
+                                                                <property name="margin-top">5</property>
+                                                                <property name="margin-bottom">5</property>
+                                                                <property name="sensitive">false</property>
                                                             </object>
                                                         </property>
                                                     </object>
@@ -358,26 +272,9 @@
                             </object>
                         </property>
                         <layout>
-                            <property name="column">1</property>
-                            <property name="row">14</property>
-                        </layout>
-                    </object>
-                </child>
-
-                <!-- Рядок 15: Експандер Довідка -->
-                <child>
-                    <object class="GtkExpander">
-                        <property name="label">Довідка</property>
-                        <property name="child">
-                            <object class="GtkBox">
-                                <property name="orientation">vertical</property>
-                                <property name="margin-start">12</property>
-                                <property name="margin-top">6</property>
-                            </object>
-                        </property>
-                        <layout>
-                            <property name="column">1</property>
-                            <property name="row">15</property>
+                            <property name="column">0</property>
+                            <property name="row">10</property>
+                            <property name="column-span">2</property>
                         </layout>
                     </object>
                 </child>

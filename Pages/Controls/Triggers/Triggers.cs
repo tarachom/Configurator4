@@ -3,7 +3,7 @@ using GObject;
 using AccountingSoftware;
 
 [Subclass<Box>("Triggers")]
-[Template<AssemblyResource>("Triggers.xml")]
+[Template<AssemblyResource>("Triggers.ui")]
 public partial class Triggers
 {
     [Connect("entry_new")] Entry entryNew;

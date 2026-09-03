@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="BasicFields" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">10</property>
+        <property name="margin-start">5</property>
+        <property name="margin-end">5</property>
+        <property name="margin-top">5</property>
+        <property name="margin-bottom">5</property>
+
+        <child>
+            <object class="GtkGrid">
+                <property name="column-spacing">10</property>
+                <property name="row-spacing">8</property>
+
+                <!-- Рядок 0: Назва -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Назва:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">0</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkEntry" id="entry_item_name">
+                        <property name="hexpand">true</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">0</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- Рядок 1: Повна назва -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Повна назва:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">1</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkEntry" id="entry_full_name">
+                        <property name="hexpand">true</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">1</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- Рядок 2: Таблиця / Поле -->
+                <child>
+                    <object class="GtkLabel" id="label_table_or_column">
+                        <property name="label"></property> <!-- Таблиця або Поле -->
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">2</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkEntry" id="entry_table_or_column">
+                        <property name="hexpand">true</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">2</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- Рядок 3: Опис -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Опис:</property>
+                        <property name="halign">end</property>
+                        <property name="valign">start</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">3</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkScrolledWindow">
+                        <property name="height-request">100</property>
+                        <property name="hexpand">true</property>
+                        <property name="has-frame">true</property>
+                        <property name="child">
+                            <object class="GtkTextView" id="textview_desc"/>
+                        </property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">3</property>
+                        </layout>
+                    </object>
+                </child>
+
+            </object>
+        </child>
+    </template>
+</interface>
