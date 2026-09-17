@@ -4,6 +4,7 @@ using AccountingSoftware;
 using InterfaceGtkLib;
 using System.Text;
 using System.Xml.XPath;
+using InterfaceGtk4;
 
 namespace Configurator;
 
@@ -42,15 +43,8 @@ public partial class PageSaveConfiguration
 
     partial void Initialize()
     {
-        buttonBrowseGeneratePath.OnClicked += (_, _) =>
-        {
-
-        };
-
-        buttonBrowseBuildPath.OnClicked += (_, _) =>
-        {
-
-        };
+        buttonBrowseGeneratePath.OnClicked += async (_, _) => await FunctionForFileDialog.SelectFolder(async path => { entryGeneratePath.Text_ = path; }, Program.BasicForm, entryGeneratePath.Text_);
+        buttonBrowseBuildPath.OnClicked += async (_, _) => await FunctionForFileDialog.SelectFolder(async path => { entryBuildPath.Text_ = path; }, Program.BasicForm, entryBuildPath.Text_);
 
         buttonSaveSettings.OnClicked += (_, _) =>
         {
