@@ -4,6 +4,15 @@ using AccountingSoftware;
 
 namespace Configurator;
 
+/// <summary>
+/// Базові поля: 
+///     Назва
+///     Повна назва
+///     Таблиця або поле
+///     Опис
+/// 
+/// Використовується для довідника, документу, поля і т.д.
+/// </summary>
 [Subclass<Box>("BasicFields")]
 [Template<AssemblyResource>("BasicFields.ui")]
 public partial class BasicFields

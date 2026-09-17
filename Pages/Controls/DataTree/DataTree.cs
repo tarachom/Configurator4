@@ -3,6 +3,9 @@ using GObject;
 using AccountingSoftware;
 using Configurator;
 
+/// <summary>
+/// 
+/// </summary>
 [Subclass<Box>()]
 [Template<AssemblyResource>("DataTree.ui")]
 public abstract partial class DataTree
@@ -21,6 +24,4 @@ public abstract partial class DataTree
         
         await page.SetValue();
     }
-
-
 }

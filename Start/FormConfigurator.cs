@@ -52,15 +52,7 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
         await page.SetValue();
     }
 
-    protected override void Settings(LinkButton linkButton)
-    {
 
-    }
-
-    protected override void Service(LinkButton linkButton)
-    {
-
-    }
 
     protected override async Task PageDirectory(string name, bool isNew = false)
     {
@@ -110,6 +102,13 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
     }
 
 
+    protected override async Task PageSettings()
+    {
+        PageSettings page = Configurator.PageSettings.New();
+        NotebookFunc?.CreatePage("Налаштування", page);
+
+        page.SetValue();
+    }
 
     #region TopMenu
 

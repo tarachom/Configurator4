@@ -1,214 +1,83 @@
-/*
-
-Стартова сторінка
-
-*/
-
 using Gtk;
-using InterfaceGtkLib;
-using InterfaceGtk4;
+using GObject;
 using AccountingSoftware;
-using System.Xml.XPath;
+using InterfaceGtkLib;
 using System.Text;
+using System.Xml.XPath;
 
 namespace Configurator;
 
-[GObject.Subclass<Form>]
-partial class PageSaveConfiguration : Form
+/// <summary>
+/// 
+/// </summary>
+[Subclass<Box>("PageSaveConfiguration")]
+[Template<AssemblyResource>("PageSaveConfiguration.ui")]
+public partial class PageSaveConfiguration
 {
-    Configuration Conf = Program.Kernel.Conf;
-
-    string PathToXsltTemplate = AppContext.BaseDirectory;
+    Configuration Conf { get; } = Program.Kernel.Conf;
+    ConfigurationParam? OpenConfigurationParam { get; } = Program.BasicForm?.OpenConfigurationParam;
+    string PathToXsltTemplate { get; } = AppContext.BaseDirectory;
 
     #region Fields
 
-    CheckButton checkButtonIsGenerate = CheckButton.NewWithLabel("Генерувати код");
-    Entry entryGenerateCodePath = Entry.New();
-    Entry entryCompileProgramPath = Entry.New();
-    Button buttonSaveParam = Button.NewWithLabel("Зберегти параметри");
-
-    Button buttonAnalize = Button.NewWithLabel("Аналіз змін");
-    Button buttonAnalizeAndCreateSQL = Button.NewWithLabel("Збереження змін. Крок 1");
-    Button buttonExecuteSQLAndGenCode = Button.NewWithLabel("Збереження змін. Крок 2");
-
-    ScrolledWindow scrollListBoxTerminal = ScrolledWindow.New();
-    TextView textTerminal = TextView.New();
+    [Connect("check_generate_code")] CheckButton checkGenerateCode;
+    [Connect("entry_generate_path")] Entry entryGeneratePath;
+    [Connect("button_browse_generate_path")] Button buttonBrowseGeneratePath;
+    [Connect("entry_build_path")] Entry entryBuildPath;
+    [Connect("button_browse_build_path")] Button buttonBrowseBuildPath;
+    [Connect("button_save_settings")] Button buttonSaveSettings;
+    [Connect("button_analyze")] Button buttonAnalyze;
+    [Connect("button_save_step1")] Button buttonSaveStep1;
+    [Connect("button_save_step2")] Button buttonSaveStep2;
+    [Connect("scroll_list_box_terminal")] ScrolledWindow scrollListBoxTerminal;
+    [Connect("text_terminal")] TextView textTerminal;
 
     #endregion
 
-    partial void Initialize()
-    {
-        Expander expander = Expander.New("Параметри");
-        expander.MarginTop = 5;
-        expander.MarginBottom = 20;
-        Append(expander);
-
-        //Параметри
-        {
-            Box vBoxParams = Box.New(Orientation.Vertical, 0);
-            vBoxParams.MarginStart = vBoxParams.MarginTop = vBoxParams.MarginBottom = 10;
-            expander.SetChild(vBoxParams);
-
-            //1
-            {
-                Box hBox = Box.New(Orientation.Horizontal, 0);
-                hBox.MarginBottom = 5;
-                vBoxParams.Append(hBox);
-
-                hBox.Append(checkButtonIsGenerate);
-            }
-
-            //2
-            {
-                Box hBox = Box.New(Orientation.Horizontal, 0);
-                hBox.MarginBottom = 5;
-                vBoxParams.Append(hBox);
-
-                entryGenerateCodePath.WidthRequest = 500;
-
-                Label label = Label.New("Шлях до папки куди генерувати код:");
-                label.MarginEnd = 5;
-                hBox.Append(label);
-
-                entryGenerateCodePath.MarginEnd = 5;
-                hBox.Append(entryGenerateCodePath);
-
-                Button buttonSelectFolderGenerateCode = Button.NewWithLabel("...");
-                buttonSelectFolderGenerateCode.MarginEnd = 5;
-                //buttonSelectFolderGenerateCode.OnClicked += OnSelectFolderGenerateCode;
-                hBox.Append(buttonSelectFolderGenerateCode);
-
-                hBox.Append(Label.New("Стандартно код генерується в каталог програми"));
-            }
-
-            //3
-            {
-                Box hBox = Box.New(Orientation.Horizontal, 0);
-                hBox.MarginBottom = 5;
-                vBoxParams.Append(hBox);
-
-                entryCompileProgramPath.WidthRequest = 500;
-
-                Label label = Label.New("Шлях до папки скомпільованої програми:");
-                label.MarginEnd = 5;
-                hBox.Append(label);
-
-                entryCompileProgramPath.MarginEnd = 5;
-                hBox.Append(entryCompileProgramPath);
-
-                Button buttonSelectFolderCompileProgram = Button.NewWithLabel("...");
-                buttonSelectFolderCompileProgram.MarginEnd = 5;
-                //buttonSelectFolderCompileProgram.OnClicked += OnSelectFolderCompileProgram;
-                hBox.Append(buttonSelectFolderCompileProgram);
-
-                hBox.Append(Label.New("Наприклад 'bin/Debug/net10.0/'. В цю папку буде скопійований файл Confa.xml"));
-            }
-
-            //Save
-            {
-                Box hBox = Box.New(Orientation.Horizontal, 0);
-                hBox.MarginBottom = 5;
-                vBoxParams.Append(hBox);
-
-                buttonSaveParam.OnClicked += OnSaveParam;
-                hBox.Append(buttonSaveParam);
-            }
-        }
-
-        // Append(Separator.New(Orientation.Horizontal));
-
-        //Кнопки
-        {
-            Box hBox = Box.New(Orientation.Horizontal, 0);
-            hBox.MarginBottom = 5;
-
-            buttonAnalize.OnClicked += async (_, _) => await SaveAndAnalize();
-            buttonAnalize.MarginStart = buttonAnalize.MarginEnd = 5;
-            hBox.Append(buttonAnalize);
-
-            buttonAnalizeAndCreateSQL.OnClicked += async (_, _) => await SaveAnalizeAndCreateSQL();
-            buttonAnalizeAndCreateSQL.MarginStart = buttonAnalizeAndCreateSQL.MarginEnd = 5;
-            hBox.Append(buttonAnalizeAndCreateSQL);
-
-            buttonExecuteSQLAndGenCode.OnClicked += async (_, _) => await ExecuteSQLAndGenerateCode();
-            buttonExecuteSQLAndGenCode.MarginStart = buttonExecuteSQLAndGenCode.MarginEnd = 5;
-            hBox.Append(buttonExecuteSQLAndGenCode);
-
-            Append(hBox);
-        }
-
-        //Terminal
-        {
-            Box hBox = Box.New(Orientation.Horizontal, 0);
-            hBox.MarginTop = 15;
-            hBox.Vexpand = hBox.Hexpand = true;
-            Append(hBox);
-
-            scrollListBoxTerminal.SetPolicy(PolicyType.Automatic, PolicyType.Automatic);
-            scrollListBoxTerminal.Vexpand = scrollListBoxTerminal.Hexpand = true;
-            scrollListBoxTerminal.SetChild(textTerminal);
-
-            hBox.Append(scrollListBoxTerminal);
-        }
-    }
-
     public static PageSaveConfiguration New()
     {
-        PageSaveConfiguration view = NewWithProperties([]);
-        view.NotebookFunc = Program.BasicForm?.NotebookFunc;
+        PageSaveConfiguration w = NewWithProperties([]);
+        return w;
+    }
 
-        return view;
+    partial void Initialize()
+    {
+        buttonBrowseGeneratePath.OnClicked += (_, _) =>
+        {
+
+        };
+
+        buttonBrowseBuildPath.OnClicked += (_, _) =>
+        {
+
+        };
+
+        buttonSaveSettings.OnClicked += (_, _) =>
+        {
+            var otherParam = OpenConfigurationParam?.OtherParam;
+            if (otherParam != null)
+            {
+                otherParam[ConfigurationParam.IsGenerateCode] = checkGenerateCode.Active.ToString();
+                otherParam[ConfigurationParam.GenerateCodePath] = entryGeneratePath.GetText();
+                otherParam[ConfigurationParam.CompileProgramPath] = entryBuildPath.GetText();
+
+                ConfigurationParamCollection.SaveConfigurationParamFromXML(ConfigurationParamCollection.PathToXML);
+            }
+        };
+
+        buttonAnalyze.OnClicked += async (_, _) => await SaveAndAnalize();
+        buttonSaveStep1.OnClicked += async (_, _) => await SaveAnalizeAndCreateSQL();
+        buttonSaveStep2.OnClicked += async (_, _) => await ExecuteSQLAndGenerateCode();
     }
 
     public void SetValue()
     {
-        if (Program.BasicForm != null)
+        var otherParam = OpenConfigurationParam?.OtherParam;
+        if (otherParam != null)
         {
-            ConfigurationParam? openConfigurationParam = Program.BasicForm.OpenConfigurationParam;
-            if (openConfigurationParam != null)
-            {
-                //1
-                if (openConfigurationParam.OtherParam.TryGetValue("IsGenerateCode", out string? IsGenerateCode))
-                    checkButtonIsGenerate.Active = IsGenerateCode == "True";
-
-                //2
-                if (openConfigurationParam.OtherParam.TryGetValue("GenerateCodePath", out string? GenerateCodePath))
-                    entryGenerateCodePath.SetText(GenerateCodePath);
-
-                //3
-                if (openConfigurationParam.OtherParam.TryGetValue("CompileProgramPath", out string? CompileProgramPath))
-                    entryCompileProgramPath.SetText(CompileProgramPath);
-            }
-        }
-    }
-
-    void OnSaveParam(Button button, EventArgs arg)
-    {
-        if (Program.BasicForm != null)
-        {
-            ConfigurationParam? openConfigurationParam = Program.BasicForm.OpenConfigurationParam;
-            if (openConfigurationParam != null)
-            {
-                //1
-                if (openConfigurationParam.OtherParam.ContainsKey("IsGenerateCode"))
-                    openConfigurationParam.OtherParam["IsGenerateCode"] = checkButtonIsGenerate.Active.ToString();
-                else
-                    openConfigurationParam.OtherParam.Add("IsGenerateCode", checkButtonIsGenerate.Active.ToString());
-
-                //2
-                if (openConfigurationParam.OtherParam.ContainsKey("GenerateCodePath"))
-                    openConfigurationParam.OtherParam["GenerateCodePath"] = entryGenerateCodePath.GetText();
-                else
-                    openConfigurationParam.OtherParam.Add("GenerateCodePath", entryGenerateCodePath.GetText());
-
-                //3
-                if (openConfigurationParam.OtherParam.ContainsKey("CompileProgramPath"))
-                    openConfigurationParam.OtherParam["CompileProgramPath"] = entryCompileProgramPath.GetText();
-                else
-                    openConfigurationParam.OtherParam.Add("CompileProgramPath", entryCompileProgramPath.GetText());
-            }
-
-            ConfigurationParamCollection.SaveConfigurationParamFromXML(ConfigurationParamCollection.PathToXML);
+            checkGenerateCode.Active = otherParam.GetValueOrDefault(ConfigurationParam.IsGenerateCode) == "True";
+            entryGeneratePath.SetText(otherParam.GetValueOrDefault(ConfigurationParam.GenerateCodePath) ?? "");
+            entryBuildPath.SetText(otherParam.GetValueOrDefault(ConfigurationParam.CompileProgramPath) ?? "");
         }
     }
 
@@ -221,11 +90,11 @@ partial class PageSaveConfiguration : Form
             textTerminal.Buffer.PlaceCursor(iterEndText);
 
             string text = message + "\n";
-            textTerminal.Buffer.InsertAtCursor(text, Encoding.UTF8.GetBytes(text).Length);
+            //textTerminal.Buffer.InsertAtCursor(text, Encoding.UTF8.GetBytes(text).Length);
+            textTerminal.Buffer.InsertAtCursor(text, -1);
 
             scrollListBoxTerminal.Vadjustment?.Value = scrollListBoxTerminal.Vadjustment.Upper;
         }
-        ;
     }
 
     void ClearListBoxTerminal()
@@ -265,9 +134,9 @@ partial class PageSaveConfiguration : Form
 
     void ButtonSensitive(bool sensitive)
     {
-        buttonAnalize.Sensitive = sensitive;
-        buttonAnalizeAndCreateSQL.Sensitive = sensitive;
-        buttonExecuteSQLAndGenCode.Sensitive = sensitive;
+        buttonAnalyze.Sensitive = sensitive;
+        buttonSaveStep1.Sensitive = sensitive;
+        buttonSaveStep2.Sensitive = sensitive;
         textTerminal.Sensitive = sensitive;
     }
 
@@ -730,14 +599,14 @@ partial class PageSaveConfiguration : Form
         }
 
         //Копіювання файлу конфігурації Confa.xml в каталог зкомпільованої програми
-        if (!string.IsNullOrEmpty(entryCompileProgramPath.GetText()))
+        if (!string.IsNullOrEmpty(entryBuildPath.GetText()))
         {
             /*
             if (entryCompileProgramPath.Text.Substring(entryCompileProgramPath.Text.Length - 1, 1) != "/")
                 entryCompileProgramPath.Text += "/";
             */
 
-            string folderCompileProgramPath = System.IO.Path.GetDirectoryName(entryCompileProgramPath.GetText())!;
+            string folderCompileProgramPath = System.IO.Path.GetDirectoryName(entryBuildPath.GetText())!;
 
             if (System.IO.Directory.Exists(folderCompileProgramPath))
             {
@@ -748,11 +617,11 @@ partial class PageSaveConfiguration : Form
             }
         }
 
-        if (checkButtonIsGenerate.Active)
+        if (checkGenerateCode.Active)
         {
-            string folderGenerateCode = string.IsNullOrEmpty(entryGenerateCodePath.GetText()) ?
+            string folderGenerateCode = string.IsNullOrEmpty(entryGeneratePath.GetText()) ?
                    System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)! :
-                   entryGenerateCodePath.GetText();
+                   entryGeneratePath.GetText();
 
             if (System.IO.Directory.Exists(folderGenerateCode))
             {
@@ -976,4 +845,5 @@ partial class PageSaveConfiguration : Form
         Thread.Sleep(1000);
         ApendLine("\n\n\n");
     }
+
 }

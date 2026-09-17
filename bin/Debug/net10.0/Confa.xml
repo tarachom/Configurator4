@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>13.08.2026 14:35:22</DateTimeSave>
+  <DateTimeSave>17.09.2026 11:18:42</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -6749,8 +6749,6 @@ END]]></Value>
       <VersionsHistory>1</VersionsHistory>
       <Type>Hierarchical</Type>
       <ParentField>Родич</ParentField>
-      <IconTree>
-      </IconTree>
       <AllowedContent>Elements</AllowedContent>
       <PredefinedFields>
         <PredefinedField>
@@ -7799,7 +7797,6 @@ FROM
       <VersionsHistory>1</VersionsHistory>
       <Type>Hierarchical</Type>
       <ParentField>Родич</ParentField>
-      <IconTree>Folder</IconTree>
       <AllowedContent>Folders</AllowedContent>
       <PredefinedFields>
         <PredefinedField>
@@ -8024,7 +8021,6 @@ FROM
       <VersionsHistory>1</VersionsHistory>
       <Type>Hierarchical</Type>
       <ParentField>Родич</ParentField>
-      <IconTree>Folder</IconTree>
       <AllowedContent>Folders</AllowedContent>
       <PredefinedFields>
         <PredefinedField>
@@ -8222,7 +8218,6 @@ FROM
       <VersionsHistory>1</VersionsHistory>
       <Type>Hierarchical</Type>
       <ParentField>Родич</ParentField>
-      <IconTree>Folder</IconTree>
       <AllowedContent>Folders</AllowedContent>
       <PredefinedFields>
         <PredefinedField>
@@ -13021,7 +13016,6 @@ FROM
       <VersionsHistory>1</VersionsHistory>
       <Type>Hierarchical</Type>
       <ParentField>Родич</ParentField>
-      <IconTree>Folder</IconTree>
       <AllowedContent>Folders</AllowedContent>
       <DirectoryOwner>Довідники.СкладськіПриміщення</DirectoryOwner>
       <PointerFieldOwner>Власник</PointerFieldOwner>
@@ -14713,7 +14707,6 @@ FROM
       <VersionsHistory>0</VersionsHistory>
       <Type>Hierarchical</Type>
       <ParentField>Родич</ParentField>
-      <IconTree>Folder</IconTree>
       <AllowedContent>FoldersAndElements</AllowedContent>
       <IsFolderField>ЦеГрупа</IsFolderField>
       <PredefinedFields>
@@ -15191,8 +15184,6 @@ FROM
       <VersionsHistory>0</VersionsHistory>
       <Type>Hierarchical</Type>
       <ParentField>Родич</ParentField>
-      <IconTree>
-      </IconTree>
       <AllowedContent>Elements</AllowedContent>
       <PredefinedFields>
         <PredefinedField>
@@ -15608,8 +15599,6 @@ FROM
       <VersionsHistory>0</VersionsHistory>
       <Type>Hierarchical</Type>
       <ParentField>Родич</ParentField>
-      <IconTree>
-      </IconTree>
       <AllowedContent>FoldersAndElements</AllowedContent>
       <IsFolderField>ЦеПапка</IsFolderField>
       <PredefinedFields>
@@ -16886,8 +16875,6 @@ FROM
       <VersionsHistory>0</VersionsHistory>
       <Type>Hierarchical</Type>
       <ParentField>Родич</ParentField>
-      <IconTree>
-      </IconTree>
       <AllowedContent>Folders</AllowedContent>
       <PredefinedFields>
         <PredefinedField>

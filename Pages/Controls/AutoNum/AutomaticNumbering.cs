@@ -3,6 +3,9 @@ using GObject;
 using AccountingSoftware;
 using Configurator;
 
+/// <summary>
+/// 
+/// </summary>
 [Subclass<Box>()]
 [Template<AssemblyResource>("AutomaticNumbering.ui")]
 public abstract partial class AutomaticNumbering

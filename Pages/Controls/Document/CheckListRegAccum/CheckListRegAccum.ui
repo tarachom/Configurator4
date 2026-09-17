@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="CheckListRegAccum" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">10</property>
+        <property name="margin-start">5</property>
+        <property name="margin-end">5</property>
+        <property name="margin-top">5</property>
+        <property name="margin-bottom">5</property>
+
+        <child>
+            <object class="GtkExpander">
+                <property name="label">Регістри накопичення</property>
+                <property name="expanded">false</property>
+                
+                 <child>
+                    <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">10</property>
+                        <property name="margin-top">10</property>
+
+                        <!-- Заголовок -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="use-markup">true</property>
+                                <property name="label">&lt;b&gt;Регістри накопичення які використовує документ&lt;/b&gt;</property>
+                                <property name="halign">center</property>
+                            </object>
+                        </child>
+
+                        <child>
+                            <object class="GtkScrolledWindow">
+                                <property name="height-request">500</property>
+                                <property name="has-frame">true</property>
+                                <property name="child">
+                                    <!-- ListBox -->
+                                    <object class="GtkListBox" id="listbox">
+                                        <property name="selection-mode">none</property>
+                                        <property name="margin-start">5</property>
+                                        <property name="margin-end">5</property>
+                                        <property name="margin-top">5</property>
+                                        <property name="margin-bottom">5</property>
+                                    </object>
+                                </property>
+                            </object>
+                        </child>
+
+                    </object>
+                </child>
+
+            </object>
+        </child>
+
+    </template>
+</interface>

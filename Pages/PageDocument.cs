@@ -13,11 +13,13 @@ namespace Configurator;
 [GObject.Subclass<FormPageConfigurator>(nameof(PageDocument))]
 partial class PageDocument : FormPageConfigurator
 {
-    public override Configuration Conf { get; } = Program.Kernel.Conf;
     public ConfigurationDocuments ConfDocument { get; set; } = new();
+    Configuration Conf { get; } = Program.Kernel.Conf;
 
     BasicFields basicFields = BasicFields.New();
     Triggers triggers = Triggers.New();
+    Spend spend = Spend.New();
+    CheckListRegAccum checkListRegAccum = CheckListRegAccum.New();
     DocumentAutomaticNumbering autoNum = DocumentAutomaticNumbering.New();
     DocumentDataTree dataTree = DocumentDataTree.New();
 
@@ -44,6 +46,12 @@ partial class PageDocument : FormPageConfigurator
 
         //Тригери
         vBox.Append(triggers);
+
+        //Проведення
+        vBox.Append(spend);
+
+        //Регістри накопичення які використовує документ
+        vBox.Append(checkListRegAccum);
     }
 
     protected override void CreateEnd(Box vBox)
@@ -61,9 +69,13 @@ partial class PageDocument : FormPageConfigurator
         basicFields.TableOrColumn = ConfDocument.Table;
         basicFields.Desc = ConfDocument.Desc;
 
-        triggers.SetValue(ConfDocument.TriggerFunctions);
-        dataTree.SetValue(ConfDocument);
         autoNum.SetValue(ConfDocument);
+
+        triggers.SetValue(ConfDocument.TriggerFunctions);
+        spend.SetValue(ConfDocument.SpendFunctions);
+        checkListRegAccum.SetValue(ConfDocument.AllowRegisterAccumulation);
+        
+        dataTree.SetValue(ConfDocument);
     }
 
     protected override async Task GetValue()
@@ -73,8 +85,13 @@ partial class PageDocument : FormPageConfigurator
         ConfDocument.Table = basicFields.TableOrColumn;
         ConfDocument.Desc = basicFields.Desc;
 
-        ConfDocument.TriggerFunctions = triggers.GetValue();
         autoNum.GetValue();
+
+        ConfDocument.TriggerFunctions = triggers.GetValue();
+        ConfDocument.SpendFunctions = spend.GetValue();
+
+        ConfDocument.AllowRegisterAccumulation.Clear();
+        ConfDocument.AllowRegisterAccumulation.AddRange(checkListRegAccum.GetValue());
     }
 
     protected override async Task<bool> Save()

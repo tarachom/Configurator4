@@ -13,10 +13,10 @@ namespace Configurator;
 [GObject.Subclass<FormPageConfigurator>(nameof(PageField))]
 partial class PageField : FormPageConfigurator
 {
-    public override Configuration Conf { get; } = Program.Kernel.Conf;
     public string ParentTable { get; set; } = "";
     public ConfigurationField ConfField { get; set; } = new();
     public Dictionary<string, ConfigurationField> Fields = [];
+    Configuration Conf { get; } = Program.Kernel.Conf;
 
     BasicFields basicFields = BasicFields.New();
     Field field = Field.New();

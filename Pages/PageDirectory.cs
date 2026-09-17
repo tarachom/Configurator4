@@ -13,8 +13,8 @@ namespace Configurator;
 [GObject.Subclass<FormPageConfigurator>(nameof(PageDirectory))]
 partial class PageDirectory : FormPageConfigurator
 {
-    public override Configuration Conf { get; } = Program.Kernel.Conf;
     public ConfigurationDirectories ConfDirectory { get; set; } = new();
+    Configuration Conf { get; } = Program.Kernel.Conf;
 
     BasicFields basicFields = BasicFields.New();
     Triggers triggers = Triggers.New();
