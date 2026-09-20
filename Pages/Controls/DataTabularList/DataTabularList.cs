@@ -148,7 +148,7 @@ public partial class DataTabularList
         bool FilterField_ = false;
         public Action? Сhanged_FilterField { get; set; } = null;
 
-        /* Тип */
+        /* Тип даних поля */
         public string Type
         {
             get => Type_;
@@ -169,6 +169,22 @@ public partial class DataTabularList
     public partial class ItemRowExtraFields : ItemRow
     {
         public static ItemRowExtraFields New() => NewWithProperties([]);
+
+        /* Тип */
+        public string Type
+        {
+            get => Type_;
+            set
+            {
+                if (!Type_.Equals(value))
+                {
+                    Type_ = value;
+                    Сhanged_Type?.Invoke();
+                }
+            }
+        }
+        string Type_ = "";
+        public Action? Сhanged_Type { get; set; } = null;
 
         /* Значення */
         public string Value
@@ -460,7 +476,7 @@ public partial class DataTabularList
         }
     }
 
-    void ColumnFields(ColumnView columnView)
+    static void ColumnFields(ColumnView columnView)
     {
         //Сортування
         {
@@ -533,7 +549,7 @@ public partial class DataTabularList
                 if (listItem.Child is not LabelTablePartCell cell) return;
                 if (listItem.Item is not ItemRowFields row) return;
 
-                (row.Сhanged_Name = () => cell.SetText(row.Type)).Invoke();
+                (row.Сhanged_Type = () => cell.SetText(row.Type)).Invoke();
             };
             ColumnViewColumn column = ColumnViewColumn.New("Тип", factory);
             column.FixedWidth = 300;
@@ -543,8 +559,37 @@ public partial class DataTabularList
         }
     }
 
-    void ColumnExtraFields(ColumnView columnView)
+    static void ColumnExtraFields(ColumnView columnView)
     {
+        //Тип
+        {
+            SignalListItemFactory factory = SignalListItemFactory.New();
+            factory.OnSetup += (_, args) =>
+            {
+                if (args.Object is not ListItem listItem) return;
+                var cell = DropDownTablePartCell.NewWithValues(new Dictionary<string, string>
+                {
+                    { "string", "Текст" },
+                    { "numeric", "Число" }
+                }, false);
+
+                listItem.Child = cell;
+            };
+            factory.OnBind += (_, args) =>
+            {
+                if (args.Object is not ListItem listItem) return;
+                if (listItem.Child is not DropDownTablePartCell cell) return;
+                if (listItem.Item is not ItemRowExtraFields row) return;
+
+                cell.OnСhanged = () => row.Type = cell.Value;
+                (row.Сhanged_Type = () => cell.Value = row.Type).Invoke();
+            };
+            ColumnViewColumn column = ColumnViewColumn.New("Тип", factory);
+            column.Resizable = true;
+
+            columnView.AppendColumn(column);
+        }
+
         //Значення
         {
             SignalListItemFactory factory = SignalListItemFactory.New();
@@ -662,6 +707,7 @@ public partial class DataTabularList
             item.Caption = field.Caption;
             item.Size = field.Size;
             item.SortNum = field.SortNum;
+            item.Type = field.Type;
             item.Value = field.Value;
 
             StoreExtraFields.Append(item);
@@ -709,8 +755,11 @@ public partial class DataTabularList
                             newName = row.Name + n;
                         row.Name = newName;
 
+                        if (string.IsNullOrEmpty(row.Type))
+                            row.Type = "string";
+
                         row.SortNum = ++counter;
-                        TabularList.AppendAdditionalField(new(row.Visible, row.Name, row.Caption, row.Size, row.SortNum, "string", row.Value));
+                        TabularList.AppendAdditionalField(new(row.Visible, row.Name, row.Caption, row.Size, row.SortNum, row.Type, row.Value));
                     }
         }
 
