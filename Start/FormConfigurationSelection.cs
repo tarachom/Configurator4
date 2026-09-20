@@ -44,15 +44,26 @@ partial class FormConfigurationSelection : InterfaceGtk4.FormConfigurationSelect
         return form;
     }
 
-    public override async Task<bool> OpenConfigurator(ConfigurationParam? openConfigurationParam)
+    public override async Task<bool> OpenConfigurator(GlobalConfigurationParam globalConfigurationParam, ConfigurationParam? openConfigurationParam)
     {
-        FormConfigurator form = FormConfigurator.NewConfiguratorStart(openConfigurationParam);
+        FormConfigurator form = FormConfigurator.NewConfiguratorStart(globalConfigurationParam, openConfigurationParam);
         form.Show();
 
         Program.BasicForm = form;
 
         //Відкрити перші сторінки
         await form.OpenFirstPages();
+
+        //Автоматичний запуск AI клієнта
+        if (globalConfigurationParam.AIStartOnRun)
+            try
+            {
+                FunctionForAI.CreateClient(globalConfigurationParam.AIKey, globalConfigurationParam.AIModel);
+            }
+            catch
+            {
+                
+            }
 
         return true;
     }

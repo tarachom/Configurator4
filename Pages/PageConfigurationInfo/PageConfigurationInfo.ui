@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="PageConfigurationInfo" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">12</property>
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+
+        <child>
+            <object class="GtkBox">
+                <property name="orientation">horizontal</property>
+                <property name="spacing">8</property>
+                <child>
+                    <object class="GtkButton" id="button_save">
+                        <property name="label">Зберегти</property>
+                    </object>
+                </child>
+            </object>
+        </child>
+
+        <child>
+            <object class="GtkGrid">
+                <property name="column-spacing">12</property>
+                <property name="row-spacing">8</property>
+                <property name="hexpand">true</property>
+                <property name="vexpand">true</property>
+
+                <!-- РЯДОК 0: Назва -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Назва:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">0</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkEntry" id="entry_name">
+                        <property name="hexpand">true</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">0</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Загальна інформація про конфігурацію</property>
+                        <property name="halign">start</property>
+                        <style>
+                            <class name="dim-label"/>
+                        </style>
+                        <layout>
+                            <property name="column">2</property>
+                            <property name="row">0</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- РЯДОК 1: Підзаголовок -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Підзаголовок:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">1</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkEntry" id="entry_subtitle">
+                        <property name="hexpand">true</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">1</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- РЯДОК 2: Простір імен згенерованого коду -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Простір імен згенерованого коду:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">2</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkEntry" id="entry_namespace_generated">
+                        <property name="hexpand">true</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">2</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- РЯДОК 3: Простір імен програми -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Простір імен програми:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">3</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkEntry" id="entry_namespace_program">
+                        <property name="hexpand">true</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">3</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- РЯДОК 4: Автор -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Автор:</property>
+                        <property name="halign">end</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">4</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkEntry" id="entry_author">
+                        <property name="hexpand">true</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">4</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- РЯДОК 5: Опис -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Опис:</property>
+                        <property name="halign">end</property>
+                        <property name="valign">start</property>
+                        <property name="margin-top">6</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">5</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkScrolledWindow">
+                        <property name="hexpand">true</property>
+                        <property name="vexpand">true</property>
+                        <property name="has-frame">true</property>
+                        <property name="min-content-height">200</property>
+                        <property name="child">
+                            <object class="GtkTextView" id="textview_desc">
+                                <property name="wrap-mode">word</property>
+                                <property name="left-margin">6</property>
+                                <property name="right-margin">6</property>
+                                <property name="top-margin">6</property>
+                                <property name="bottom-margin">6</property>
+                            </object>
+                        </property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">5</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- РЯДОК 6: Версія бібліотек Gtk (внизу форми) -->
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Версія бібліотек Gtk:</property>
+                        <property name="halign">end</property>
+                        <property name="margin-top">4</property>
+                        <layout>
+                            <property name="column">0</property>
+                            <property name="row">6</property>
+                        </layout>
+                    </object>
+                </child>
+                <child>
+                    <object class="DropDownControl" id="dropdown_gtk_version">
+                        <property name="halign">start</property>
+                        <property name="margin-top">4</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">6</property>
+                        </layout>
+                    </object>
+                </child>
+
+            </object>
+        </child>
+
+    </template>
+</interface>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="PageSettings" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">16</property>
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+
+        <!-- Кнопка "Зберегти" -->
+        <child>
+            <object class="GtkButton" id="button_save">
+                <property name="label">Зберегти</property>
+                <property name="halign">start</property>
+                <property name="margin-top">4</property>
+            </object>
+        </child>
+
+        <child>
+            <object class="GtkExpander">
+                <property name="label">Штучний інтелект Google</property>
+                <property name="expanded">true</property>
+
+                <property name="child">
+                    <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">12</property>
+                        <property name="margin-top">8</property>
+                        <property name="margin-start">6</property>
+
+                        <!-- Таблиця налаштувань -->
+                        <child>
+                            <object class="GtkGrid">
+                                <property name="column-spacing">12</property>
+                                <property name="row-spacing">10</property>
+
+                                <!-- РЯДОК 0: AI Model -->
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="label">Модель:</property>
+                                        <property name="halign">start</property>
+                                        <layout>
+                                            <property name="column">0</property>
+                                            <property name="row">0</property>
+                                        </layout>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkEntry" id="entry_ai_model">
+                                        <property name="hexpand">true</property>
+                                        <property name="width-request">280</property>
+                                        <property name="placeholder-text">Наприклад: gemini-3.5-flash-lite</property>
+                                        <layout>
+                                            <property name="column">1</property>
+                                            <property name="row">0</property>
+                                        </layout>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="label">Назва моделі штучного інтелекту</property>
+                                        <property name="halign">start</property>
+                                        <style>
+                                            <class name="dim-label"/>
+                                        </style>
+                                        <layout>
+                                            <property name="column">2</property>
+                                            <property name="row">0</property>
+                                        </layout>
+                                    </object>
+                                </child>
+
+                                <!-- РЯДОК 1: AI Key -->
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="label">Ключ:</property>
+                                        <property name="halign">start</property>
+                                        <layout>
+                                            <property name="column">0</property>
+                                            <property name="row">1</property>
+                                        </layout>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkEntry" id="entry_ai_key">
+                                        <property name="hexpand">true</property>
+                                        <property name="width-request">280</property>
+                                        <property name="placeholder-text">...</property>
+                                        <layout>
+                                            <property name="column">1</property>
+                                            <property name="row">1</property>
+                                        </layout>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="label">API ключ доступу до сервісу</property>
+                                        <property name="halign">start</property>
+                                        <style>
+                                            <class name="dim-label"/>
+                                        </style>
+                                        <layout>
+                                            <property name="column">2</property>
+                                            <property name="row">1</property>
+                                        </layout>
+                                    </object>
+                                </child>
+
+                                <!-- РЯДОК 2: Автостарт -->
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="label">Автозапуск:</property>
+                                        <property name="halign">start</property>
+                                        <layout>
+                                            <property name="column">0</property>
+                                            <property name="row">2</property>
+                                        </layout>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkSwitch" id="switch_autostart">
+                                        <property name="halign">start</property>
+                                        <property name="active">false</property>
+                                        <layout>
+                                            <property name="column">1</property>
+                                            <property name="row">2</property>
+                                        </layout>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="label">Автоматично ініціалізувати AI при старті програми</property>
+                                        <property name="halign">start</property>
+                                        <style>
+                                            <class name="dim-label"/>
+                                        </style>
+                                        <layout>
+                                            <property name="column">2</property>
+                                            <property name="row">2</property>
+                                        </layout>
+                                    </object>
+                                </child>
+
+                            </object>
+                        </child>
+
+                    </object>
+                </property>
+            </object>
+        </child>
+
+    </template>
+</interface>

@@ -17,7 +17,7 @@ public abstract partial class AutomaticNumbering
 
     protected void CreateConst(KeyValuePair<string, string> block, string name)
     {
-        if (Conf.ConstantsBlock.ContainsKey(block.Key))
+        if (!Conf.ConstantsBlock.ContainsKey(block.Key))
             Conf.AppendConstantsBlock(new ConfigurationConstantsBlock(block.Key, block.Value));
 
         ConfigurationConstantsBlock blockAutoNum = Conf.ConstantsBlock[block.Key];
@@ -25,7 +25,7 @@ public abstract partial class AutomaticNumbering
         //Назва поля в таблиці
         string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, SpecialTables.Constants, Function.GetConstantsAllFields(Conf));
 
-        if (blockAutoNum.Constants.ContainsKey(name))
+        if (!blockAutoNum.Constants.ContainsKey(name))
             blockAutoNum.AppendConstant(new ConfigurationConstants(name, nameInTable, "integer", blockAutoNum));
     }
 }

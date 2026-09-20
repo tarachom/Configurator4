@@ -58,6 +58,31 @@ columnview listview row cell:not(:first-child) {
     border-left: 1px solid shade(#b8b8b8, 1.2);
 }
 
+columnview listview row cell {
+    border-bottom: 1px solid shade(#cccccc, 1.2); /* тест #cecaca */
+}
+
+/* Ще потрібно пропрацювати прибирання впливу виділеного рядка */
+columnview row:selected button.link,
+columnview row:selected button.link>label {
+    color: inherit;
+    border-color: transparent;
+}
+
+/* Для кнопок Toolbar  */
+button.toolbar {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+/* ------------------ Контроли для числа, дати і т.д. де потрібна валідація ------------------------ */
+
+entry.error {
+    border: 1px solid red;
+}
+
 /* ------------------ Клітинки табличної частини --------------->>> */
 
 /* Базовий клас для *TablePartCell */
@@ -65,34 +90,19 @@ columnview listview row cell box.base {
     padding: 3px 6px;
 }
 
-/* 
-Варіант відображення для типу даних numeric для LabelTablePartCell 
-Відображення числа як текст
+/*
+LabelTablePartCell, IntegerTablePartCell, NumericTablePartCell
+Відображення для типу даних numeric або integer
 */
+columnview listview row cell box.integer,
 columnview listview row cell box.numeric {
-    color: green;
-    background-color: rgba(238, 238, 220, 0.2);
+    background-color: rgba(241, 241, 233, 0.2);
 }
 
-/* Кнопки для PointerTablePartCell */
-columnview listview row cell box.pointer .button {
-    padding-left: 3px;
-    padding-right: 3px;
-    margin: 0;
-    min-height: 0;
-    min-width: 0;
-    border-radius: 0;
-    border: 0;
-    background: transparent;
-}
-
-/* Текст для PointerTablePartCell */
-columnview listview row cell box.pointer .text {
-    padding-left: 3px;
-    padding-right: 3px;
-}
-
-/* IntegerTablePartCell */
+/*
+IntegerTablePartCell, NumericTablePartCell
+Поле вводу
+*/
 columnview listview row cell box.integer entry,
 columnview listview row cell box.numeric entry {
     padding-left: 3px;
@@ -105,13 +115,41 @@ columnview listview row cell box.numeric entry {
     background: transparent;
 }
 
-/* Для підсвітки помилки */
+/*
+IntegerTablePartCell, NumericTablePartCell
+Для підсвітки помилки поля вводу
+*/
 columnview listview row cell box.integer entry.error,
 columnview listview row cell box.numeric entry.error {
     border: 1px solid red;
 }
 
-/* Для ComboTextTablePartCell */
+/*
+PointerTablePartCell
+Кнопки 
+*/
+columnview row cell box.pointer .button {
+    padding-left: 3px;
+    padding-right: 3px;
+    margin: 0;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+/*
+PointerTablePartCell
+Текст
+*/
+columnview listview row cell box.pointer .text {
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+/* ComboTextTablePartCell */ /* OBSOLETE */
 columnview listview row cell box.combotext combobox button.combo {
     padding: 0px 3px;
     margin: 0;
@@ -122,7 +160,27 @@ columnview listview row cell box.combotext combobox button.combo {
     background: transparent;
 }
 
-/* Для TextTablePartCell */
+/* DropDownTablePartCell */
+columnview listview row cell box.dropdown button {
+    padding: 0px 3px;
+    margin: 0;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+}
+
+/* DropDownTablePartCell menu */
+columnview listview row cell box.dropdown popover.menu listview row {
+    min-height: 24px;
+    padding: 0px 5px;
+}
+
+/* 
+TextTablePartCell 
+Поле вводу
+*/
 columnview listview row cell box.text entry {
     padding: 0px 3px;
     margin: 0;
@@ -133,16 +191,119 @@ columnview listview row cell box.text entry {
     background: transparent;
 }
 
+/* 
+TextTablePartCell
+Кнопки
+*/
+columnview listview row cell box.text .button {
+    padding-left: 3px;
+    padding-right: 3px;
+    margin: 0;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+/* 
+DateTimeTablePartCell
+Поле вводу
+*/
+columnview listview row cell box.datetime entry {
+    padding-left: 3px;
+    padding-right: 3px;
+    margin: 0;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+}
+
+/* 
+DateTimeTablePartCell 
+Кнопки
+*/
+columnview listview row cell box.datetime .button {
+    padding-left: 3px;
+    padding-right: 3px;
+    margin: 0;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+/*
+TimeTablePartCell
+Поле вводу
+*/
+columnview listview row cell box.time entry {
+    padding-left: 3px;
+    padding-right: 3px;
+    margin: 0;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+}
+
+/* 
+TimeTablePartCell 
+Кнопки
+*/
+columnview listview row cell box.time .button {
+    padding-left: 3px;
+    padding-right: 3px;
+    margin: 0;
+    min-height: 0;
+    min-width: 0;
+    border-radius: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+/* Робимо картинку всередині кнопки невидимою */
+columnview row cell box.pointer .button image,
+columnview row cell box.datetime .button image,
+columnview row cell box.time .button image,
+columnview row cell box.text .button image {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out; /* Плавність появи */
+}
+
+/* Показуємо картинку */
+columnview row:hover cell box.pointer .button image,
+columnview row:hover cell box.datetime .button image,
+columnview row:hover cell box.time .button image,
+columnview row:hover cell box.text .button image  {
+    opacity: 1;
+}
+
+/* Коли рядок виділено (selected) */
+columnview row:selected cell box.pointer .button image,
+columnview row:selected cell box.datetime .button image,
+columnview row:selected cell box.time .button image,
+columnview row:selected cell box.text .button image  {
+    opacity: 1;
+}
+
+
 /* <<<--------------- Клітинки табличної частини ------------------ */
 
 
-
-/* Для Log */
+/* Log */
 textview.log_text_terminal {
     font: 11px Arial;
 }
 
-/* Для LinkButton */
+/* LinkButton */
 button.link {
     padding-top: 0;
     padding-bottom: 0;
@@ -150,3 +311,39 @@ button.link {
     margin-bottom: 0;
 }
 
+/*
+columnview listview row:nth-child(odd) {
+   background-color: shade(#b8b8b8, 1.2);
+}
+
+columnview listview row:nth-child(even) {
+      background-color: #f6f6f6;  
+}
+*/
+
+/*-------------------------------------------------------------------*/
+
+/* Кнопка закриття вкладки блокноту */
+/*notebook tab button {
+    font-size: x-small;
+    padding: 2px 1px 2px 1px;
+    margin-left: 10px;
+    min-height: 0;
+    min-width: 0;
+    border: 0;
+    border-radius: 3px;
+    background-color: transparent;
+}*/
+
+
+/*notebook tab button:hover {
+    background-color: lightgray;
+}*/
+
+/* Ліве меню головного вікна */
+/*
+button.left-menu {
+    border: 0;
+    background-color: transparent;
+}
+*/

@@ -24,14 +24,19 @@ public partial class DirectoryDataTree : DataTree
                         await OpenPageField(false, directory.Table, directory.Fields, field);
                         break;
                     }
-                case "TablePart":
+                case "TablePart" when row.Obj is ConfigurationTablePart tablePart:
                     {
-
+                        await OpenPageTablePart(false, directory.TabularParts, tablePart);
                         break;
                     }
-                case "TablePartField":
+                case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
                     {
-
+                        await OpenPageTabularList(false, directory.TabularList, directory.Fields, tabularList);
+                        break;
+                    }
+                case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
+                    {
+                        await OpenPageField(false, tablePart.Table, tablePart.Fields, field);
                         break;
                     }
                 default:
@@ -50,18 +55,21 @@ public partial class DirectoryDataTree : DataTree
                     }
                 case "TablePartGroup" or "TablePart":
                     {
+                        await OpenPageTablePart(true, directory.TabularParts);
                         break;
                     }
                 case "TabularListGroup" or "TabularList":
                     {
+                        await OpenPageTabularList(true, directory.TabularList, directory.Fields);
                         break;
                     }
                 case "FormGroup" or "Form":
                     {
                         break;
                     }
-                case "TablePartField":
+                case "TablePartField" when row.ParentObj is ConfigurationTablePart tablePart:
                     {
+                        await OpenPageField(true, tablePart.Table, tablePart.Fields);
                         break;
                     }
                 default:
@@ -86,20 +94,29 @@ public partial class DirectoryDataTree : DataTree
                         await OpenPageField(true, directory.Table, directory.Fields, newField);
                         break;
                     }
-                case "TablePart":
+                case "TablePart" when row.Obj is ConfigurationTablePart tablePart:
                     {
+                        ConfigurationTablePart newTablePart = tablePart.Copy();
+                        newTablePart.Name += GenerateName.GetNewName();
+                        await OpenPageTablePart(true, directory.TabularParts, newTablePart);
                         break;
                     }
-                case "TabularList":
+                case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
                     {
+                        ConfigurationTabularList newTabularList = tabularList.Copy();
+                        newTabularList.Name += GenerateName.GetNewName();
+                        await OpenPageTabularList(true, directory.TabularList, directory.Fields, newTabularList);
                         break;
                     }
                 case "Form":
                     {
                         break;
                     }
-                case "TablePartField":
+                case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
                     {
+                        ConfigurationField newField = field.Copy();
+                        newField.Name += GenerateName.GetNewName();
+                        await OpenPageField(true, tablePart.Table, tablePart.Fields, newField);
                         break;
                     }
                 default:
@@ -116,20 +133,23 @@ public partial class DirectoryDataTree : DataTree
                         directory.Fields.Remove(field.Name);
                         break;
                     }
-                case "TablePart":
+                case "TablePart" when row.Obj is ConfigurationTablePart tablePart:
                     {
+                        directory.TabularParts.Remove(tablePart.Name);
                         break;
                     }
-                case "TabularList":
+                case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
                     {
+                        directory.TabularList.Remove(tabularList.Name);
                         break;
                     }
                 case "Form":
                     {
                         break;
                     }
-                case "TablePartField":
+                case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
                     {
+                        tablePart.Fields.Remove(field.Name);
                         break;
                     }
                 default:

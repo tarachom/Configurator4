@@ -2,7 +2,6 @@ using Gtk;
 using GObject;
 using AccountingSoftware;
 using InterfaceGtkLib;
-using System.Text;
 using System.Xml.XPath;
 using InterfaceGtk4;
 
@@ -45,20 +44,7 @@ public partial class PageSaveConfiguration
     {
         buttonBrowseGeneratePath.OnClicked += async (_, _) => await FunctionForFileDialog.SelectFolder(async path => { entryGeneratePath.Text_ = path; }, Program.BasicForm, entryGeneratePath.Text_);
         buttonBrowseBuildPath.OnClicked += async (_, _) => await FunctionForFileDialog.SelectFolder(async path => { entryBuildPath.Text_ = path; }, Program.BasicForm, entryBuildPath.Text_);
-
-        buttonSaveSettings.OnClicked += (_, _) =>
-        {
-            var otherParam = OpenConfigurationParam?.OtherParam;
-            if (otherParam != null)
-            {
-                otherParam[ConfigurationParam.IsGenerateCode] = checkGenerateCode.Active.ToString();
-                otherParam[ConfigurationParam.GenerateCodePath] = entryGeneratePath.GetText();
-                otherParam[ConfigurationParam.CompileProgramPath] = entryBuildPath.GetText();
-
-                ConfigurationParamCollection.SaveConfigurationParamFromXML(ConfigurationParamCollection.PathToXML);
-            }
-        };
-
+        buttonSaveSettings.OnClicked += (_, _) => SaveSettings();
         buttonAnalyze.OnClicked += async (_, _) => await SaveAndAnalize();
         buttonSaveStep1.OnClicked += async (_, _) => await SaveAnalizeAndCreateSQL();
         buttonSaveStep2.OnClicked += async (_, _) => await ExecuteSQLAndGenerateCode();
@@ -75,6 +61,19 @@ public partial class PageSaveConfiguration
         }
     }
 
+    void SaveSettings()
+    {
+        var otherParam = OpenConfigurationParam?.OtherParam;
+        if (otherParam != null)
+        {
+            otherParam[ConfigurationParam.IsGenerateCode] = checkGenerateCode.Active.ToString();
+            otherParam[ConfigurationParam.GenerateCodePath] = entryGeneratePath.GetText();
+            otherParam[ConfigurationParam.CompileProgramPath] = entryBuildPath.GetText();
+
+            ConfigurationParamCollection.SaveConfigurationParamFromXML(ConfigurationParamCollection.PathToXML);
+        }
+    }
+
     void ApendLine(string message)
     {
         if (textTerminal != null && textTerminal.Buffer != null)
@@ -84,7 +83,6 @@ public partial class PageSaveConfiguration
             textTerminal.Buffer.PlaceCursor(iterEndText);
 
             string text = message + "\n";
-            //textTerminal.Buffer.InsertAtCursor(text, Encoding.UTF8.GetBytes(text).Length);
             textTerminal.Buffer.InsertAtCursor(text, -1);
 
             scrollListBoxTerminal.Vadjustment?.Value = scrollListBoxTerminal.Vadjustment.Upper;
@@ -839,5 +837,4 @@ public partial class PageSaveConfiguration
         Thread.Sleep(1000);
         ApendLine("\n\n\n");
     }
-
 }

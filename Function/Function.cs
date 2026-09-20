@@ -246,4 +246,28 @@ public static class Function
 
         return true;
     }
+
+    public static async Task<bool> FillNewTablePart(ConfigurationTablePart confTablePart, List<ConfigurationField>? otherFields = null)
+    {
+        confTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
+
+        //Заповнення полями
+        {
+            //НомерРядка
+            if (!confTablePart.Fields.ContainsKey("НомерРядка"))
+            {
+                string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, confTablePart.Table, confTablePart.Fields);
+                confTablePart.AppendField(new ConfigurationField("НомерРядка", "Номер рядка", nameInTable, "integer", "", "Номер рядка") { AutomaticNumbering = true });
+            }
+
+            if (otherFields != null)
+                foreach (var otherField in otherFields)
+                {
+                    otherField.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, confTablePart.Table, confTablePart.Fields);
+                    confTablePart.AppendField(otherField);
+                }
+        }
+
+        return true;
+    }
 }

@@ -101,10 +101,7 @@ public partial class Field
                 .ToDictionary(x => x, x => x);
 
             dropdownPointer.Fill(dict);
-            dropdownPointer.OnСhanged = () =>
-            {
-
-            };
+            dropdownPointer.OnСhanged = () => { };
         }
 
         //Перелічення
@@ -114,10 +111,7 @@ public partial class Field
                 .ToDictionary(x => x, x => x);
 
             dropdownEnum.Fill(dict);
-            dropdownEnum.OnСhanged = () =>
-            {
-
-            };
+            dropdownEnum.OnСhanged = () => { };
         }
 
         //Для композитного типу

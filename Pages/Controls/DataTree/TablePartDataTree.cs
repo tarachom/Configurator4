@@ -5,15 +5,15 @@ using InterfaceGtk4;
 using Configurator;
 
 [Subclass<DataTree>()]
-public partial class DocumentDataTree : DataTree
+public partial class TablePartDataTree : DataTree
 {
-    public static DocumentDataTree New()
+    public static TablePartDataTree New()
     {
-        DocumentDataTree w = NewWithProperties([]);
+        TablePartDataTree w = NewWithProperties([]);
         return w;
     }
 
-    public void SetValue(ConfigurationDocuments document)
+    public void SetValue(ConfigurationTablePart tablePart)
     {
         async void Activate(ConfiguratorItemRow row)
         {
@@ -21,22 +21,12 @@ public partial class DocumentDataTree : DataTree
             {
                 case "Field" when row.Obj is ConfigurationField field:
                     {
-                        await OpenPageField(false, document.Table, document.Fields, field);
-                        break;
-                    }
-                case "TablePart" when row.Obj is ConfigurationTablePart tablePart:
-                    {
-                        await OpenPageTablePart(false, document.TabularParts, tablePart);
+                        await OpenPageField(false, tablePart.Table, tablePart.Fields, field);
                         break;
                     }
                 case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
                     {
-                        await OpenPageTabularList(false, document.TabularList, document.Fields, tabularList);
-                        break;
-                    }
-                case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
-                    {
-                        await OpenPageField(false, tablePart.Table, tablePart.Fields, field);
+                        await OpenPageTabularList(false, tablePart.TabularList, tablePart.Fields, tabularList);
                         break;
                     }
                 default:
@@ -50,26 +40,16 @@ public partial class DocumentDataTree : DataTree
             {
                 case "FieldGroup" or "Field":
                     {
-                        await OpenPageField(true, document.Table, document.Fields);
-                        break;
-                    }
-                case "TablePartGroup" or "TablePart":
-                    {
-                        await OpenPageTablePart(true, document.TabularParts);
+                        await OpenPageField(true, tablePart.Table, tablePart.Fields);
                         break;
                     }
                 case "TabularListGroup" or "TabularList":
                     {
-                        await OpenPageTabularList(true, document.TabularList, document.Fields);
+                        await OpenPageTabularList(true, tablePart.TabularList, tablePart.Fields);
                         break;
                     }
                 case "FormGroup" or "Form":
                     {
-                        break;
-                    }
-                case "TablePartField" when row.ParentObj is ConfigurationTablePart tablePart:
-                    {
-                        await OpenPageField(true, tablePart.Table, tablePart.Fields);
                         break;
                     }
                 default:
@@ -91,32 +71,18 @@ public partial class DocumentDataTree : DataTree
                     {
                         ConfigurationField newField = field.Copy();
                         newField.Name += GenerateName.GetNewName();
-                        await OpenPageField(true, document.Table, document.Fields, newField);
-                        break;
-                    }
-                case "TablePart" when row.Obj is ConfigurationTablePart tablePart:
-                    {
-                        ConfigurationTablePart newTablePart = tablePart.Copy();
-                        newTablePart.Name += GenerateName.GetNewName();
-                        await OpenPageTablePart(true, document.TabularParts, newTablePart);
+                        await OpenPageField(true, tablePart.Table, tablePart.Fields, newField);
                         break;
                     }
                 case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
                     {
                         ConfigurationTabularList newTabularList = tabularList.Copy();
                         newTabularList.Name += GenerateName.GetNewName();
-                        await OpenPageTabularList(true, document.TabularList, document.Fields, newTabularList);
+                        await OpenPageTabularList(true, tablePart.TabularList, tablePart.Fields, newTabularList);
                         break;
                     }
                 case "Form":
                     {
-                        break;
-                    }
-                case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
-                    {
-                        ConfigurationField newField = field.Copy();
-                        newField.Name += GenerateName.GetNewName();
-                        await OpenPageField(true, tablePart.Table, tablePart.Fields, newField);
                         break;
                     }
                 default:
@@ -130,26 +96,16 @@ public partial class DocumentDataTree : DataTree
             {
                 case "Field" when row.Obj is ConfigurationField field:
                     {
-                        document.Fields.Remove(field.Name);
-                        break;
-                    }
-                case "TablePart" when row.Obj is ConfigurationTablePart tablePart:
-                    {
-                        document.TabularParts.Remove(tablePart.Name);
+                        tablePart.Fields.Remove(field.Name);
                         break;
                     }
                 case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
                     {
-                        document.TabularList.Remove(tabularList.Name);
+                        tablePart.TabularList.Remove(tabularList.Name);
                         break;
                     }
                 case "Form":
                     {
-                        break;
-                    }
-                case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
-                    {
-                        tablePart.Fields.Remove(field.Name);
                         break;
                     }
                 default:
@@ -157,7 +113,7 @@ public partial class DocumentDataTree : DataTree
             }
         }
 
-        Box box = new ConfiguratorDocumentsFieldsTree(document, Activate, new()
+        Box box = new ConfiguratorTablePartsFieldsTree(tablePart, Activate, new()
         {
             Add = (button, row) => Add(button, row),
             Edit = (_, rows) =>

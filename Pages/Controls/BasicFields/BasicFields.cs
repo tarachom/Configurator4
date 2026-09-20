@@ -46,6 +46,11 @@ public partial class BasicFields
         return w;
     }
 
+    /// <summary>
+    /// Приховати поле ТаблицяЧиСтовпчик
+    /// </summary>
+    public void HideTableOrColumn() => labelTableOrColumn.Visible = entryTableOrColumn.Visible = false;
+
     public string ItemName
     {
         get => entryItemName.GetText();

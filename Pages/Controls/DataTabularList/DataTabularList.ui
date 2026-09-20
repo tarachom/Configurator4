@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="DataTabularList" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">6</property>
+        <property name="margin-start">6</property>
+        <property name="margin-end">6</property>
+        <property name="margin-top">6</property>
+        <property name="margin-bottom">6</property>
+
+        <!-- Вертикальна панель із розділювачем -->
+        <child>
+            <object class="GtkPaned" id="paned_main">
+                <property name="orientation">vertical</property>
+                <property name="hexpand">true</property>
+                <property name="vexpand">true</property>
+                <property name="position">500</property>
+
+                <!-- ================= ВЕРХНЯ ПАНЕЛЬ: Поля ================= -->
+                <property name="start-child">
+                    <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">6</property>
+                        <property name="margin-bottom">10</property>
+
+                        <!-- Заголовок секції -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label">Поля:</property>
+                                <property name="halign">start</property>
+                            </object>
+                        </child>
+
+                        <!-- Верхній тулбар -->
+                        <child>
+                            <object class="GtkBox">
+                                <property name="orientation">horizontal</property>
+                                <property name="spacing">6</property>
+                                <child>
+                                    <object class="GtkButton" id="button_fields_action">
+                                        <property name="icon-name">view-sort-descending</property>
+                                        <property name="tooltip-text">Дія</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkButton" id="button_fields_up">
+                                        <property name="icon-name">go-up</property>
+                                        <property name="tooltip-text">Вгору</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkButton" id="button_fields_down">
+                                        <property name="icon-name">go-down</property>
+                                        <property name="tooltip-text">Вниз</property>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+
+                        <!-- Верхній ScrolledWindow з порожнім ColumnView -->
+                        <child>
+                            <object class="GtkScrolledWindow">
+                                <property name="hexpand">true</property>
+                                <property name="vexpand">true</property>
+                                <property name="child">
+                                    <object class="GtkColumnView" id="column_view_fields">
+                                        <property name="show-column-separators">false</property>
+                                        <property name="show-row-separators">false</property>
+                                    </object>
+                                </property>
+                            </object>
+                        </child>
+
+                    </object>
+                </property>
+
+                <!-- ================= НИЖНЯ ПАНЕЛЬ: Додаткові поля ================= -->
+                <property name="end-child">
+                    <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">6</property>
+                        <property name="margin-top">6</property>
+
+                        <!-- Заголовок секції -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label">Додаткові поля:</property>
+                                <property name="halign">start</property>
+                            </object>
+                        </child>
+
+                        <!-- Нижній тулбар -->
+                        <child>
+                            <object class="GtkBox">
+                                <property name="orientation">horizontal</property>
+                                <property name="spacing">6</property>
+                                <child>
+                                    <object class="GtkButton" id="button_extra_add">
+                                        <property name="label">Додати</property>
+                                        <property name="icon-name">new</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkButton" id="button_extra_copy">
+                                        <property name="label">Копіювати</property>
+                                        <property name="icon-name">copy</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkButton" id="button_extra_delete">
+                                        <property name="label">Видалити</property>
+                                        <property name="icon-name">delete</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkButton" id="button_extra_up">
+                                        <property name="icon-name">go-up</property>
+                                        <property name="tooltip-text">Вгору</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkButton" id="button_extra_down">
+                                        <property name="icon-name">go-down</property>
+                                        <property name="tooltip-text">Вниз</property>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+
+                        <!-- Нижній ScrolledWindow з порожнім ColumnView -->
+                        <child>
+                            <object class="GtkScrolledWindow">
+                                <property name="hexpand">true</property>
+                                <property name="vexpand">true</property>
+                                <property name="child">
+                                    <object class="GtkColumnView" id="column_view_extra_fields">
+                                        <property name="show-column-separators">false</property>
+                                        <property name="show-row-separators">false</property>
+                                    </object>
+                                </property>
+                            </object>
+                        </child>
+
+                    </object>
+                </property>
+
+            </object>
+        </child>
+
+    </template>
+</interface>

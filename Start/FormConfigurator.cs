@@ -14,11 +14,12 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
     /// <summary>
     /// Викликається із конфігуратора при запуску
     /// </summary>
-    public static FormConfigurator NewConfiguratorStart(ConfigurationParam? openConfigurationParam)
+    public static FormConfigurator NewConfiguratorStart(GlobalConfigurationParam globalConfigurationParam, ConfigurationParam? openConfigurationParam)
     {
         FormConfigurator form = NewWithProperties([]);
         form.Application = Program.BasicApp;
         form.OpenConfigurationParam = openConfigurationParam;
+        form.GlobalConfigurationParam = globalConfigurationParam;
 
         form.SetValue();
 
@@ -28,12 +29,13 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
     /// <summary>
     /// Викликається із зовнішньої програми при запуску конфігуратора
     /// </summary>
-    public static FormConfigurator NewProgramStart(Application app, Kernel kernel, ConfigurationParam? openConfigurationParam)
+    public static FormConfigurator NewProgramStart(Application app, Kernel kernel, GlobalConfigurationParam globalConfigurationParam, ConfigurationParam? openConfigurationParam)
     {
         FormConfigurator form = NewWithProperties([]);
         form.Application = app;
         form.Kernel = kernel;
         form.OpenConfigurationParam = openConfigurationParam;
+        form.GlobalConfigurationParam = globalConfigurationParam;
 
         form.SetValue();
 
@@ -116,6 +118,14 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
     {
         PageSaveConfiguration page = Configurator.PageSaveConfiguration.New();
         NotebookFunc?.CreatePage("Зберегти конфігурацію", page);
+
+        page.SetValue();
+    }
+
+    protected override async Task PageConfigurationInfo()
+    {
+        PageConfigurationInfo page = Configurator.PageConfigurationInfo.New();
+        NotebookFunc?.CreatePage("Параметри конфігураціЇ", page);
 
         page.SetValue();
     }
