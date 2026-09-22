@@ -25,6 +25,7 @@ partial class PageDocument : FormPageConfigurator
 
     partial void Initialize()
     {
+        PageName = "Документ:";
         basicFields.TableOrColumnLabel = "Таблиця:";
     }
 
@@ -109,6 +110,8 @@ partial class PageDocument : FormPageConfigurator
 
         await GetValue();
         Conf.AppendDocument(ConfDocument);
+
+        Caption = ConfDocument.Name;
         IsNew = false;
 
         return true;

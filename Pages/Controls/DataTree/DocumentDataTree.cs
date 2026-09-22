@@ -17,7 +17,7 @@ public partial class DocumentDataTree : DataTree
             {
                 case "Field" when row.Obj is ConfigurationField field:
                     {
-                        await OpenPageField(false, document.Table, document.Fields, field);
+                        await OpenPageField(false, document.Fields, field, new(ConfiguratorItemOwnerType.Document, document));
                         break;
                     }
                 case "TablePart" when row.Obj is ConfigurationTablePart tablePart:
@@ -32,7 +32,7 @@ public partial class DocumentDataTree : DataTree
                     }
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
                     {
-                        await OpenPageField(false, tablePart.Table, tablePart.Fields, field);
+                        await OpenPageField(false, tablePart.Fields, field, new(ConfiguratorItemOwnerType.TablePart, tablePart));
                         break;
                     }
                 default:
@@ -46,7 +46,7 @@ public partial class DocumentDataTree : DataTree
             {
                 case "FieldGroup" or "Field":
                     {
-                        await OpenPageField(true, document.Table, document.Fields);
+                        await OpenPageField(true, document.Fields, null, new(ConfiguratorItemOwnerType.Document, document));
                         break;
                     }
                 case "TablePartGroup" or "TablePart":
@@ -65,7 +65,7 @@ public partial class DocumentDataTree : DataTree
                     }
                 case "TablePartField" when row.ParentObj is ConfigurationTablePart tablePart:
                     {
-                        await OpenPageField(true, tablePart.Table, tablePart.Fields);
+                        await OpenPageField(true, tablePart.Fields, null, new(ConfiguratorItemOwnerType.TablePart, tablePart));
                         break;
                     }
                 default:
@@ -87,7 +87,7 @@ public partial class DocumentDataTree : DataTree
                     {
                         ConfigurationField newField = field.Copy();
                         newField.Name += GenerateName.GetNewName();
-                        await OpenPageField(true, document.Table, document.Fields, newField);
+                        await OpenPageField(true, document.Fields, newField, new(ConfiguratorItemOwnerType.Document, document));
                         break;
                     }
                 case "TablePart" when row.Obj is ConfigurationTablePart tablePart:
@@ -112,7 +112,7 @@ public partial class DocumentDataTree : DataTree
                     {
                         ConfigurationField newField = field.Copy();
                         newField.Name += GenerateName.GetNewName();
-                        await OpenPageField(true, tablePart.Table, tablePart.Fields, newField);
+                        await OpenPageField(true, tablePart.Fields, newField, new(ConfiguratorItemOwnerType.TablePart, tablePart));
                         break;
                     }
                 default:

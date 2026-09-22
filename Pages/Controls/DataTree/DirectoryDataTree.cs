@@ -17,7 +17,7 @@ public partial class DirectoryDataTree : DataTree
             {
                 case "Field" when row.Obj is ConfigurationField field:
                     {
-                        await OpenPageField(false, directory.Table, directory.Fields, field);
+                        await OpenPageField(false, directory.Fields, field, new(ConfiguratorItemOwnerType.Directory, directory));
                         break;
                     }
                 case "TablePart" when row.Obj is ConfigurationTablePart tablePart:
@@ -32,7 +32,7 @@ public partial class DirectoryDataTree : DataTree
                     }
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
                     {
-                        await OpenPageField(false, tablePart.Table, tablePart.Fields, field);
+                        await OpenPageField(false, tablePart.Fields, field, new(ConfiguratorItemOwnerType.TablePart,  tablePart));
                         break;
                     }
                 default:
@@ -46,7 +46,7 @@ public partial class DirectoryDataTree : DataTree
             {
                 case "FieldGroup" or "Field":
                     {
-                        await OpenPageField(true, directory.Table, directory.Fields);
+                        await OpenPageField(true, directory.Fields, null, new(ConfiguratorItemOwnerType.Directory, directory));
                         break;
                     }
                 case "TablePartGroup" or "TablePart":
@@ -65,14 +65,13 @@ public partial class DirectoryDataTree : DataTree
                     }
                 case "TablePartField" when row.ParentObj is ConfigurationTablePart tablePart:
                     {
-                        await OpenPageField(true, tablePart.Table, tablePart.Fields);
+                        await OpenPageField(true, tablePart.Fields, null, new(ConfiguratorItemOwnerType.TablePart, tablePart));
                         break;
                     }
                 default:
                     {
                         Popover popover = Popover.New();
                         popover.SetParent(button);
-
                         popover.Show();
                     }
                     break;
@@ -87,7 +86,7 @@ public partial class DirectoryDataTree : DataTree
                     {
                         ConfigurationField newField = field.Copy();
                         newField.Name += GenerateName.GetNewName();
-                        await OpenPageField(true, directory.Table, directory.Fields, newField);
+                        await OpenPageField(true, directory.Fields, newField, new(ConfiguratorItemOwnerType.Directory, directory));
                         break;
                     }
                 case "TablePart" when row.Obj is ConfigurationTablePart tablePart:
@@ -112,7 +111,7 @@ public partial class DirectoryDataTree : DataTree
                     {
                         ConfigurationField newField = field.Copy();
                         newField.Name += GenerateName.GetNewName();
-                        await OpenPageField(true, tablePart.Table, tablePart.Fields, newField);
+                        await OpenPageField(true, tablePart.Fields, newField, new(ConfiguratorItemOwnerType.TablePart, tablePart));
                         break;
                     }
                 default:

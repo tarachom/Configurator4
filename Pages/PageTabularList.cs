@@ -23,6 +23,7 @@ partial class PageTabularList : FormPageConfigurator
 
     partial void Initialize()
     {
+        PageName = "Табличний список:";
         basicFields.HideTableOrColumn();
     }
 
@@ -78,10 +79,9 @@ partial class PageTabularList : FormPageConfigurator
             return false;
 
         await GetValue();
-
         TabularLists.Add(ConfTabularList.Name, ConfTabularList);
 
-        Caption = $"Табличний список: {ConfTabularList.Name}";
+        Caption = ConfTabularList.Name;
         IsNew = false;
 
         return true;

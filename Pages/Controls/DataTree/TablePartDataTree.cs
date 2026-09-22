@@ -17,7 +17,7 @@ public partial class TablePartDataTree : DataTree
             {
                 case "Field" when row.Obj is ConfigurationField field:
                     {
-                        await OpenPageField(false, tablePart.Table, tablePart.Fields, field);
+                        await OpenPageField(false, tablePart.Fields, field, new(ConfiguratorItemOwnerType.TablePart, tablePart));
                         break;
                     }
                 case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
@@ -36,7 +36,7 @@ public partial class TablePartDataTree : DataTree
             {
                 case "FieldGroup" or "Field":
                     {
-                        await OpenPageField(true, tablePart.Table, tablePart.Fields);
+                        await OpenPageField(true, tablePart.Fields, null, new(ConfiguratorItemOwnerType.TablePart, tablePart));
                         break;
                     }
                 case "TabularListGroup" or "TabularList":
@@ -52,7 +52,6 @@ public partial class TablePartDataTree : DataTree
                     {
                         Popover popover = Popover.New();
                         popover.SetParent(button);
-
                         popover.Show();
                     }
                     break;
@@ -67,7 +66,7 @@ public partial class TablePartDataTree : DataTree
                     {
                         ConfigurationField newField = field.Copy();
                         newField.Name += GenerateName.GetNewName();
-                        await OpenPageField(true, tablePart.Table, tablePart.Fields, newField);
+                        await OpenPageField(true, tablePart.Fields, newField, new(ConfiguratorItemOwnerType.TablePart, tablePart));
                         break;
                     }
                 case "TabularList" when row.Obj is ConfigurationTabularList tabularList:

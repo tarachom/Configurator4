@@ -25,7 +25,7 @@ partial class PageDirectory : FormPageConfigurator
 
     partial void Initialize()
     {
-        Caption = "Довідник: ";
+        PageName = "Довідник:";
         basicFields.TableOrColumnLabel = "Таблиця:";
     }
 
@@ -106,7 +106,7 @@ partial class PageDirectory : FormPageConfigurator
         await GetValue();
         Conf.AppendDirectory(ConfDirectory);
 
-        Caption = $"Довідник: {ConfDirectory.Name}";
+        Caption = ConfDirectory.Name;
         IsNew = false;
 
         return true;

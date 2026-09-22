@@ -22,6 +22,7 @@ partial class PageTablePart : FormPageConfigurator
 
     partial void Initialize()
     {
+        PageName = "Таблична частина:";
         basicFields.TableOrColumnLabel = "Таблиця:";
     }
 
@@ -63,7 +64,6 @@ partial class PageTablePart : FormPageConfigurator
         ConfTablePart.FullName = basicFields.FullName;
         ConfTablePart.Table = basicFields.TableOrColumn;
         ConfTablePart.Desc = basicFields.Desc;
-
     }
 
     protected override async Task<bool> Save()
@@ -80,10 +80,9 @@ partial class PageTablePart : FormPageConfigurator
             return false;
 
         await GetValue();
-
         TabularParts.Add(ConfTablePart.Name, ConfTablePart);
 
-        Caption = $"Таблична частина: {ConfTablePart.Name}";
+        Caption = ConfTablePart.Name;
         IsNew = false;
 
         return true;

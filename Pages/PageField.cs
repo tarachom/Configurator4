@@ -13,6 +13,7 @@ namespace Configurator;
 [GObject.Subclass<FormPageConfigurator>(nameof(PageField))]
 partial class PageField : FormPageConfigurator
 {
+
     public string ParentTable { get; set; } = "";
     public ConfigurationField ConfField { get; set; } = new();
     public Dictionary<string, ConfigurationField> Fields = [];
@@ -23,6 +24,7 @@ partial class PageField : FormPageConfigurator
 
     partial void Initialize()
     {
+        PageName = "Поле:";
         basicFields.TableOrColumnLabel = "В таблиці:";
     }
 
@@ -49,7 +51,19 @@ partial class PageField : FormPageConfigurator
     public override async Task AssignValue()
     {
         if (IsNew)
-            _ = await Function.FillNewField(ConfField, ParentTable, Fields);
+        {
+            string parentTable = Owner?.Group switch
+            {
+                ConfiguratorItemOwnerType.Directory => Owner.Obj is ConfigurationDirectories x ? x.Table : "",
+                ConfiguratorItemOwnerType.Document => Owner.Obj is ConfigurationDocuments x ? x.Table : "",
+                ConfiguratorItemOwnerType.TablePart => Owner.Obj is ConfigurationTablePart x ? x.Table : "",
+                ConfiguratorItemOwnerType.RegisterInformation => Owner.Obj is ConfigurationRegistersInformation x ? x.Table : "",
+                ConfiguratorItemOwnerType.RegisterAccumulation => Owner.Obj is ConfigurationRegistersAccumulation x ? x.Table : "",
+                _ => ""
+            };
+            
+            _ = await Function.FillNewField(ConfField, parentTable, Fields);
+        }
 
         basicFields.ItemName = ConfField.Name;
         basicFields.FullName = ConfField.FullName;
@@ -92,7 +106,7 @@ partial class PageField : FormPageConfigurator
 
         Fields.Add(ConfField.Name, ConfField);
 
-        Caption = $"Поле: {ConfField.Name}";
+        Caption = ConfField.Name;
         IsNew = false;
 
         return true;

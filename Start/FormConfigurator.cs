@@ -54,68 +54,84 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
         await page.SetValue();
     }
 
-    protected override async Task PageDirectory(ConfiguratorItemRow? item)
+    public override async Task PageDirectory(bool isNew, ConfigurationDirectories? directory = null)
     {
         PageDirectory page = Configurator.PageDirectory.New();
-        if (item != null && item.Obj is ConfigurationDirectories confDirectory)
-        {
-            page.ConfDirectory = confDirectory;
-            page.Caption += page.ConfDirectory.Name;
-        }
-        else
+        if (isNew)
         {
             page.IsNew = true;
-            page.Caption += "*";
+            page.Caption = "*";
         }
-
-        NotebookFunc?.CreatePage(page.Caption, page);
-        await page.SetValue();
-
-        /*ConfigurationDirectories? directory = null;
-        if (!isNew && !Kernel.Conf.Directories.TryGetValue(name, out directory))
+        else if (directory != null)
         {
-            Message.Error(Program.BasicForm, "Помилка", $"Не знайдено довідник '{name}' в колекції");
-            return;
-        }
-
-        PageDirectory page = Configurator.PageDirectory.New();
-        page.IsNew = isNew;
-        page.Caption = $"Довідник: {(isNew ? "*" : name)}";
-
-        if (!isNew && directory != null)
             page.ConfDirectory = directory;
-
-        NotebookFunc?.CreatePage(page.Caption, page);
-        await page.SetValue();*/
-    }
-
-    /*
-    protected override async Task PageField(string name, bool isNew = false)
-    {
-
-    }
-    */
-
-    protected override async Task PageDocument(string name, bool isNew = false)
-    {
-        ConfigurationDocuments? document = null;
-        if (!isNew && !Kernel.Conf.Documents.TryGetValue(name, out document))
-        {
-            Message.Error(Program.BasicForm, "Помилка", $"Не знайдено документ '{name}' в колекції");
-            return;
+            page.Caption = directory.Name;
         }
-
-        PageDocument page = Configurator.PageDocument.New();
-        page.IsNew = isNew;
-        page.Caption = $"Документ: {(isNew ? "*" : name)}";
-
-        if (!isNew && document != null)
-            page.ConfDocument = document;
 
         NotebookFunc?.CreatePage(page.Caption, page);
         await page.SetValue();
     }
 
+    public override async Task PageDocument(bool isNew, ConfigurationDocuments? document = null)
+    {
+        PageDocument page = Configurator.PageDocument.New();
+        if (isNew)
+        {
+            page.IsNew = true;
+            page.Caption = "*";
+        }
+        else if (document != null)
+        {
+            page.ConfDocument = document;
+            page.Caption = document.Name;
+        }
+
+        NotebookFunc?.CreatePage(page.Caption, page);
+        await page.SetValue();
+    }
+
+    public override async Task PageField(bool isNew, Dictionary<string, ConfigurationField> fields, ConfigurationField? field = null, ConfiguratorItemOwner? owner = null)
+    {
+        PageField page = Configurator.PageField.New();
+        page.Owner = owner;
+        page.Fields = fields;
+
+        if (isNew)
+        {
+            page.IsNew = true;
+            page.Caption = "*";
+        }
+        else if (field != null)
+        {
+            page.ConfField = field;
+            page.Caption = field.Name;
+        }
+
+        Program.BasicForm?.NotebookFunc.CreatePage(page.Caption, page);
+        await page.SetValue();
+    }
+
+    public override async Task PageTablePart(bool isNew, Dictionary<string, ConfigurationTablePart> tabularParts, ConfigurationTablePart? tablePart = null, ConfiguratorItemOwner? owner = null)
+    {
+        PageTablePart page = Configurator.PageTablePart.New();
+        page.Owner = owner;
+        page.IsNew = isNew;
+        page.TabularParts = tabularParts;
+
+        if (isNew)
+        {
+            page.IsNew = true;
+            page.Caption = "*";
+        }
+        else if (tablePart != null)
+        {
+            page.ConfTablePart = tablePart;
+            page.Caption = tablePart.Name;
+        }
+
+        Program.BasicForm?.NotebookFunc.CreatePage(page.Caption, page);
+        await page.SetValue();
+    }
 
     protected override async Task PageSettings()
     {

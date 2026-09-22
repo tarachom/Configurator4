@@ -2,6 +2,7 @@ using Gtk;
 using GObject;
 using AccountingSoftware;
 using Configurator;
+using InterfaceGtk4;
 
 /// <summary>
 /// 
@@ -10,8 +11,12 @@ using Configurator;
 [Template<AssemblyResource>("DataTree.ui")]
 public abstract partial class DataTree
 {
-    protected static async Task OpenPageField(bool isNew, string parentTable, Dictionary<string, ConfigurationField> fields, ConfigurationField? field = null)
+    protected static async Task OpenPageField(bool isNew, Dictionary<string, ConfigurationField> fields, ConfigurationField? field = null, ConfiguratorItemOwner? owner = null)
     {
+        if (Program.BasicForm != null)
+            await Program.BasicForm.PageField(isNew, fields, field, owner);
+
+        /*
         PageField page = PageField.New();
 
         page.IsNew = isNew;
@@ -22,11 +27,15 @@ public abstract partial class DataTree
 
         Program.BasicForm?.NotebookFunc.CreatePage(page.Caption, page);
 
-        await page.SetValue();
+        await page.SetValue();*/
     }
 
-    protected static async Task OpenPageTablePart(bool isNew, Dictionary<string, ConfigurationTablePart> tabularParts, ConfigurationTablePart? tablePart = null)
+    protected static async Task OpenPageTablePart(bool isNew, Dictionary<string, ConfigurationTablePart> tabularParts, ConfigurationTablePart? tablePart = null, ConfiguratorItemOwner? owner = null)
     {
+        if (Program.BasicForm != null)
+            await Program.BasicForm.PageTablePart(isNew, tabularParts, tablePart, owner);
+
+        /*
         PageTablePart page = PageTablePart.New();
 
         page.IsNew = isNew;
@@ -36,18 +45,19 @@ public abstract partial class DataTree
 
         Program.BasicForm?.NotebookFunc.CreatePage(page.Caption, page);
 
-        await page.SetValue();
+        await page.SetValue();*/
     }
 
     protected static async Task OpenPageTabularList(bool isNew, Dictionary<string, ConfigurationTabularList> tabularLists, Dictionary<string, ConfigurationField> fields, ConfigurationTabularList? tabularList = null)
     {
+        ///!!!
         PageTabularList page = PageTabularList.New();
 
         page.IsNew = isNew;
         page.TabularLists = tabularLists;
         page.Fields = fields;
         if (tabularList != null) page.ConfTabularList = tabularList;
-        page.Caption = $"Табличний список: {(isNew ? "*" : tabularList?.Name)}";
+        page.Caption = isNew ? "*" : tabularList?.Name ?? "";
 
         Program.BasicForm?.NotebookFunc.CreatePage(page.Caption, page);
 
