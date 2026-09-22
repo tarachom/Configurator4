@@ -89,10 +89,11 @@
                     </object>
                 </child>
 
-                <!-- Рядок 4: Використовувати для представлення -->
+                <!-- Рядок 4: Автоматична нумерація та сортування -->
                 <child>
-                    <object class="GtkCheckButton" id="check_presentation">
-                        <property name="label">Використовувати для представлення</property>
+                    <object class="GtkCheckButton" id="check_auto_numbering">
+                        <property name="label">Автоматична нумерація та сортування</property>
+                        <property name="sensitive">false</property>
                         <layout>
                             <property name="column">1</property>
                             <property name="row">4</property>
@@ -100,10 +101,10 @@
                     </object>
                 </child>
 
-                <!-- Рядок 5: Повнотекстовий пошук -->
+                <!-- Рядок 5: Використовувати для представлення -->
                 <child>
-                    <object class="GtkCheckButton" id="check_fulltext_search">
-                        <property name="label">Повнотекстовий пошук</property>
+                    <object class="GtkCheckButton" id="check_presentation">
+                        <property name="label">Використовувати для представлення</property>
                         <layout>
                             <property name="column">1</property>
                             <property name="row">5</property>
@@ -111,11 +112,10 @@
                     </object>
                 </child>
 
-                <!-- Рядок 6: Пошук в журналах -->
+                <!-- Рядок 6: Повнотекстовий пошук -->
                 <child>
-                    <object class="GtkCheckButton" id="check_journal_search">
-                        <property name="label">Пошук в журналах</property>
-                        <property name="active">true</property>
+                    <object class="GtkCheckButton" id="check_fulltext_search">
+                        <property name="label">Повнотекстовий пошук</property>
                         <layout>
                             <property name="column">1</property>
                             <property name="row">6</property>
@@ -123,10 +123,11 @@
                     </object>
                 </child>
 
-                <!-- Рядок 7: Багатострічкове поле -->
+                <!-- Рядок 7: Пошук в журналах -->
                 <child>
-                    <object class="GtkCheckButton" id="check_multiline">
-                        <property name="label">Багатострічкове поле</property>
+                    <object class="GtkCheckButton" id="check_journal_search">
+                        <property name="label">Пошук в журналах</property>
+                        <property name="active">true</property>
                         <layout>
                             <property name="column">1</property>
                             <property name="row">7</property>
@@ -134,11 +135,10 @@
                     </object>
                 </child>
 
-                <!-- Рядок 8: Автоматична нумерація та сортування -->
+                <!-- Рядок 8: Багатострічкове поле -->
                 <child>
-                    <object class="GtkCheckButton" id="check_auto_numbering">
-                        <property name="label">Автоматична нумерація та сортування</property>
-                        <property name="sensitive">false</property>
+                    <object class="GtkCheckButton" id="check_multiline">
+                        <property name="label">Багатострічкове поле</property>
                         <layout>
                             <property name="column">1</property>
                             <property name="row">8</property>
@@ -159,118 +159,125 @@
 
                 <!-- Рядок 10: Експандер композитного типу -->
                 <child>
-                    <object class="GtkExpander">
-                        <property name="label">Налаштування для композитного типу даних (composite_pointer)</property>
-                        <property name="child">
-                            <object class="GtkBox">
-                                <property name="orientation">vertical</property>
-                                <property name="spacing">10</property>
-                                <property name="margin-top">10</property>
-                                <property name="margin-bottom">10</property>
+                    <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
 
-                                <!-- Заголовок секції -->
-                                <child>
-                                    <object class="GtkLabel">
-                                        <property name="use-markup">true</property>
-                                        <property name="label">&lt;b&gt;Довідники або документи доступні для вибору&lt;/b&gt;</property>
-                                        <property name="halign">center</property>
-                                    </object>
-                                </child>
-
-                                <!-- Контейнер для 2 колонок (Довідники та Документи) -->
-                                <child>
+                        <child>
+                            <object class="GtkExpander">
+                                <property name="label">Налаштування для композитного типу даних (composite_pointer)</property>
+                                <property name="child">
                                     <object class="GtkBox">
-                                        <property name="orientation">horizontal</property>
+                                        <property name="orientation">vertical</property>
                                         <property name="spacing">10</property>
-                                        <property name="homogeneous">true</property>
+                                        <property name="margin-top">10</property>
+                                        <property name="margin-bottom">10</property>
 
-                                        <!-- ДОВІДНИКИ -->
+                                        <!-- Заголовок секції -->
                                         <child>
-                                            <object class="GtkBox">
-                                                <property name="orientation">vertical</property>
-                                                <property name="spacing">10</property>
-
-                                                <child>
-                                                    <object class="GtkLabel">
-                                                        <property name="label">Довідники</property>
-                                                        <property name="halign">center</property>
-                                                    </object>
-                                                </child>
-
-                                                <child>
-                                                    <object class="GtkCheckButton" id="check_directories_not_use">
-                                                        <property name="label">Не використовувати</property>
-                                                        <property name="sensitive">false</property>
-                                                    </object>
-                                                </child>
-
-                                                <child>
-                                                    <object class="GtkScrolledWindow">
-                                                        <property name="height-request">500</property>
-                                                        <property name="width-request">300</property>
-                                                        <property name="has-frame">true</property>
-                                                        <property name="child">
-                                                            <!-- ListBox для довідників -->
-                                                            <object class="GtkListBox" id="listbox_directories">
-                                                                <property name="selection-mode">none</property>
-                                                                <property name="margin-start">5</property>
-                                                                <property name="margin-end">5</property>
-                                                                <property name="margin-top">5</property>
-                                                                <property name="margin-bottom">5</property>
-                                                                <property name="sensitive">false</property>
-                                                            </object>
-                                                        </property>
-                                                    </object>
-                                                </child>
+                                            <object class="GtkLabel">
+                                                <property name="use-markup">true</property>
+                                                <property name="label">&lt;b&gt;Довідники або документи доступні для вибору&lt;/b&gt;</property>
+                                                <property name="halign">center</property>
                                             </object>
                                         </child>
 
-                                        <!-- ДОКУМЕНТИ -->
+                                        <!-- Контейнер для 2 колонок (Довідники та Документи) -->
                                         <child>
                                             <object class="GtkBox">
-                                                <property name="orientation">vertical</property>
+                                                <property name="orientation">horizontal</property>
                                                 <property name="spacing">10</property>
+                                                <property name="homogeneous">true</property>
 
+                                                <!-- ДОВІДНИКИ -->
                                                 <child>
-                                                    <object class="GtkLabel">
-                                                        <property name="label">Документи</property>
-                                                        <property name="halign">center</property>
-                                                    </object>
-                                                </child>
+                                                    <object class="GtkBox">
+                                                        <property name="orientation">vertical</property>
+                                                        <property name="spacing">10</property>
 
-                                                <child>
-                                                    <object class="GtkCheckButton" id="check_documents_not_use">
-                                                        <property name="label">Не використовувати</property>
-                                                        <property name="sensitive">false</property>
-                                                    </object>
-                                                </child>
+                                                        <child>
+                                                            <object class="GtkLabel">
+                                                                <property name="label">Довідники</property>
+                                                                <property name="halign">center</property>
+                                                            </object>
+                                                        </child>
 
-                                                <child>
-                                                    <object class="GtkScrolledWindow">
-                                                        <property name="height-request">500</property>
-                                                        <property name="width-request">300</property>
-                                                        <property name="has-frame">true</property>
-                                                        <property name="child">
-                                                            <!-- ListBox для документів -->
-                                                            <object class="GtkListBox" id="listbox_documents">
-                                                                <property name="selection-mode">none</property>
-                                                                <property name="margin-start">5</property>
-                                                                <property name="margin-end">5</property>
-                                                                <property name="margin-top">5</property>
-                                                                <property name="margin-bottom">5</property>
+                                                        <child>
+                                                            <object class="GtkCheckButton" id="check_directories_not_use">
+                                                                <property name="label">Не використовувати</property>
                                                                 <property name="sensitive">false</property>
                                                             </object>
-                                                        </property>
+                                                        </child>
+
+                                                        <child>
+                                                            <object class="GtkScrolledWindow">
+                                                                <property name="height-request">500</property>
+                                                                <property name="width-request">400</property>
+                                                                <property name="has-frame">true</property>
+                                                                <property name="child">
+                                                                    <!-- ListBox для довідників -->
+                                                                    <object class="GtkListBox" id="listbox_directories">
+                                                                        <property name="selection-mode">none</property>
+                                                                        <property name="margin-start">5</property>
+                                                                        <property name="margin-end">5</property>
+                                                                        <property name="margin-top">5</property>
+                                                                        <property name="margin-bottom">5</property>
+                                                                        <property name="sensitive">false</property>
+                                                                    </object>
+                                                                </property>
+                                                            </object>
+                                                        </child>
                                                     </object>
                                                 </child>
+
+                                                <!-- ДОКУМЕНТИ -->
+                                                <child>
+                                                    <object class="GtkBox">
+                                                        <property name="orientation">vertical</property>
+                                                        <property name="spacing">10</property>
+
+                                                        <child>
+                                                            <object class="GtkLabel">
+                                                                <property name="label">Документи</property>
+                                                                <property name="halign">center</property>
+                                                            </object>
+                                                        </child>
+
+                                                        <child>
+                                                            <object class="GtkCheckButton" id="check_documents_not_use">
+                                                                <property name="label">Не використовувати</property>
+                                                                <property name="sensitive">false</property>
+                                                            </object>
+                                                        </child>
+
+                                                        <child>
+                                                            <object class="GtkScrolledWindow">
+                                                                <property name="height-request">500</property>
+                                                                <property name="width-request">400</property>
+                                                                <property name="has-frame">true</property>
+                                                                <property name="child">
+                                                                    <!-- ListBox для документів -->
+                                                                    <object class="GtkListBox" id="listbox_documents">
+                                                                        <property name="selection-mode">none</property>
+                                                                        <property name="margin-start">5</property>
+                                                                        <property name="margin-end">5</property>
+                                                                        <property name="margin-top">5</property>
+                                                                        <property name="margin-bottom">5</property>
+                                                                        <property name="sensitive">false</property>
+                                                                    </object>
+                                                                </property>
+                                                            </object>
+                                                        </child>
+                                                    </object>
+                                                </child>
+
                                             </object>
                                         </child>
 
                                     </object>
-                                </child>
-
+                                </property>
                             </object>
-                        </property>
+                        </child>
+                        
                         <layout>
                             <property name="column">0</property>
                             <property name="row">10</property>

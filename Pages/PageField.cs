@@ -38,14 +38,12 @@ partial class PageField : FormPageConfigurator
     {
         //Основні поля
         vBox.Append(basicFields);
-
-        //Інші
-        vBox.Append(field);
     }
 
     protected override void CreateEnd(Box vBox)
     {
-
+        //Інші
+        vBox.Append(field);
     }
 
     public override async Task AssignValue()

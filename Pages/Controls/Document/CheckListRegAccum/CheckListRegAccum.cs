@@ -2,6 +2,7 @@ using Gtk;
 using GObject;
 using AccountingSoftware;
 using Configurator;
+using InterfaceGtk4;
 
 [Subclass<Box>("CheckListRegAccum")]
 [Template<AssemblyResource>("CheckListRegAccum.ui")]
@@ -15,6 +16,10 @@ public partial class CheckListRegAccum
 
     public void SetValue(List<string> allowRegisterAccumulation)
     {
+        //Очистка
+        FunctionForListBox.RemoveAll(listbox);
+
+        //Заповнення
         foreach (ConfigurationRegistersAccumulation regAccum in Conf.RegistersAccumulation.Values)
         {
             CheckButton cb = CheckButton.NewWithLabel(regAccum.Name);
@@ -26,6 +31,7 @@ public partial class CheckListRegAccum
     public List<string> GetValue()
     {
         List<string> list = [];
+        
         var row = listbox.GetFirstChild();
         while (row != null)
         {
