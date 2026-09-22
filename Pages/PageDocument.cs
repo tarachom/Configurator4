@@ -30,10 +30,10 @@ partial class PageDocument : FormPageConfigurator
 
     public static PageDocument New()
     {
-        PageDocument view = NewWithProperties([]);
-        view.NotebookFunc = Program.BasicForm?.NotebookFunc;
+        PageDocument w = NewWithProperties([]);
+        w.NotebookFunc = Program.BasicForm?.NotebookFunc;
 
-        return view;
+        return w;
     }
 
     protected override void CreateStart(Box vBox)

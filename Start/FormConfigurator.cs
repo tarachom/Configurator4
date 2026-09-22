@@ -54,11 +54,24 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
         await page.SetValue();
     }
 
-
-
-    protected override async Task PageDirectory(string name, bool isNew = false)
+    protected override async Task PageDirectory(ConfiguratorItemRow? item)
     {
-        ConfigurationDirectories? directory = null;
+        PageDirectory page = Configurator.PageDirectory.New();
+        if (item != null && item.Obj is ConfigurationDirectories confDirectory)
+        {
+            page.ConfDirectory = confDirectory;
+            page.Caption += page.ConfDirectory.Name;
+        }
+        else
+        {
+            page.IsNew = true;
+            page.Caption += "*";
+        }
+
+        NotebookFunc?.CreatePage(page.Caption, page);
+        await page.SetValue();
+
+        /*ConfigurationDirectories? directory = null;
         if (!isNew && !Kernel.Conf.Directories.TryGetValue(name, out directory))
         {
             Message.Error(Program.BasicForm, "Помилка", $"Не знайдено довідник '{name}' в колекції");
@@ -73,7 +86,7 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
             page.ConfDirectory = directory;
 
         NotebookFunc?.CreatePage(page.Caption, page);
-        await page.SetValue();
+        await page.SetValue();*/
     }
 
     /*

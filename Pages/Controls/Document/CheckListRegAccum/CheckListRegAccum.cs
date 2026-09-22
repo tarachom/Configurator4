@@ -11,11 +11,7 @@ public partial class CheckListRegAccum
 
     Configuration Conf { get; } = Program.Kernel.Conf;
 
-    public static CheckListRegAccum New()
-    {
-        CheckListRegAccum w = NewWithProperties([]);
-        return w;
-    }
+    public static CheckListRegAccum New() => NewWithProperties([]);
 
     public void SetValue(List<string> allowRegisterAccumulation)
     {

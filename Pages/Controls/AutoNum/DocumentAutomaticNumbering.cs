@@ -9,11 +9,7 @@ public partial class DocumentAutomaticNumbering : AutomaticNumbering
 {
     ConfigurationDocuments ConfDocuments { get; set; } = new();
 
-    public static DocumentAutomaticNumbering New()
-    {
-        DocumentAutomaticNumbering w = NewWithProperties([]);
-        return w;
-    }
+    public static DocumentAutomaticNumbering New() => NewWithProperties([]);
 
     partial void Initialize()
     {

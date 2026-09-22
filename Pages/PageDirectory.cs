@@ -25,15 +25,16 @@ partial class PageDirectory : FormPageConfigurator
 
     partial void Initialize()
     {
+        Caption = "Довідник: ";
         basicFields.TableOrColumnLabel = "Таблиця:";
     }
 
     public static PageDirectory New()
     {
-        PageDirectory view = NewWithProperties([]);
-        view.NotebookFunc = Program.BasicForm?.NotebookFunc;
+        PageDirectory w = NewWithProperties([]);
+        w.NotebookFunc = Program.BasicForm?.NotebookFunc;
 
-        return view;
+        return w;
     }
 
     protected override void CreateStart(Box vBox)

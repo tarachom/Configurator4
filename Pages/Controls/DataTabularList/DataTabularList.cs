@@ -627,11 +627,7 @@ public partial class DataTabularList
         }
     }
 
-    public static DataTabularList New()
-    {
-        DataTabularList w = NewWithProperties([]);
-        return w;
-    }
+    public static DataTabularList New() => NewWithProperties([]);
 
     static void SelectAll(ColumnView columnView)
     {

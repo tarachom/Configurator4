@@ -13,17 +13,13 @@ public partial class Spend
     [Connect("switch_clear")] Switch switchClear;
 
 
-    public static Spend New()
-    {
-        Spend w = NewWithProperties([]);
-        return w;
-    }
-
+    public static Spend New() => NewWithProperties([]);
+    
     public void SetValue(ConfigurationSpendFunctions spendFunc)
     {
         entrySpend.SetText(spendFunc.Spend);
         entryClear.SetText(spendFunc.ClearSpend);
-        
+
         switchSpend.Active = spendFunc.SpendAction;
         switchClear.Active = spendFunc.ClearSpendAction;
     }

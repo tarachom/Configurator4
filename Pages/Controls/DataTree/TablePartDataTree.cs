@@ -7,11 +7,7 @@ using Configurator;
 [Subclass<DataTree>()]
 public partial class TablePartDataTree : DataTree
 {
-    public static TablePartDataTree New()
-    {
-        TablePartDataTree w = NewWithProperties([]);
-        return w;
-    }
+    public static TablePartDataTree New() => NewWithProperties([]);
 
     public void SetValue(ConfigurationTablePart tablePart)
     {

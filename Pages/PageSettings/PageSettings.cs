@@ -25,11 +25,7 @@ public partial class PageSettings
 
     #endregion
 
-    public static PageSettings New()
-    {
-        PageSettings w = NewWithProperties([]);
-        return w;
-    }
+    public static PageSettings New() => NewWithProperties([]);
 
     partial void Initialize()
     {

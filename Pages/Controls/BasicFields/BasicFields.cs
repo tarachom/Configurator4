@@ -40,11 +40,7 @@ public partial class BasicFields
         }
     }
 
-    public static BasicFields New()
-    {
-        BasicFields w = NewWithProperties([]);
-        return w;
-    }
+    public static BasicFields New() => NewWithProperties([]);
 
     /// <summary>
     /// Приховати поле ТаблицяЧиСтовпчик

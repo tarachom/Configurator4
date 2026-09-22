@@ -26,9 +26,10 @@ partial class PageHome : Form
 
     public static PageHome New() 
     {
-        PageHome page = NewWithProperties([]);
-        page.NotebookFunc = Program.BasicForm?.NotebookFunc;
-        return page;
+        PageHome w = NewWithProperties([]);
+        w.NotebookFunc = Program.BasicForm?.NotebookFunc;
+        
+        return w;
     }
 
     public async ValueTask SetValue()

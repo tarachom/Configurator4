@@ -33,9 +33,7 @@ public partial class Field
     {
         //Реєстрація типів
         DropDownControl.GetGType();
-
-        Field widget = NewWithProperties([]);
-        return widget;
+        return NewWithProperties([]);
     }
 
     partial void Initialize()

@@ -25,9 +25,7 @@ public partial class DirectoryHierarchy
     {
         //Реєстрація типів
         DropDownControl.GetGType();
-
-        DirectoryHierarchy widget = NewWithProperties([]);
-        return widget;
+        return NewWithProperties([]);
     }
 
     partial void Initialize()

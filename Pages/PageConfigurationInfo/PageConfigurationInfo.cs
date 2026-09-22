@@ -31,9 +31,7 @@ public partial class PageConfigurationInfo
     {
         //Реєстрація типів
         DropDownControl.GetGType();
-
-        PageConfigurationInfo w = NewWithProperties([]);
-        return w;
+        return NewWithProperties([]);
     }
 
     partial void Initialize()

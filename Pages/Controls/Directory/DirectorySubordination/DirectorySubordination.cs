@@ -20,8 +20,8 @@ public partial class DirectorySubordination
         //Реєстрація типів
         DropDownControl.GetGType();
 
-        DirectorySubordination widget = NewWithProperties([]);
-        return widget;
+        DirectorySubordination w = NewWithProperties([]);
+        return w;
     }
 
     partial void Initialize()

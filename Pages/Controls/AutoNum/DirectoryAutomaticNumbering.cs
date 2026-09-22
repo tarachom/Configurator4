@@ -9,11 +9,7 @@ public partial class DirectoryAutomaticNumbering : AutomaticNumbering
 {
     ConfigurationDirectories ConfDirectory { get; set; } = new();
 
-    public static DirectoryAutomaticNumbering New()
-    {
-        DirectoryAutomaticNumbering w = NewWithProperties([]);
-        return w;
-    }
+    public static DirectoryAutomaticNumbering New() => NewWithProperties([]);
 
     partial void Initialize()
     {

@@ -28,10 +28,10 @@ partial class PageField : FormPageConfigurator
 
     public static PageField New()
     {
-        PageField view = NewWithProperties([]);
-        view.NotebookFunc = Program.BasicForm?.NotebookFunc;
+        PageField w = NewWithProperties([]);
+        w.NotebookFunc = Program.BasicForm?.NotebookFunc;
 
-        return view;
+        return w;
     }
 
     protected override void CreateStart(Box vBox)

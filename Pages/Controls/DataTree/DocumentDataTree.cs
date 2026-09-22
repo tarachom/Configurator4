@@ -7,11 +7,7 @@ using Configurator;
 [Subclass<DataTree>()]
 public partial class DocumentDataTree : DataTree
 {
-    public static DocumentDataTree New()
-    {
-        DocumentDataTree w = NewWithProperties([]);
-        return w;
-    }
+    public static DocumentDataTree New() => NewWithProperties([]);
 
     public void SetValue(ConfigurationDocuments document)
     {

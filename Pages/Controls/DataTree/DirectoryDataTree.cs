@@ -7,11 +7,7 @@ using Configurator;
 [Subclass<DataTree>()]
 public partial class DirectoryDataTree : DataTree
 {
-    public static DirectoryDataTree New()
-    {
-        DirectoryDataTree w = NewWithProperties([]);
-        return w;
-    }
+    public static DirectoryDataTree New() => NewWithProperties([]);
 
     public void SetValue(ConfigurationDirectories directory)
     {

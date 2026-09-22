@@ -28,10 +28,10 @@ partial class PageTabularList : FormPageConfigurator
 
     public static PageTabularList New()
     {
-        PageTabularList view = NewWithProperties([]);
-        view.NotebookFunc = Program.BasicForm?.NotebookFunc;
+        PageTabularList w = NewWithProperties([]);
+        w.NotebookFunc = Program.BasicForm?.NotebookFunc;
 
-        return view;
+        return w;
     }
 
     protected override void CreateStart(Box vBox)
@@ -48,8 +48,6 @@ partial class PageTabularList : FormPageConfigurator
 
     public override async Task AssignValue()
     {
-        //if (IsNew)  _ = await Function.FillNewTablePart(ConfTablePart);
-
         basicFields.ItemName = ConfTabularList.Name;
         basicFields.FullName = ConfTabularList.FullName;
         basicFields.Desc = ConfTabularList.Desc;

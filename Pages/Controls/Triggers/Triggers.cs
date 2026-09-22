@@ -20,11 +20,7 @@ public partial class Triggers
     [Connect("switch_set_deletion_label")] Switch switchSetDeletionLabel;
     [Connect("switch_before_delete")] Switch switchBeforeDelete;
 
-    public static Triggers New()
-    {
-        Triggers tr = NewWithProperties([]);
-        return tr;
-    }
+    public static Triggers New() => NewWithProperties([]);
 
     public void SetValue(ConfigurationTriggerFunctions triggerFunc)
     {

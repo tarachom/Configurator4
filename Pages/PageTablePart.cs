@@ -27,10 +27,10 @@ partial class PageTablePart : FormPageConfigurator
 
     public static PageTablePart New()
     {
-        PageTablePart view = NewWithProperties([]);
-        view.NotebookFunc = Program.BasicForm?.NotebookFunc;
+        PageTablePart w = NewWithProperties([]);
+        w.NotebookFunc = Program.BasicForm?.NotebookFunc;
 
-        return view;
+        return w;
     }
 
     protected override void CreateStart(Box vBox)

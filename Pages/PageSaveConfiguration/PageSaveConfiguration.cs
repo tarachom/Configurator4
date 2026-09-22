@@ -34,11 +34,7 @@ public partial class PageSaveConfiguration
 
     #endregion
 
-    public static PageSaveConfiguration New()
-    {
-        PageSaveConfiguration w = NewWithProperties([]);
-        return w;
-    }
+    public static PageSaveConfiguration New() => NewWithProperties([]);
 
     partial void Initialize()
     {
