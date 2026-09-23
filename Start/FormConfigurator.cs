@@ -57,16 +57,9 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
     public override async Task PageDirectory(bool isNew, ConfigurationDirectories? directory = null)
     {
         PageDirectory page = Configurator.PageDirectory.New();
-        if (isNew)
-        {
-            page.IsNew = true;
-            page.Caption = "*";
-        }
-        else if (directory != null)
-        {
-            page.ConfDirectory = directory;
-            page.Caption = directory.Name;
-        }
+        page.IsNew = isNew;
+        if (directory != null) page.ConfDirectory = directory;
+        page.Caption = isNew ? "*" : directory?.Name ?? "";
 
         NotebookFunc?.CreatePage(page.Caption, page);
         await page.SetValue();
@@ -75,16 +68,9 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
     public override async Task PageDocument(bool isNew, ConfigurationDocuments? document = null)
     {
         PageDocument page = Configurator.PageDocument.New();
-        if (isNew)
-        {
-            page.IsNew = true;
-            page.Caption = "*";
-        }
-        else if (document != null)
-        {
-            page.ConfDocument = document;
-            page.Caption = document.Name;
-        }
+        page.IsNew = isNew;
+        if (document != null) page.ConfDocument = document;
+        page.Caption = isNew ? "*" : document?.Name ?? "";
 
         NotebookFunc?.CreatePage(page.Caption, page);
         await page.SetValue();
@@ -93,19 +79,11 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
     public override async Task PageField(bool isNew, Dictionary<string, ConfigurationField> fields, ConfigurationField? field = null, ConfiguratorItemOwner? owner = null)
     {
         PageField page = Configurator.PageField.New();
-        page.Owner = owner;
+        page.IsNew = isNew;
         page.Fields = fields;
-
-        if (isNew)
-        {
-            page.IsNew = true;
-            page.Caption = "*";
-        }
-        else if (field != null)
-        {
-            page.ConfField = field;
-            page.Caption = field.Name;
-        }
+        if (field != null) page.ConfField = field;
+        page.Caption = isNew ? "*" : field?.Name ?? "";
+        page.Owner = owner;
 
         Program.BasicForm?.NotebookFunc.CreatePage(page.Caption, page);
         await page.SetValue();
@@ -114,20 +92,11 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
     public override async Task PageTablePart(bool isNew, Dictionary<string, ConfigurationTablePart> tabularParts, ConfigurationTablePart? tablePart = null, ConfiguratorItemOwner? owner = null)
     {
         PageTablePart page = Configurator.PageTablePart.New();
-        page.Owner = owner;
         page.IsNew = isNew;
         page.TabularParts = tabularParts;
-
-        if (isNew)
-        {
-            page.IsNew = true;
-            page.Caption = "*";
-        }
-        else if (tablePart != null)
-        {
-            page.ConfTablePart = tablePart;
-            page.Caption = tablePart.Name;
-        }
+        if (tablePart != null) page.ConfTablePart = tablePart;
+        page.Caption = isNew ? "*" : tablePart?.Name ?? "";
+        page.Owner = owner;
 
         Program.BasicForm?.NotebookFunc.CreatePage(page.Caption, page);
         await page.SetValue();
