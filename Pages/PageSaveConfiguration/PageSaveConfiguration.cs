@@ -476,7 +476,7 @@ public partial class PageSaveConfiguration
                 else
                 {
                     foreach (string sql in SqlList)
-                        ApendLine(" -- " + sql);
+                        ApendLine(sql);
 
                     ApendLine("\n Для внесення змін - натисніть \"Збереження змін. Крок 2\"\n");
                 }
@@ -518,7 +518,7 @@ public partial class PageSaveConfiguration
                 //Execute
                 foreach (string sqlText in SqlList)
                 {
-                    ApendLine(" --> " + sqlText);
+                    ApendLine(sqlText);
 
                     try
                     {
@@ -549,7 +549,7 @@ public partial class PageSaveConfiguration
                 //Execute
                 foreach (string sqlText in SqlList)
                 {
-                    ApendLine(" --> " + (sqlText.Length > 100 ? sqlText[..100] : sqlText));
+                    ApendLine(sqlText.Length > 100 ? sqlText[..100] : sqlText);
 
                     try
                     {

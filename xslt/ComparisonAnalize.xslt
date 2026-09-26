@@ -784,9 +784,7 @@
                   <xsl:text> (</xsl:text>
                   <xsl:text>uid uuid NOT NULL, </xsl:text>
                   <xsl:if test="$IsCreateOwnerField = 'yes'">
-                    <xsl:text>owner uuid NOT NULL REFERENCES </xsl:text>
-                    <xsl:value-of select="OwnerTableName"/>
-                    <xsl:text>(uid),</xsl:text>
+                    <xsl:text>owner uuid NOT NULL, </xsl:text>
                   </xsl:if>
                   <xsl:for-each select="FieldCreate">
                     <xsl:text>"</xsl:text>
@@ -797,6 +795,11 @@
                   </xsl:for-each>
                   <xsl:text>PRIMARY KEY(uid));</xsl:text>
                 </sql>
+                <xsl:if test="$IsCreateOwnerField = 'yes' and normalize-space($OwnerTableName) != ''">
+                  <sql_end>
+                    <xsl:value-of select="concat('ALTER TABLE ', $TabularParts_TableName, ' ADD CONSTRAINT ', 'fk_', $TabularParts_TableName, '_owner_references FOREIGN KEY(owner) REFERENCES ', $OwnerTableName, '(uid) ON UPDATE NO ACTION ON DELETE NO ACTION NOT VALID;')"/>
+                  </sql_end>
+                </xsl:if>
                 <xsl:for-each select="FieldCreate[ForeignKey = '1']">
                   <sql_end>
                     <xsl:value-of select="concat('ALTER TABLE ', $TabularParts_TableName, ' ADD CONSTRAINT ', 'fk_', $TabularParts_TableName, '_', NameInTable, '_references ', 
