@@ -441,7 +441,7 @@
  * Дата конфігурації: <xsl:value-of select="Configuration/DateTimeSave"/>
  *
  *
- * Цей код згенерований в Конфігураторі 3. Шаблон GeneratedCode.xslt
+ * Згенеровано в Конфігураторі 4. Шаблон GeneratedCode.xslt
  *
  */
 
@@ -805,9 +805,15 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             </xsl:if>
             <xsl:for-each select="Fields/Field">
               <xsl:text>base.FieldValue["</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"] = </xsl:text>
-              <xsl:if test="Type = 'enum'">
-                  <xsl:text>(int)</xsl:text>      
-              </xsl:if>
+              <xsl:choose>
+                <xsl:when test="Type = 'enum'">
+                  <xsl:text>(int)</xsl:text>
+                </xsl:when>
+                <xsl:when test="Type = 'pointer'">
+                    <xsl:value-of select="Name"/>
+                    <xsl:text>.IsEmpty() ? DBNull.Value : </xsl:text>
+                </xsl:when>
+              </xsl:choose>
               <xsl:value-of select="Name"/>
               <xsl:choose>
                 <xsl:when test="Type = 'pointer'">
@@ -1120,9 +1126,15 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                     <xsl:for-each select="Fields/Field">
                         <xsl:text>{"</xsl:text>
                         <xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
-                        <xsl:if test="Type = 'enum'">
-                          <xsl:text>(int)</xsl:text>
-                        </xsl:if>
+                        <xsl:choose>
+                          <xsl:when test="Type = 'enum'">
+                            <xsl:text>(int)</xsl:text>
+                          </xsl:when>
+                          <xsl:when test="Type = 'pointer'">
+                              <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
+                              <xsl:text>.IsEmpty() ? DBNull.Value : </xsl:text>
+                          </xsl:when>
+                        </xsl:choose>
                         <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
                         <xsl:choose>
                             <xsl:when test="Type = 'pointer'">
@@ -1380,9 +1392,15 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
             </xsl:if>
             <xsl:for-each select="Fields/Field">
               <xsl:text>base.FieldValue["</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"] = </xsl:text>
-              <xsl:if test="Type = 'enum'">
-                  <xsl:text>(int)</xsl:text>      
-              </xsl:if>
+              <xsl:choose>
+                <xsl:when test="Type = 'enum'">
+                  <xsl:text>(int)</xsl:text>
+                </xsl:when>
+                <xsl:when test="Type = 'pointer'">
+                    <xsl:value-of select="Name"/>
+                    <xsl:text>.IsEmpty() ? DBNull.Value : </xsl:text>
+                </xsl:when>
+              </xsl:choose>
               <xsl:value-of select="Name"/>
               <xsl:choose>
                 <xsl:when test="Type = 'pointer'">
@@ -1731,9 +1749,15 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
                     <xsl:for-each select="Fields/Field">
                         <xsl:text>{"</xsl:text>
                         <xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
-                        <xsl:if test="Type = 'enum'">
-                          <xsl:text>(int)</xsl:text>
-                        </xsl:if>
+                        <xsl:choose>
+                          <xsl:when test="Type = 'enum'">
+                            <xsl:text>(int)</xsl:text>
+                          </xsl:when>
+                          <xsl:when test="Type = 'pointer'">
+                              <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
+                              <xsl:text>.IsEmpty() ? DBNull.Value : </xsl:text>
+                          </xsl:when>
+                        </xsl:choose>
                         <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
                         <xsl:choose>
                             <xsl:when test="Type = 'pointer'">
@@ -2052,9 +2076,15 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                     <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
                         <xsl:text>{"</xsl:text>
                         <xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
-                        <xsl:if test="Type = 'enum'">
-                            <xsl:text>(int)</xsl:text>      
-                        </xsl:if>
+                        <xsl:choose>
+                          <xsl:when test="Type = 'enum'">
+                            <xsl:text>(int)</xsl:text>
+                          </xsl:when>
+                          <xsl:when test="Type = 'pointer'">
+                              <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
+                              <xsl:text>.IsEmpty() ? DBNull.Value : </xsl:text>
+                          </xsl:when>
+                        </xsl:choose>
                         <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
                         <xsl:if test="Type = 'pointer'">
                         <xsl:text>.UniqueID.UGuid</xsl:text>
@@ -2140,9 +2170,15 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
         {
             <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
               <xsl:text>base.FieldValue["</xsl:text><xsl:value-of select="NameInTable"/><xsl:text>"] = </xsl:text>
-              <xsl:if test="Type = 'enum'">
-                  <xsl:text>(int)</xsl:text>      
-              </xsl:if>
+              <xsl:choose>
+                <xsl:when test="Type = 'enum'">
+                  <xsl:text>(int)</xsl:text>
+                </xsl:when>
+                <xsl:when test="Type = 'pointer'">
+                    <xsl:value-of select="Name"/>
+                    <xsl:text>.IsEmpty() ? DBNull.Value : </xsl:text>
+                </xsl:when>
+              </xsl:choose>
               <xsl:value-of select="Name"/>
               <xsl:choose>
                 <xsl:when test="Type = 'pointer'">
@@ -2379,9 +2415,15 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                     <xsl:for-each select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field">
                         <xsl:text>{"</xsl:text>
                         <xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
-                        <xsl:if test="Type = 'enum'">
-                            <xsl:text>(int)</xsl:text>      
-                        </xsl:if>
+                        <xsl:choose>
+                          <xsl:when test="Type = 'enum'">
+                            <xsl:text>(int)</xsl:text>
+                          </xsl:when>
+                          <xsl:when test="Type = 'pointer'">
+                              <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
+                              <xsl:text>.IsEmpty() ? DBNull.Value : </xsl:text>
+                          </xsl:when>
+                        </xsl:choose>
                         <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
                         <xsl:if test="Type = 'pointer'">
                         <xsl:text>.UniqueID.UGuid</xsl:text>
@@ -2465,9 +2507,15 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                     <xsl:for-each select="Fields/Field">
                         <xsl:text>{"</xsl:text>
                         <xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
-                        <xsl:if test="Type = 'enum'">
+                        <xsl:choose>
+                          <xsl:when test="Type = 'enum'">
                             <xsl:text>(int)</xsl:text>
-                          </xsl:if>
+                          </xsl:when>
+                          <xsl:when test="Type = 'pointer'">
+                              <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
+                              <xsl:text>.IsEmpty() ? DBNull.Value : </xsl:text>
+                          </xsl:when>
+                        </xsl:choose>
                         <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
                         <xsl:choose>
                         <xsl:when test="Type = 'pointer'">

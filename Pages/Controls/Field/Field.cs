@@ -20,6 +20,7 @@ public partial class Field
     [Connect("check_multiline")] CheckButton checkMultiline;
     [Connect("check_auto_numbering")] CheckButton checkAutoNumbering;
     [Connect("check_allow_export")] CheckButton checkAllowExport;
+    [Connect("check_foreign_key")] CheckButton checkForeignKey;
 
     [Connect("check_directories_not_use")] CheckButton checkDirectoriesNotUse;
     [Connect("listbox_directories")] ListBox listboxDirectories;
@@ -70,6 +71,13 @@ public partial class Field
                 bool isInteger = typeName == "integer";
 
                 checkAutoNumbering.Sensitive = isInteger;
+            }
+
+            //pointer only
+            {
+                bool isPointer = typeName == "pointer";
+
+                checkForeignKey.Sensitive = isPointer;
             }
 
             checkJournalSearch.Sensitive =
@@ -147,6 +155,7 @@ public partial class Field
         checkMultiline.Active = ConfField.Multiline;
         checkAutoNumbering.Active = ConfField.AutomaticNumbering;
         checkAllowExport.Active = ConfField.IsExport;
+        checkForeignKey.Active = ConfField.ForeignKey;
 
         checkDirectoriesNotUse.Active = ConfField.CompositePointerNotUseDirectories;
         checkDocumentsNotUse.Active = ConfField.CompositePointerNotUseDocuments;
@@ -180,6 +189,7 @@ public partial class Field
         ConfField.Multiline = checkMultiline.Active;
         ConfField.AutomaticNumbering = checkAutoNumbering.Active;
         ConfField.IsExport = checkAllowExport.Active;
+        ConfField.ForeignKey = checkForeignKey.Active;
 
         ConfField.CompositePointerNotUseDirectories = checkDirectoriesNotUse.Active;
         ConfField.CompositePointerNotUseDocuments = checkDocumentsNotUse.Active;

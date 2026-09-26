@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>18.09.2026 11:51:04</DateTimeSave>
+  <DateTimeSave>26.09.2026 16:05:02</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -1690,6 +1690,8 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a01</References>
         </Field>
         <Field>
           <Name>КлючовіСловаДляПошуку</Name>
@@ -1725,6 +1727,8 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a01</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -2238,6 +2242,8 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a04</References>
         </Field>
         <Field>
           <Name>ВидНоменклатури</Name>
@@ -2250,6 +2256,8 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a05</References>
         </Field>
         <Field>
           <Name>ОдиницяВиміру</Name>
@@ -2262,6 +2270,8 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a06</References>
         </Field>
         <Field>
           <Name>Папка</Name>
@@ -2274,6 +2284,8 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a22</References>
         </Field>
         <Field>
           <Name>ОсновнаКартинкаФайл</Name>
@@ -2286,6 +2298,8 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a20</References>
         </Field>
         <Field>
           <Name>Категорія</Name>
@@ -2298,6 +2312,8 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_b58</References>
         </Field>
         <Field>
           <Name>БазоваОдиницяВиміру</Name>
@@ -2310,6 +2326,8 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_c40</References>
         </Field>
         <Field>
           <Name>ОдиницяДляЗвітів</Name>
@@ -2322,6 +2340,8 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a06</References>
         </Field>
       </Fields>
       <TabularParts>
@@ -2345,6 +2365,8 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a03</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -2359,6 +2381,8 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a20</References>
             </Field>
             <Field>
               <Name>Основний</Name>
@@ -2474,7 +2498,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <Name>ТипНоменклатури</Name>
               <Caption>Тип</Caption>
               <Size>0</Size>
-              <SortNum>5</SortNum>
+              <SortNum>4</SortNum>
               <SortField>False</SortField>
               <SortDirection>False</SortDirection>
               <FilterField>True</FilterField>
@@ -2485,7 +2509,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <Name>Категорія</Name>
               <Caption>Категорія</Caption>
               <Size>0</Size>
-              <SortNum>6</SortNum>
+              <SortNum>5</SortNum>
               <SortField>False</SortField>
               <SortDirection>False</SortDirection>
               <FilterField>True</FilterField>
@@ -2493,7 +2517,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <Pointer>Довідники.Категорії</Pointer>
             </Field>
             <AdditionalField>
-              <Visible>True</Visible>
+              <Visible>False</Visible>
               <Name>Залишок</Name>
               <Caption>Залишок</Caption>
               <Size>0</Size>
@@ -2523,7 +2547,7 @@ THEN
 END]]></Value>
             </AdditionalField>
             <AdditionalField>
-              <Visible>True</Visible>
+              <Visible>False</Visible>
               <Name>ВРезерві</Name>
               <Caption>В резерві</Caption>
               <Size>0</Size>
@@ -2552,7 +2576,7 @@ THEN
 END]]></Value>
             </AdditionalField>
             <AdditionalField>
-              <Visible>True</Visible>
+              <Visible>False</Visible>
               <Name>ВРезервіПідЗамовлення</Name>
               <Caption>Під замовлення</Caption>
               <Size>0</Size>
@@ -2581,7 +2605,7 @@ THEN
 END]]></Value>
             </AdditionalField>
             <AdditionalField>
-              <Visible>True</Visible>
+              <Visible>False</Visible>
               <Name>ЗалишокВКомірках</Name>
               <Caption>В комірках</Caption>
               <Size>0</Size>
@@ -2660,7 +2684,7 @@ END]]></Value>
               <Pointer>Перелічення.ТипиНоменклатури</Pointer>
             </Field>
             <AdditionalField>
-              <Visible>True</Visible>
+              <Visible>False</Visible>
               <Name>Залишок</Name>
               <Caption>Залишок</Caption>
               <Size>0</Size>
@@ -2690,7 +2714,7 @@ THEN
 END]]></Value>
             </AdditionalField>
             <AdditionalField>
-              <Visible>True</Visible>
+              <Visible>False</Visible>
               <Name>ВРезерві</Name>
               <Caption>В резерві</Caption>
               <Size>0</Size>
@@ -2719,7 +2743,7 @@ THEN
 END]]></Value>
             </AdditionalField>
             <AdditionalField>
-              <Visible>True</Visible>
+              <Visible>False</Visible>
               <Name>ВРезервіПідЗамовлення</Name>
               <Caption>Під замовлення</Caption>
               <Size>0</Size>
@@ -3246,6 +3270,8 @@ END]]></Value>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a06</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -3468,6 +3494,8 @@ END]]></Value>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_c40</References>
         </Field>
         <Field>
           <Name>Коєфіціент</Name>
@@ -4114,6 +4142,8 @@ END]]></Value>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a23</References>
         </Field>
         <Field>
           <Name>Опис</Name>
@@ -4174,6 +4204,8 @@ END]]></Value>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_b58</References>
         </Field>
       </Fields>
       <TabularParts>
@@ -4197,6 +4229,8 @@ END]]></Value>
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a08</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -4429,6 +4463,8 @@ END]]></Value>
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a08</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -4845,6 +4881,8 @@ END]]></Value>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a16</References>
         </Field>
         <Field>
           <Name>ВидЦін</Name>
@@ -4857,6 +4895,8 @@ END]]></Value>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a12</References>
         </Field>
         <Field>
           <Name>Підрозділ</Name>
@@ -4869,6 +4909,8 @@ END]]></Value>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a18</References>
         </Field>
         <Field>
           <Name>Папка</Name>
@@ -4881,6 +4923,8 @@ END]]></Value>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a24</References>
         </Field>
         <Field>
           <Name>НалаштуванняАдресногоЗберігання</Name>
@@ -4917,6 +4961,8 @@ END]]></Value>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_b58</References>
         </Field>
       </Fields>
       <TabularParts>
@@ -4940,6 +4986,8 @@ END]]></Value>
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a10</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -5474,6 +5522,8 @@ END]]></Value>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a07</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -5688,6 +5738,8 @@ END]]></Value>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a07</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -5875,6 +5927,8 @@ END]]></Value>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a16</References>
         </Field>
         <Field>
           <Name>Коментар</Name>
@@ -5922,6 +5976,8 @@ END]]></Value>
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a14</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -6383,6 +6439,8 @@ END]]></Value>
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a16</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -6806,6 +6864,8 @@ END]]></Value>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a16</References>
         </Field>
         <Field>
           <Name>Родич</Name>
@@ -6819,6 +6879,8 @@ END]]></Value>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a18</References>
         </Field>
         <Field>
           <Name>Склад</Name>
@@ -6831,6 +6893,8 @@ END]]></Value>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a10</References>
         </Field>
         <Field>
           <Name>Категорія</Name>
@@ -6843,6 +6907,8 @@ END]]></Value>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_b58</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -7552,6 +7618,8 @@ END]]></Value>
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a03</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -7854,6 +7922,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a22</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -8078,6 +8148,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a23</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -8275,6 +8347,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a24</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -8470,6 +8544,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a07</References>
         </Field>
         <Field>
           <Name>Підрозділ</Name>
@@ -8482,6 +8558,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a18</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -8767,6 +8845,8 @@ WHERE
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a07</References>
         </Field>
         <Field>
           <Name>Банк</Name>
@@ -8779,6 +8859,8 @@ WHERE
           <IsFullTextSearch>1</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a39</References>
         </Field>
         <Field>
           <Name>Підрозділ</Name>
@@ -8791,6 +8873,8 @@ WHERE
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a18</References>
         </Field>
         <Field>
           <Name>НомерРахунку</Name>
@@ -8815,6 +8899,8 @@ WHERE
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a01</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -9065,6 +9151,8 @@ WHERE
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a27</References>
         </Field>
         <Field>
           <Name>БанківськийРахунокКонтрагента</Name>
@@ -9077,6 +9165,8 @@ WHERE
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a29</References>
         </Field>
         <Field>
           <Name>ВалютаВзаєморозрахунків</Name>
@@ -9089,6 +9179,8 @@ WHERE
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a07</References>
         </Field>
         <Field>
           <Name>ДатаПочаткуДії</Name>
@@ -9123,6 +9215,8 @@ WHERE
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a01</References>
         </Field>
         <Field>
           <Name>Контрагент</Name>
@@ -9135,6 +9229,8 @@ WHERE
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a08</References>
         </Field>
         <Field>
           <Name>Дата</Name>
@@ -9170,6 +9266,8 @@ WHERE
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a18</References>
         </Field>
         <Field>
           <Name>Узгоджений</Name>
@@ -9692,6 +9790,8 @@ WHERE
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a39</References>
         </Field>
         <Field>
           <Name>Валюта</Name>
@@ -9704,6 +9804,8 @@ WHERE
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a07</References>
         </Field>
         <Field>
           <Name>Контрагент</Name>
@@ -9716,6 +9818,8 @@ WHERE
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a08</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -9997,6 +10101,8 @@ WHERE
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a45</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -10434,6 +10540,8 @@ WHERE
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a32</References>
         </Field>
         <Field>
           <Name>ВведенняЗалишків</Name>
@@ -10446,6 +10554,8 @@ WHERE
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a83</References>
         </Field>
         <Field>
           <Name>ВиготовленняПродукції</Name>
@@ -10458,6 +10568,8 @@ WHERE
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_b76</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -10770,6 +10882,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a01</References>
         </Field>
         <Field>
           <Name>ТипЗапасів</Name>
@@ -10794,6 +10908,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a07</References>
         </Field>
         <Field>
           <Name>Контрагент</Name>
@@ -10806,6 +10922,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a08</References>
         </Field>
         <Field>
           <Name>Договір</Name>
@@ -10818,6 +10936,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a28</References>
         </Field>
         <Field>
           <Name>Код</Name>
@@ -12019,6 +12139,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a10</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -12196,6 +12318,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a76</References>
         </Field>
         <Field>
           <Name>Назва</Name>
@@ -12222,6 +12346,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a73</References>
         </Field>
         <Field>
           <Name>Лінія</Name>
@@ -12258,6 +12384,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a71</References>
         </Field>
         <Field>
           <Name>Стелаж</Name>
@@ -12306,6 +12434,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a75</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -12667,6 +12797,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a71</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -13075,6 +13207,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a76</References>
         </Field>
         <Field>
           <Name>Власник</Name>
@@ -13087,6 +13221,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a71</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -13536,6 +13672,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a14</References>
         </Field>
         <Field>
           <Name>Опис</Name>
@@ -13596,6 +13734,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b04</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -14509,6 +14649,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a10</References>
         </Field>
         <Field>
           <Name>Тип</Name>
@@ -14533,6 +14675,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a07</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -14766,6 +14910,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_b57</References>
         </Field>
         <Field>
           <Name>ЦеГрупа</Name>
@@ -15242,6 +15388,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_b58</References>
         </Field>
         <Field>
           <Name>МетодСписання</Name>
@@ -15267,6 +15415,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_b57</References>
         </Field>
         <Field>
           <Name>РахунокДоходів</Name>
@@ -15280,6 +15430,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_b57</References>
         </Field>
         <Field>
           <Name>СтаттяДоходів</Name>
@@ -15292,6 +15444,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_b59</References>
         </Field>
         <Field>
           <Name>РахунокВитрат</Name>
@@ -15305,6 +15459,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_b57</References>
         </Field>
         <Field>
           <Name>СтаттяВитрат</Name>
@@ -15317,6 +15473,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_b59</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -15658,6 +15816,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_b59</References>
         </Field>
         <Field>
           <Name>ЦеПапка</Name>
@@ -16736,6 +16896,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_b67</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -16933,6 +17095,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_b67</References>
         </Field>
       </Fields>
       <TabularParts />
@@ -17881,6 +18045,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a08</References>
         </Field>
         <Field>
           <Name>Організація</Name>
@@ -17893,6 +18059,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a01</References>
         </Field>
         <Field>
           <Name>Склад</Name>
@@ -17905,6 +18073,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a10</References>
         </Field>
         <Field>
           <Name>Валюта</Name>
@@ -17917,6 +18087,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a07</References>
         </Field>
         <Field>
           <Name>СумаДокументу</Name>
@@ -17940,6 +18112,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a26</References>
         </Field>
         <Field>
           <Name>БанківськийРахунок</Name>
@@ -17952,6 +18126,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a27</References>
         </Field>
         <Field>
           <Name>Підрозділ</Name>
@@ -17964,6 +18140,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a18</References>
         </Field>
         <Field>
           <Name>Договір</Name>
@@ -17976,6 +18154,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a28</References>
         </Field>
         <Field>
           <Name>Автор</Name>
@@ -17988,6 +18168,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a14</References>
         </Field>
         <Field>
           <Name>ДатаПоступлення</Name>
@@ -18116,6 +18298,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a14</References>
         </Field>
         <Field>
           <Name>Підстава</Name>
@@ -18176,6 +18360,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a25</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -18201,6 +18387,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>1</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a03</References>
             </Field>
             <Field>
               <Name>ХарактеристикаНоменклатури</Name>
@@ -18212,6 +18400,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>1</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a21</References>
             </Field>
             <Field>
               <Name>Пакування</Name>
@@ -18223,6 +18413,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>1</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a06</References>
             </Field>
             <Field>
               <Name>Коєфіціент</Name>
@@ -18294,6 +18486,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a10</References>
             </Field>
             <Field>
               <Name>Підрозділ</Name>
@@ -18305,6 +18499,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a18</References>
             </Field>
           </Fields>
           <TabularLists />
@@ -18976,6 +19172,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a07</References>
         </Field>
         <Field>
           <Name>ГосподарськаОперація</Name>
@@ -19000,6 +19198,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a18</References>
         </Field>
         <Field>
           <Name>Склад</Name>
@@ -19012,6 +19212,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a10</References>
         </Field>
         <Field>
           <Name>Контрагент</Name>
@@ -19024,6 +19226,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a08</References>
         </Field>
         <Field>
           <Name>СумаДокументу</Name>
@@ -19047,6 +19251,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a25</References>
         </Field>
         <Field>
           <Name>ДатаОплати</Name>
@@ -19093,6 +19299,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a27</References>
         </Field>
         <Field>
           <Name>НомерВхідногоДокументу</Name>
@@ -19128,6 +19336,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a29</References>
         </Field>
         <Field>
           <Name>Договір</Name>
@@ -19140,6 +19350,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a28</References>
         </Field>
         <Field>
           <Name>Автор</Name>
@@ -19152,6 +19364,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a14</References>
         </Field>
         <Field>
           <Name>ПовернутиТару</Name>
@@ -19198,6 +19412,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a01</References>
         </Field>
         <Field>
           <Name>Курс</Name>
@@ -19255,6 +19471,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a14</References>
         </Field>
         <Field>
           <Name>СтаттяРухуКоштів</Name>
@@ -19267,6 +19485,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a45</References>
         </Field>
         <Field>
           <Name>Каса</Name>
@@ -19279,6 +19499,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a26</References>
         </Field>
         <Field>
           <Name>Підстава</Name>
@@ -19343,6 +19565,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>acc_operations</References>
         </Field>
         <Field>
           <Name>ВідобразитиВБухгалтерськомуОбліку</Name>
@@ -19377,6 +19601,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a32</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -19402,6 +19628,8 @@ FROM
               <IsFullTextSearch>1</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>1</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a03</References>
             </Field>
             <Field>
               <Name>ХарактеристикаНоменклатури</Name>
@@ -19413,6 +19641,8 @@ FROM
               <IsFullTextSearch>1</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>1</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a21</References>
             </Field>
             <Field>
               <Name>Серія</Name>
@@ -19424,6 +19654,8 @@ FROM
               <IsFullTextSearch>1</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>1</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b02</References>
             </Field>
             <Field>
               <Name>Пакування</Name>
@@ -19435,6 +19667,8 @@ FROM
               <IsFullTextSearch>1</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>1</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a06</References>
             </Field>
             <Field>
               <Name>Коєфіціент</Name>
@@ -19486,6 +19720,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a10</References>
             </Field>
             <Field>
               <Name>ЗамовленняПостачальнику</Name>
@@ -19497,6 +19733,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a25</References>
             </Field>
             <Field>
               <Name>Скидка</Name>
@@ -19518,6 +19756,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a18</References>
             </Field>
             <Field>
               <Name>ВидЦіни</Name>
@@ -19529,6 +19769,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a12</References>
             </Field>
           </Fields>
           <TabularLists>
@@ -19872,6 +20114,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a32</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -19898,6 +20142,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b57</References>
             </Field>
             <Field>
               <Name>Дебет</Name>
@@ -19983,6 +20229,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b57</References>
             </Field>
             <Field>
               <Name>КорАналітика1</Name>
@@ -20027,6 +20275,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b60</References>
             </Field>
           </Fields>
           <TabularLists />
@@ -20869,6 +21119,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a08</References>
         </Field>
         <Field>
           <Name>Організація</Name>
@@ -20881,6 +21133,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a01</References>
         </Field>
         <Field>
           <Name>Валюта</Name>
@@ -20893,6 +21147,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a07</References>
         </Field>
         <Field>
           <Name>СумаДокументу</Name>
@@ -20916,6 +21172,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a10</References>
         </Field>
         <Field>
           <Name>Статус</Name>
@@ -20963,6 +21221,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a27</References>
         </Field>
         <Field>
           <Name>БанківськийРахунокКонтрагента</Name>
@@ -20975,6 +21235,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a29</References>
         </Field>
         <Field>
           <Name>Каса</Name>
@@ -20987,6 +21249,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a26</References>
         </Field>
         <Field>
           <Name>СумаАвансуДоЗабезпечення</Name>
@@ -21056,6 +21320,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a28</References>
         </Field>
         <Field>
           <Name>Підрозділ</Name>
@@ -21068,6 +21334,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a18</References>
         </Field>
         <Field>
           <Name>Автор</Name>
@@ -21080,6 +21348,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a14</References>
         </Field>
         <Field>
           <Name>СпосібДоставки</Name>
@@ -21160,6 +21430,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a14</References>
         </Field>
         <Field>
           <Name>КлючовіСловаДляПошуку</Name>
@@ -21207,6 +21479,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a34</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -21232,6 +21506,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>1</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a03</References>
             </Field>
             <Field>
               <Name>ХарактеристикаНоменклатури</Name>
@@ -21243,6 +21519,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>1</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a21</References>
             </Field>
             <Field>
               <Name>Пакування</Name>
@@ -21254,6 +21532,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>1</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a06</References>
             </Field>
             <Field>
               <Name>Коєфіціент</Name>
@@ -21285,6 +21565,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a12</References>
             </Field>
             <Field>
               <Name>Ціна</Name>
@@ -21326,6 +21608,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a10</References>
             </Field>
           </Fields>
           <TabularLists />
@@ -22054,6 +22338,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a01</References>
         </Field>
         <Field>
           <Name>Валюта</Name>
@@ -22066,6 +22352,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a07</References>
         </Field>
         <Field>
           <Name>БанківськийРахунокОрганізації</Name>
@@ -22078,6 +22366,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a27</References>
         </Field>
         <Field>
           <Name>БанківськийРахунокКонтрагента</Name>
@@ -22090,6 +22380,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a29</References>
         </Field>
         <Field>
           <Name>ДатаОплати</Name>
@@ -22113,6 +22405,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a34</References>
         </Field>
         <Field>
           <Name>Контрагент</Name>
@@ -22125,6 +22419,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a08</References>
         </Field>
         <Field>
           <Name>СумаДокументу</Name>
@@ -22148,6 +22444,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a18</References>
         </Field>
         <Field>
           <Name>Склад</Name>
@@ -22160,6 +22458,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a10</References>
         </Field>
         <Field>
           <Name>ФормаОплати</Name>
@@ -22196,6 +22496,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>1</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a26</References>
         </Field>
         <Field>
           <Name>Договір</Name>
@@ -22208,6 +22510,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a28</References>
         </Field>
         <Field>
           <Name>Підстава</Name>
@@ -22245,6 +22549,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a14</References>
         </Field>
         <Field>
           <Name>СумаПередоплати</Name>
@@ -22370,6 +22676,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a14</References>
         </Field>
         <Field>
           <Name>КлючовіСловаДляПошуку</Name>
@@ -22395,6 +22703,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>acc_operations</References>
         </Field>
         <Field>
           <Name>ВідобразитиВБухгалтерськомуОбліку</Name>
@@ -22429,6 +22739,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a36</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -22454,6 +22766,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>1</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a03</References>
             </Field>
             <Field>
               <Name>ХарактеристикаНоменклатури</Name>
@@ -22465,6 +22779,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>1</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a21</References>
             </Field>
             <Field>
               <Name>Серія</Name>
@@ -22476,6 +22792,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>1</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b02</References>
             </Field>
             <Field>
               <Name>Пакування</Name>
@@ -22487,6 +22805,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>1</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a06</References>
             </Field>
             <Field>
               <Name>Коєфіціент</Name>
@@ -22518,6 +22838,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a12</References>
             </Field>
             <Field>
               <Name>Ціна</Name>
@@ -22549,6 +22871,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a10</References>
             </Field>
             <Field>
               <Name>ЗамовленняКлієнта</Name>
@@ -22560,6 +22884,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a34</References>
             </Field>
             <Field>
               <Name>РахунокФактура</Name>
@@ -22571,6 +22897,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b10</References>
             </Field>
             <Field>
               <Name>Скидка</Name>
@@ -22593,6 +22921,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b06</References>
             </Field>
           </Fields>
           <TabularLists />
@@ -22807,6 +23137,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a36</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -22833,6 +23165,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b57</References>
             </Field>
             <Field>
               <Name>Аналітика1</Name>
@@ -22877,6 +23211,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b60</References>
             </Field>
             <Field>
               <Name>Дебет</Name>
@@ -22929,6 +23265,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b57</References>
             </Field>
             <Field>
               <Name>КорАналітика1</Name>
@@ -23665,6 +24003,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a01</References>
         </Field>
         <Field>
           <Name>Валюта</Name>
@@ -23677,6 +24017,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a07</References>
         </Field>
         <Field>
           <Name>ВидЦіни</Name>
@@ -23689,6 +24031,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a12</References>
         </Field>
         <Field>
           <Name>Коментар</Name>
@@ -23713,6 +24057,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a14</References>
         </Field>
         <Field>
           <Name>КлючовіСловаДляПошуку</Name>
@@ -23760,6 +24106,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a42</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -23785,6 +24133,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a03</References>
             </Field>
             <Field>
               <Name>ХарактеристикаНоменклатури</Name>
@@ -23796,6 +24146,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a21</References>
             </Field>
             <Field>
               <Name>Пакування</Name>
@@ -23807,6 +24159,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a06</References>
             </Field>
             <Field>
               <Name>ВидЦіни</Name>
@@ -23818,6 +24172,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a12</References>
             </Field>
             <Field>
               <Name>Ціна</Name>
@@ -24266,6 +24622,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a01</References>
         </Field>
         <Field>
           <Name>Каса</Name>
@@ -24278,6 +24636,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a26</References>
         </Field>
         <Field>
           <Name>СумаДокументу</Name>
@@ -24325,6 +24685,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a08</References>
         </Field>
         <Field>
           <Name>Договір</Name>
@@ -24337,6 +24699,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a28</References>
         </Field>
         <Field>
           <Name>БанківськийРахунок</Name>
@@ -24349,6 +24713,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a27</References>
         </Field>
         <Field>
           <Name>Валюта</Name>
@@ -24361,6 +24727,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a07</References>
         </Field>
         <Field>
           <Name>СтаттяРухуКоштів</Name>
@@ -24373,6 +24741,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a45</References>
         </Field>
         <Field>
           <Name>КасаВідправник</Name>
@@ -24385,6 +24755,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a26</References>
         </Field>
         <Field>
           <Name>Курс</Name>
@@ -24420,6 +24792,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a14</References>
         </Field>
         <Field>
           <Name>КлючовіСловаДляПошуку</Name>
@@ -24445,6 +24819,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>acc_operations</References>
         </Field>
         <Field>
           <Name>ВідобразитиВБухгалтерськомуОбліку</Name>
@@ -24479,6 +24855,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a44</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -24525,6 +24903,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a18</References>
             </Field>
             <Field>
               <Name>ВалютаВзаєморозрахунків</Name>
@@ -24536,6 +24916,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a07</References>
             </Field>
             <Field>
               <Name>Організація</Name>
@@ -24547,6 +24929,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a01</References>
             </Field>
           </Fields>
           <TabularLists />
@@ -24576,6 +24960,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a44</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -24602,6 +24988,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b57</References>
             </Field>
             <Field>
               <Name>Аналітика1</Name>
@@ -24646,6 +25034,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b60</References>
             </Field>
             <Field>
               <Name>Дебет</Name>
@@ -24698,6 +25088,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b57</References>
             </Field>
             <Field>
               <Name>КорАналітика1</Name>
@@ -25316,6 +25708,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a01</References>
         </Field>
         <Field>
           <Name>Каса</Name>
@@ -25328,6 +25722,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a26</References>
         </Field>
         <Field>
           <Name>СумаДокументу</Name>
@@ -25374,6 +25770,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a01</References>
         </Field>
         <Field>
           <Name>Контрагент</Name>
@@ -25386,6 +25784,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a08</References>
         </Field>
         <Field>
           <Name>Договір</Name>
@@ -25398,6 +25798,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a28</References>
         </Field>
         <Field>
           <Name>БанківськийРахунок</Name>
@@ -25410,6 +25812,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a27</References>
         </Field>
         <Field>
           <Name>Валюта</Name>
@@ -25422,6 +25826,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a07</References>
         </Field>
         <Field>
           <Name>СтаттяРухуКоштів</Name>
@@ -25434,6 +25840,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a45</References>
         </Field>
         <Field>
           <Name>КасаОтримувач</Name>
@@ -25446,6 +25854,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a26</References>
         </Field>
         <Field>
           <Name>Курс</Name>
@@ -25494,6 +25904,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a14</References>
         </Field>
         <Field>
           <Name>КлючовіСловаДляПошуку</Name>
@@ -25519,6 +25931,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>acc_operations</References>
         </Field>
         <Field>
           <Name>ВідобразитиВБухгалтерськомуОбліку</Name>
@@ -25553,6 +25967,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a48</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -25599,6 +26015,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a07</References>
             </Field>
             <Field>
               <Name>Підрозділ</Name>
@@ -25610,6 +26028,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a18</References>
             </Field>
             <Field>
               <Name>Коментар</Name>
@@ -25632,6 +26052,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a01</References>
             </Field>
           </Fields>
           <TabularLists />
@@ -25661,6 +26083,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a48</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -25687,6 +26111,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b57</References>
             </Field>
             <Field>
               <Name>Аналітика1</Name>
@@ -25731,6 +26157,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b60</References>
             </Field>
             <Field>
               <Name>Дебет</Name>
@@ -25783,6 +26211,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b57</References>
             </Field>
             <Field>
               <Name>КорАналітика1</Name>
@@ -26672,6 +27102,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a31</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -26897,6 +27329,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a31</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -27913,6 +28347,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a51</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -28175,6 +28611,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a51</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -29207,6 +29645,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a53</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -29480,6 +29920,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a53</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -30458,6 +30900,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a81</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -30628,6 +31072,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a81</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -31541,6 +31987,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a83</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -31779,6 +32227,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a83</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -31886,6 +32336,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a83</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -31993,6 +32445,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a83</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -32148,6 +32602,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a83</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -32959,6 +33415,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a88</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -33546,6 +34004,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a90</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -34126,6 +34586,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a92</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -34804,6 +35266,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a94</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -35546,6 +36010,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b07</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -35809,6 +36275,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b07</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -36723,6 +37191,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b10</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -37004,6 +37474,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b10</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -37899,6 +38371,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a64</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -38553,6 +39027,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b09</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -39231,6 +39707,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b27</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -39880,6 +40358,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b29</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -40439,6 +40919,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a65</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -40594,6 +41076,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a65</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -41359,6 +41843,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a96</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -42226,6 +42712,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b41</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -43081,6 +43569,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b44</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -43912,6 +44402,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b51</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -44647,6 +45139,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>acc_operations</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -45566,6 +46060,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b72</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -45851,6 +46347,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b72</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -47429,6 +47927,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a01</References>
         </Field>
         <Field>
           <Name>Підрозділ</Name>
@@ -47441,6 +47941,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a18</References>
         </Field>
         <Field>
           <Name>Автор</Name>
@@ -47453,6 +47955,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a14</References>
         </Field>
         <Field>
           <Name>КлючовіСловаДляПошуку</Name>
@@ -47478,6 +47982,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>acc_operations</References>
         </Field>
         <Field>
           <Name>ВідобразитиВБухгалтерськомуОбліку</Name>
@@ -47501,6 +48007,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a07</References>
         </Field>
         <Field>
           <Name>СкладКомплектуючих</Name>
@@ -47513,6 +48021,8 @@ FROM
           <IsFullTextSearch>0</IsFullTextSearch>
           <IsSearch>0</IsSearch>
           <IsExport>0</IsExport>
+          <ForeignKey>1</ForeignKey>
+          <References>tab_a10</References>
         </Field>
       </Fields>
       <TabularParts>
@@ -47536,6 +48046,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b76</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -47573,6 +48085,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a03</References>
             </Field>
             <Field>
               <Name>ХарактеристикаНоменклатури</Name>
@@ -47584,6 +48098,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a21</References>
             </Field>
             <Field>
               <Name>Замовлення</Name>
@@ -47595,6 +48111,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a34</References>
             </Field>
             <Field>
               <Name>Склад</Name>
@@ -47606,6 +48124,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a10</References>
             </Field>
             <Field>
               <Name>ОдиницяВиміру</Name>
@@ -47617,6 +48137,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a06</References>
             </Field>
             <Field>
               <Name>Кількість</Name>
@@ -47649,6 +48171,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b02</References>
             </Field>
             <Field>
               <Name>Коєфіціент</Name>
@@ -47805,6 +48329,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b76</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -47842,6 +48368,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a03</References>
             </Field>
             <Field>
               <Name>ХарактеристикаНоменклатури</Name>
@@ -47853,6 +48381,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a21</References>
             </Field>
             <Field>
               <Name>Партія</Name>
@@ -47864,6 +48394,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b06</References>
             </Field>
             <Field>
               <Name>Склад</Name>
@@ -47875,6 +48407,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a10</References>
             </Field>
             <Field>
               <Name>ОдиницяВиміру</Name>
@@ -47886,6 +48420,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_a06</References>
             </Field>
             <Field>
               <Name>Кількість</Name>
@@ -47918,6 +48454,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b02</References>
             </Field>
             <Field>
               <Name>Коєфіціент</Name>
@@ -48096,6 +48634,8 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b76</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -48122,6 +48662,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b57</References>
             </Field>
             <Field>
               <Name>Дебет</Name>
@@ -48207,6 +48749,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b57</References>
             </Field>
             <Field>
               <Name>КорАналітика1</Name>
@@ -48251,6 +48795,8 @@ FROM
               <IsFullTextSearch>0</IsFullTextSearch>
               <IsSearch>0</IsSearch>
               <IsExport>0</IsExport>
+              <ForeignKey>1</ForeignKey>
+              <References>tab_b60</References>
             </Field>
           </Fields>
           <TabularLists />

@@ -6,10 +6,12 @@
     <xsl:param name="TableName" />
     <xsl:param name="InfoSchemaFieldList" />
     <xsl:param name="InfoSchemaIndexList" />
+    <xsl:param name="InfoSchemaConstraintList" />
     <xsl:param name="ConfigurationFieldList" />
 
     <xsl:for-each select="$ConfigurationFieldList">
       <xsl:variable name="ConfFieldName" select="NameInTable" />
+      <xsl:variable name="ConfFieldReferences" select="References" />
 
       <Control_Field>
         <Name>
@@ -26,6 +28,17 @@
             <xsl:text>yes</xsl:text>
           </xsl:if>
         </IndexExist>
+        <ForeignKey>
+          <xsl:value-of select="ForeignKey"/>
+        </ForeignKey>
+        <References>
+          <xsl:value-of select="$ConfFieldReferences"/>
+        </References>
+        <ForeignKeyExist>
+          <xsl:if test="$InfoSchemaConstraintList[Name = concat('fk_', $TableName , '_', $ConfFieldName, '_references')]"> <!-- and Column = $ConfFieldName and ToTable = $ConfFieldReferences -->
+            <xsl:text>yes</xsl:text> 
+          </xsl:if>
+        </ForeignKeyExist>
         <xsl:choose>
           <xsl:when test="$InfoSchemaFieldList[Name = $ConfFieldName]">
             <IsExist>yes</IsExist>
@@ -260,6 +273,8 @@
               <xsl:with-param name="ConfFieldNameInTable" select="$ConfFieldName" />
               <xsl:with-param name="ConfFieldType" select="Type" />
 		          <xsl:with-param name="ConfFieldIndex" select="IsIndex" />
+              <xsl:with-param name="ConfFieldForeignKey" select="ForeignKey" />
+              <xsl:with-param name="ConfFieldReferences" select="$ConfFieldReferences" />
               <xsl:with-param name="ConfFieldNotNull" select="IsNotNull" />
             </xsl:call-template>
 
@@ -276,6 +291,8 @@
     <xsl:param name="ConfFieldNameInTable" />
     <xsl:param name="ConfFieldType" />
 	  <xsl:param name="ConfFieldIndex" />
+    <xsl:param name="ConfFieldForeignKey" />
+    <xsl:param name="ConfFieldReferences" />
     <xsl:param name="ConfFieldNotNull" />
 	  
     <FieldCreate>
@@ -351,6 +368,14 @@
 		    <xsl:value-of select="$ConfFieldIndex"/>
       </Index>
 
+      <ForeignKey>
+        <xsl:value-of select="$ConfFieldForeignKey"/>
+      </ForeignKey>
+
+      <References>
+        <xsl:value-of select="$ConfFieldReferences"/>
+      </References>
+
       <NotNull>
 		    <xsl:value-of select="$ConfFieldNotNull"/>
       </NotNull>
@@ -362,6 +387,7 @@
     <xsl:param name="InfoSchemaTableList" />
     <xsl:param name="ConfigurationTablePartList" />
     <xsl:param name="IsCreateOwner" />
+    <xsl:param name="OwnerTableName" />
 
     <xsl:for-each select="$ConfigurationTablePartList">
       <xsl:variable name="ConTablePart" select="Name" />
@@ -377,6 +403,9 @@
         <IsCreateOwner>
           <xsl:value-of select="$IsCreateOwner"/>
         </IsCreateOwner>
+        <OwnerTableName>
+          <xsl:value-of select="$OwnerTableName"/>
+        </OwnerTableName>
         <xsl:choose>
           <xsl:when test="$InfoSchemaTableList[Name = $ConfTablePartTable]">
             <IsExist>yes</IsExist>
@@ -388,6 +417,7 @@
                   <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid']" />
                   <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Column" />
                   <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Index" />
+                  <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Constraint" />
                 </xsl:call-template>
               </xsl:when>
               <!-- 
@@ -408,6 +438,7 @@
               <xsl:with-param name="ConfigurationFieldList" select="Fields/Field" />
               <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Column" />
 			        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Index" />
+              <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Constraint" />
             </xsl:call-template>
 
           </xsl:when>
@@ -422,6 +453,8 @@
                   <xsl:with-param name="ConfFieldNameInTable" select="NameInTable" />
                   <xsl:with-param name="ConfFieldType" select="Type" />
 				          <xsl:with-param name="ConfFieldIndex" select="IsIndex" />
+                  <xsl:with-param name="ConfFieldForeignKey" select="ForeignKey" />
+                  <xsl:with-param name="ConfFieldReferences" select="References" />
                   <xsl:with-param name="ConfFieldNotNull" select="IsNotNull" />
                 </xsl:call-template>
               </xsl:for-each>
@@ -677,6 +710,7 @@
                 <xsl:with-param name="ConfigurationFieldList" select="ConstantsBlock/./Constants/Constant" />
                 <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfObjTable]/Column" />
 				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfObjTable]/Index" />
+                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfObjTable]/Constraint" />
               </xsl:call-template>
 
             </xsl:when>
@@ -691,6 +725,8 @@
                     <xsl:with-param name="ConfFieldNameInTable" select="NameInTable" />
                     <xsl:with-param name="ConfFieldType" select="Type" />
 					          <xsl:with-param name="ConfFieldIndex" select="IsIndex" />
+                    <xsl:with-param name="ConfFieldForeignKey" select="ForeignKey" />
+                    <xsl:with-param name="ConfFieldReferences" select="References" />
                     <xsl:with-param name="ConfFieldNotNull" select="IsNotNull" />
 				          </xsl:call-template>
                 </xsl:for-each>
@@ -767,6 +803,7 @@
                 <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid']" />
                 <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
 				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
+                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
               </xsl:call-template>
 
               <xsl:call-template name="FieldsControl">
@@ -774,6 +811,7 @@
                 <xsl:with-param name="ConfigurationFieldList" select="Fields/Field" />
                 <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
 				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
+                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
               </xsl:call-template>
 
             </xsl:when>
@@ -788,6 +826,8 @@
                     <xsl:with-param name="ConfFieldNameInTable" select="NameInTable" />
                     <xsl:with-param name="ConfFieldType" select="Type" />
 					          <xsl:with-param name="ConfFieldIndex" select="IsIndex" />
+                    <xsl:with-param name="ConfFieldForeignKey" select="ForeignKey" />
+                    <xsl:with-param name="ConfFieldReferences" select="References" />
                     <xsl:with-param name="ConfFieldNotNull" select="IsNotNull" />
                   </xsl:call-template>
                 </xsl:for-each>
@@ -801,6 +841,7 @@
             <xsl:with-param name="ConfigurationTablePartList" select="TabularParts/TablePart" />
             <xsl:with-param name="InfoSchemaTableList" select="$InfoSchemaTableList" />
             <xsl:with-param name="IsCreateOwner">yes</xsl:with-param>
+            <xsl:with-param name="OwnerTableName" select="$ConfDirectoryTable" />
           </xsl:call-template>
 
         </Control_Table>
@@ -837,13 +878,15 @@
                 <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid']" />
                 <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
 				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
+                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
               </xsl:call-template>
 
               <xsl:call-template name="FieldsControl">
 				        <xsl:with-param name="TableName" select="$ConfDirectoryTable" />
                 <xsl:with-param name="ConfigurationFieldList" select="Fields/Field" />
                 <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
-				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />				  
+				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
+                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
               </xsl:call-template>
 
             </xsl:when>
@@ -858,6 +901,8 @@
                     <xsl:with-param name="ConfFieldNameInTable" select="NameInTable" />
                     <xsl:with-param name="ConfFieldType" select="Type" />
 					          <xsl:with-param name="ConfFieldIndex" select="IsIndex" />
+                    <xsl:with-param name="ConfFieldForeignKey" select="ForeignKey" />
+                    <xsl:with-param name="ConfFieldReferences" select="References" />
                     <xsl:with-param name="ConfFieldNotNull" select="IsNotNull" />
                   </xsl:call-template>
                 </xsl:for-each>
@@ -871,6 +916,7 @@
             <xsl:with-param name="ConfigurationTablePartList" select="TabularParts/TablePart" />
             <xsl:with-param name="InfoSchemaTableList" select="$InfoSchemaTableList" />
             <xsl:with-param name="IsCreateOwner">yes</xsl:with-param>
+            <xsl:with-param name="OwnerTableName" select="$ConfDirectoryTable" />
           </xsl:call-template>
 
         </Control_Table>
@@ -907,6 +953,7 @@
                 <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid']" />
                 <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
 				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
+                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
               </xsl:call-template>
 
               <xsl:call-template name="FieldsControl">
@@ -914,6 +961,7 @@
                 <xsl:with-param name="ConfigurationFieldList" select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field" />
                 <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
 				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
+                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
               </xsl:call-template>
 
             </xsl:when>
@@ -928,6 +976,8 @@
                     <xsl:with-param name="ConfFieldNameInTable" select="NameInTable" />
                     <xsl:with-param name="ConfFieldType" select="Type" />
 					          <xsl:with-param name="ConfFieldIndex" select="IsIndex" />
+                    <xsl:with-param name="ConfFieldForeignKey" select="ForeignKey" />
+                    <xsl:with-param name="ConfFieldReferences" select="References" />
                     <xsl:with-param name="ConfFieldNotNull" select="IsNotNull" />
                   </xsl:call-template>
                 </xsl:for-each>
@@ -980,6 +1030,7 @@
                 <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid']" />
                 <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
 				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
+                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
               </xsl:call-template>
 
               <xsl:call-template name="FieldsControl">
@@ -987,6 +1038,7 @@
                 <xsl:with-param name="ConfigurationFieldList" select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field" />
                 <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
 				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
+                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
               </xsl:call-template>
 
             </xsl:when>
@@ -1001,6 +1053,8 @@
                     <xsl:with-param name="ConfFieldNameInTable" select="NameInTable" />
                     <xsl:with-param name="ConfFieldType" select="Type" />
 					          <xsl:with-param name="ConfFieldIndex" select="IsIndex" />
+                    <xsl:with-param name="ConfFieldForeignKey" select="ForeignKey" />
+                    <xsl:with-param name="ConfFieldReferences" select="References" />
                     <xsl:with-param name="ConfFieldNotNull" select="IsNotNull" />
                   </xsl:call-template>
                 </xsl:for-each>

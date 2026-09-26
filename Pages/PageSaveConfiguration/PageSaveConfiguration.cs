@@ -421,12 +421,12 @@ public partial class PageSaveConfiguration
         Configuration.Save(Conf.PathToTempXmlFileConfiguration, Conf);
         ApendLine(" --> " + Conf.PathToTempXmlFileConfiguration + "\n");
 
-        ApendLine("2. Отримання структури бази даних");
+        ApendLine("3. Отримання структури бази даних");
         ConfigurationInformationSchema informationSchema = await Program.Kernel.DataBase.SelectInformationSchema();
         Configuration.SaveInformationSchema(informationSchema,
-             System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "InformationSchema.xml"));
+            System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "InformationSchema.xml"));
 
-        ApendLine("3. Створення загального файлу для порівняння");
+        ApendLine("4. Створення загального файлу для порівняння");
         Configuration.CreateOneFileForComparison(
             System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "InformationSchema.xml"),
             Conf.PathToTempXmlFileConfiguration,
@@ -434,20 +434,20 @@ public partial class PageSaveConfiguration
             System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "ComparisonAllData.xml")
         );
 
-        ApendLine("4. Порівняння конфігурації та бази даних");
+        ApendLine("5. Порівняння конфігурації та бази даних");
         Configuration.Comparison(
             System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "ComparisonAllData.xml"),
             System.IO.Path.Combine(PathToXsltTemplate, "xslt/Comparison.xslt"),
             System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "Comparison.xml")
         );
 
-        ApendLine("5. Створення команд SQL");
+        ApendLine("6. Створення команд SQL");
         Configuration.ComparisonAnalizeGeneration(
             System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "Comparison.xml"),
             System.IO.Path.Combine(PathToXsltTemplate, "xslt/ComparisonAnalize.xslt"),
             System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "ComparisonAnalize.xml"));
 
-        ApendLine("6. Створення функцій SQL");
+        ApendLine("7. Створення функцій SQL");
         Configuration.GeneratedFunc(
             Conf.PathToTempXmlFileConfiguration,
             System.IO.Path.Combine(PathToXsltTemplate, "xslt/GeneratedFunc.xslt"),
@@ -457,37 +457,29 @@ public partial class PageSaveConfiguration
         {
             ApendLine("");
 
-            XPathDocument xPathDoc = new XPathDocument(
-                System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "ComparisonAnalize.xml")
-            );
-            XPathNavigator xPathDocNavigator = xPathDoc.CreateNavigator();
-
-            XPathNodeIterator nodeInfo = xPathDocNavigator.Select("/root/info");
-            if (nodeInfo.Count == 0)
+            string pathToSqlCommandFile = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Conf.PathToXmlFileConfiguration)!, "ComparisonAnalize.xml");
+            if (File.Exists(pathToSqlCommandFile))
             {
-                ApendLine("Інформація відсутня!");
-            }
-            else
-                while (nodeInfo!.MoveNext())
+                //Read SQL
+                (List<string> InfoList, List<string> SqlList) = Configuration.ListComparisonSql(pathToSqlCommandFile);
+
+                if (InfoList.Count == 0)
+                    ApendLine("Інформація відсутня!");
+                else
+                    foreach (string info in InfoList)
+                        ApendLine(info);
+
+                ApendLine("\n[ Команди SQL ]\n");
+
+                if (SqlList.Count == 0)
+                    ApendLine("Команди відсутні!");
+                else
                 {
-                    ApendLine(nodeInfo?.Current?.Value ?? "");
+                    foreach (string sql in SqlList)
+                        ApendLine(" -- " + sql);
+
+                    ApendLine("\n Для внесення змін - натисніть \"Збереження змін. Крок 2\"\n");
                 }
-
-            ApendLine("\n[ Команди SQL ]\n");
-
-            XPathNodeIterator nodeSQL = xPathDocNavigator.Select("/root/sql");
-            if (nodeSQL.Count == 0)
-            {
-                ApendLine("Команди відсутні!");
-            }
-            else
-            {
-                while (nodeSQL!.MoveNext())
-                {
-                    ApendLine(" - " + nodeSQL?.Current?.Value);
-                }
-
-                ApendLine("\n Для внесення змін - натисніть \"Збереження змін. Крок 2\"\n");
             }
         }
         else
@@ -513,7 +505,7 @@ public partial class PageSaveConfiguration
         if (File.Exists(pathToSqlCommandFile))
         {
             //Read SQL
-            List<string> SqlList = Configuration.ListComparisonSql(pathToSqlCommandFile);
+            (_, List<string> SqlList) = Configuration.ListComparisonSql(pathToSqlCommandFile);
 
             ApendLine("[ Виконання SQL ]\n");
 
@@ -548,7 +540,7 @@ public partial class PageSaveConfiguration
         if (File.Exists(pathToFuncSqlCommandFile))
         {
             //Read SQL
-            List<string> SqlList = Configuration.ListComparisonSql(pathToFuncSqlCommandFile);
+            (_, List<string> SqlList) = Configuration.ListComparisonSql(pathToFuncSqlCommandFile);
 
             ApendLine("[ Створення функцій SQL ]\n");
 

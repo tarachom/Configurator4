@@ -89,10 +89,10 @@
                     </object>
                 </child>
 
-                <!-- Рядок 4: Автоматична нумерація та сортування -->
+                <!-- Рядок 4: Зовнішній ключ -->
                 <child>
-                    <object class="GtkCheckButton" id="check_auto_numbering">
-                        <property name="label">Автоматична нумерація та сортування</property>
+                    <object class="GtkCheckButton" id="check_foreign_key">
+                        <property name="label">Зовнішній ключ</property>
                         <property name="sensitive">false</property>
                         <layout>
                             <property name="column">1</property>
@@ -101,10 +101,11 @@
                     </object>
                 </child>
 
-                <!-- Рядок 5: Використовувати для представлення -->
+                <!-- Рядок 5: Автоматична нумерація та сортування -->
                 <child>
-                    <object class="GtkCheckButton" id="check_presentation">
-                        <property name="label">Використовувати для представлення</property>
+                    <object class="GtkCheckButton" id="check_auto_numbering">
+                        <property name="label">Автоматична нумерація та сортування</property>
+                        <property name="sensitive">false</property>
                         <layout>
                             <property name="column">1</property>
                             <property name="row">5</property>
@@ -112,10 +113,10 @@
                     </object>
                 </child>
 
-                <!-- Рядок 6: Повнотекстовий пошук -->
+                <!-- Рядок 6: Використовувати для представлення -->
                 <child>
-                    <object class="GtkCheckButton" id="check_fulltext_search">
-                        <property name="label">Повнотекстовий пошук</property>
+                    <object class="GtkCheckButton" id="check_presentation">
+                        <property name="label">Використовувати для представлення</property>
                         <layout>
                             <property name="column">1</property>
                             <property name="row">6</property>
@@ -123,11 +124,10 @@
                     </object>
                 </child>
 
-                <!-- Рядок 7: Пошук в журналах -->
+                <!-- Рядок 7: Повнотекстовий пошук -->
                 <child>
-                    <object class="GtkCheckButton" id="check_journal_search">
-                        <property name="label">Пошук в журналах</property>
-                        <property name="active">true</property>
+                    <object class="GtkCheckButton" id="check_fulltext_search">
+                        <property name="label">Повнотекстовий пошук</property>
                         <layout>
                             <property name="column">1</property>
                             <property name="row">7</property>
@@ -135,10 +135,11 @@
                     </object>
                 </child>
 
-                <!-- Рядок 8: Багатострічкове поле -->
+                <!-- Рядок 8: Пошук в журналах -->
                 <child>
-                    <object class="GtkCheckButton" id="check_multiline">
-                        <property name="label">Багатострічкове поле</property>
+                    <object class="GtkCheckButton" id="check_journal_search">
+                        <property name="label">Пошук в журналах</property>
+                        <property name="active">true</property>
                         <layout>
                             <property name="column">1</property>
                             <property name="row">8</property>
@@ -146,10 +147,10 @@
                     </object>
                 </child>
 
-                <!-- Рядок 9: Дозволити експорт -->
+                <!-- Рядок 9: Багатострічкове поле -->
                 <child>
-                    <object class="GtkCheckButton" id="check_allow_export">
-                        <property name="label">Дозволити експорт</property>
+                    <object class="GtkCheckButton" id="check_multiline">
+                        <property name="label">Багатострічкове поле</property>
                         <layout>
                             <property name="column">1</property>
                             <property name="row">9</property>
@@ -157,7 +158,18 @@
                     </object>
                 </child>
 
-                <!-- Рядок 10: Експандер композитного типу -->
+                <!-- Рядок 10: Дозволити експорт -->
+                <child>
+                    <object class="GtkCheckButton" id="check_allow_export">
+                        <property name="label">Дозволити експорт</property>
+                        <layout>
+                            <property name="column">1</property>
+                            <property name="row">10</property>
+                        </layout>
+                    </object>
+                </child>
+
+                <!-- Рядок 11: Експандер композитного типу -->
                 <child>
                     <object class="GtkBox">
                         <property name="orientation">horizontal</property>
@@ -280,7 +292,7 @@
                         
                         <layout>
                             <property name="column">0</property>
-                            <property name="row">10</property>
+                            <property name="row">11</property>
                             <property name="column-span">2</property>
                         </layout>
                     </object>

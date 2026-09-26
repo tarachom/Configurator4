@@ -781,8 +781,10 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
 
             /* Тільки елементи верхнього рівня для стандартного виводу */
             if (form.WhereList == null &amp;&amp; form.TypeWhereState == InterfaceGtk4.FormJournal.TypeWhere.Standart)
-                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.Add(new(Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$ParentField"/>, Comparison.EQ, Guid.Empty));
-
+                <xsl:value-of select="$DirectoryName"/>_Select.QuerySelect.Where.AddRange([
+                    new(Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$ParentField"/>, Comparison.EQ, Guid.Empty) { Group = "_topLevel" },
+                    new(Comparison.OR, Довідники.<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$ParentField"/>, Comparison.ISNULL, null, true) { Group = "_topLevel" }
+                ]);
                 </xsl:when>
                 <xsl:otherwise>
             /* Cторінки */

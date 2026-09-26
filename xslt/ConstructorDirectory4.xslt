@@ -948,7 +948,11 @@ partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFo
             Папки.CallBack_Activate = async uniqueID =&gt;
             {
                 //Відбір по полю <xsl:value-of select="$FieldFolder"/>
-                ParentWhereList = [new(<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$FieldFolder"/>, Comparison.EQ, uniqueID.UGuid)];
+                ParentWhereList = uniqueID.IsEmpty() ?
+                    [new(<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$FieldFolder"/>, Comparison.ISNULL, null, true) { Group = "TopLevel" },
+                        new(Comparison.OR, <xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$FieldFolder"/>, Comparison.EQ, Guid.Empty) { Group = "TopLevel" }]
+                         : [new(<xsl:value-of select="$DirectoryName"/>_Const.<xsl:value-of select="$FieldFolder"/>, Comparison.EQ, uniqueID.UGuid)];
+
                 if (!UseHierarchy.Active &amp;&amp; TypeWhereState == TypeWhere.Standart)
                 {
                     PagesClear();
