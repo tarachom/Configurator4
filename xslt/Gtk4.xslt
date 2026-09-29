@@ -115,7 +115,7 @@ limitations under the License.
                         <xsl:value-of select="substring-after(Pointer, '.')"/>_PointerControl <xsl:value-of select="Name"/> = <xsl:value-of select="substring-after(Pointer, '.')"/>_PointerControl.New();
                         <xsl:value-of select="Name"/>.Caption = "";
                         <xsl:value-of select="Name"/>.AfterSelectFunc = () =&gt; sw.Active = true;
-                        object get() =&gt; <xsl:value-of select="Name"/>.Pointer.UniqueID.UGuid;
+                        object get() =&gt; <xsl:value-of select="Name"/>.Pointer.UniqueID.IsEmpty() ? DBNull.Value : <xsl:value-of select="Name"/>.Pointer.UniqueID.UGuid;
                     </xsl:when>
                     <xsl:when test="Type = 'enum'">
                         DropDownControl <xsl:value-of select="Name"/> = DropDownControl.NewWithValues(ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_Dict());

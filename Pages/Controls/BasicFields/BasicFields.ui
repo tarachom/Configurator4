@@ -55,7 +55,7 @@
                     </object>
                 </child>
 
-                <!-- Рядок 2: Таблиця / Поле -->
+                <!-- Рядок 2: Таблиця / Поле + Кнопка Перейменувати -->
                 <child>
                     <object class="GtkLabel" id="label_table_or_column">
                         <property name="label"></property> <!-- Таблиця або Поле -->
@@ -67,8 +67,22 @@
                     </object>
                 </child>
                 <child>
-                    <object class="GtkEntry" id="entry_table_or_column">
+                    <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">6</property>
                         <property name="hexpand">true</property>
+                        <child>
+                            <object class="GtkEntry" id="entry_table_or_column">
+                                <property name="hexpand">true</property>
+                                <property name="sensitive">false</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkButton" id="button_rename_table_or_column">
+                                <property name="icon-name">edit</property>
+                                <property name="tooltip-text">Перейменувати</property>
+                            </object>
+                        </child>
                         <layout>
                             <property name="column">1</property>
                             <property name="row">2</property>

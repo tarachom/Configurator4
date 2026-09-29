@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="AiChatView" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">5</property>
+        <property name="halign">start</property>
+        <property name="valign">start</property>
+
+        <!-- 0. Заголовок зверху -->
+        <child>
+            <object class="GtkLabel" id="label_title">
+                <property name="label">&lt;b&gt;AI управління&lt;/b&gt;</property>
+                <property name="use-markup">true</property>
+                <property name="halign">start</property>
+            </object>
+        </child>
+
+        <!-- 1. Верхня область: Історія чату -->
+        <child>
+            <object class="GtkScrolledWindow" id="scroll_history">
+                <property name="has-frame">true</property>
+                <property name="height-request">500</property>
+                <property name="hscrollbar-policy">never</property>
+                <property name="vscrollbar-policy">automatic</property>
+                
+                <property name="child">
+                    <object class="GtkTextView" id="textview_history">
+                        <property name="editable">false</property>
+                        <property name="wrap-mode">word</property>
+                        <property name="left-margin">10</property>
+                        <property name="right-margin">10</property>
+                        <property name="top-margin">10</property>
+                        <property name="bottom-margin">10</property>
+                    </object>
+                </property>
+            </object>
+        </child>
+
+        <!-- 2. Нижня область: Ввід + Кнопка -->
+        <child>
+            <object class="GtkBox">
+                <property name="orientation">horizontal</property>
+                <property name="spacing">8</property>
+
+                <child>
+                    <object class="GtkScrolledWindow" id="scroll_prompt">
+                        <property name="hexpand">true</property>
+                        <property name="height-request">100</property>
+                        <property name="has-frame">true</property>
+                        <property name="hscrollbar-policy">never</property>
+                        <property name="vscrollbar-policy">automatic</property>
+                        <property name="child">
+                            <object class="GtkTextView" id="textview_prompt">
+                                <property name="wrap-mode">word</property>
+                                <property name="left-margin">6</property>
+                                <property name="right-margin">6</property>
+                                <property name="top-margin">6</property>
+                                <property name="bottom-margin">6</property>
+                            </object>
+                        </property>
+                    </object>
+                </child>
+
+                <child>
+                    <object class="GtkButton" id="button_send">
+                        <property name="label">Надіслати</property>
+                        <property name="valign">end</property>
+                    </object>
+                </child>
+            </object>
+        </child>
+
+    </template>
+</interface>

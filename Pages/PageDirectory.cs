@@ -27,6 +27,11 @@ partial class PageDirectory : FormPageConfigurator
     {
         PageName = "Довідник:";
         basicFields.TableOrColumnLabel = "Таблиця:";
+        basicFields.RenameFunc = () =>
+        {
+            Console.WriteLine(1);
+            return Task.CompletedTask;
+        };
     }
 
     public static PageDirectory New()

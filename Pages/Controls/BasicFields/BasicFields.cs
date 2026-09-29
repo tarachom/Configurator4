@@ -21,6 +21,7 @@ public partial class BasicFields
     [Connect("entry_full_name")] Entry entryFullName;
     [Connect("label_table_or_column")] Label labelTableOrColumn;
     [Connect("entry_table_or_column")] Entry entryTableOrColumn;
+    [Connect("button_rename_table_or_column")] Button buttonRenameTableOrColumn;
     [Connect("textview_desc")] TextView textviewDesc;
 
     partial void Initialize()
@@ -38,6 +39,12 @@ public partial class BasicFields
             };
             entryItemName.AddController(controller);
         }
+
+        buttonRenameTableOrColumn.OnClicked += async (_, _) =>
+        {
+            if (RenameFunc != null)
+                await RenameFunc.Invoke();
+        };
     }
 
     public static BasicFields New() => NewWithProperties([]);
@@ -46,6 +53,8 @@ public partial class BasicFields
     /// Приховати поле ТаблицяЧиСтовпчик
     /// </summary>
     public void HideTableOrColumn() => labelTableOrColumn.Visible = entryTableOrColumn.Visible = false;
+
+    public Func<Task>? RenameFunc { get; set; } = null;
 
     public string ItemName
     {

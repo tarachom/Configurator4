@@ -15,7 +15,16 @@ partial class PageHome : Form
     partial void Initialize()
     {
         {
-            ActiveUsersView view = ActiveUsersView.New(Program.Kernel, 800, 300);
+            ActiveUsersView view = ActiveUsersView.New(Program.Kernel, 800, 200);
+
+            Box hBox = New(Orientation.Horizontal, 0);
+            hBox.MarginBottom = 10;
+            hBox.Append(view);
+            Append(hBox);
+        }
+
+        {
+            AiChatView view = AiChatView.New(800);
 
             Box hBox = New(Orientation.Horizontal, 0);
             hBox.MarginBottom = 10;
@@ -24,16 +33,16 @@ partial class PageHome : Form
         }
     }
 
-    public static PageHome New() 
+    public static PageHome New()
     {
         PageHome w = NewWithProperties([]);
         w.NotebookFunc = Program.BasicForm?.NotebookFunc;
-        
+
         return w;
     }
 
     public async ValueTask SetValue()
     {
-        
+
     }
 }
