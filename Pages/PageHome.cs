@@ -6,6 +6,7 @@
 
 using Gtk;
 using InterfaceGtk4;
+using InterfaceGtkLib;
 
 namespace Configurator;
 
@@ -43,6 +44,16 @@ partial class PageHome : Form
 
     public async ValueTask SetValue()
     {
-
+        //Автоматичний запуск AI клієнта
+        GlobalConfigurationParam? globalConfigurationParam = Program.BasicForm?.GlobalConfigurationParam;
+        if (globalConfigurationParam != null && globalConfigurationParam.AIStartOnRun)
+            try
+            {
+                bool result = FunctionForAI.CreateClient(globalConfigurationParam.AIKey, globalConfigurationParam.AIModel);
+            }
+            catch (Exception ex)
+            {
+                Message.Error(Program.BasicForm, "Помилка", "Під час запуску AI клієнта виникла помилка:\n\n" + ex.Message);
+            }
     }
 }

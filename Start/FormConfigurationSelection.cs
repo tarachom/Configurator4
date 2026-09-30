@@ -54,18 +54,6 @@ partial class FormConfigurationSelection : InterfaceGtk4.FormConfigurationSelect
         //Відкрити перші сторінки
         await form.OpenFirstPages();
 
-        //Автоматичний запуск AI клієнта
-        if (globalConfigurationParam.AIStartOnRun)
-            try
-            {
-                FunctionForAI.CreateClient(globalConfigurationParam.AIKey, globalConfigurationParam.AIModel);
-                //FunctionForAI.CreateOlama(globalConfigurationParam.AIKey, globalConfigurationParam.AIModel);
-            }
-            catch (Exception ex)
-            {
-                Message.Error(form, "Помилка", "Під час запуску AI клієнта виникла помилка:\n\n" + ex.Message);
-            }
-
         return true;
     }
 }
