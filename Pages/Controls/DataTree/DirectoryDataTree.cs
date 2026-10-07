@@ -32,7 +32,12 @@ public partial class DirectoryDataTree : DataTree
                     }
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
                     {
-                        await OpenPageField(false, tablePart.Fields, field, new(ConfiguratorItemOwnerType.TablePart,  tablePart));
+                        await OpenPageField(false, tablePart.Fields, field, new(ConfiguratorItemOwnerType.TablePart, tablePart));
+                        break;
+                    }
+                case "Form" when row.Obj is ConfigurationForms form:
+                    {
+                        await OpenPageForm(false, directory.Forms, form);
                         break;
                     }
                 default:
@@ -61,6 +66,7 @@ public partial class DirectoryDataTree : DataTree
                     }
                 case "FormGroup" or "Form":
                     {
+                        await OpenPageForm(true, directory.Forms, null);
                         break;
                     }
                 case "TablePartField" when row.ParentObj is ConfigurationTablePart tablePart:
@@ -103,7 +109,7 @@ public partial class DirectoryDataTree : DataTree
                         await OpenPageTabularList(true, directory.TabularList, directory.Fields, newTabularList);
                         break;
                     }
-                case "Form":
+                case "Form" when row.Obj is ConfigurationForms form:
                     {
                         break;
                     }
@@ -138,8 +144,9 @@ public partial class DirectoryDataTree : DataTree
                         directory.TabularList.Remove(tabularList.Name);
                         break;
                     }
-                case "Form":
+                case "Form" when row.Obj is ConfigurationForms form:
                     {
+                        directory.Forms.Remove(form.Name);
                         break;
                     }
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:

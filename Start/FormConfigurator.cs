@@ -102,6 +102,31 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
         await page.SetValue();
     }
 
+    public async Task PageTabularList(bool isNew, Dictionary<string, ConfigurationTabularList> tabularLists, Dictionary<string, ConfigurationField> fields, ConfigurationTabularList? tabularList = null)
+    {
+        PageTabularList page = Configurator.PageTabularList.New();
+        page.IsNew = isNew;
+        page.TabularLists = tabularLists;
+        page.Fields = fields;
+        if (tabularList != null) page.ConfTabularList = tabularList;
+        page.Caption = isNew ? "*" : tabularList?.Name ?? "";
+
+        Program.BasicForm?.NotebookFunc.CreatePage(page.Caption, page);
+        await page.SetValue();
+    }
+
+    public async Task PageForm(bool isNew, Dictionary<string, ConfigurationForms> forms, ConfigurationForms? form = null)
+    {
+        PageForm page = Configurator.PageForm.New();
+        page.IsNew = isNew;
+        page.Forms = forms;
+        if (form != null) page.ConfForm = form;
+        page.Caption = isNew ? "*" : form?.Name ?? "";
+
+        Program.BasicForm?.NotebookFunc.CreatePage(page.Caption, page);
+        await page.SetValue();
+    }
+
     protected override async Task PageSettings()
     {
         PageSettings page = Configurator.PageSettings.New();

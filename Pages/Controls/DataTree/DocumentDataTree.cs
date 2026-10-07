@@ -35,6 +35,11 @@ public partial class DocumentDataTree : DataTree
                         await OpenPageField(false, tablePart.Fields, field, new(ConfiguratorItemOwnerType.TablePart, tablePart));
                         break;
                     }
+                case "Form" when row.Obj is ConfigurationForms form:
+                    {
+                        await OpenPageForm(false, document.Forms, form);
+                        break;
+                    }
                 default:
                     break;
             }
@@ -61,6 +66,7 @@ public partial class DocumentDataTree : DataTree
                     }
                 case "FormGroup" or "Form":
                     {
+                        await OpenPageForm(true, document.Forms, null);
                         break;
                     }
                 case "TablePartField" when row.ParentObj is ConfigurationTablePart tablePart:
@@ -104,7 +110,7 @@ public partial class DocumentDataTree : DataTree
                         await OpenPageTabularList(true, document.TabularList, document.Fields, newTabularList);
                         break;
                     }
-                case "Form":
+                case "Form" when row.Obj is ConfigurationForms form:
                     {
                         break;
                     }
@@ -139,8 +145,9 @@ public partial class DocumentDataTree : DataTree
                         document.TabularList.Remove(tabularList.Name);
                         break;
                     }
-                case "Form":
+                case "Form" when row.Obj is ConfigurationForms form:
                     {
+                        document.Forms.Remove(form.Name);
                         break;
                     }
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:

@@ -94,37 +94,37 @@ public static class Function
         {
             {
                 string name = "Функції";
-                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.Function);
+                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.Function);
                 confDirectory.AppendForms(forms);
             }
 
             {
                 string name = "Тригери";
-                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.Triggers);
+                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.Triggers);
                 confDirectory.AppendForms(forms);
             }
 
             {
                 string name = "Реквізит вибору";
-                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.PointerControl);
+                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.PointerControl);
                 confDirectory.AppendForms(forms);
             }
 
             {
                 string name = "Реквізит вибору для таб частини";
-                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.PointerTablePartCell);
+                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.PointerTablePartCell);
                 confDirectory.AppendForms(forms);
             }
 
             {
                 string name = "Швидкий вибір";
-                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.ListSmallSelect);
+                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.ListSmallSelect);
                 confDirectory.AppendForms(forms);
             }
 
             {
                 string name = "Список";
-                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.List);
+                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.List);
                 confDirectory.AppendForms(forms);
             }
         }
@@ -191,37 +191,37 @@ public static class Function
         {
             {
                 string name = "Функції";
-                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.Function);
+                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.Function);
                 confDocument.AppendForms(forms);
             }
 
             {
                 string name = "Тригери";
-                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.Triggers);
+                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.Triggers);
                 confDocument.AppendForms(forms);
             }
 
             {
                 string name = "Реквізит вибору";
-                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.PointerControl);
+                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.PointerControl);
                 confDocument.AppendForms(forms);
             }
 
             {
                 string name = "Реквізит вибору для таб частини";
-                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.PointerTablePartCell);
+                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.PointerTablePartCell);
                 confDocument.AppendForms(forms);
             }
 
             {
                 string name = "Швидкий вибір";
-                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.ListSmallSelect);
+                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.ListSmallSelect);
                 confDocument.AppendForms(forms);
             }
 
             {
                 string name = "Список";
-                ConfigurationForms forms = new(name, name, ConfigurationForms.TypeForms.List);
+                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.List);
                 confDocument.AppendForms(forms);
             }
         }

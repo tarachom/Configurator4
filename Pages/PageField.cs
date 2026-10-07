@@ -13,7 +13,6 @@ namespace Configurator;
 [GObject.Subclass<FormPageConfigurator>(nameof(PageField))]
 partial class PageField : FormPageConfigurator
 {
-
     public string ParentTable { get; set; } = "";
     public ConfigurationField ConfField { get; set; } = new();
     public Dictionary<string, ConfigurationField> Fields = [];
