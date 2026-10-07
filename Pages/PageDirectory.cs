@@ -27,10 +27,81 @@ partial class PageDirectory : FormPageConfigurator
     {
         PageName = "Довідник:";
         basicFields.TableOrColumnLabel = "Таблиця:";
-        basicFields.RenameFunc = () =>
+        basicFields.RenameTableOrColumn.RenameFunc = async () =>
         {
-            Console.WriteLine(1);
-            return Task.CompletedTask;
+            List<string> log = [];
+
+            string oldName = basicFields.TableOrColumn;
+            string newName = basicFields.RenameTableOrColumn.NewName;
+
+            ConfigurationInformationSchema schema = await Program.Kernel.DataBase.SelectInformationSchema();
+            if (string.IsNullOrEmpty(newName))
+            {
+                log.Add("Не вказана нова назва таблиці!");
+                return (false, log);
+            }
+
+            if (schema.Tables.ContainsKey(newName))
+            {
+                log.Add($"В базі вже є таблиця із назвою {newName}!");
+                return (false, log);
+            }
+
+            if (schema.Tables.TryGetValue(oldName, out ConfigurationInformationSchema_Table? tableOldInfo) && tableOldInfo != null)
+            {
+                byte transactionID = await Program.Kernel.DataBase.BeginTransaction();
+
+                //Видалення зовнішніх ключів поточної таблиці
+                foreach (var constraint in tableOldInfo.Constraints.Keys)
+                {
+                    string query = $"ALTER TABLE {oldName} DROP CONSTRAINT {constraint}";
+
+                    log.Add(query);
+                    await Program.Kernel.DataBase.ExecuteSQL(query, transactionID);
+                }
+
+                string pkeyOldName = $"{oldName}_pkey";
+                string pkeyNewName = $"{newName}_pkey";
+
+                //Видалення індексів поточної таблиці
+                foreach (var index in tableOldInfo.Indexes.Keys)
+                {
+                    string query = (index == pkeyOldName) switch
+                    {
+                        true => $"ALTER INDEX {pkeyOldName} RENAME TO {pkeyNewName}",
+                        false => $"DROP INDEX IF EXISTS {index}"
+                    };
+
+                    log.Add(query);
+                    await Program.Kernel.DataBase.ExecuteSQL(query, transactionID);
+                }
+
+                //Перейменування
+                {
+                    string query = $"ALTER TABLE {oldName} RENAME TO {newName}";
+
+                    log.Add(query);
+                    await Program.Kernel.DataBase.ExecuteSQL(query, transactionID);
+                }
+
+                //
+                /*
+                foreach (ConfigurationInformationSchema_Table tableInfo in schema.Tables.Values) //.Where(x => x.Constraints.Values.Any(y => y.ToTable == oldName))
+                {
+                    foreach (var constraint in tableInfo.Constraints.Values)
+                    {
+                        if (constraint.ToTable == oldName)
+                        {
+                            
+                        }
+                    }
+                }
+                */
+
+                await Program.Kernel.DataBase.CommitTransaction(transactionID);
+            }
+
+            return (true, log);
         };
     }
 
@@ -68,7 +139,10 @@ partial class PageDirectory : FormPageConfigurator
     public override async Task AssignValue()
     {
         if (IsNew)
+        {
             _ = await Function.FillNewDirectory(ConfDirectory);
+            basicFields.NewTableOrColumn();
+        }
 
         basicFields.ItemName = ConfDirectory.Name;
         basicFields.FullName = ConfDirectory.FullName;

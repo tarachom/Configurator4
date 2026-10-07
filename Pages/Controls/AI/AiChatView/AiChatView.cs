@@ -98,8 +98,8 @@ public partial class AiChatView
                 ApendLine($"Err: {ex.Message}");
             }
 
-            await Task.Delay(500);
-            ApendLine("");
+            //await Task.Delay(500);
+            //ApendLine("");
         }
     }
 
@@ -112,9 +112,13 @@ public partial class AiChatView
 
             string text = message + "\n";
             buffer.Insert(iterEndText, text, -1);
-            buffer.PlaceCursor(iterEndText);
 
-            textviewHistory.ScrollToIter(iterEndText, 0.0, false, 0.0, 0.0);
+            GLib.Functions.IdleAdd(GLib.Constants.PRIORITY_DEFAULT_IDLE, () =>
+            {
+                buffer.GetEndIter(out TextIter iterEndText);
+                textviewHistory.ScrollToIter(iterEndText, 0.0, false, 0.0, 0.0);
+                return false;
+            });
         }
     }
 

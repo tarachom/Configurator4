@@ -20,14 +20,13 @@
                 <property name="start-child">
                     <object class="GtkBox">
                         <property name="orientation">vertical</property>
-                        <property name="spacing">6</property>
-                        <property name="margin-bottom">10</property>
-
+                        
                         <!-- Заголовок секції -->
                         <child>
                             <object class="GtkLabel">
                                 <property name="label">Поля:</property>
                                 <property name="halign">start</property>
+                                <property name="margin-bottom">10</property>
                             </object>
                         </child>
 
@@ -35,23 +34,37 @@
                         <child>
                             <object class="GtkBox">
                                 <property name="orientation">horizontal</property>
-                                <property name="spacing">6</property>
+                                <style>
+                                    <class name="toolbar-container" />
+                                </style>
                                 <child>
                                     <object class="GtkButton" id="button_fields_action">
                                         <property name="icon-name">view-sort-descending</property>
                                         <property name="tooltip-text">Дія</property>
+                                        <style>
+                                            <class name="toolbar" />
+                                            <class name="flat" />
+                                        </style>
                                     </object>
                                 </child>
                                 <child>
                                     <object class="GtkButton" id="button_fields_up">
                                         <property name="icon-name">go-up</property>
                                         <property name="tooltip-text">Вгору</property>
+                                        <style>
+                                            <class name="toolbar" />
+                                            <class name="flat" />
+                                        </style>
                                     </object>
                                 </child>
                                 <child>
                                     <object class="GtkButton" id="button_fields_down">
                                         <property name="icon-name">go-down</property>
                                         <property name="tooltip-text">Вниз</property>
+                                        <style>
+                                            <class name="toolbar" />
+                                            <class name="flat" />
+                                        </style>
                                     </object>
                                 </child>
                             </object>
@@ -78,7 +91,6 @@
                 <property name="end-child">
                     <object class="GtkBox">
                         <property name="orientation">vertical</property>
-                        <property name="spacing">6</property>
                         <property name="margin-top">6</property>
 
                         <!-- Заголовок секції -->
@@ -86,6 +98,7 @@
                             <object class="GtkLabel">
                                 <property name="label">Додаткові поля:</property>
                                 <property name="halign">start</property>
+                                <property name="margin-bottom">10</property>
                             </object>
                         </child>
 
@@ -93,35 +106,57 @@
                         <child>
                             <object class="GtkBox">
                                 <property name="orientation">horizontal</property>
-                                <property name="spacing">6</property>
+                                <style>
+                                    <class name="toolbar-container" />
+                                </style>
                                 <child>
                                     <object class="GtkButton" id="button_extra_add">
                                         <property name="label">Додати</property>
                                         <property name="icon-name">new</property>
+                                        <style>
+                                            <class name="toolbar" />
+                                            <class name="flat" />
+                                        </style>
                                     </object>
                                 </child>
                                 <child>
                                     <object class="GtkButton" id="button_extra_copy">
                                         <property name="label">Копіювати</property>
                                         <property name="icon-name">copy</property>
+                                        <style>
+                                            <class name="toolbar" />
+                                            <class name="flat" />
+                                        </style>
                                     </object>
                                 </child>
                                 <child>
                                     <object class="GtkButton" id="button_extra_delete">
                                         <property name="label">Видалити</property>
                                         <property name="icon-name">delete</property>
+                                        <style>
+                                            <class name="toolbar" />
+                                            <class name="flat" />
+                                        </style>
                                     </object>
                                 </child>
                                 <child>
                                     <object class="GtkButton" id="button_extra_up">
                                         <property name="icon-name">go-up</property>
                                         <property name="tooltip-text">Вгору</property>
+                                        <style>
+                                            <class name="toolbar" />
+                                            <class name="flat" />
+                                        </style>
                                     </object>
                                 </child>
                                 <child>
                                     <object class="GtkButton" id="button_extra_down">
                                         <property name="icon-name">go-down</property>
                                         <property name="tooltip-text">Вниз</property>
+                                        <style>
+                                            <class name="toolbar" />
+                                            <class name="flat" />
+                                        </style>
                                     </object>
                                 </child>
                             </object>

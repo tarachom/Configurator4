@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>30.09.2026 09:58:43</DateTimeSave>
+  <DateTimeSave>05.10.2026 17:11:45</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -2517,7 +2517,7 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <Pointer>Довідники.Категорії</Pointer>
             </Field>
             <AdditionalField>
-              <Visible>False</Visible>
+              <Visible>True</Visible>
               <Name>Залишок</Name>
               <Caption>Залишок</Caption>
               <Size>0</Size>
@@ -2547,7 +2547,7 @@ THEN
 END]]></Value>
             </AdditionalField>
             <AdditionalField>
-              <Visible>False</Visible>
+              <Visible>True</Visible>
               <Name>ВРезерві</Name>
               <Caption>В резерві</Caption>
               <Size>0</Size>
@@ -2576,7 +2576,7 @@ THEN
 END]]></Value>
             </AdditionalField>
             <AdditionalField>
-              <Visible>False</Visible>
+              <Visible>True</Visible>
               <Name>ВРезервіПідЗамовлення</Name>
               <Caption>Під замовлення</Caption>
               <Size>0</Size>
@@ -2605,7 +2605,7 @@ THEN
 END]]></Value>
             </AdditionalField>
             <AdditionalField>
-              <Visible>False</Visible>
+              <Visible>True</Visible>
               <Name>ЗалишокВКомірках</Name>
               <Caption>В комірках</Caption>
               <Size>0</Size>
@@ -2684,7 +2684,7 @@ END]]></Value>
               <Pointer>Перелічення.ТипиНоменклатури</Pointer>
             </Field>
             <AdditionalField>
-              <Visible>False</Visible>
+              <Visible>True</Visible>
               <Name>Залишок</Name>
               <Caption>Залишок</Caption>
               <Size>0</Size>
@@ -2714,7 +2714,7 @@ THEN
 END]]></Value>
             </AdditionalField>
             <AdditionalField>
-              <Visible>False</Visible>
+              <Visible>True</Visible>
               <Name>ВРезерві</Name>
               <Caption>В резерві</Caption>
               <Size>0</Size>
@@ -2743,7 +2743,7 @@ THEN
 END]]></Value>
             </AdditionalField>
             <AdditionalField>
-              <Visible>False</Visible>
+              <Visible>True</Visible>
               <Name>ВРезервіПідЗамовлення</Name>
               <Caption>Під замовлення</Caption>
               <Size>0</Size>

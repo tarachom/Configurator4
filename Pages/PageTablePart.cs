@@ -48,7 +48,10 @@ partial class PageTablePart : FormPageConfigurator
     public override async Task AssignValue()
     {
         if (IsNew)
+        {
             _ = await Function.FillNewTablePart(ConfTablePart);
+            basicFields.NewTableOrColumn();
+        }
 
         basicFields.ItemName = ConfTablePart.Name;
         basicFields.FullName = ConfTablePart.FullName;

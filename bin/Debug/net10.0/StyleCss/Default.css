@@ -69,6 +69,11 @@ columnview row:selected button.link>label {
     border-color: transparent;
 }
 
+box.toolbar-container {
+    background-color: alpha(currentColor, 0.05); 
+    padding: 3px 3px;
+}
+
 /* Для кнопок Toolbar  */
 button.toolbar {
     padding-left: 10px;

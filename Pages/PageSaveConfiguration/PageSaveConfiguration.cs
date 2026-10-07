@@ -74,21 +74,22 @@ public partial class PageSaveConfiguration
     {
         if (textTerminal != null && textTerminal.Buffer != null)
         {
-            //Поміщення курсору в кінець тексту
-            textTerminal.Buffer.GetEndIter(out TextIter iterEndText);
-            textTerminal.Buffer.PlaceCursor(iterEndText);
+            var buffer = textTerminal.Buffer;
+            buffer.GetEndIter(out TextIter iterEndText);
 
             string text = message + "\n";
-            textTerminal.Buffer.InsertAtCursor(text, -1);
+            buffer.Insert(iterEndText, text, -1);
 
-            scrollListBoxTerminal.Vadjustment?.Value = scrollListBoxTerminal.Vadjustment.Upper;
+            GLib.Functions.IdleAdd(GLib.Constants.PRIORITY_DEFAULT_IDLE, () =>
+            {
+                buffer.GetEndIter(out TextIter iterEndText);
+                textTerminal.ScrollToIter(iterEndText, 0.0, false, 0.0, 0.0);
+                return false;
+            });
         }
     }
 
-    void ClearListBoxTerminal()
-    {
-        textTerminal.Buffer?.Text = "";
-    }
+    void ClearListBoxTerminal() => textTerminal.Buffer?.Text = "";
 
     static string GetNameFromType(string Type)
     {

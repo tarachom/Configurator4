@@ -63,7 +63,10 @@ partial class PageDocument : FormPageConfigurator
     public override async Task AssignValue()
     {
         if (IsNew)
+        {
             _ = await Function.FillNewDocument(ConfDocument);
+            basicFields.NewTableOrColumn();
+        }
 
         basicFields.ItemName = ConfDocument.Name;
         basicFields.FullName = ConfDocument.FullName;
@@ -75,7 +78,7 @@ partial class PageDocument : FormPageConfigurator
         triggers.SetValue(ConfDocument.TriggerFunctions);
         spend.SetValue(ConfDocument.SpendFunctions);
         checkListRegAccum.SetValue(ConfDocument.AllowRegisterAccumulation);
-        
+
         dataTree.SetValue(ConfDocument);
     }
 

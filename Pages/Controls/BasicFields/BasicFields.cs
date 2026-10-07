@@ -19,9 +19,10 @@ public partial class BasicFields
 {
     [Connect("entry_item_name")] Entry entryItemName;
     [Connect("entry_full_name")] Entry entryFullName;
+    [Connect("box_table_or_column")] Box boxTableOrColumn;
     [Connect("label_table_or_column")] Label labelTableOrColumn;
     [Connect("entry_table_or_column")] Entry entryTableOrColumn;
-    [Connect("button_rename_table_or_column")] Button buttonRenameTableOrColumn;
+    [Connect("rename_table_or_column")] public RenameTableOrColumn RenameTableOrColumn;
     [Connect("textview_desc")] TextView textviewDesc;
 
     partial void Initialize()
@@ -40,21 +41,41 @@ public partial class BasicFields
             entryItemName.AddController(controller);
         }
 
-        buttonRenameTableOrColumn.OnClicked += async (_, _) =>
+        // Зміна значення в полі entryTableOrColumn
         {
-            if (RenameFunc != null)
-                await RenameFunc.Invoke();
-        };
+            entryTableOrColumn.OnNotify += (sender, args) =>
+            {
+                if (args.Pspec.GetName() == "text")
+                {
+                    string text = entryTableOrColumn.GetText();
+                    RenameTableOrColumn.OldName = text;
+                }
+            };
+        }
+
+        RenameTableOrColumn.CallBack_Update = (x) => TableOrColumn = x;
     }
 
-    public static BasicFields New() => NewWithProperties([]);
+    public static BasicFields New()
+    {
+        //Реєстрація типів
+        RenameTableOrColumn.GetGType();
+        return NewWithProperties([]);
+    }
 
     /// <summary>
     /// Приховати поле ТаблицяЧиСтовпчик
     /// </summary>
-    public void HideTableOrColumn() => labelTableOrColumn.Visible = entryTableOrColumn.Visible = false;
+    public void HideTableOrColumn() => labelTableOrColumn.Visible = boxTableOrColumn.Visible = false;
 
-    public Func<Task>? RenameFunc { get; set; } = null;
+    /// <summary>
+    /// Зробити доступним поле ТаблицяЧиСтовпчик
+    /// </summary>
+    public void NewTableOrColumn()
+    {
+        entryTableOrColumn.Sensitive = true;
+        RenameTableOrColumn.Visible = false;
+    }
 
     public string ItemName
     {

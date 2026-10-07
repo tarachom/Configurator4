@@ -63,6 +63,7 @@ partial class PageField : FormPageConfigurator
             };
             
             _ = await Function.FillNewField(ConfField, parentTable, Fields);
+            basicFields.NewTableOrColumn();
         }
 
         basicFields.ItemName = ConfField.Name;
