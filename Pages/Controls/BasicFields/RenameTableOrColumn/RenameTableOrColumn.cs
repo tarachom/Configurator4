@@ -1,5 +1,6 @@
 using Gtk;
 using GObject;
+using AccountingSoftware;
 
 namespace Configurator;
 
@@ -33,7 +34,7 @@ public partial class RenameTableOrColumn
         };
 
         //При відкритті popover
-        popoverRename.OnShow += (sender, args) => entryNewName.GrabFocus();
+        popoverRename.OnShow += (_, _) => entryNewName.GrabFocus();
     }
 
     /// <summary>
@@ -75,5 +76,62 @@ public partial class RenameTableOrColumn
                 return false;
             });
         }
+    }
+
+    /// <summary>
+    /// Функція стандартна для обробки перейменування таблиці
+    /// </summary>
+    public async Task<(bool, List<string>)> RenameTableDef()
+    {
+        List<string> log = [];
+
+        string oldName = OldName;
+        string newName = NewName;
+
+        if (string.IsNullOrEmpty(newName))
+        {
+            log.Add("Не вказана нова назва таблиці!");
+            return (false, log);
+        }
+
+        if (oldName == newName)
+        {
+            log.Add("Стара назва і нова назва таблиці однакові!");
+            return (false, log);
+        }
+
+        ConfigurationInformationSchema schema = await Program.Kernel.DataBase.SelectInformationSchema();
+        if (schema.Tables.ContainsKey(newName))
+            log.Add($"Увага! В базі вже є таблиця із назвою '{newName}'!");
+
+        log.Add($"Остаточне перейменування '{oldName}' на '{newName}' відбудеться при збереженні конфігурації");
+        return (true, log);
+    }
+
+    public async Task<(bool, List<string>)> RenameFieldDef(string parentTable)
+    {
+        List<string> log = [];
+
+        string oldName = OldName;
+        string newName = NewName;
+
+        if (string.IsNullOrEmpty(newName))
+        {
+            log.Add("Не вказана нова назва поля!");
+            return (false, log);
+        }
+
+        if (oldName == newName)
+        {
+            log.Add("Стара назва і нова назва поля однакові!");
+            return (false, log);
+        }
+
+        ConfigurationInformationSchema schema = await Program.Kernel.DataBase.SelectInformationSchema();
+        if (schema.Tables.TryGetValue(parentTable, out var table) && table.Columns.ContainsKey(newName))
+            log.Add($"Увага! В таблиці {parentTable} вже є поле із назвою '{newName}'!");
+
+        log.Add($"Остаточне перейменування '{oldName}' на '{newName}' відбудеться при збереженні конфігурації");
+        return (true, log);
     }
 }

@@ -130,7 +130,7 @@ public partial class AiChatView
     async Task<string[]> ConstantsBlockList()
     {
         ApendLine($"[F] Вибірка списку блоків констант");
-        return [.. Conf.ConstantsBlock.Select(x => x.Key + " (" + x.Value.BlockName + ", " + x.Value.Desc + ")")];
+        return [.. Conf.ConstantsBlock.Select(x => x.Key + " (" + x.Value.Name + ", " + x.Value.Desc + ")")];
     }
 
     [Description("Повертає список всіх констант певного блоку у форматі ключ та назва і опис в дужках для пояснення")]

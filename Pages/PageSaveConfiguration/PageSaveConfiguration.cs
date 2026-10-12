@@ -550,7 +550,7 @@ public partial class PageSaveConfiguration
                 //Execute
                 foreach (string sqlText in SqlList)
                 {
-                    ApendLine(sqlText.Length > 100 ? sqlText[..100] : sqlText);
+                    ApendLine(sqlText.Length > 72 ? sqlText[..72] + "..." : sqlText);
 
                     try
                     {

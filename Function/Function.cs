@@ -16,7 +16,7 @@ public static class Function
         foreach (ConfigurationConstantsBlock block in conf.ConstantsBlock.Values)
             foreach (ConfigurationConstants constants in block.Constants.Values)
             {
-                string fullName = block.BlockName + "." + constants.Name;
+                string fullName = block.Name + "." + constants.Name;
                 ConstantsAllFields.Add(fullName, new ConfigurationField(fullName, fullName, constants.NameInTable, constants.Type, constants.Pointer, constants.Desc));
             }
 

@@ -27,6 +27,7 @@ partial class PageDocument : FormPageConfigurator
     {
         PageName = "Документ:";
         basicFields.TableOrColumnLabel = "Таблиця:";
+        basicFields.RenameTableOrColumn.RenameFunc = basicFields.RenameTableOrColumn.RenameTableDef;
     }
 
     public static PageDocument New()

@@ -8,10 +8,14 @@
     <xsl:param name="InfoSchemaIndexList" />
     <xsl:param name="InfoSchemaConstraintList" />
     <xsl:param name="ConfigurationFieldList" />
+    <xsl:param name="SecondConfigurationFieldList" />
 
     <xsl:for-each select="$ConfigurationFieldList">
+      <xsl:variable name="ConfFieldUid" select="Uid" />
       <xsl:variable name="ConfFieldName" select="NameInTable" />
       <xsl:variable name="ConfFieldReferences" select="References" />
+      <xsl:variable name="SecondConfField" select="$SecondConfigurationFieldList[Uid = $ConfFieldUid]" />
+      <xsl:variable name="SecondConfFieldName" select="$SecondConfField/NameInTable" />
 
       <Control_Field>
         <Name>
@@ -262,8 +266,17 @@
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:if>
-				
+
             </Type>
+          </xsl:when>
+          <xsl:when test="$SecondConfField and $SecondConfFieldName != $ConfFieldName">
+              <IsExist>rename</IsExist>
+              <FieldOld><xsl:value-of select="$SecondConfFieldName"/></FieldOld>
+
+              <xsl:call-template name="RemoveOldIndex">
+                <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaIndexList[Name = concat($TableName , '_', $SecondConfFieldName, '_idx')]" />
+                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaConstraintList[Name = concat('fk_', $TableName , '_', $SecondConfFieldName, '_references')]" />
+              </xsl:call-template>
           </xsl:when>
           <xsl:otherwise>
             <IsExist>no</IsExist>
@@ -386,12 +399,16 @@
   <xsl:template name="TabularPartsControl">
     <xsl:param name="InfoSchemaTableList" />
     <xsl:param name="ConfigurationTablePartList" />
+    <xsl:param name="SecondConfigurationTablePartList" />
     <xsl:param name="IsCreateOwner" />
     <xsl:param name="OwnerTableName" />
 
     <xsl:for-each select="$ConfigurationTablePartList">
+      <xsl:variable name="ConTablePartUid" select="Uid" />
       <xsl:variable name="ConTablePart" select="Name" />
       <xsl:variable name="ConfTablePartTable" select="Table" />
+      <xsl:variable name="SecondTablePart" select="$SecondConfigurationTablePartList[Uid = $ConTablePartUid]" />
+      <xsl:variable name="SecondTablePartTable" select="$SecondTablePart/Table" />
 
       <Control_TabularParts>
         <Name>
@@ -415,6 +432,7 @@
                 <xsl:call-template name="FieldsControl">
                   <xsl:with-param name="TableName" select="$ConfTablePartTable" />
                   <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid']" />
+                  <xsl:with-param name="SecondConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid']" />
                   <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Column" />
                   <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Index" />
                   <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Constraint" />
@@ -436,11 +454,42 @@
             <xsl:call-template name="FieldsControl">
 			        <xsl:with-param name="TableName" select="$ConfTablePartTable" />
               <xsl:with-param name="ConfigurationFieldList" select="Fields/Field" />
+              <xsl:with-param name="SecondConfigurationFieldList" select="$SecondTablePart/Fields/Field" />
               <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Column" />
 			        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Index" />
               <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfTablePartTable]/Constraint" />
             </xsl:call-template>
 
+          </xsl:when>
+          <xsl:when test="$SecondTablePart and $SecondTablePartTable != $ConfTablePartTable">
+              <IsExist>rename</IsExist>
+              <TableOld><xsl:value-of select="$SecondTablePartTable"/></TableOld>
+
+              <xsl:call-template name="RemoveOldIndex">
+                <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $SecondTablePartTable]/Index" />
+                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $SecondTablePartTable]/Constraint" />
+              </xsl:call-template>
+
+              <xsl:if test="$IsCreateOwner = 'yes'">
+                <xsl:call-template name="FieldsControl">
+                  <xsl:with-param name="TableName" select="$SecondTablePartTable" />
+                  <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid']" />
+                  <xsl:with-param name="SecondConfigurationFieldList" select="/.." />
+                  <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $SecondTablePartTable]/Column" />
+                  <xsl:with-param name="InfoSchemaIndexList" select="/.." />
+                  <xsl:with-param name="InfoSchemaConstraintList" select="/.." />
+                </xsl:call-template>
+              </xsl:if>
+              
+              <xsl:call-template name="FieldsControl">
+				        <xsl:with-param name="TableName" select="$SecondTablePartTable" />
+                <xsl:with-param name="ConfigurationFieldList" select="Fields/Field" />
+                <xsl:with-param name="SecondConfigurationFieldList" select="/.." />
+                <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $SecondTablePartTable]/Column" />
+				        <xsl:with-param name="InfoSchemaIndexList" select="/.." />
+                <xsl:with-param name="InfoSchemaConstraintList" select="/.." />
+              </xsl:call-template>
+              
           </xsl:when>
           <xsl:otherwise>
             <IsExist>no</IsExist>
@@ -479,11 +528,13 @@
     <xsl:param name="TableName" />
 
     <xsl:for-each select="$SecondConfigurationFieldsNodes">
+      <xsl:variable name="SecondConfFieldUid" select="Uid" />
       <xsl:variable name="SecondConfFieldName" select="Name" />
       <xsl:variable name="SecondConfFieldNameInTable" select="NameInTable" />
       <xsl:variable name="SecondConfFieldType" select="Type" />
 
-      <xsl:variable name="CountField" select="count($DocumentConfigurationFieldNodes[NameInTable = $SecondConfFieldNameInTable])" />
+      <xsl:variable name="CountField" select="count($DocumentConfigurationFieldNodes[Uid = $SecondConfFieldUid])" />    
+      <!--<xsl:variable name="CountFieldInfoSchema" select="count($InfoSchemaTableList[Name = $SecondConfTablePartTable])" />-->
 
       <xsl:choose>
         <xsl:when test="$CountField = 0">
@@ -515,11 +566,11 @@
 
           <xsl:if test="$SecondConfFieldType = 'pointer' or $SecondConfFieldType = 'any_pointer' or $SecondConfFieldType = 'enum'">
 
-            <xsl:variable name="DocumentConfigurationType" select="$DocumentConfigurationFieldNodes[NameInTable = $SecondConfFieldNameInTable]/Type" />
+            <xsl:variable name="DocumentConfigurationType" select="$DocumentConfigurationFieldNodes[Uid = $SecondConfFieldUid]/Type" />
 
             <!-- Вказівник з конфігурації за умови що типи не відрізняються -->
             <xsl:variable name="DocumentConfigurationPointer" select="$DocumentConfigurationFieldNodes
-                                [NameInTable = $SecondConfFieldNameInTable and Type = $SecondConfFieldType]/Pointer" />
+                                [Uid = $SecondConfFieldUid and Type = $SecondConfFieldType]/Pointer" />
 
             <!-- Вказівник з копії конфігурації -->
             <xsl:variable name="SecondConfFieldPointer" select="Pointer" />
@@ -580,10 +631,11 @@
     <xsl:param name="Type" />
 
     <xsl:for-each select="$SecondConfigurationTabularParts">
+      <xsl:variable name="SecondConfTablePartUid" select="Uid" />
       <xsl:variable name="SecondConfTablePartName" select="Name" />
       <xsl:variable name="SecondConfTablePartTable" select="Table" />
 
-      <xsl:variable name="CountTablePart" select="count($DocumentConfigurationTabularParts[Table = $SecondConfTablePartTable])" />
+      <xsl:variable name="CountTablePart" select="count($DocumentConfigurationTabularParts[Uid = $SecondConfTablePartUid])" />
       <xsl:variable name="CountTablePartInfoSchema" select="count($InfoSchemaTableList[Name = $SecondConfTablePartTable])" />
 
       <xsl:choose>
@@ -610,7 +662,7 @@
 
           <xsl:call-template name="SecondConfigurationFields">
             <xsl:with-param name="InfoSchemaTableList" select="$InfoSchemaTableList" />
-            <xsl:with-param name="DocumentConfigurationFieldNodes" select="$DocumentConfigurationTabularParts[Table = $SecondConfTablePartTable]/Fields/Field" />
+            <xsl:with-param name="DocumentConfigurationFieldNodes" select="$DocumentConfigurationTabularParts[Uid = $SecondConfTablePartUid]/Fields/Field" />
             <xsl:with-param name="SecondConfigurationFieldsNodes" select="Fields/Field" />
             <xsl:with-param name="Type" select="concat($Type, '.TablePart')"/>
             <xsl:with-param name="Name" select="$SecondConfTablePartName" />
@@ -631,17 +683,19 @@
     <xsl:param name="Type" />
 
     <xsl:for-each select="$SecondConfigurationNodes">
+      <xsl:variable name="SecondConfDirectoryUid" select="Uid" />
       <xsl:variable name="SecondConfDirectoryName" select="Name" />
       <xsl:variable name="SecondConfDirectoryTable" select="Table" />
 
-      <xsl:variable name="CountObject"
-           select="count($DocumentConfigurationNodes[Table = $SecondConfDirectoryTable])" />
-
-      <xsl:variable name="CountTableInfoSchema"
-          select="count($InfoSchemaTableList[Name = $SecondConfDirectoryTable])" />
+      <!-- Чи є об'єкт в конфігурації - перевірка по ключах -->
+      <xsl:variable name="CountObjectUid" select="count($DocumentConfigurationNodes[Uid = $SecondConfDirectoryUid])" />
+      <!-- Чи є об'єкт в конфігурації - перевірка по таблицях 
+      <xsl:variable name="CountObject" select="count($DocumentConfigurationNodes[Table = $SecondConfDirectoryTable])" />-->
+      <!-- Чи є таблиця в базі даних -->
+      <xsl:variable name="CountTableInfoSchema" select="count($InfoSchemaTableList[Name = $SecondConfDirectoryTable])" />
 
       <!-- Якщо обєкт відсутній в конфігурації, але є наявна таблиця в базі даних -->
-      <xsl:if test="$CountObject = 0 and $CountTableInfoSchema = 1">
+      <xsl:if test="$CountObjectUid = 0 and $CountTableInfoSchema = 1">
         <Control_Table>
           <Type>
             <xsl:value-of select="$Type"/>
@@ -656,11 +710,11 @@
         </Control_Table>
       </xsl:if>
 
-      <xsl:if test="$CountObject = 1">
+      <xsl:if test="$CountObjectUid = 1">
 		  
         <xsl:call-template name="SecondConfigurationFields">
           <xsl:with-param name="InfoSchemaTableList" select="$InfoSchemaTableList" />
-          <xsl:with-param name="DocumentConfigurationFieldNodes" select="$DocumentConfigurationNodes[Table = $SecondConfDirectoryTable]/Fields/Field" />
+          <xsl:with-param name="DocumentConfigurationFieldNodes" select="$DocumentConfigurationNodes[Uid = $SecondConfDirectoryUid]/Fields/Field" />
           <xsl:with-param name="SecondConfigurationFieldsNodes" select="Fields/Field" />
           <xsl:with-param name="Type" select="$Type"/>
           <xsl:with-param name="Name" select="$SecondConfDirectoryName" />
@@ -671,13 +725,32 @@
 
       <xsl:call-template name="SecondConfigurationTabularParts">
         <xsl:with-param name="InfoSchemaTableList" select="$InfoSchemaTableList" />
-        <xsl:with-param name="DocumentConfigurationTabularParts" select="$DocumentConfigurationNodes[Table = $SecondConfDirectoryTable]/TabularParts/TablePart" />
+        <xsl:with-param name="DocumentConfigurationTabularParts" select="$DocumentConfigurationNodes[Uid = $SecondConfDirectoryUid]/TabularParts/TablePart" />
         <xsl:with-param name="SecondConfigurationTabularParts" select="TabularParts/TablePart" />
-        <xsl:with-param name="IsExistOwner" select="$CountObject" />
+        <xsl:with-param name="IsExistOwner" select="$CountObjectUid" />
         <xsl:with-param name="Type" select="$Type" />
       </xsl:call-template>
 
     </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template name="RemoveOldIndex">
+    <xsl:param name="InfoSchemaIndexList" />
+    <xsl:param name="InfoSchemaConstraintList" />
+
+    <Remove>
+      <xsl:for-each select="$InfoSchemaIndexList[substring(Name, string-length(Name) - 3) = '_idx']">
+        <Index>
+          <Name><xsl:value-of select="Name"/></Name>
+        </Index>
+      </xsl:for-each>
+      <xsl:for-each select="$InfoSchemaConstraintList[substring(Name, string-length(Name) - 10) = '_references']">
+        <Constraint>
+          <Name><xsl:value-of select="Name"/></Name>
+        </Constraint>
+      </xsl:for-each>
+    </Remove>
+
   </xsl:template>
 
   <xsl:template match="/">
@@ -691,7 +764,7 @@
       <xsl:for-each select="$documentConfiguration/Configuration/ConstantsBlocks">
         <xsl:variable name="ConfObjName">Константи</xsl:variable>
         <xsl:variable name="ConfObjTable">tab_constants</xsl:variable>
-
+        
         <Control_Table>
           <Type>Constants</Type>
           <Name>
@@ -708,6 +781,7 @@
               <xsl:call-template name="FieldsControl">
 				        <xsl:with-param name="TableName" select="$ConfObjTable" />
                 <xsl:with-param name="ConfigurationFieldList" select="ConstantsBlock/./Constants/Constant" />
+                <xsl:with-param name="SecondConfigurationFieldList" select="$documentSecondConfiguration/Configuration/ConstantsBlocks/ConstantsBlock/./Constants/Constant" />
                 <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfObjTable]/Column" />
 				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfObjTable]/Index" />
                 <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfObjTable]/Constraint" />
@@ -737,9 +811,11 @@
           </xsl:choose>
 
           <xsl:for-each select="ConstantsBlock/./Constants/Constant">
+            <xsl:variable name="ConfConstantName" select="Name" />
 
             <xsl:call-template name="TabularPartsControl">
               <xsl:with-param name="ConfigurationTablePartList" select="TabularParts/TablePart" />
+              <xsl:with-param name="SecondConfigurationTablePartList" select="$documentSecondConfiguration/Configuration/ConstantsBlocks/ConstantsBlock/./Constants/Constant[Name = $ConfConstantName]/TabularParts/TablePart" />
               <xsl:with-param name="InfoSchemaTableList" select="$InfoSchemaTableList" />
               <xsl:with-param name="IsCreateOwner">no</xsl:with-param>
             </xsl:call-template>
@@ -781,9 +857,12 @@
       </xsl:for-each>
 
       <xsl:for-each select="$documentConfiguration/Configuration/Directories/Directory">
+        <xsl:variable name="ConfDirectoryUid" select="Uid" />
+        <xsl:variable name="SecondConfDirectory" select="$documentSecondConfiguration/Configuration/Directories/Directory[Uid = $ConfDirectoryUid]" />
+        <xsl:variable name="SecondConfDirectoryTable" select="$SecondConfDirectory/Table" />
         <xsl:variable name="ConfDirectoryName" select="Name" />
         <xsl:variable name="ConfDirectoryTable" select="Table" />
-
+        
         <Control_Table>
           <Type>Directory</Type>
           <Name>
@@ -794,24 +873,47 @@
           </Table>
 
           <xsl:choose>
+            <!-- Перевірка наявності таблиці в схемі бази даних -->
             <xsl:when test="$InfoSchemaTableList[Name = $ConfDirectoryTable]">
               <IsExist>yes</IsExist>
 
               <!-- Перевірка наперед визначених полів, окрім первинного ключа -->
-              <xsl:call-template name="FieldsControl">
+              <!--<xsl:call-template name="FieldsControl">
 				        <xsl:with-param name="TableName" select="$ConfDirectoryTable" />
                 <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid']" />
+                <xsl:with-param name="SecondConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid']" />
+                <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
+				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
+                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
+              </xsl:call-template>-->
+
+              <xsl:call-template name="FieldsControl">
+				        <xsl:with-param name="TableName" select="$ConfDirectoryTable" />
+                <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid'] | Fields/Field" />
+                <xsl:with-param name="SecondConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid'] | $SecondConfDirectory/Fields/Field" />
                 <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
 				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
                 <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
               </xsl:call-template>
 
+            </xsl:when>
+            <!-- Перевірка в попередній версії -->
+            <xsl:when test="$SecondConfDirectory and $SecondConfDirectoryTable != $ConfDirectoryTable">
+              <IsExist>rename</IsExist>
+              <TableOld><xsl:value-of select="$SecondConfDirectoryTable"/></TableOld>
+
+              <xsl:call-template name="RemoveOldIndex">
+                <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $SecondConfDirectoryTable]/Index" />
+                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $SecondConfDirectoryTable]/Constraint" />
+              </xsl:call-template>
+
               <xsl:call-template name="FieldsControl">
-				        <xsl:with-param name="TableName" select="$ConfDirectoryTable" />
-                <xsl:with-param name="ConfigurationFieldList" select="Fields/Field" />
-                <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
-				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
-                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
+				        <xsl:with-param name="TableName" select="$SecondConfDirectoryTable" />
+                <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid'] | Fields/Field" />
+                <xsl:with-param name="SecondConfigurationFieldList" select="/.." />
+                <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $SecondConfDirectoryTable]/Column" />
+				        <xsl:with-param name="InfoSchemaIndexList" select="/.." />
+                <xsl:with-param name="InfoSchemaConstraintList" select="/.." />
               </xsl:call-template>
 
             </xsl:when>
@@ -839,6 +941,7 @@
 
           <xsl:call-template name="TabularPartsControl">
             <xsl:with-param name="ConfigurationTablePartList" select="TabularParts/TablePart" />
+            <xsl:with-param name="SecondConfigurationTablePartList" select="$SecondConfDirectory/TabularParts/TablePart" />
             <xsl:with-param name="InfoSchemaTableList" select="$InfoSchemaTableList" />
             <xsl:with-param name="IsCreateOwner">yes</xsl:with-param>
             <xsl:with-param name="OwnerTableName" select="$ConfDirectoryTable" />
@@ -856,6 +959,9 @@
       </xsl:call-template>
 
       <xsl:for-each select="$documentConfiguration/Configuration/Documents/Document">
+        <xsl:variable name="ConfDirectoryUid" select="Uid" />
+        <xsl:variable name="SecondConfDirectory" select="$documentSecondConfiguration/Configuration/Documents/Document[Uid = $ConfDirectoryUid]" />
+        <xsl:variable name="SecondConfDirectoryTable" select="$SecondConfDirectory/Table" />
         <xsl:variable name="ConfDirectoryName" select="Name" />
         <xsl:variable name="ConfDirectoryTable" select="Table" />
 
@@ -873,22 +979,44 @@
               <IsExist>yes</IsExist>
 
                <!-- Перевірка наперед визначених полів, окрім первинного ключа -->
-              <xsl:call-template name="FieldsControl">
+              <!--<xsl:call-template name="FieldsControl">
 				        <xsl:with-param name="TableName" select="$ConfDirectoryTable" />
                 <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid']" />
+                <xsl:with-param name="SecondConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid']" />
                 <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
 				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
                 <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
-              </xsl:call-template>
+              </xsl:call-template>-->
 
               <xsl:call-template name="FieldsControl">
 				        <xsl:with-param name="TableName" select="$ConfDirectoryTable" />
-                <xsl:with-param name="ConfigurationFieldList" select="Fields/Field" />
+                <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid'] | Fields/Field" />
+                <xsl:with-param name="SecondConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid'] | $SecondConfDirectory/Fields/Field" />
                 <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
 				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
                 <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
               </xsl:call-template>
 
+            </xsl:when>
+            <!-- Перевірка в попередній версії -->
+            <xsl:when test="$SecondConfDirectory and $SecondConfDirectoryTable != $ConfDirectoryTable">
+              <IsExist>rename</IsExist>
+              <TableOld><xsl:value-of select="$SecondConfDirectoryTable"/></TableOld>
+              
+              <xsl:call-template name="RemoveOldIndex">
+                <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $SecondConfDirectoryTable]/Index" />
+                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $SecondConfDirectoryTable]/Constraint" />
+              </xsl:call-template>
+
+              <xsl:call-template name="FieldsControl">
+				        <xsl:with-param name="TableName" select="$SecondConfDirectoryTable" />
+                <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid'] | Fields/Field" />
+                <xsl:with-param name="SecondConfigurationFieldList" select="/.." />
+                <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $SecondConfDirectoryTable]/Column" />
+				        <xsl:with-param name="InfoSchemaIndexList" select="/.." />
+                <xsl:with-param name="InfoSchemaConstraintList" select="/.." />
+              </xsl:call-template>
+  
             </xsl:when>
             <xsl:otherwise>
               <IsExist>no</IsExist>
@@ -914,6 +1042,7 @@
 
           <xsl:call-template name="TabularPartsControl">
             <xsl:with-param name="ConfigurationTablePartList" select="TabularParts/TablePart" />
+            <xsl:with-param name="SecondConfigurationTablePartList" select="$SecondConfDirectory/TabularParts/TablePart" />
             <xsl:with-param name="InfoSchemaTableList" select="$InfoSchemaTableList" />
             <xsl:with-param name="IsCreateOwner">yes</xsl:with-param>
             <xsl:with-param name="OwnerTableName" select="$ConfDirectoryTable" />
@@ -931,6 +1060,9 @@
       </xsl:call-template>
 
       <xsl:for-each select="$documentConfiguration/Configuration/RegistersInformation/RegisterInformation">
+        <xsl:variable name="ConfDirectoryUid" select="Uid" />
+        <xsl:variable name="SecondConfDirectory" select="$documentSecondConfiguration/Configuration/RegistersInformation/RegisterInformation[Uid = $ConfDirectoryUid]" />
+        <xsl:variable name="SecondConfDirectoryTable" select="$SecondConfDirectory/Table" />
         <xsl:variable name="ConfDirectoryName" select="Name" />
         <xsl:variable name="ConfDirectoryTable" select="Table" />
 
@@ -948,22 +1080,44 @@
               <IsExist>yes</IsExist>
 
                <!-- Перевірка наперед визначених полів, окрім первинного ключа -->
-              <xsl:call-template name="FieldsControl">
+              <!--<xsl:call-template name="FieldsControl">
 				        <xsl:with-param name="TableName" select="$ConfDirectoryTable" />
                 <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid']" />
+                <xsl:with-param name="SecondConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid']" />
                 <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
 				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
                 <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
-              </xsl:call-template>
+              </xsl:call-template>-->
 
               <xsl:call-template name="FieldsControl">
 				        <xsl:with-param name="TableName" select="$ConfDirectoryTable" />
-                <xsl:with-param name="ConfigurationFieldList" select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field" />
+                <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid'] | (DimensionFields|ResourcesFields|PropertyFields)/Fields/Field" />
+                <xsl:with-param name="SecondConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid'] | $SecondConfDirectory/*[self::DimensionFields | self::ResourcesFields | self::PropertyFields]/Fields/Field" />
                 <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
 				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
                 <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
               </xsl:call-template>
 
+            </xsl:when>
+            <!-- Перевірка в попередній версії -->
+            <xsl:when test="$SecondConfDirectory and $SecondConfDirectoryTable != $ConfDirectoryTable">
+              <IsExist>rename</IsExist>
+              <TableOld><xsl:value-of select="$SecondConfDirectoryTable"/></TableOld>
+
+              <xsl:call-template name="RemoveOldIndex">
+                <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $SecondConfDirectoryTable]/Index" />
+                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $SecondConfDirectoryTable]/Constraint" />
+              </xsl:call-template>
+
+              <xsl:call-template name="FieldsControl">
+				        <xsl:with-param name="TableName" select="$SecondConfDirectoryTable" />
+                <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid'] | (DimensionFields|ResourcesFields|PropertyFields)/Fields/Field" />
+                <xsl:with-param name="SecondConfigurationFieldList" select="/.." />
+                <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $SecondConfDirectoryTable]/Column" />
+				        <xsl:with-param name="InfoSchemaIndexList" select="/.." />
+                <xsl:with-param name="InfoSchemaConstraintList" select="/.." />
+              </xsl:call-template>
+   
             </xsl:when>
             <xsl:otherwise>
               <IsExist>no</IsExist>
@@ -1008,6 +1162,9 @@
       </xsl:call-template>
 		
       <xsl:for-each select="$documentConfiguration/Configuration/RegistersAccumulation/RegisterAccumulation">
+        <xsl:variable name="ConfDirectoryUid" select="Uid" />
+        <xsl:variable name="SecondConfDirectory" select="$documentSecondConfiguration/Configuration/RegistersInformation/RegisterInformation[Uid = $ConfDirectoryUid]" />
+        <xsl:variable name="SecondConfDirectoryTable" select="$SecondConfDirectory/Table" />
         <xsl:variable name="ConfDirectoryName" select="Name" />
         <xsl:variable name="ConfDirectoryTable" select="Table" />
 
@@ -1025,20 +1182,42 @@
               <IsExist>yes</IsExist>
 
                <!-- Перевірка наперед визначених полів, окрім первинного ключа -->
-              <xsl:call-template name="FieldsControl">
+              <!--<xsl:call-template name="FieldsControl">
 				        <xsl:with-param name="TableName" select="$ConfDirectoryTable" />
                 <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid']" />
+                <xsl:with-param name="SecondConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid']" />
+                <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
+				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
+                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
+              </xsl:call-template>-->
+
+              <xsl:call-template name="FieldsControl">
+				        <xsl:with-param name="TableName" select="$ConfDirectoryTable" />
+                <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid'] | (DimensionFields|ResourcesFields|PropertyFields)/Fields/Field" />
+                <xsl:with-param name="SecondConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid'] | $SecondConfDirectory/*[self::DimensionFields | self::ResourcesFields | self::PropertyFields]/Fields/Field" />
                 <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
 				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
                 <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
               </xsl:call-template>
 
+            </xsl:when>
+            <!-- Перевірка в попередній версії -->
+            <xsl:when test="$SecondConfDirectory and $SecondConfDirectoryTable != $ConfDirectoryTable">
+              <IsExist>rename</IsExist>
+              <TableOld><xsl:value-of select="$SecondConfDirectoryTable"/></TableOld>
+
+              <xsl:call-template name="RemoveOldIndex">
+                <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $SecondConfDirectoryTable]/Index" />
+                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $SecondConfDirectoryTable]/Constraint" />
+              </xsl:call-template>
+
               <xsl:call-template name="FieldsControl">
-				        <xsl:with-param name="TableName" select="$ConfDirectoryTable" />
-                <xsl:with-param name="ConfigurationFieldList" select="(DimensionFields|ResourcesFields|PropertyFields)/Fields/Field" />
-                <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Column" />
-				        <xsl:with-param name="InfoSchemaIndexList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Index" />
-                <xsl:with-param name="InfoSchemaConstraintList" select="$InfoSchemaTableList[Name = $ConfDirectoryTable]/Constraint" />
+				        <xsl:with-param name="TableName" select="$SecondConfDirectoryTable" />
+                <xsl:with-param name="ConfigurationFieldList" select="PredefinedFields/PredefinedField[Name != 'uid'] | (DimensionFields|ResourcesFields|PropertyFields)/Fields/Field" />
+                <xsl:with-param name="SecondConfigurationFieldList" select="/.." />
+                <xsl:with-param name="InfoSchemaFieldList" select="$InfoSchemaTableList[Name = $SecondConfDirectoryTable]/Column" />
+				        <xsl:with-param name="InfoSchemaIndexList" select="/.." />
+                <xsl:with-param name="InfoSchemaConstraintList" select="/.." />
               </xsl:call-template>
 
             </xsl:when>
@@ -1066,6 +1245,7 @@
 
           <xsl:call-template name="TabularPartsControl">
             <xsl:with-param name="ConfigurationTablePartList" select="TabularParts/TablePart" />
+            <xsl:with-param name="SecondConfigurationTablePartList" select="$SecondConfDirectory/TabularParts/TablePart" />
             <xsl:with-param name="InfoSchemaTableList" select="$InfoSchemaTableList" />
             <xsl:with-param name="IsCreateOwner">no</xsl:with-param>
           </xsl:call-template>

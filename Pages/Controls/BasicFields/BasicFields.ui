@@ -69,8 +69,11 @@
                 <child>
                     <object class="GtkBox" id="box_table_or_column">
                         <property name="orientation">horizontal</property>
-                        <property name="spacing">6</property>
+                        <property name="spacing">5</property>
                         <property name="hexpand">true</property>
+                        <style>
+                            <class name="flat"/>
+                        </style>
                         <child>
                             <object class="GtkEntry" id="entry_table_or_column">
                                 <property name="hexpand">true</property>

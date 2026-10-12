@@ -97,7 +97,28 @@
     <xsl:for-each select="$Control_Field">
 
       <xsl:choose>
-        <xsl:when test="IsExist = 'yes'">
+        <xsl:when test="IsExist = 'yes' or IsExist = 'rename'">
+
+          <xsl:if test="IsExist = 'rename'">
+            <xsl:variable name="FieldOld" select="FieldOld" />
+            <xsl:for-each select="Remove/Constraint">
+            <info>Видалити зовнішній ключ <xsl:value-of select="Name"/></info>
+              <sql>
+                <xsl:value-of select="concat('ALTER TABLE ', $TableName, ' DROP CONSTRAINT IF EXISTS ', Name, ';')"/>
+              </sql>
+            </xsl:for-each>
+
+            <xsl:for-each select="Remove/Index">
+              <info>Видалити індекс <xsl:value-of select="Name"/></info>
+              <sql>
+                <xsl:value-of select="concat('DROP INDEX IF EXISTS ', Name, ';')"/>
+              </sql>
+            </xsl:for-each>
+            <info>Перейменувати поле <xsl:value-of select="Name"/> (<xsl:value-of select="$FieldOld"/> &gt; <xsl:value-of select="NameInTable"/>) в таблиці <xsl:value-of select="$Name"/> (<xsl:value-of select="$TableName"/>)</info>
+            <sql>
+              <xsl:value-of select="concat('ALTER TABLE ', $TableName, ' RENAME COLUMN ', $FieldOld, ' TO ', NameInTable, ';')"/>
+            </sql>
+          </xsl:if>
 
           <xsl:choose>
             <xsl:when test="Type/Coincide = 'no'">
@@ -646,7 +667,29 @@
 	      <xsl:variable name="TableType" select="Type" />
 		  
         <xsl:choose>
-          <xsl:when test="IsExist = 'yes'">
+          <xsl:when test="IsExist = 'yes' or IsExist = 'rename'">
+            
+            <xsl:if test="IsExist = 'rename'">
+              <xsl:variable name="TableNameOld" select="TableOld" />
+              <xsl:for-each select="Remove/Constraint">
+                <info>Видалити зовнішній ключ <xsl:value-of select="Name"/></info>
+                <sql>
+                  <xsl:value-of select="concat('ALTER TABLE ', $TableNameOld, ' DROP CONSTRAINT IF EXISTS ', Name, ';')"/>
+                </sql>
+              </xsl:for-each>
+
+              <xsl:for-each select="Remove/Index">
+                <info>Видалити індекс <xsl:value-of select="Name"/></info>
+                <sql>
+                  <xsl:value-of select="concat('DROP INDEX IF EXISTS ', Name, ';')"/>
+                </sql>
+              </xsl:for-each>
+
+              <info>Перейменувати таблицю <xsl:value-of select="$DirectoryName"/> (<xsl:value-of select="$TableNameOld"/> &gt; <xsl:value-of select="$TableName"/>)</info>
+              <sql>
+                <xsl:value-of select="concat('ALTER TABLE ', $TableNameOld, ' RENAME TO ', $TableName, ';')"/>
+              </sql>
+            </xsl:if>
 
             <xsl:call-template name="Template_Control_Field">
               <xsl:with-param name="Control_Field" select="Control_Field" />
@@ -765,7 +808,29 @@
           <xsl:variable name="OwnerTableName" select="OwnerTableName" />
           
           <xsl:choose>
-            <xsl:when test="IsExist = 'yes'">
+            <xsl:when test="IsExist = 'yes' or IsExist = 'rename'">
+
+              <xsl:if test="IsExist = 'rename'">
+                <xsl:variable name="TableNameOld" select="TableOld" />
+                <xsl:for-each select="Remove/Constraint">
+                <info>Видалити зовнішній ключ <xsl:value-of select="Name"/></info>
+                  <sql>
+                    <xsl:value-of select="concat('ALTER TABLE ', $TableNameOld, ' DROP CONSTRAINT IF EXISTS ', Name, ';')"/>
+                  </sql>
+                </xsl:for-each>
+
+                <xsl:for-each select="Remove/Index">
+                  <info>Видалити індекс <xsl:value-of select="Name"/></info>
+                  <sql>
+                    <xsl:value-of select="concat('DROP INDEX IF EXISTS ', Name, ';')"/>
+                  </sql>
+                </xsl:for-each>
+
+                <info>Перейменувати таблицю <xsl:value-of select="$TablePartName"/> (<xsl:value-of select="$TableNameOld"/> &gt; <xsl:value-of select="$TabularParts_TableName"/>)</info>
+                <sql>
+                  <xsl:value-of select="concat('ALTER TABLE ', $TableNameOld, ' RENAME TO ', $TabularParts_TableName, ';')"/>
+                </sql>
+              </xsl:if>
 
               <xsl:call-template name="Template_Control_Field">
                 <xsl:with-param name="Control_Field" select="Control_Field" />
@@ -821,7 +886,7 @@
             </xsl:when>
             <xsl:when test="IsExist = 'delete'">
 
-              <info>Видалити таблицю <xsl:value-of select="$DirectoryName"/> (<xsl:value-of select="$TableName"/>)</info>
+              <info>Видалити таблицю <xsl:value-of select="$TablePartName"/> (<xsl:value-of select="$TableName"/>)</info>
               <sql>
                 <xsl:text>DROP TABLE </xsl:text>
                 <xsl:value-of select="$TabularParts_TableName"/>
@@ -829,7 +894,6 @@
               </sql>
 
             </xsl:when>
-            
           </xsl:choose>
 
         </xsl:for-each>

@@ -13,10 +13,10 @@ namespace Configurator;
 [GObject.Subclass<FormPageConfigurator>(nameof(PageField))]
 partial class PageField : FormPageConfigurator
 {
-    public string ParentTable { get; set; } = "";
     public ConfigurationField ConfField { get; set; } = new();
     public Dictionary<string, ConfigurationField> Fields = [];
     Configuration Conf { get; } = Program.Kernel.Conf;
+    string ParentTable { get; set; } = "";
 
     BasicFields basicFields = BasicFields.New();
     Field field = Field.New();
@@ -25,6 +25,7 @@ partial class PageField : FormPageConfigurator
     {
         PageName = "Поле:";
         basicFields.TableOrColumnLabel = "В таблиці:";
+        basicFields.RenameTableOrColumn.RenameFunc = () => basicFields.RenameTableOrColumn.RenameFieldDef(ParentTable);
     }
 
     public static PageField New()
@@ -49,19 +50,19 @@ partial class PageField : FormPageConfigurator
 
     public override async Task AssignValue()
     {
+        ParentTable = Owner?.Group switch
+        {
+            ConfiguratorItemOwnerType.Directory => Owner.Obj is ConfigurationDirectories x ? x.Table : "",
+            ConfiguratorItemOwnerType.Document => Owner.Obj is ConfigurationDocuments x ? x.Table : "",
+            ConfiguratorItemOwnerType.TablePart => Owner.Obj is ConfigurationTablePart x ? x.Table : "",
+            ConfiguratorItemOwnerType.RegisterInformation => Owner.Obj is ConfigurationRegistersInformation x ? x.Table : "",
+            ConfiguratorItemOwnerType.RegisterAccumulation => Owner.Obj is ConfigurationRegistersAccumulation x ? x.Table : "",
+            _ => ""
+        };
+
         if (IsNew)
         {
-            string parentTable = Owner?.Group switch
-            {
-                ConfiguratorItemOwnerType.Directory => Owner.Obj is ConfigurationDirectories x ? x.Table : "",
-                ConfiguratorItemOwnerType.Document => Owner.Obj is ConfigurationDocuments x ? x.Table : "",
-                ConfiguratorItemOwnerType.TablePart => Owner.Obj is ConfigurationTablePart x ? x.Table : "",
-                ConfiguratorItemOwnerType.RegisterInformation => Owner.Obj is ConfigurationRegistersInformation x ? x.Table : "",
-                ConfiguratorItemOwnerType.RegisterAccumulation => Owner.Obj is ConfigurationRegistersAccumulation x ? x.Table : "",
-                _ => ""
-            };
-            
-            _ = await Function.FillNewField(ConfField, parentTable, Fields);
+            _ = await Function.FillNewField(ConfField, ParentTable, Fields);
             basicFields.NewTableOrColumn();
         }
 

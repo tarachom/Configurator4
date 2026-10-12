@@ -24,6 +24,7 @@ partial class PageTablePart : FormPageConfigurator
     {
         PageName = "Таблична частина:";
         basicFields.TableOrColumnLabel = "Таблиця:";
+        basicFields.RenameTableOrColumn.RenameFunc = basicFields.RenameTableOrColumn.RenameTableDef;
     }
 
     public static PageTablePart New()
