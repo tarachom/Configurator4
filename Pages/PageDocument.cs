@@ -64,10 +64,7 @@ partial class PageDocument : FormPageConfigurator
     public override async Task AssignValue()
     {
         if (IsNew)
-        {
             _ = await Function.FillNewDocument(ConfDocument);
-            basicFields.NewTableOrColumn();
-        }
 
         basicFields.ItemName = ConfDocument.Name;
         basicFields.FullName = ConfDocument.FullName;

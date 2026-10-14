@@ -104,6 +104,9 @@ public partial class RenameTableOrColumn
         if (schema.Tables.ContainsKey(newName))
             log.Add($"Увага! В базі вже є таблиця із назвою '{newName}'!");
 
+        //Додаткова реєстрація нової назви в таблиці зарезервованих назв
+        Configuration.AddToReservedTables(Program.Kernel, newName);
+
         log.Add($"Остаточне перейменування '{oldName}' на '{newName}' відбудеться при збереженні конфігурації");
         return (true, log);
     }
@@ -130,6 +133,9 @@ public partial class RenameTableOrColumn
         ConfigurationInformationSchema schema = await Program.Kernel.DataBase.SelectInformationSchema();
         if (schema.Tables.TryGetValue(parentTable, out var table) && table.Columns.ContainsKey(newName))
             log.Add($"Увага! В таблиці {parentTable} вже є поле із назвою '{newName}'!");
+
+        //Додаткова реєстрація нової назви в таблиці зарезервованих назв
+        Configuration.AddToReservedColumn(Program.Kernel, parentTable, newName);
 
         log.Add($"Остаточне перейменування '{oldName}' на '{newName}' відбудеться при збереженні конфігурації");
         return (true, log);

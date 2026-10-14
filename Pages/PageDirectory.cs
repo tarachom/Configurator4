@@ -64,10 +64,7 @@ partial class PageDirectory : FormPageConfigurator
     public override async Task AssignValue()
     {
         if (IsNew)
-        {
             _ = await Function.FillNewDirectory(ConfDirectory);
-            basicFields.NewTableOrColumn();
-        }
 
         basicFields.ItemName = ConfDirectory.Name;
         basicFields.FullName = ConfDirectory.FullName;

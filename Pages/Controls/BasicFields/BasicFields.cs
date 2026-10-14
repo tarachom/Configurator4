@@ -71,11 +71,13 @@ public partial class BasicFields
     /// <summary>
     /// Зробити доступним поле ТаблицяЧиСтовпчик
     /// </summary>
+    /*
     public void NewTableOrColumn()
     {
         entryTableOrColumn.Sensitive = true;
         RenameTableOrColumn.Visible = false;
     }
+    */
 
     public string ItemName
     {
