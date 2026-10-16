@@ -92,21 +92,21 @@ public partial class DocumentDataTree : DataTree
                 case "Field" when row.Obj is ConfigurationField field:
                     {
                         ConfigurationField newField = field.Copy();
-                        newField.Name += GenerateName.GetNewName();
+                        newField.Name += Configuration.GetNewRandomName();
                         await OpenPageField(true, document.Fields, newField, new(ConfiguratorItemOwnerType.Document, document));
                         break;
                     }
                 case "TablePart" when row.Obj is ConfigurationTablePart tablePart:
                     {
                         ConfigurationTablePart newTablePart = tablePart.Copy();
-                        newTablePart.Name += GenerateName.GetNewName();
+                        newTablePart.Name += Configuration.GetNewRandomName();
                         await OpenPageTablePart(true, document.TabularParts, newTablePart);
                         break;
                     }
                 case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
                     {
                         ConfigurationTabularList newTabularList = tabularList.Copy();
-                        newTabularList.Name += GenerateName.GetNewName();
+                        newTabularList.Name += Configuration.GetNewRandomName();
                         await OpenPageTabularList(true, document.TabularList, document.Fields, newTabularList);
                         break;
                     }
@@ -117,7 +117,7 @@ public partial class DocumentDataTree : DataTree
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
                     {
                         ConfigurationField newField = field.Copy();
-                        newField.Name += GenerateName.GetNewName();
+                        newField.Name += Configuration.GetNewRandomName();
                         await OpenPageField(true, tablePart.Fields, newField, new(ConfiguratorItemOwnerType.TablePart, tablePart));
                         break;
                     }

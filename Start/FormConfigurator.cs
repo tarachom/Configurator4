@@ -127,6 +127,28 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
         await page.SetValue();
     }
 
+    public override async Task PageRegisterInformation(bool isNew, ConfigurationRegistersInformation? register = null)
+    {
+        PageRegisterInformation page = Configurator.PageRegisterInformation.New();
+        page.IsNew = isNew;
+        if (register != null) page.ConfRegInfo = register;
+        page.Caption = isNew ? "*" : register?.Name ?? "";
+
+        NotebookFunc?.CreatePage(page.Caption, page);
+        await page.SetValue();
+    }
+
+    public override async Task PageRegisterAccumulation(bool isNew, ConfigurationRegistersAccumulation? register = null)
+    {
+        PageRegisterAccumulation page = Configurator.PageRegisterAccumulation.New();
+        page.IsNew = isNew;
+        if (register != null) page.ConfRegAccum = register;
+        page.Caption = isNew ? "*" : register?.Name ?? "";
+
+        NotebookFunc?.CreatePage(page.Caption, page);
+        await page.SetValue();
+    }
+
     protected override async Task PageSettings()
     {
         PageSettings page = Configurator.PageSettings.New();

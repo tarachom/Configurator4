@@ -17,6 +17,7 @@ partial class PageField : FormPageConfigurator
     public Dictionary<string, ConfigurationField> Fields = [];
     Configuration Conf { get; } = Program.Kernel.Conf;
     string ParentTable { get; set; } = "";
+    Dictionary<string, ConfigurationField> AllFields = [];
 
     BasicFields basicFields = BasicFields.New();
     Field field = Field.New();
@@ -60,8 +61,15 @@ partial class PageField : FormPageConfigurator
             _ => ""
         };
 
+        AllFields = Owner?.Group switch
+        {
+            ConfiguratorItemOwnerType.RegisterInformation => Owner.Obj is ConfigurationRegistersInformation x ? Configuration.CombineAllFieldForRegister(x) : throw new Exception(),
+            ConfiguratorItemOwnerType.RegisterAccumulation => Owner.Obj is ConfigurationRegistersAccumulation x ? Configuration.CombineAllFieldForRegister(x) : throw new Exception(),
+            _ => Fields
+        };
+
         if (IsNew)
-            _ = await Function.FillNewField(ConfField, ParentTable, Fields);
+            _ = await Function.FillNewField(ConfField, ParentTable, AllFields);
 
         basicFields.ItemName = ConfField.Name;
         basicFields.FullName = ConfField.FullName;
@@ -83,7 +91,7 @@ partial class PageField : FormPageConfigurator
 
     protected override async Task<bool> Save()
     {
-        (bool result, string name) = IsValid(basicFields.ItemName, ConfField.Name, [.. Fields.Keys]);
+        (bool result, string name) = IsValid(basicFields.ItemName, ConfField.Name, [.. AllFields.Keys]);
         basicFields.ItemName = name;
 
         if (result)

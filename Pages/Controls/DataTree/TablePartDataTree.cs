@@ -65,14 +65,14 @@ public partial class TablePartDataTree : DataTree
                 case "Field" when row.Obj is ConfigurationField field:
                     {
                         ConfigurationField newField = field.Copy();
-                        newField.Name += GenerateName.GetNewName();
+                        newField.Name += Configuration.GetNewRandomName();
                         await OpenPageField(true, tablePart.Fields, newField, new(ConfiguratorItemOwnerType.TablePart, tablePart));
                         break;
                     }
                 case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
                     {
                         ConfigurationTabularList newTabularList = tabularList.Copy();
-                        newTabularList.Name += GenerateName.GetNewName();
+                        newTabularList.Name += Configuration.GetNewRandomName();
                         await OpenPageTabularList(true, tablePart.TabularList, tablePart.Fields, newTabularList);
                         break;
                     }

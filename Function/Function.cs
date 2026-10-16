@@ -56,6 +56,7 @@ public static class Function
         confDirectory.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
         //Заповнення полями
+        if (confDirectory.Fields.Count == 0)
         {
             //Код
             {
@@ -78,6 +79,7 @@ public static class Function
         }
 
         //Табличний список
+        if (confDirectory.TabularList.Count == 0)
         {
             ConfigurationTabularList list = new("Записи");
             int sortNum = 0;
@@ -91,6 +93,7 @@ public static class Function
         }
 
         //Форми
+        if (confDirectory.Forms.Count == 0)
         {
             {
                 string name = "Функції";
@@ -145,6 +148,7 @@ public static class Function
         confDocument.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
         //Заповнення полями
+        if (confDocument.Fields.Count == 0)
         {
             confDocument.AppendField(new ConfigurationField("Назва", "Назва", "docname", "string", "", "Назва", true, true));
             confDocument.AppendField(new ConfigurationField("НомерДок", "Номер", "docnomer", "string", "", "Номер документу", false, true));
@@ -171,6 +175,7 @@ public static class Function
         }
 
         //Табличний список
+        if (confDocument.TabularList.Count == 0)
         {
             ConfigurationTabularList list = new("Записи");
             int sortNum = 0;
@@ -188,6 +193,7 @@ public static class Function
         }
 
         //Форми
+        if (confDocument.Forms.Count == 0)
         {
             {
                 string name = "Функції";
@@ -252,9 +258,9 @@ public static class Function
         confTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
 
         //Заповнення полями
+        if (confTablePart.Fields.Count == 0)
         {
             //НомерРядка
-            if (!confTablePart.Fields.ContainsKey("НомерРядка"))
             {
                 string nameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, confTablePart.Table, confTablePart.Fields);
                 confTablePart.AppendField(new ConfigurationField("НомерРядка", "Номер рядка", nameInTable, "integer", "", "Номер рядка") { AutomaticNumbering = true });
@@ -267,6 +273,66 @@ public static class Function
                     confTablePart.AppendField(otherField);
                 }
         }
+
+        return true;
+    }
+
+    public static async Task<bool> FillNewRegAccum(ConfigurationRegistersAccumulation confRegAccum,
+        List<ConfigurationField>? dimensionFields = null, List<ConfigurationField>? resourcesFields = null, List<ConfigurationField>? propertyFields = null)
+    {
+        confRegAccum.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
+        Dictionary<string, ConfigurationField> allFields = Configuration.CombineAllFieldForRegister(confRegAccum);
+
+        if (dimensionFields != null)
+            foreach (var field in dimensionFields)
+            {
+                field.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, confRegAccum.Table, allFields);
+                confRegAccum.AppendDimensionField(field);
+            }
+
+        if (resourcesFields != null)
+            foreach (var field in resourcesFields)
+            {
+                field.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, confRegAccum.Table, allFields);
+                confRegAccum.AppendResourcesField(field);
+            }
+
+        if (propertyFields != null)
+            foreach (var field in propertyFields)
+            {
+                field.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, confRegAccum.Table, allFields);
+                confRegAccum.AppendPropertyField(field);
+            }
+
+        return true;
+    }
+
+    public static async Task<bool> FillNewRegInfo(ConfigurationRegistersInformation confRegInfo,
+        List<ConfigurationField>? dimensionFields = null, List<ConfigurationField>? resourcesFields = null, List<ConfigurationField>? propertyFields = null)
+    {
+        confRegInfo.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
+        Dictionary<string, ConfigurationField> allFields = Configuration.CombineAllFieldForRegister(confRegInfo);
+
+        if (dimensionFields != null)
+            foreach (var field in dimensionFields)
+            {
+                field.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, confRegInfo.Table, allFields);
+                confRegInfo.AppendDimensionField(field);
+            }
+
+        if (resourcesFields != null)
+            foreach (var field in resourcesFields)
+            {
+                field.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, confRegInfo.Table, allFields);
+                confRegInfo.AppendResourcesField(field);
+            }
+
+        if (propertyFields != null)
+            foreach (var field in propertyFields)
+            {
+                field.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, confRegInfo.Table, allFields);
+                confRegInfo.AppendPropertyField(field);
+            }
 
         return true;
     }

@@ -1163,7 +1163,7 @@
 		
       <xsl:for-each select="$documentConfiguration/Configuration/RegistersAccumulation/RegisterAccumulation">
         <xsl:variable name="ConfDirectoryUid" select="Uid" />
-        <xsl:variable name="SecondConfDirectory" select="$documentSecondConfiguration/Configuration/RegistersInformation/RegisterInformation[Uid = $ConfDirectoryUid]" />
+        <xsl:variable name="SecondConfDirectory" select="$documentSecondConfiguration/Configuration/RegistersAccumulation/RegisterAccumulation[Uid = $ConfDirectoryUid]" />
         <xsl:variable name="SecondConfDirectoryTable" select="$SecondConfDirectory/Table" />
         <xsl:variable name="ConfDirectoryName" select="Name" />
         <xsl:variable name="ConfDirectoryTable" select="Table" />
