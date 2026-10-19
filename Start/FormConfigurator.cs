@@ -48,6 +48,9 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
 
     public async Task OpenFirstPages()
     {
+        //Ініціалізація GtkSource
+        GtkSource.Module.Initialize();
+
         PageHome page = PageHome.New();
         NotebookFunc?.CreatePage("Стартова", () => page, false, null, null, true);
 
