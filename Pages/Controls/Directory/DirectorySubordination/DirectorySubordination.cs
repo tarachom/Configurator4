@@ -1,8 +1,9 @@
 using Gtk;
 using GObject;
 using AccountingSoftware;
-using Configurator;
 using InterfaceGtk4;
+
+namespace Configurator;
 
 [Subclass<Box>("DirectorySubordination")]
 [Template<AssemblyResource>("DirectorySubordination.ui")]

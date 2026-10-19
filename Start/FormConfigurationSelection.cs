@@ -22,7 +22,6 @@ limitations under the License.
 */
 
 using AccountingSoftware;
-using InterfaceGtk4;
 using InterfaceGtkLib;
 
 namespace Configurator;

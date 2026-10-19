@@ -1,13 +1,14 @@
 using Gtk;
 using GObject;
 using AccountingSoftware;
-using Configurator;
 using InterfaceGtk4;
+
+namespace Configurator;
 
 /// <summary>
 /// 
 /// </summary>
-[Subclass<Box>()]
+[Subclass<Box>("DataTree")]
 [Template<AssemblyResource>("DataTree.ui")]
 public abstract partial class DataTree
 {
@@ -33,5 +34,11 @@ public abstract partial class DataTree
     {
         if (Program.BasicForm != null)
             await Program.BasicForm.PageForm(isNew, forms, form);
+    }
+
+    protected static async Task OpenPageQueryBlock(bool isNew, Dictionary<string, ConfigurationQueryBlock> blocks, ConfigurationQueryBlock? block = null)
+    {
+        if (Program.BasicForm != null)
+            await Program.BasicForm.PageQueryBlock(isNew, blocks, block);
     }
 }

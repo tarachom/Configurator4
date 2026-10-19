@@ -2,7 +2,8 @@ using Gtk;
 using GObject;
 using AccountingSoftware;
 using InterfaceGtk4;
-using Configurator;
+
+namespace Configurator;
 
 [Subclass<DataTree>()]
 public partial class DocumentDataTree : DataTree
@@ -112,6 +113,7 @@ public partial class DocumentDataTree : DataTree
                     }
                 case "Form" when row.Obj is ConfigurationForms form:
                     {
+                        
                         break;
                     }
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:

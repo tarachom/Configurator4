@@ -2,7 +2,8 @@ using Gtk;
 using GObject;
 using AccountingSoftware;
 using InterfaceGtk4;
-using Configurator;
+
+namespace Configurator;
 
 [Subclass<Box>("DirectoryHierarchy")]
 [Template<AssemblyResource>("DirectoryHierarchy.ui")]

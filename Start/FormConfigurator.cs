@@ -127,6 +127,34 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
         await page.SetValue();
     }
 
+    public async Task PageQueryBlock(bool isNew, Dictionary<string, ConfigurationQueryBlock> blocks, ConfigurationQueryBlock? block = null)
+    {
+        PageQueryBlock page = Configurator.PageQueryBlock.New();
+        page.IsNew = isNew;
+        page.QueryBlocks = blocks;
+        if (block != null) page.ConfQueryBlock = block;
+        page.Caption = isNew ? "*" : block?.Name ?? "";
+
+        Program.BasicForm?.NotebookFunc.CreatePage(page.Caption, page);
+        await page.SetValue();
+    }
+
+    public async Task PageQuery(bool isNew, OrderedDictionary<string, string> queryList, string? queryKey = null, string? queryValue = null)
+    {
+        PageQuery page = Configurator.PageQuery.New();
+        page.IsNew = isNew;
+        page.QueryList = queryList;
+        if (queryKey != null)
+        {
+            page.QueryKey = queryKey;
+            page.QueryValue = queryValue ?? "";
+        }
+        page.Caption = isNew ? "*" : queryKey ?? "";
+
+        Program.BasicForm?.NotebookFunc.CreatePage(page.Caption, page);
+        await page.SetValue();
+    }
+
     public override async Task PageRegisterInformation(bool isNew, ConfigurationRegistersInformation? register = null)
     {
         PageRegisterInformation page = Configurator.PageRegisterInformation.New();

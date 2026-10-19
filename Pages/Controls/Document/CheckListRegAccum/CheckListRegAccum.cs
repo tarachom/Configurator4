@@ -1,9 +1,13 @@
 using Gtk;
 using GObject;
 using AccountingSoftware;
-using Configurator;
 using InterfaceGtk4;
 
+namespace Configurator;
+
+/// <summary>
+/// Список регістрів накопичення із вибором
+/// </summary>
 [Subclass<Box>("CheckListRegAccum")]
 [Template<AssemblyResource>("CheckListRegAccum.ui")]
 public partial class CheckListRegAccum
@@ -31,7 +35,7 @@ public partial class CheckListRegAccum
     public List<string> GetValue()
     {
         List<string> list = [];
-        
+
         var row = listbox.GetFirstChild();
         while (row != null)
         {

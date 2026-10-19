@@ -9,7 +9,7 @@ public static class Function
     /// </summary>
     /// <param name="conf">Конфігурація</param>
     /// <returns></returns>
-    public static Dictionary<string, ConfigurationField> GetConstantsAllFields(Configuration conf)
+    public static Dictionary<string, ConfigurationField> GetConstantsAllFields(Configuration conf) //!!! Перевірити доцільність. Можливо винести в модуль конфігурації
     {
         Dictionary<string, ConfigurationField> ConstantsAllFields = [];
 

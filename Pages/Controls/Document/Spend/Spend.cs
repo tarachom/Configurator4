@@ -2,6 +2,8 @@ using Gtk;
 using GObject;
 using AccountingSoftware;
 
+namespace Configurator;
+
 [Subclass<Box>("Spend")]
 [Template<AssemblyResource>("Spend.ui")]
 public partial class Spend

@@ -1,12 +1,13 @@
 using Gtk;
 using GObject;
 using AccountingSoftware;
-using Configurator;
+
+namespace Configurator;
 
 /// <summary>
 /// 
 /// </summary>
-[Subclass<Box>()]
+[Subclass<Box>("AutomaticNumbering")]
 [Template<AssemblyResource>("AutomaticNumbering.ui")]
 public abstract partial class AutomaticNumbering
 {
@@ -15,7 +16,7 @@ public abstract partial class AutomaticNumbering
 
     protected Configuration Conf { get; } = Program.Kernel.Conf;
 
-    protected void CreateConst(KeyValuePair<string, string> block, string name)
+    protected void CreateConst(KeyValuePair<string, string> block, string name) //!!! Можливо винести в функції
     {
         if (!Conf.ConstantsBlock.ContainsKey(block.Key))
             Conf.AppendConstantsBlock(new ConfigurationConstantsBlock(block.Key, block.Value));

@@ -1,7 +1,6 @@
 using Gtk;
 using GObject;
 using AccountingSoftware;
-using Configurator;
 using InterfaceGtk4;
 using Microsoft.Extensions.AI;
 using System.ComponentModel;

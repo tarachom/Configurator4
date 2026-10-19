@@ -51,6 +51,7 @@ partial class PageField : FormPageConfigurator
 
     public override async Task AssignValue()
     {
+        //Визначення таблиці власника із самого власника
         ParentTable = Owner?.Group switch
         {
             ConfiguratorItemOwnerType.Directory => Owner.Obj is ConfigurationDirectories x ? x.Table : "",
@@ -61,6 +62,7 @@ partial class PageField : FormPageConfigurator
             _ => ""
         };
 
+        //Для регістрів поля збираються в один масив
         AllFields = Owner?.Group switch
         {
             ConfiguratorItemOwnerType.RegisterInformation => Owner.Obj is ConfigurationRegistersInformation x ? Configuration.CombineAllFieldForRegister(x) : throw new Exception(),

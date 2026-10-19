@@ -17,6 +17,7 @@ partial class PageRegisterAccumulation : FormPageConfigurator
     Configuration Conf { get; } = Program.Kernel.Conf;
 
     BasicFields basicFields = BasicFields.New();
+    AllowDocumentSpend allowDocumentSpend = AllowDocumentSpend.New();
     RegisterAccumulationDataTree dataTree = RegisterAccumulationDataTree.New();
 
     partial void Initialize()
@@ -39,7 +40,8 @@ partial class PageRegisterAccumulation : FormPageConfigurator
         //Основні поля
         vBox.Append(basicFields);
 
-        
+        //Документи які роблять рухи по регістру
+        vBox.Append(allowDocumentSpend);
     }
 
     protected override void CreateEnd(Box vBox)
@@ -57,6 +59,7 @@ partial class PageRegisterAccumulation : FormPageConfigurator
         basicFields.TableOrColumn = ConfRegAccum.Table;
         basicFields.Desc = ConfRegAccum.Desc;
 
+        allowDocumentSpend.SetValue(ConfRegAccum.AllowDocumentSpend);
         dataTree.SetValue(ConfRegAccum);
     }
 

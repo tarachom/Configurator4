@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="QueryBlockList" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="margin-start">5</property>
+        <property name="margin-end">5</property>
+        <property name="margin-top">5</property>
+        <property name="margin-bottom">5</property>
+               
+        <!-- Підсумковий -->
+        <child>
+            <object class="GtkCheckButton" id="check_final_calculation">
+                <property name="label">Для розрахунку підсумків</property>
+                <property name="tooltip-text">Запити виконуються один раз, після всіх розрахунків</property>
+                <property name="halign">start</property>
+                <property name="margin-bottom">10</property>
+            </object>
+        </child>
+
+        <!-- Заголовок секції -->
+        <child>
+            <object class="GtkLabel">
+                <property name="label">Запити:</property>
+                <property name="halign">start</property>
+                <property name="margin-bottom">10</property>
+            </object>
+        </child>
+
+        <!-- Верхній тулбар -->
+        <child>
+            <object class="GtkBox">
+                <property name="orientation">horizontal</property>
+                <property name="spacing">3</property>
+                <style>
+                    <class name="toolbar-container" />
+                </style>
+
+                <!-- Кнопка: Додати -->
+                <child>
+                    <object class="GtkButton" id="button_add">
+                        <property name="icon-name">new</property>
+                        <property name="tooltip-text">Додати</property>
+                        <style>
+                            <class name="toolbar" />
+                            <class name="flat" />
+                        </style>
+                    </object>
+                </child>
+
+                <!-- Кнопка: Редагувати -->
+                <child>
+                    <object class="GtkButton" id="button_edit">
+                        <property name="icon-name">edit</property>
+                        <property name="tooltip-text">Редагувати</property>
+                        <style>
+                            <class name="toolbar" />
+                            <class name="flat" />
+                        </style>
+                    </object>
+                </child>
+
+                <!-- Кнопка: Копіювати -->
+                <child>
+                    <object class="GtkButton" id="button_copy">
+                        <property name="icon-name">copy</property>
+                        <property name="tooltip-text">Копіювати</property>
+                        <style>
+                            <class name="toolbar" />
+                            <class name="flat" />
+                        </style>
+                    </object>
+                </child>
+
+                <!-- Кнопка: Видалити -->
+                <child>
+                    <object class="GtkButton" id="button_delete">
+                        <property name="label">Видалити</property>
+                        <property name="icon-name">delete</property>
+                        <style>
+                            <class name="toolbar" />
+                            <class name="flat" />
+                        </style>
+                    </object>
+                </child>
+
+                <!-- Кнопка: Оновити -->
+                <child>
+                    <object class="GtkButton" id="button_refresh">
+                        <property name="icon-name">refresh</property>
+                        <property name="tooltip-text">Оновити</property>
+                        <style>
+                            <class name="toolbar" />
+                            <class name="flat" />
+                        </style>
+                    </object>
+                </child>
+
+                <!-- Розділювач між групами кнопок -->
+                <child>
+                    <object class="GtkSeparator">
+                        <property name="orientation">vertical</property>
+                        <property name="margin-start">4</property>
+                        <property name="margin-end">4</property>
+                    </object>
+                </child>
+
+                <!-- Кнопка: Вгору -->
+                <child>
+                    <object class="GtkButton" id="button_up">
+                        <property name="icon-name">go-up</property>
+                        <property name="tooltip-text">Вгору</property>
+                        <style>
+                            <class name="toolbar" />
+                            <class name="flat" />
+                        </style>
+                    </object>
+                </child>
+
+                <!-- Кнопка: Вниз -->
+                <child>
+                    <object class="GtkButton" id="button_down">
+                        <property name="icon-name">go-down</property>
+                        <property name="tooltip-text">Вниз</property>
+                        <style>
+                            <class name="toolbar" />
+                            <class name="flat" />
+                        </style>
+                    </object>
+                </child>
+
+            </object>
+        </child>
+
+        <!-- ScrolledWindow із списком -->
+        <child>
+            <object class="GtkScrolledWindow">
+                <property name="hexpand">true</property>
+                <property name="vexpand">true</property>
+                <property name="has-frame">true</property>
+                <property name="child">
+                    <!-- ListBox -->
+                    <object class="GtkListBox" id="listbox">
+                        <property name="selection-mode">single</property>
+                        <property name="margin-start">5</property>
+                        <property name="margin-end">5</property>
+                        <property name="margin-top">5</property>
+                        <property name="margin-bottom">5</property>
+                    </object>
+                </property>
+            </object>
+        </child>
+
+    </template>
+</interface>

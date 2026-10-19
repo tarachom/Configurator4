@@ -2,6 +2,8 @@ using Gtk;
 using GObject;
 using AccountingSoftware;
 
+namespace Configurator;
+
 [Subclass<Box>("Triggers")]
 [Template<AssemblyResource>("Triggers.ui")]
 public partial class Triggers

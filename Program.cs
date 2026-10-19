@@ -46,6 +46,8 @@ class Program
         //Підключення бібліотек
         FunctionForNativeMethods.SetMsysDirectory();
 
+        GtkSource.Module.Initialize();
+
         BasicApp.OnActivate += (app, _) =>
         {
             var window = FormConfigurationSelection.New();
