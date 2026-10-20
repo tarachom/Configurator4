@@ -489,8 +489,8 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>
                 await Kernel.DataBase.SpetialTableRegAccumTrigerExecute
                 (
                     Kernel.Session,
-                    РегістриНакопичення.VirtualTablesСalculation.Execute, 
-                    РегістриНакопичення.VirtualTablesСalculation.ExecuteFinalCalculation
+                    РегістриНакопичення.AggregateTablesCalculation.Execute, 
+                    РегістриНакопичення.AggregateTablesCalculation.ExecuteFinalCalculation
                 );
 
                 //Затримка на 5 сек
@@ -2228,15 +2228,15 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
 
 namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.РегістриНакопичення
 {
-    public static class VirtualTablesСalculation
+    public static class AggregateTablesCalculation
     {
-        /* Функція повного очищення віртуальних таблиць */
+        /* Функція повного очищення таблиць агрегації */
         public static void ClearAll()
         {
             /*  */
         }
 
-        /* Функція для обчислення віртуальних таблиць  */
+        /* Функція для таблиць агрегації */
         public static async Task Execute(DateTime period, string regAccumName)
         {
             <xsl:variable name="QueryAllCountCalculation" select="count(Configuration/RegistersAccumulation/RegisterAccumulation/QueryBlockList/QueryBlock[FinalCalculation = '0']/Query)"/>
@@ -2255,7 +2255,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                     /* QueryBlock: <xsl:value-of select="Name"/> */
                         <xsl:for-each select="Query">
                             <xsl:sort select="@position" data-type="number" order="ascending" />
-                    await Config.Kernel.DataBase.ExecuteSQL($@"<xsl:value-of select="normalize-space(.)"/>", paramQuery, transactionID);
+                    await Config.Kernel.DataBase.ExecuteSQL($@"<xsl:value-of select="."/>", paramQuery, transactionID); <!-- normalize-space(.) -->
                         </xsl:for-each>
                     </xsl:for-each>
                     await Config.Kernel.DataBase.CommitTransaction(transactionID);
@@ -2272,7 +2272,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
             </xsl:if>
         }
 
-        /* Функція для обчислення підсумкових віртуальних таблиць */
+        /* Функція для обчислення підсумкових таблиць */
         public static async Task ExecuteFinalCalculation(List&lt;string&gt; regAccumNameList)
         {
             <xsl:variable name="QueryAllCountFinalCalculation" select="count(Configuration/RegistersAccumulation/RegisterAccumulation/QueryBlockList/QueryBlock[FinalCalculation = '1']/Query)"/>
@@ -2290,7 +2290,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Регі
                         /* QueryBlock: <xsl:value-of select="Name"/> */
                             <xsl:for-each select="Query">
                                 <xsl:sort select="@position" data-type="number" order="ascending" />
-                        await Config.Kernel.DataBase.ExecuteSQL($@"<xsl:value-of select="normalize-space(.)"/>", null, transactionID);
+                        await Config.Kernel.DataBase.ExecuteSQL($@"<xsl:value-of select="."/>", null, transactionID); <!-- normalize-space(.) -->
                             </xsl:for-each>
                         </xsl:for-each>
                         await Config.Kernel.DataBase.CommitTransaction(transactionID);

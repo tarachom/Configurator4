@@ -25,10 +25,7 @@ partial class PageQuery : FormPageConfigurator
     partial void Initialize()
     {
         PageName = "Запит:";
-        QueryName.WidthRequest = 800;
-
-        //Прибираю другу панель, так як вона не потрібна
-        HPanedTop.SetEndChild(null);
+        QueryName.WidthRequest = 1200;
     }
 
     public static PageQuery New()
@@ -65,7 +62,7 @@ partial class PageQuery : FormPageConfigurator
 
     protected override async Task<bool> Save()
     {
-        (bool result, string name) = IsValid(QueryName.GetText(), QueryKey, [.. QueryList.Keys]);
+        (bool result, string name) = IsValid(QueryName.GetText(), QueryKey, [.. QueryList.Keys], true);
         QueryName.SetName(name);
 
         int index = -1;
@@ -81,7 +78,7 @@ partial class PageQuery : FormPageConfigurator
             return false;
 
         await GetValue();
-        
+
         if (index != -1)
             QueryList.Insert(index, QueryKey, QueryValue);
         else

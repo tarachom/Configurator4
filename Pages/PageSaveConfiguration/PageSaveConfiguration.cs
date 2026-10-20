@@ -582,19 +582,11 @@ public partial class PageSaveConfiguration
         //Копіювання файлу конфігурації Confa.xml в каталог зкомпільованої програми
         if (!string.IsNullOrEmpty(entryBuildPath.GetText()))
         {
-            /*
-            if (entryCompileProgramPath.Text.Substring(entryCompileProgramPath.Text.Length - 1, 1) != "/")
-                entryCompileProgramPath.Text += "/";
-            */
-
-            string folderCompileProgramPath = System.IO.Path.GetDirectoryName(entryBuildPath.GetText())!;
-
-            if (System.IO.Directory.Exists(folderCompileProgramPath))
+            var dirInfo = new DirectoryInfo(entryBuildPath.GetText());
+            if (dirInfo.Exists)
             {
-                File.Copy(Conf.PathToXmlFileConfiguration,
-                    System.IO.Path.Combine(folderCompileProgramPath, "Confa.xml"), true);
-
-                ApendLine("\nСкопійований файл 'Confa.xml' в каталог " + folderCompileProgramPath);
+                File.Copy(Conf.PathToXmlFileConfiguration, System.IO.Path.Combine(dirInfo.FullName, "Confa.xml"), true);
+                ApendLine("\nСкопійований файл 'Confa.xml' в каталог " + dirInfo.FullName);
             }
         }
 
