@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>20.10.2026 17:29:52</DateTimeSave>
+  <DateTimeSave>21.10.2026 19:25:09</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -72190,13 +72190,13 @@ SQL тип  непотрібно вказувати
         <QueryBlock>
           <Name>Залишки</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {ТовариНаСкладах_Залишки_TablePart.TABLE}
 WHERE 
     {ТовариНаСкладах_Залишки_TablePart.TABLE}.{ТовариНаСкладах_Залишки_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         ТовариНаСкладах.{ТовариНаСкладах_Const.Номенклатура} AS Номенклатура,
@@ -72255,13 +72255,13 @@ WHERE
         <QueryBlock>
           <Name>ЗалишкиТаОбороти</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {ТовариНаСкладах_ЗалишкиТаОбороти_TablePart.TABLE}
 WHERE 
     {ТовариНаСкладах_ЗалишкиТаОбороти_TablePart.TABLE}.{ТовариНаСкладах_ЗалишкиТаОбороти_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         ТовариНаСкладах.{ТовариНаСкладах_Const.Номенклатура} AS Номенклатура,
@@ -72337,10 +72337,10 @@ WHERE
         <QueryBlock>
           <Name>Підсумки</Name>
           <FinalCalculation>1</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM {ТовариНаСкладах_Підсумки_TablePart.TABLE}
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         ТовариНаСкладах.{ТовариНаСкладах_Залишки_TablePart.Номенклатура} AS Номенклатура,
         ТовариНаСкладах.{ТовариНаСкладах_Залишки_TablePart.ХарактеристикаНоменклатури} AS ХарактеристикаНоменклатури,
@@ -72792,13 +72792,13 @@ WHERE
         <QueryBlock>
           <Name>Залишки</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {ЗамовленняКлієнтів_Залишки_TablePart.TABLE}
 WHERE 
     {ЗамовленняКлієнтів_Залишки_TablePart.TABLE}.{ЗамовленняКлієнтів_Залишки_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         ЗамовленняКлієнтів.{ЗамовленняКлієнтів_Const.ЗамовленняКлієнта} AS ЗамовленняКлієнта,
@@ -73318,13 +73318,13 @@ WHERE
         <QueryBlock>
           <Name>Залишки</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {РозрахункиЗКлієнтами_Залишки_TablePart.TABLE}
 WHERE 
     {РозрахункиЗКлієнтами_Залишки_TablePart.TABLE}.{РозрахункиЗКлієнтами_Залишки_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         РозрахункиЗКлієнтами.{РозрахункиЗКлієнтами_Const.Валюта} AS Валюта,
@@ -73370,13 +73370,13 @@ WHERE
         <QueryBlock>
           <Name>ЗалишкиТаОбороти</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {РозрахункиЗКлієнтами_ЗалишкиТаОбороти_TablePart.TABLE}
 WHERE 
     {РозрахункиЗКлієнтами_ЗалишкиТаОбороти_TablePart.TABLE}.{РозрахункиЗКлієнтами_ЗалишкиТаОбороти_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         РозрахункиЗКлієнтами.{РозрахункиЗКлієнтами_Const.Валюта} AS Валюта,
@@ -73858,13 +73858,13 @@ WHERE
         <QueryBlock>
           <Name>Обороти</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {Закупівлі_Обороти_TablePart.TABLE}
 WHERE 
     {Закупівлі_Обороти_TablePart.TABLE}.{Закупівлі_Обороти_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         Закупівлі.{Закупівлі_Const.Організація} AS Організація,
@@ -74542,13 +74542,13 @@ WHERE
         <QueryBlock>
           <Name>Залишки</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {ВільніЗалишки_Залишки_TablePart.TABLE}
 WHERE 
     {ВільніЗалишки_Залишки_TablePart.TABLE}.{ВільніЗалишки_Залишки_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         ВільніЗалишки.{ВільніЗалишки_Const.Номенклатура} AS Номенклатура,
@@ -74612,10 +74612,10 @@ WHERE
         <QueryBlock>
           <Name>Підсумки</Name>
           <FinalCalculation>1</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM {ВільніЗалишки_Підсумки_TablePart.TABLE}
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         ВільніЗалишки.{ВільніЗалишки_Залишки_TablePart.Номенклатура} AS Номенклатура,
         ВільніЗалишки.{ВільніЗалишки_Залишки_TablePart.ХарактеристикаНоменклатури} AS ХарактеристикаНоменклатури,
@@ -75065,13 +75065,13 @@ WHERE
         <QueryBlock>
           <Name>Залишки</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {ЗамовленняПостачальникам_Залишки_TablePart.TABLE}
 WHERE 
     {ЗамовленняПостачальникам_Залишки_TablePart.TABLE}.{ЗамовленняПостачальникам_Залишки_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         ЗамовленняПостачальникам.{ЗамовленняПостачальникам_Const.ЗамовленняПостачальнику} AS ЗамовленняПостачальнику,
@@ -75563,13 +75563,13 @@ WHERE
         <QueryBlock>
           <Name>Залишки</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {РозрахункиЗПостачальниками_Залишки_TablePart.TABLE}
 WHERE 
     {РозрахункиЗПостачальниками_Залишки_TablePart.TABLE}.{РозрахункиЗПостачальниками_Залишки_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         РозрахункиЗПостачальниками.{РозрахункиЗПостачальниками_Const.Контрагент} AS Контрагент,
@@ -75615,13 +75615,13 @@ WHERE
         <QueryBlock>
           <Name>ЗалишкиТаОбороти</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {РозрахункиЗПостачальниками_ЗалишкиТаОбороти_TablePart.TABLE}
 WHERE 
     {РозрахункиЗПостачальниками_ЗалишкиТаОбороти_TablePart.TABLE}.{РозрахункиЗПостачальниками_ЗалишкиТаОбороти_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         РозрахункиЗПостачальниками.{РозрахункиЗПостачальниками_Const.Контрагент} AS Контрагент,
@@ -76182,13 +76182,13 @@ WHERE
         <QueryBlock>
           <Name>Залишки</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {РухКоштів_Залишки_TablePart.TABLE}
 WHERE 
     {РухКоштів_Залишки_TablePart.TABLE}.{РухКоштів_Залишки_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         РухКоштів.{РухКоштів_Const.Організація} AS Організація,
@@ -76238,13 +76238,13 @@ WHERE
         <QueryBlock>
           <Name>ЗалишкиТаОбороти</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {РухКоштів_ЗалишкиТаОбороти_TablePart.TABLE}
 WHERE 
     {РухКоштів_ЗалишкиТаОбороти_TablePart.TABLE}.{РухКоштів_ЗалишкиТаОбороти_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         РухКоштів.{РухКоштів_Const.Організація} AS Організація,
@@ -76301,10 +76301,10 @@ WHERE
         <QueryBlock>
           <Name>Підсумки</Name>
           <FinalCalculation>1</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM {РухКоштів_Підсумки_TablePart.TABLE}
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         РухКоштів.{РухКоштів_Залишки_TablePart.Організація} AS Організація,
         РухКоштів.{РухКоштів_Залишки_TablePart.Каса} AS Каса,
@@ -77135,13 +77135,13 @@ WHERE
         <QueryBlock>
           <Name>Залишки</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {ПартіїТоварів_Залишки_TablePart.TABLE}
 WHERE 
     {ПартіїТоварів_Залишки_TablePart.TABLE}.{ПартіїТоварів_Залишки_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         ПартіїТоварів.{ПартіїТоварів_Const.Організація} AS Організація,
@@ -77214,13 +77214,13 @@ WHERE
         <QueryBlock>
           <Name>ЗалишкиТаОбороти</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {ПартіїТоварів_ЗалишкиТаОбороти_TablePart.TABLE}
 WHERE 
     {ПартіїТоварів_ЗалишкиТаОбороти_TablePart.TABLE}.{ПартіїТоварів_ЗалишкиТаОбороти_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         ПартіїТоварів.{ПартіїТоварів_Const.Організація} AS Організація,
@@ -77308,10 +77308,10 @@ WHERE
         <QueryBlock>
           <Name>Підсумки</Name>
           <FinalCalculation>1</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM {ПартіїТоварів_Підсумки_TablePart.TABLE}
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         ПартіїТоварів.{ПартіїТоварів_Залишки_TablePart.Організація} AS Організація,
         ПартіїТоварів.{ПартіїТоварів_Залишки_TablePart.ПартіяТоварівКомпозит} AS ПартіяТоварівКомпозит,
@@ -77964,13 +77964,13 @@ WHERE
         <QueryBlock>
           <Name>Обороти</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {Продажі_Обороти_TablePart.TABLE}
 WHERE 
     {Продажі_Обороти_TablePart.TABLE}.{Продажі_Обороти_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         Продажі.{Продажі_Const.Організація} AS Організація,
@@ -78792,13 +78792,13 @@ WHERE
         <QueryBlock>
           <Name>ЗалишкиТаОбороти</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {ТовариВКомірках_ЗалишкиТаОбороти_TablePart.TABLE}
 WHERE 
     {ТовариВКомірках_ЗалишкиТаОбороти_TablePart.TABLE}.{ТовариВКомірках_ЗалишкиТаОбороти_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         ТовариВКомірках.{ТовариВКомірках_Const.Номенклатура} AS Номенклатура,
@@ -78864,13 +78864,13 @@ WHERE
         <QueryBlock>
           <Name>Залишки</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {ТовариВКомірках_Залишки_TablePart.TABLE}
 WHERE 
     {ТовариВКомірках_Залишки_TablePart.TABLE}.{ТовариВКомірках_Залишки_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         ТовариВКомірках.{ТовариВКомірках_Const.Номенклатура} AS Номенклатура,
@@ -78928,10 +78928,10 @@ WHERE
         <QueryBlock>
           <Name>Підсумки</Name>
           <FinalCalculation>1</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM {ТовариВКомірках_Підсумки_TablePart.TABLE}
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         ТовариВКомірках.{ТовариВКомірках_Залишки_TablePart.Номенклатура} AS Номенклатура,
         ТовариВКомірках.{ТовариВКомірках_Залишки_TablePart.ХарактеристикаНоменклатури} AS ХарактеристикаНоменклатури,
@@ -79553,10 +79553,10 @@ WHERE
         <QueryBlock>
           <Name>Підсумки</Name>
           <FinalCalculation>1</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM {РухКоштівККМ_Підсумки_TablePart.TABLE}
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         РухКоштівККМ.{РухКоштівККМ_Залишки_TablePart.Організація} AS Організація,
         РухКоштівККМ.{РухКоштівККМ_Залишки_TablePart.КасаККМ} AS КасаККМ,
@@ -79597,13 +79597,13 @@ WHERE
         <QueryBlock>
           <Name>ЗалишкиТаОбороти</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {РухКоштівККМ_ЗалишкиТаОбороти_TablePart.TABLE}
 WHERE 
     {РухКоштівККМ_ЗалишкиТаОбороти_TablePart.TABLE}.{РухКоштівККМ_ЗалишкиТаОбороти_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         РухКоштівККМ.{РухКоштівККМ_Const.Організація} AS Організація,
@@ -79661,13 +79661,13 @@ WHERE
         <QueryBlock>
           <Name>Залишки</Name>
           <FinalCalculation>0</FinalCalculation>
-          <Query position="0" key="DELETE"><![CDATA[
+          <Query position="0" key="1. Очищення"><![CDATA[
 DELETE FROM 
     {РухКоштівККМ_Залишки_TablePart.TABLE}
 WHERE 
     {РухКоштівККМ_Залишки_TablePart.TABLE}.{РухКоштівККМ_Залишки_TablePart.Період} = @ПеріодДеньВідбір
 ]]></Query>
-          <Query position="1" key="SELECT"><![CDATA[WITH Агрегація AS (
+          <Query position="1" key="2. Заповнення"><![CDATA[WITH Агрегація AS (
     SELECT
         @ПеріодДеньВідбір AS Період,
         РухКоштівККМ.{РухКоштівККМ_Const.Організація} AS Організація,
@@ -80337,7 +80337,7 @@ DELETE FROM
     {БухгалтерськіОперації_Залишки_TablePart.TABLE} AS Залишки
 WHERE 
     Залишки.{БухгалтерськіОперації_Залишки_TablePart.Період} = date_trunc('month', @ПеріодДеньВідбір::timestamp);]]></Query>
-          <Query position="1" key="2. Обчислення"><![CDATA[
+          <Query position="1" key="2. Заповнення"><![CDATA[
 /* Обчислення балансу на початок місяця */
 
 WITH МежіМісяця AS (
@@ -80345,7 +80345,6 @@ WITH МежіМісяця AS (
         date_trunc('month', @ПеріодДеньВідбір::timestamp) AS ПочатокМісяця,
         date_trunc('month', @ПеріодДеньВідбір::timestamp) + INTERVAL '1 month' AS КінецьМісяця
 )
-
 INSERT INTO {БухгалтерськіОперації_Залишки_TablePart.TABLE} 
 (
     uid,

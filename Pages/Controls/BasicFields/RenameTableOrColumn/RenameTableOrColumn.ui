@@ -64,7 +64,7 @@
                                     </object>
                                 </child>
 
-                                <!-- 2. Нижня частина: Лог (800x500) -->
+                                <!-- 2. Нижня частина: Лог -->
                                 <child>
                                     <object class="GtkScrolledWindow">
                                         <property name="width-request">600</property>
