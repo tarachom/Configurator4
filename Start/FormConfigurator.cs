@@ -104,6 +104,17 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
         await page.SetValue();
     }
 
+    public override async Task PageEnum(bool isNew, ConfigurationEnums? enums = null)
+    {
+        PageEnum page = Configurator.PageEnum.New();
+        page.IsNew = isNew;
+        if (enums != null) page.ConfEnums = enums;
+        page.Caption = isNew ? "*" : enums?.Name ?? "";
+
+        NotebookFunc?.CreatePage(page.Caption, page);
+        await page.SetValue();
+    }
+
     public override async Task PageField(bool isNew, Dictionary<string, ConfigurationField> fields, ConfigurationField? field = null, ConfiguratorItemOwner? owner = null)
     {
         PageField page = Configurator.PageField.New();
