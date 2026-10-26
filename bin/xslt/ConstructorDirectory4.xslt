@@ -197,7 +197,7 @@ static class <xsl:value-of select="$DirectoryName"/>_Функції
         }
         else if (uniqueID == null || !await page.Елемент.Read(uniqueID))
         {
-            Message.Error(Program.BasicForm, "Не вдалось прочитати!");
+            await Message.Info(Program.BasicForm, "Не вдалось прочитати!");
             return;
         }
 
