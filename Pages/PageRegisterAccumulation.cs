@@ -93,7 +93,7 @@ partial class PageRegisterAccumulation : FormPageConfigurator
 
     protected override async Task<bool> Save()
     {
-        (bool result, string name) = IsValid(basicFields.ItemName, ConfRegAccum.Name, [.. Conf.Directories.Keys]);
+        (bool result, string name) =await IsValid(basicFields.ItemName, ConfRegAccum.Name, [.. Conf.Directories.Keys]);
         basicFields.ItemName = name;
 
         if (result)

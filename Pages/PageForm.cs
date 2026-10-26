@@ -81,7 +81,7 @@ partial class PageForm : FormPageConfigurator
 
     protected override async Task<bool> Save()
     {
-        (bool result, string name) = IsValid(basicFields.ItemName, ConfForm.Name, [.. Forms.Keys]);
+        (bool result, string name) = await IsValid(basicFields.ItemName, ConfForm.Name, [.. Forms.Keys]);
         basicFields.ItemName = name;
 
         if (result)

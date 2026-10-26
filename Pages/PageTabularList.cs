@@ -87,7 +87,7 @@ partial class PageTabularList : FormPageConfigurator
 
     protected override async Task<bool> Save()
     {
-        (bool result, string name) = IsValid(basicFields.ItemName, ConfTabularList.Name, [.. TabularLists.Keys]);
+        (bool result, string name) = await IsValid(basicFields.ItemName, ConfTabularList.Name, [.. TabularLists.Keys]);
         basicFields.ItemName = name;
 
         if (result)

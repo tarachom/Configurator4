@@ -38,11 +38,11 @@ public partial class DocumentAutomaticNumbering : AutomaticNumbering
 
     partial void Initialize()
     {
-        buttonCreate.OnClicked += (_, _) =>
+        buttonCreate.OnClicked += async (_, _) =>
         {
             if (string.IsNullOrEmpty(ConfDocuments.Name) || !Conf.Documents.ContainsKey(ConfDocuments.Name))
             {
-                Message.Error(Program.BasicForm, "Назва документу не задана або документ не збережений! Документ потрібно спочатку зберегти!");
+                await Message.Info(Program.BasicForm, "Назва документу не задана або документ не збережений! Документ потрібно спочатку зберегти!");
                 return;
             }
 

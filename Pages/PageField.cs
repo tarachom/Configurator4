@@ -113,7 +113,7 @@ partial class PageField : FormPageConfigurator
 
     protected override async Task<bool> Save()
     {
-        (bool result, string name) = IsValid(basicFields.ItemName, ConfField.Name, [.. AllFields.Keys]);
+        (bool result, string name) = await IsValid(basicFields.ItemName, ConfField.Name, [.. AllFields.Keys]);
         basicFields.ItemName = name;
 
         if (result)
@@ -128,7 +128,7 @@ partial class PageField : FormPageConfigurator
 
         if ((ConfField.Type == "pointer" || ConfField.Type == "enum") && string.IsNullOrEmpty(ConfField.Pointer))
         {
-            Message.Error(Program.BasicForm, "Не заповненні поля", "Потрібна деталізація для типів [ pointer ] або [ enum ]\nВиберіть із списків вказівник або перелічення!");
+            await Message.Info(Program.BasicForm, "Не заповненні поля", "Потрібна деталізація для типів [ pointer ] або [ enum ]\nВиберіть із списків вказівник або перелічення!");
             return false;
         }
 

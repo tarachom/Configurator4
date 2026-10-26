@@ -82,7 +82,7 @@ partial class PageQuery : FormPageConfigurator
 
     protected override async Task<bool> Save()
     {
-        (bool result, string name) = IsValid(QueryName.GetText(), QueryKey, [.. QueryList.Keys], true);
+        (bool result, string name) = await IsValid(QueryName.GetText(), QueryKey, [.. QueryList.Keys], true);
         QueryName.SetName(name);
 
         int index = -1;

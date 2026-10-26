@@ -137,6 +137,11 @@ public partial class RenameTableOrColumn
         return (true, log);
     }
 
+    /// <summary>
+    /// Функція стандартна для обробки перейменування поля
+    /// </summary>
+    /// <param name="parentTable">Таблиця власник поля</param>
+    /// <returns></returns>
     public async Task<(bool, List<string>)> RenameFieldDef(string parentTable)
     {
         List<string> log = [];

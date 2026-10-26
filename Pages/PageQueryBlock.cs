@@ -86,7 +86,7 @@ partial class PageQueryBlock : FormPageConfigurator
 
     protected override async Task<bool> Save()
     {
-        (bool result, string name) = IsValid(basicFields.ItemName, ConfQueryBlock.Name, [.. QueryBlocks.Keys]);
+        (bool result, string name) = await IsValid(basicFields.ItemName, ConfQueryBlock.Name, [.. QueryBlocks.Keys]);
         basicFields.ItemName = name;
 
         if (result)

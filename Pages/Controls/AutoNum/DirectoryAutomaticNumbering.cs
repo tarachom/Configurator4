@@ -39,11 +39,11 @@ public partial class DirectoryAutomaticNumbering : AutomaticNumbering
 
     partial void Initialize()
     {
-        buttonCreate.OnClicked += (_, _) =>
+        buttonCreate.OnClicked += async (_, _) =>
         {
             if (string.IsNullOrEmpty(ConfDirectory.Name) || !Conf.Directories.ContainsKey(ConfDirectory.Name))
             {
-                Message.Error(Program.BasicForm, "Назва довідника не задана або довідник не збережений! Довідник потрібно спочатку зберегти!");
+                await Message.Info(Program.BasicForm, "Назва довідника не задана або довідник не збережений! Довідник потрібно спочатку зберегти!");
                 return;
             }
 

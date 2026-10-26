@@ -106,14 +106,11 @@ public partial class QueryBlockList
     {
         ListBoxRow? selectedRow = listbox.GetSelectedRow();
         if (Program.BasicForm != null && selectedRow != null)
-            Message.Request(Program.BasicForm, "Питання", $"Видалити?", x =>
+            if (await Message.Request(Program.BasicForm, "Питання", "Видалити?") == Message.YesNo.Yes)
             {
-                if (x == Message.YesNo.Yes)
-                {
-                    QueryBlock.Query.Remove(selectedRow.GetName());
-                    Fill();
-                }
-            });
+                QueryBlock.Query.Remove(selectedRow.GetName());
+                Fill();
+            }
     }
 
     async Task Copy()

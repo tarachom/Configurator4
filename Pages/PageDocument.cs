@@ -118,7 +118,7 @@ partial class PageDocument : FormPageConfigurator
 
     protected override async Task<bool> Save()
     {
-        (bool result, string name) = IsValid(basicFields.ItemName, ConfDocument.Name, [.. Conf.Documents.Keys]);
+        (bool result, string name) = await IsValid(basicFields.ItemName, ConfDocument.Name, [.. Conf.Documents.Keys]);
         basicFields.ItemName = name;
 
         if (result)

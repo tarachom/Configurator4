@@ -199,14 +199,13 @@ public partial class DirectoryDataTree : DataTree
                 foreach (var row in rows)
                     Copy(row);
             },
-            Delete = (_, rows) =>
+            Delete = async (_, rows) =>
             {
-                Message.Request(Program.BasicForm, "Питання", $"Видалити?", x =>
+                if (await Message.Request(Program.BasicForm, "Питання", "Видалити?") == Message.YesNo.Yes)
                 {
-                    if (x == Message.YesNo.Yes)
-                        foreach (var row in rows)
-                            Delete(row);
-                });
+                    foreach (var row in rows)
+                        Delete(row);
+                }
             },
         }).Fill();
 

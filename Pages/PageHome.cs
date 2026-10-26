@@ -73,7 +73,7 @@ partial class PageHome : Form
             }
             catch (Exception ex)
             {
-                Message.Error(Program.BasicForm, "Помилка", "Під час запуску AI клієнта виникла помилка:\n\n" + ex.Message);
+                await Message.Info(Program.BasicForm, "Помилка", "Під час запуску AI клієнта виникла помилка:\n\n" + ex.Message);
             }
     }
 }
