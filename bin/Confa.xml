@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>21.10.2026 19:25:09</DateTimeSave>
+  <DateTimeSave>27.10.2026 14:12:20</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -71581,7 +71581,7 @@ SQL тип  непотрібно вказувати
       <Name>ТовариНаСкладах</Name>
       <FullName>Товари на складах</FullName>
       <Table>tab_a38</Table>
-      <Type>Residues</Type>
+      <Type>Turnover</Type>
       <NoSummary>0</NoSummary>
       <PredefinedFields>
         <PredefinedField>
@@ -80329,6 +80329,8 @@ WHERE
       <QueryBlockList>
         <QueryBlock>
           <Name>Залишки</Name>
+          <FullName>Залишки</FullName>
+          <Desc>Залишки</Desc>
           <FinalCalculation>0</FinalCalculation>
           <Query position="0" key="1. Очищення"><![CDATA[
 /* Очищення */
@@ -80675,7 +80677,7 @@ GROUP BY
                 <Name>Аналітика3</Name>
                 <Caption>Аналітика 3</Caption>
                 <Size>0</Size>
-                <SortNum>9</SortNum>
+                <SortNum>5</SortNum>
                 <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>
@@ -80685,7 +80687,7 @@ GROUP BY
                 <Name>КореспондуючийРахунок</Name>
                 <Caption>Кореспондуючий рахунок</Caption>
                 <Size>0</Size>
-                <SortNum>10</SortNum>
+                <SortNum>6</SortNum>
                 <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>
@@ -80696,7 +80698,7 @@ GROUP BY
                 <Name>КорАналітика1</Name>
                 <Caption>Кор аналітика 1</Caption>
                 <Size>0</Size>
-                <SortNum>11</SortNum>
+                <SortNum>7</SortNum>
                 <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>
@@ -80706,7 +80708,7 @@ GROUP BY
                 <Name>КорАналітика2</Name>
                 <Caption>Кор аналітика 2</Caption>
                 <Size>0</Size>
-                <SortNum>12</SortNum>
+                <SortNum>8</SortNum>
                 <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>
@@ -80716,7 +80718,7 @@ GROUP BY
                 <Name>КорАналітика3</Name>
                 <Caption>Кор аналітика 3</Caption>
                 <Size>0</Size>
-                <SortNum>13</SortNum>
+                <SortNum>9</SortNum>
                 <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>
@@ -80726,7 +80728,7 @@ GROUP BY
                 <Name>Податок</Name>
                 <Caption>Податок</Caption>
                 <Size>0</Size>
-                <SortNum>14</SortNum>
+                <SortNum>10</SortNum>
                 <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>
@@ -80737,7 +80739,7 @@ GROUP BY
                 <Name>Журнал</Name>
                 <Caption>Журнал</Caption>
                 <Size>0</Size>
-                <SortNum>23</SortNum>
+                <SortNum>11</SortNum>
                 <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>
@@ -80748,7 +80750,7 @@ GROUP BY
                 <Name>СумаПодатку</Name>
                 <Caption>Сума податку</Caption>
                 <Size>0</Size>
-                <SortNum>24</SortNum>
+                <SortNum>12</SortNum>
                 <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>
@@ -80758,7 +80760,7 @@ GROUP BY
                 <Name>ТипБухОперації</Name>
                 <Caption>Тип бух операції</Caption>
                 <Size>0</Size>
-                <SortNum>99</SortNum>
+                <SortNum>13</SortNum>
                 <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>
@@ -80769,7 +80771,7 @@ GROUP BY
                 <Name>Валюта</Name>
                 <Caption>Валюта</Caption>
                 <Size>0</Size>
-                <SortNum>100</SortNum>
+                <SortNum>14</SortNum>
                 <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>
@@ -80780,7 +80782,7 @@ GROUP BY
                 <Name>Сума</Name>
                 <Caption>Сума</Caption>
                 <Size>0</Size>
-                <SortNum>100</SortNum>
+                <SortNum>15</SortNum>
                 <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>
@@ -80790,7 +80792,7 @@ GROUP BY
                 <Name>Кількість</Name>
                 <Caption>Кількість</Caption>
                 <Size>0</Size>
-                <SortNum>100</SortNum>
+                <SortNum>16</SortNum>
                 <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>
@@ -80800,7 +80802,7 @@ GROUP BY
                 <Name>СумаВВалюті</Name>
                 <Caption>Сума в валюті</Caption>
                 <Size>0</Size>
-                <SortNum>100</SortNum>
+                <SortNum>17</SortNum>
                 <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>
@@ -80810,7 +80812,7 @@ GROUP BY
                 <Name>СумаПО</Name>
                 <Caption>Сума ПО</Caption>
                 <Size>0</Size>
-                <SortNum>100</SortNum>
+                <SortNum>18</SortNum>
                 <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>
@@ -80820,7 +80822,7 @@ GROUP BY
                 <Name>КурсВалюти</Name>
                 <Caption>Курс валюти</Caption>
                 <Size>0</Size>
-                <SortNum>100</SortNum>
+                <SortNum>19</SortNum>
                 <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>
@@ -80830,8 +80832,8 @@ GROUP BY
                 <Name>Коментар</Name>
                 <Caption>Коментар</Caption>
                 <Size>0</Size>
-                <SortNum>101</SortNum>
-                <SortField>True</SortField>
+                <SortNum>20</SortNum>
+                <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>
                 <Type>string</Type>
@@ -80841,7 +80843,7 @@ GROUP BY
                 <Name>Автор</Name>
                 <Caption>Автор</Caption>
                 <Size>0</Size>
-                <SortNum>102</SortNum>
+                <SortNum>21</SortNum>
                 <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>
@@ -80852,7 +80854,7 @@ GROUP BY
                 <Name>Організація</Name>
                 <Caption>Організація</Caption>
                 <Size>0</Size>
-                <SortNum>103</SortNum>
+                <SortNum>22</SortNum>
                 <SortField>False</SortField>
                 <SortDirection>False</SortDirection>
                 <FilterField>False</FilterField>

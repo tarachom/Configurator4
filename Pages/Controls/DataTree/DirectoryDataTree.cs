@@ -138,6 +138,9 @@ public partial class DirectoryDataTree : DataTree
                     }
                 case "Form" when row.Obj is ConfigurationForms form:
                     {
+                        ConfigurationForms newForm = form.Copy();
+                        newForm.Name += Configuration.GetNewRandomName();
+                        await OpenPageForm(true, directory.Forms, newForm, new(ConfiguratorItemOwnerType.Directory, directory));
                         break;
                     }
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:

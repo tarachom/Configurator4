@@ -115,6 +115,18 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
         await page.SetValue();
     }
 
+    public override async Task PageEnumField(bool isNew, Dictionary<string, ConfigurationEnumField> fields, ConfigurationEnumField? field = null)
+    {
+        PageEnumField page = Configurator.PageEnumField.New();
+        page.IsNew = isNew;
+        page.Fields = fields;
+        if (field != null) page.ConfEnumField = field;
+        page.Caption = isNew ? "*" : field?.Name ?? "";
+
+        NotebookFunc?.CreatePage(page.Caption, page);
+        await page.SetValue();
+    }
+
     public override async Task PageField(bool isNew, Dictionary<string, ConfigurationField> fields, ConfigurationField? field = null, ConfiguratorItemOwner? owner = null)
     {
         PageField page = Configurator.PageField.New();
@@ -154,13 +166,14 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
         await page.SetValue();
     }
 
-    public async Task PageForm(bool isNew, Dictionary<string, ConfigurationForms> forms, ConfigurationForms? form = null)
+    public async Task PageForm(bool isNew, Dictionary<string, ConfigurationForms> forms, ConfigurationForms? form = null, ConfiguratorItemOwner? owner = null)
     {
         PageForm page = Configurator.PageForm.New();
         page.IsNew = isNew;
         page.Forms = forms;
         if (form != null) page.ConfForm = form;
         page.Caption = isNew ? "*" : form?.Name ?? "";
+        page.Owner = owner;
 
         Program.BasicForm?.NotebookFunc.CreatePage(page.Caption, page);
         await page.SetValue();
@@ -244,9 +257,4 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
 
     #endregion
 
-    #region Func
-
-
-
-    #endregion
 }

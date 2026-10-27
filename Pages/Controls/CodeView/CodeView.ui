@@ -2,13 +2,15 @@
 <interface>
     <template class="CodeView" parent="GtkBox">
         <property name="orientation">vertical</property>
+        <!--
         <property name="margin-start">5</property>
         <property name="margin-end">5</property>
         <property name="margin-top">5</property>
         <property name="margin-bottom">5</property>
+        -->
 
         <child>
-            <object class="GtkScrolledWindow">
+            <object class="GtkScrolledWindow" id="scroll_view">
                 <property name="hexpand">true</property>
                 <property name="vexpand">true</property>
                 <property name="has-frame">true</property>

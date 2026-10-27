@@ -57,6 +57,16 @@ public partial class RegisterInformationDataTree : DataTree
                         await OpenPageField(false, register.PropertyFields, field, new(ConfiguratorItemOwnerType.RegisterInformation, register));
                         break;
                     }
+                case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
+                    {
+                        await OpenPageTabularList(false, register.TabularList, Configuration.CombineAllFieldForRegister(register), tabularList);
+                        break;
+                    }
+                case "Form" when row.Obj is ConfigurationForms form:
+                    {
+                        await OpenPageForm(false, register.Forms, form);
+                        break;
+                    }
                 default:
                     break;
             }
@@ -79,6 +89,16 @@ public partial class RegisterInformationDataTree : DataTree
                 case "PropertyFields" or "PropertyField":
                     {
                         await OpenPageField(true, register.PropertyFields, null, new(ConfiguratorItemOwnerType.RegisterInformation, register));
+                        break;
+                    }
+                case "TabularListGroup" or "TabularList":
+                    {
+                        await OpenPageTabularList(true, register.TabularList, Configuration.CombineAllFieldForRegister(register));
+                        break;
+                    }
+                case "FormGroup" or "Form":
+                    {
+                        await OpenPageForm(true, register.Forms);
                         break;
                     }
                 default:
@@ -116,6 +136,20 @@ public partial class RegisterInformationDataTree : DataTree
                         await OpenPageField(true, register.PropertyFields, newField, new(ConfiguratorItemOwnerType.RegisterInformation, register));
                         break;
                     }
+                case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
+                    {
+                        ConfigurationTabularList newTabularList = tabularList.Copy();
+                        newTabularList.Name += Configuration.GetNewRandomName();
+                        await OpenPageTabularList(true, register.TabularList, Configuration.CombineAllFieldForRegister(register), newTabularList);
+                        break;
+                    }
+                case "Form" when row.Obj is ConfigurationForms form:
+                    {
+                        ConfigurationForms newForm = form.Copy();
+                        newForm.Name += Configuration.GetNewRandomName();
+                        await OpenPageForm(true, register.Forms, newForm, new(ConfiguratorItemOwnerType.RegisterAccumulation, register));
+                        break;
+                    }
                 default:
                     break;
             }
@@ -138,6 +172,16 @@ public partial class RegisterInformationDataTree : DataTree
                 case "PropertyField" when row.Obj is ConfigurationField field:
                     {
                         register.PropertyFields.Remove(field.Name);
+                        break;
+                    }
+                case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
+                    {
+                        register.TabularList.Remove(tabularList.Name);
+                        break;
+                    }
+                case "Form" when row.Obj is ConfigurationForms form:
+                    {
+                        register.Forms.Remove(form.Name);
                         break;
                     }
                 default:

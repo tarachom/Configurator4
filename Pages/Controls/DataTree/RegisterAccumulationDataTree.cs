@@ -206,6 +206,9 @@ public partial class RegisterAccumulationDataTree : DataTree
                     }
                 case "Form" when row.Obj is ConfigurationForms form:
                     {
+                        ConfigurationForms newForm = form.Copy();
+                        newForm.Name += Configuration.GetNewRandomName();
+                        await OpenPageForm(true, register.Forms, newForm, new(ConfiguratorItemOwnerType.RegisterAccumulation, register));
                         break;
                     }
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:

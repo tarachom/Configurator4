@@ -46,6 +46,8 @@ partial class PageQuery : FormPageConfigurator
     {
         PageName = "Запит:";
         QueryName.WidthRequest = 1200;
+
+        CodeView.MarginStart = CodeView.MarginEnd = CodeView.MarginTop = CodeView.MarginBottom = 5;
     }
 
     public static PageQuery New()

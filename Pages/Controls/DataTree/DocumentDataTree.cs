@@ -139,7 +139,9 @@ public partial class DocumentDataTree : DataTree
                     }
                 case "Form" when row.Obj is ConfigurationForms form:
                     {
-
+                        ConfigurationForms newForm = form.Copy();
+                        newForm.Name += Configuration.GetNewRandomName();
+                        await OpenPageForm(true, document.Forms, newForm, new(ConfiguratorItemOwnerType.Document, document));
                         break;
                     }
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:

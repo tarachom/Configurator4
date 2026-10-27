@@ -34,11 +34,11 @@ namespace Configurator;
 partial class PageForm : FormPageConfigurator
 {
     public ConfigurationForms ConfForm { get; set; } = new();
-    //public Dictionary<string, ConfigurationTabularList> TabularLists = [];
     public Dictionary<string, ConfigurationForms> Forms = [];
     Configuration Conf { get; } = Program.Kernel.Conf;
 
     BasicFields basicFields = BasicFields.New();
+    FormItem formItem = FormItem.New();
 
     partial void Initialize()
     {
@@ -62,7 +62,7 @@ partial class PageForm : FormPageConfigurator
 
     protected override void CreateEnd(Box vBox)
     {
-
+        vBox.Append(formItem);
     }
 
     public override async Task AssignValue()
@@ -70,6 +70,8 @@ partial class PageForm : FormPageConfigurator
         basicFields.ItemName = ConfForm.Name;
         basicFields.FullName = ConfForm.FullName;
         basicFields.Desc = ConfForm.Desc;
+
+        formItem.SetValue(ConfForm);
     }
 
     protected override async Task GetValue()

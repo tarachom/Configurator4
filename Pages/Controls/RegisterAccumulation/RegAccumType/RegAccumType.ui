@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="RegAccumType" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">10</property>
+        <property name="margin-start">5</property>
+        <property name="margin-end">5</property>
+        <property name="margin-top">5</property>
+        <property name="margin-bottom">5</property>
+
+        <child>
+            <object class="GtkExpander">
+                <property name="label">Тип регістру</property>
+                <property name="expanded">false</property>
+
+                <child>
+                    <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">10</property>
+                        <property name="margin-top">10</property>
+
+                        <!-- Заголовок -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="use-markup">true</property>
+                                <property name="label">&lt;b&gt;Тип регістру накопичення&lt;/b&gt;</property>
+                                <property name="halign">center</property>
+                            </object>
+                        </child>
+
+                        <child>
+                            <object class="GtkBox">
+                                <property name="orientation">horizontal</property>
+                                <property name="spacing">10</property>
+                                                        
+                                <child>
+                                    <object class="GtkBox">
+                                        <property name="orientation">vertical</property>
+                                        <property name="spacing">10</property>
+
+                                        <child>
+                                            <object class="GtkBox">
+                                                <property name="orientation">horizontal</property>
+                                                <property name="spacing">10</property>
+
+                                                <!-- Назва: "Тип:" -->
+                                                <child>
+                                                    <object class="GtkLabel">
+                                                        <property name="label">Тип:</property>
+                                                        <property name="halign">end</property>
+                                                    </object>
+                                                </child>
+
+                                                <!-- Список -->
+                                                <child>
+                                                    <object class="DropDownControl" id="dropdown_type">
+                                                        <property name="halign">start</property>
+                                                    </object>
+                                                </child>
+                                            </object>
+                                        </child>
+
+                                        <!-- Кнопка Створити -->
+                                        <child>
+                                            <object class="GtkButton" id="button_create">
+                                                <property name="label">Створити</property>
+                                                <property name="halign">end</property>
+                                            </object>
+                                        </child>
+
+                                    </object>
+                                </child>
+
+                                <!-- Опис -->
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="use-markup">true</property>
+                                        <property name="wrap">true</property>
+                                        <property name="halign">start</property>
+                                        <property name="valign">start</property>
+                                        <property name="hexpand">true</property>
+                                        <property name="label">В залежності від типу регістру можна створити табличні частини агрегації і тригери розрахунків</property>
+                                    </object>
+                                </child>
+
+                            </object>
+                        </child>
+
+                    </object>
+                </child>
+
+            </object>
+        </child>
+
+    </template>
+</interface>

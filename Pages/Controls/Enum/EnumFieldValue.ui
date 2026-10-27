@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="EnumFieldValue" parent="GtkBox">
+        <property name="orientation">horizontal</property>
+        <property name="spacing">10</property>
+        <property name="margin-start">5</property>
+        <property name="margin-end">5</property>
+        <property name="margin-top">5</property>
+        <property name="margin-bottom">5</property>
+
+        <!-- Назва -->
+        <child>
+            <object class="GtkLabel">
+                <property name="label">Значення:</property>
+            </object>
+        </child>
+
+        <!-- Поле тільки для читання -->
+        <child>
+            <object class="GtkEntry" id="entry_value">
+                <property name="editable">false</property>
+                <property name="can-focus">true</property>
+            </object>
+        </child>
+
+        <!-- Довідка праворуч -->
+        <child>
+            <object class="GtkLabel">
+                <property name="label">Значення не можна змінювати</property>
+                <property name="halign">start</property>
+                <style>
+                    <class name="dim-label"/>
+                </style>
+            </object>
+        </child>
+
+    </template>
+</interface>

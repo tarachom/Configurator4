@@ -34,6 +34,7 @@ namespace Configurator;
 [Template<AssemblyResource>("CodeView.ui")]
 public partial class CodeView
 {
+    [Connect("scroll_view")] ScrolledWindow scrollView;
     [Connect("source_view")] View sourceView;
 
     GtkSource.Buffer SourceBuffer = GtkSource.Buffer.New(null);
@@ -41,15 +42,25 @@ public partial class CodeView
     partial void Initialize()
     {
         sourceView.SetBuffer(SourceBuffer);
+
+        //Виправлення багу із пропаданням повзунків при прокручуванні тексту
+        scrollView.Vadjustment?.OnValueChanged += (_, _) => GLib.Functions.IdleAdd(0, () =>
+        {
+            if (scrollView.Visible) scrollView.QueueResize();
+            return false;
+        });
     }
 
     public static CodeView NewWithLang(string lang)
     {
         CodeView view = NewWithProperties([]);
-        view.SourceBuffer.SetLanguage(LanguageManager.New().GetLanguage(lang));
+        view.SetLanguage(lang);
 
         return view;
     }
+
+    public void SetLanguage(string lang) =>
+        SourceBuffer.SetLanguage(LanguageManager.New().GetLanguage(lang));
 
     public string Value
     {

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="FormItem" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">10</property>
+        <property name="margin-start">5</property>
+        <property name="margin-end">5</property>
+        <property name="margin-top">5</property>
+        <property name="margin-bottom">5</property>
+
+        <!-- 1. Верхній рядок: Тип форми -->
+        <child>
+            <object class="GtkBox">
+                <property name="orientation">horizontal</property>
+                <property name="spacing">10</property>
+
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Тип форми:</property>
+                        <property name="halign">start</property>
+                    </object>
+                </child>
+
+                <child>
+                    <object class="DropDownControl" id="dropdown_type_form">
+                        <property name="sensitive">false</property>
+                        <property name="halign">start</property>
+                    </object>
+                </child>
+            </object>
+        </child>
+
+        <!-- 2. Перемикач вкладок Стека (GtkStackSwitcher) -->
+        <child>
+            <object class="GtkStackSwitcher">
+                <property name="stack">stack_main</property> <!-- Зв'язка зі Стеком -->
+                <property name="halign">center</property>
+            </object>
+        </child>
+
+        <!-- 3. Сам Стек (GtkStack) -->
+        <child>
+            <object class="GtkStack" id="stack_main">
+                <property name="hexpand">true</property>
+                <property name="vexpand">true</property>
+                <property name="transition-type">crossfade</property> <!-- Плавний перехід між вкладками -->
+
+                <!-- ================= СТОРІНКА 1: Код ================= -->
+                <child>
+                    <object class="GtkStackPage">
+                        <property name="name">page_code</property>
+                        <property name="title">Код</property>
+                        <property name="child">
+                            <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">10</property>
+
+                                <!-- Кнопка "Згенерувати код" -->
+                                <child>
+                                    <object class="GtkButton" id="button_generate_code">
+                                        <property name="label">Згенерувати код</property>
+                                        <property name="halign">start</property>
+                                    </object>
+                                </child>
+
+                                <!-- Віджет коду -->
+                                <child>
+                                    <object class="CodeView" id="codeview_code" />
+                                </child>
+                            </object>
+                        </property>
+                    </object>
+                </child>
+
+                <!-- ================= СТОРІНКА 2: Налаштування елементу ================= -->
+                <child>
+                    <object class="GtkStackPage">
+                        <property name="name">page_element_settings</property>
+                        <property name="title">Налаштування елементу</property>
+                        <property name="visible">false</property>
+                        <property name="child">
+                            <object class="GtkBox" id="box_element_settings">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">10</property>
+                                <property name="hexpand">true</property>
+                                <property name="vexpand">true</property>
+                            </object>
+                        </property>
+                    </object>
+                </child>
+
+                <!-- ================= СТОРІНКА 3: Налаштування списку ================= -->
+                <child>
+                    <object class="GtkStackPage">
+                        <property name="name">page_list_settings</property>
+                        <property name="title">Налаштування списку</property>
+                        <property name="visible">false</property>
+                        <property name="child">
+                            <object class="GtkBox" id="box_list_settings">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">10</property>
+                                <property name="hexpand">true</property>
+                                <property name="vexpand">true</property>
+                            </object>
+                        </property>
+                    </object>
+                </child>
+
+            </object>
+        </child>
+
+    </template>
+</interface>

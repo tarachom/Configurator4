@@ -37,6 +37,7 @@ partial class PageRegisterAccumulation : FormPageConfigurator
     Configuration Conf { get; } = Program.Kernel.Conf;
 
     BasicFields basicFields = BasicFields.New();
+    RegAccumType regAccumType = RegAccumType.New();
     AllowDocumentSpend allowDocumentSpend = AllowDocumentSpend.New();
     RegisterAccumulationDataTree dataTree = RegisterAccumulationDataTree.New();
 
@@ -60,6 +61,9 @@ partial class PageRegisterAccumulation : FormPageConfigurator
         //Основні поля
         vBox.Append(basicFields);
 
+        //Тип регістру
+        vBox.Append(regAccumType);
+
         //Документи які роблять рухи по регістру
         vBox.Append(allowDocumentSpend);
     }
@@ -79,6 +83,7 @@ partial class PageRegisterAccumulation : FormPageConfigurator
         basicFields.TableOrColumn = ConfRegAccum.Table;
         basicFields.Desc = ConfRegAccum.Desc;
 
+        regAccumType.SetValue(ConfRegAccum);
         allowDocumentSpend.SetValue(ConfRegAccum.AllowDocumentSpend);
         dataTree.SetValue(ConfRegAccum);
     }
@@ -93,7 +98,7 @@ partial class PageRegisterAccumulation : FormPageConfigurator
 
     protected override async Task<bool> Save()
     {
-        (bool result, string name) =await IsValid(basicFields.ItemName, ConfRegAccum.Name, [.. Conf.Directories.Keys]);
+        (bool result, string name) = await IsValid(basicFields.ItemName, ConfRegAccum.Name, [.. Conf.Directories.Keys]);
         basicFields.ItemName = name;
 
         if (result)

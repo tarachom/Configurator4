@@ -42,9 +42,9 @@ public partial class EnumsDataTree : DataTree
         {
             switch (row.Group)
             {
-                case "Field" when row.Obj is ConfigurationField field:
+                case "Field" when row.Obj is ConfigurationEnumField field:
                     {
-                        //await OpenPageField(false, document.Fields, field, new(ConfiguratorItemOwnerType.Document, document));
+                        await OpenPageEnumField(false, enums.Fields, field);
                         break;
                     }
                 default:
@@ -58,7 +58,8 @@ public partial class EnumsDataTree : DataTree
             {
                 case "FieldGroup" or "Field":
                     {
-                        //await OpenPageField(true, document.Fields, null, new(ConfiguratorItemOwnerType.Document, document));
+                        ConfigurationEnumField newField = new() { Value = ++enums.SerialNumber };
+                        await OpenPageEnumField(true, enums.Fields, newField);
                         break;
                     }
                 default:
@@ -70,11 +71,11 @@ public partial class EnumsDataTree : DataTree
         {
             switch (row?.Group)
             {
-                case "Field" when row.Obj is ConfigurationField field:
+                case "Field" when row.Obj is ConfigurationEnumField field:
                     {
-                        //ConfigurationField newField = field.Copy();
-                        //newField.Name += Configuration.GetNewRandomName();
-                        //await OpenPageField(true, document.Fields, newField, new(ConfiguratorItemOwnerType.Document, document));
+                        ConfigurationEnumField newField = field.Copy(++enums.SerialNumber);
+                        newField.Name += Configuration.GetNewRandomName();
+                        await OpenPageEnumField(true, enums.Fields, newField);
                         break;
                     }
                 default:

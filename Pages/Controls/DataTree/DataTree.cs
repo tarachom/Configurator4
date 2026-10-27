@@ -41,6 +41,12 @@ public abstract partial class DataTree
             await Program.BasicForm.PageField(isNew, fields, field, owner);
     }
 
+    protected static async Task OpenPageEnumField(bool isNew, Dictionary<string, ConfigurationEnumField> fields, ConfigurationEnumField? field = null)
+    {
+        if (Program.BasicForm != null)
+            await Program.BasicForm.PageEnumField(isNew, fields, field);
+    }
+
     protected static async Task OpenPageTablePart(bool isNew, Dictionary<string, ConfigurationTablePart> tabularParts, ConfigurationTablePart? tablePart = null, ConfiguratorItemOwner? owner = null)
     {
         if (Program.BasicForm != null)
@@ -53,10 +59,10 @@ public abstract partial class DataTree
             await Program.BasicForm.PageTabularList(isNew, tabularLists, fields, tabularList);
     }
 
-    protected static async Task OpenPageForm(bool isNew, Dictionary<string, ConfigurationForms> forms, ConfigurationForms? form = null)
+    protected static async Task OpenPageForm(bool isNew, Dictionary<string, ConfigurationForms> forms, ConfigurationForms? form = null, ConfiguratorItemOwner? owner = null)
     {
         if (Program.BasicForm != null)
-            await Program.BasicForm.PageForm(isNew, forms, form);
+            await Program.BasicForm.PageForm(isNew, forms, form, owner);
     }
 
     protected static async Task OpenPageQueryBlock(bool isNew, Dictionary<string, ConfigurationQueryBlock> blocks, ConfigurationQueryBlock? block = null)

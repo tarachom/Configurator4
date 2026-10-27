@@ -34,7 +34,6 @@ namespace Configurator;
 partial class PageEnum : FormPageConfigurator
 {
     public ConfigurationEnums ConfEnums { get; set; } = new();
-    public Dictionary<string, ConfigurationEnums> Enums = [];
     Configuration Conf { get; } = Program.Kernel.Conf;
 
     BasicFields basicFields = BasicFields.New();
@@ -83,19 +82,19 @@ partial class PageEnum : FormPageConfigurator
 
     protected override async Task<bool> Save()
     {
-        (bool result, string name) = await IsValid(basicFields.ItemName, ConfEnums.Name, [.. Enums.Keys]);
+        (bool result, string name) = await IsValid(basicFields.ItemName, ConfEnums.Name, [.. Conf.Enums.Keys]);
         basicFields.ItemName = name;
 
         if (result)
         {
             if (!IsNew)
-                Enums.Remove(ConfEnums.Name);
+                Conf.Enums.Remove(ConfEnums.Name);
         }
         else
             return false;
 
         await GetValue();
-        Enums.Add(ConfEnums.Name, ConfEnums);
+        Conf.AppendEnum(ConfEnums);
 
         Caption = ConfEnums.Name;
         IsNew = false;
