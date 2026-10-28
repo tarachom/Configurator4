@@ -22,8 +22,8 @@
                 </child>
 
                 <child>
-                    <object class="DropDownControl" id="dropdown_type_form">
-                        <property name="sensitive">false</property>
+                    <object class="GtkLabel" id="label_type_form">
+                        <property name="use-markup">true</property>
                         <property name="halign">start</property>
                     </object>
                 </child>
@@ -43,7 +43,7 @@
             <object class="GtkStack" id="stack_main">
                 <property name="hexpand">true</property>
                 <property name="vexpand">true</property>
-                <property name="transition-type">crossfade</property> <!-- Плавний перехід між вкладками -->
+                <!-- <property name="transition-type">crossfade</property>  Плавний перехід між вкладками -->
 
                 <!-- ================= СТОРІНКА 1: Код ================= -->
                 <child>
@@ -84,6 +84,10 @@
                                 <property name="spacing">10</property>
                                 <property name="hexpand">true</property>
                                 <property name="vexpand">true</property>
+
+                                <child>
+                                    <object class="FormElementSettings" id="form_element_settings" />
+                                </child>
                             </object>
                         </property>
                     </object>
@@ -101,6 +105,28 @@
                                 <property name="spacing">10</property>
                                 <property name="hexpand">true</property>
                                 <property name="vexpand">true</property>
+
+                                <!-- Вибір списку / табличної частини -->
+                                <child>
+                                    <object class="GtkBox">
+                                        <property name="orientation">horizontal</property>
+                                        <property name="spacing">10</property>
+
+                                        <child>
+                                            <object class="GtkLabel">
+                                                <property name="label">Табличний список:</property>
+                                                <property name="halign">start</property>
+                                            </object>
+                                        </child>
+
+                                        <child>
+                                            <object class="DropDownControl" id="dropdown_tabularlist">
+                                                <property name="halign">start</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+
                             </object>
                         </property>
                     </object>

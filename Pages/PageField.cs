@@ -72,21 +72,22 @@ partial class PageField : FormPageConfigurator
     public override async Task AssignValue()
     {
         //Визначення таблиці власника із самого власника
-        ParentTable = Owner?.Group switch
+        ParentTable = (Owner?.Group, Owner?.Obj) switch
         {
-            ConfiguratorItemOwnerType.Directory => Owner.Obj is ConfigurationDirectories x ? x.Table : "",
-            ConfiguratorItemOwnerType.Document => Owner.Obj is ConfigurationDocuments x ? x.Table : "",
-            ConfiguratorItemOwnerType.TablePart => Owner.Obj is ConfigurationTablePart x ? x.Table : "",
-            ConfiguratorItemOwnerType.RegisterInformation => Owner.Obj is ConfigurationRegistersInformation x ? x.Table : "",
-            ConfiguratorItemOwnerType.RegisterAccumulation => Owner.Obj is ConfigurationRegistersAccumulation x ? x.Table : "",
+            (ConfiguratorItemOwnerType.Directory, ConfigurationDirectories x) => x.Table,
+            (ConfiguratorItemOwnerType.Document, ConfigurationDocuments x) => x.Table,
+            (ConfiguratorItemOwnerType.TablePart, ConfigurationTablePart x) => x.Table,
+            (ConfiguratorItemOwnerType.RegisterInformation, ConfigurationRegistersInformation x) => x.Table,
+            (ConfiguratorItemOwnerType.RegisterAccumulation, ConfigurationRegistersAccumulation x) => x.Table,
             _ => ""
         };
 
         //Для регістрів поля збираються в один масив
-        AllFields = Owner?.Group switch
+        AllFields = (Owner?.Group, Owner?.Obj) switch
         {
-            ConfiguratorItemOwnerType.RegisterInformation => Owner.Obj is ConfigurationRegistersInformation x ? Configuration.CombineAllFieldForRegister(x) : throw new Exception(),
-            ConfiguratorItemOwnerType.RegisterAccumulation => Owner.Obj is ConfigurationRegistersAccumulation x ? Configuration.CombineAllFieldForRegister(x) : throw new Exception(),
+            (ConfiguratorItemOwnerType.RegisterInformation, ConfigurationRegistersInformation x) => Configuration.CombineAllFieldForRegister(x),
+            (ConfiguratorItemOwnerType.RegisterAccumulation, ConfigurationRegistersAccumulation x) => Configuration.CombineAllFieldForRegister(x),
+            (ConfiguratorItemOwnerType.RegisterInformation or ConfiguratorItemOwnerType.RegisterAccumulation, _)  => throw new InvalidOperationException($"Невідповідність типу: Owner.Obj не є очікуваним регістром для групи {Owner?.Group}."),
             _ => Fields
         };
 

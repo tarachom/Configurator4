@@ -64,7 +64,7 @@ public partial class RegisterInformationDataTree : DataTree
                     }
                 case "Form" when row.Obj is ConfigurationForms form:
                     {
-                        await OpenPageForm(false, register.Forms, form);
+                        await OpenPageForm(false, register.Forms, form, new(ConfiguratorItemOwnerType.RegisterInformation, register));
                         break;
                     }
                 default:
@@ -98,7 +98,7 @@ public partial class RegisterInformationDataTree : DataTree
                     }
                 case "FormGroup" or "Form":
                     {
-                        await OpenPageForm(true, register.Forms);
+                        await OpenPageForm(true, register.Forms, null, new(ConfiguratorItemOwnerType.RegisterInformation, register));
                         break;
                     }
                 default:
@@ -147,7 +147,7 @@ public partial class RegisterInformationDataTree : DataTree
                     {
                         ConfigurationForms newForm = form.Copy();
                         newForm.Name += Configuration.GetNewRandomName();
-                        await OpenPageForm(true, register.Forms, newForm, new(ConfiguratorItemOwnerType.RegisterAccumulation, register));
+                        await OpenPageForm(true, register.Forms, newForm, new(ConfiguratorItemOwnerType.RegisterInformation, register));
                         break;
                     }
                 default:

@@ -71,7 +71,7 @@ partial class PageForm : FormPageConfigurator
         basicFields.FullName = ConfForm.FullName;
         basicFields.Desc = ConfForm.Desc;
 
-        formItem.SetValue(ConfForm);
+        formItem.SetValue(ConfForm, Owner);
     }
 
     protected override async Task GetValue()
@@ -79,11 +79,13 @@ partial class PageForm : FormPageConfigurator
         ConfForm.Name = basicFields.ItemName;
         ConfForm.FullName = basicFields.FullName;
         ConfForm.Desc = basicFields.Desc;
+
+        formItem.GetValue();
     }
 
     protected override async Task<bool> Save()
     {
-        (bool result, string name) = await IsValid(basicFields.ItemName, ConfForm.Name, [.. Forms.Keys]);
+        (bool result, string name) = await IsValid(basicFields.ItemName, ConfForm.Name, [.. Forms.Keys], true);
         basicFields.ItemName = name;
 
         if (result)

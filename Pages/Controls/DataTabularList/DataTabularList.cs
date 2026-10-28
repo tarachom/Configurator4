@@ -692,8 +692,6 @@ public partial class DataTabularList
                     else
                         currentRow.SortNum++;
             }
-            else
-                currentRow.SortNum++;
         }
     }
 
@@ -707,7 +705,7 @@ public partial class DataTabularList
         {
             ItemRowFields item = ItemRowFields.New();
 
-            item.Visible = tabularList.Fields.ContainsKey(field.Name); ;
+            item.Visible = tabularList.Fields.ContainsKey(field.Name);
             item.Name = field.Name;
             item.Caption = item.Visible ? (!string.IsNullOrEmpty(tabularList.Fields[field.Name].Caption) ? tabularList.Fields[field.Name].Caption : Configuration.CreateFullName(field.Name)) : Configuration.CreateFullName(field.Name);
             item.Size = item.Visible ? tabularList.Fields[field.Name].Size : 0;

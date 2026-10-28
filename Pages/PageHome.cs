@@ -52,6 +52,15 @@ partial class PageHome : Form
             hBox.Append(view);
             Append(hBox);
         }
+
+        /*{
+            FormElementSettings f = FormElementSettings.New();
+            Box hBox = New(Orientation.Horizontal, 0);
+            hBox.Hexpand = hBox.Vexpand = true;
+            hBox.MarginBottom = 10;
+            hBox.Append(f);
+            Append(hBox);
+        }*/
     }
 
     public static PageHome New()

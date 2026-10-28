@@ -153,6 +153,12 @@ public static class Function
                 ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.List);
                 confDirectory.AppendForms(forms);
             }
+
+            {
+                string name = "Елемент";
+                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.Element);
+                confDirectory.AppendForms(forms);
+            }
         }
 
         //Тригери
@@ -251,6 +257,12 @@ public static class Function
             {
                 string name = "Список";
                 ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.List);
+                confDocument.AppendForms(forms);
+            }
+
+            {
+                string name = "Елемент";
+                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.Element);
                 confDocument.AppendForms(forms);
             }
         }

@@ -64,7 +64,7 @@ public partial class DocumentDataTree : DataTree
                     }
                 case "Form" when row.Obj is ConfigurationForms form:
                     {
-                        await OpenPageForm(false, document.Forms, form);
+                        await OpenPageForm(false, document.Forms, form, new(ConfiguratorItemOwnerType.Document, document));
                         break;
                     }
                 default:
@@ -93,7 +93,7 @@ public partial class DocumentDataTree : DataTree
                     }
                 case "FormGroup" or "Form":
                     {
-                        await OpenPageForm(true, document.Forms, null);
+                        await OpenPageForm(true, document.Forms, null, new(ConfiguratorItemOwnerType.Document, document));
                         break;
                     }
                 case "TablePartField" when row.ParentObj is ConfigurationTablePart tablePart:

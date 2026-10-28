@@ -79,7 +79,7 @@ public partial class RegisterAccumulationDataTree : DataTree
                     }
                 case "Form" when row.Obj is ConfigurationForms form:
                     {
-                        await OpenPageForm(false, register.Forms, form);
+                        await OpenPageForm(false, register.Forms, form, new(ConfiguratorItemOwnerType.RegisterAccumulation, register));
                         break;
                     }
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
@@ -133,7 +133,7 @@ public partial class RegisterAccumulationDataTree : DataTree
                     }
                 case "FormGroup" or "Form":
                     {
-                        await OpenPageForm(true, register.Forms);
+                        await OpenPageForm(true, register.Forms, null, new(ConfiguratorItemOwnerType.RegisterAccumulation, register));
                         break;
                     }
                 case "TablePartField" when row.ParentObj is ConfigurationTablePart tablePart:
