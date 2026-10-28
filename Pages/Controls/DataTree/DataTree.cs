@@ -35,6 +35,11 @@ namespace Configurator;
 [Template<AssemblyResource>("DataTree.ui")]
 public abstract partial class DataTree
 {
+    /// <summary>
+    /// Власник
+    /// </summary>
+    protected ConfiguratorItemOwner? Owner { get; set; } = null;
+
     protected static async Task OpenPageField(bool isNew, Dictionary<string, ConfigurationField> fields, ConfigurationField? field = null, ConfiguratorItemOwner? owner = null)
     {
         if (Program.BasicForm != null)

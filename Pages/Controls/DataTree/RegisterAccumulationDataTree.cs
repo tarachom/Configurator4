@@ -38,28 +38,30 @@ public partial class RegisterAccumulationDataTree : DataTree
 
     public void SetValue(ConfigurationRegistersAccumulation register)
     {
+        Owner = new(ConfiguratorItemOwnerType.RegisterAccumulation, register);
+
         async void Activate(ConfiguratorItemRow row)
         {
             switch (row.Group)
             {
                 case "DimensionField" when row.Obj is ConfigurationField field:
                     {
-                        await OpenPageField(false, register.DimensionFields, field, new(ConfiguratorItemOwnerType.RegisterAccumulation, register));
+                        await OpenPageField(false, register.DimensionFields, field, Owner);
                         break;
                     }
                 case "ResourcesField" when row.Obj is ConfigurationField field:
                     {
-                        await OpenPageField(false, register.ResourcesFields, field, new(ConfiguratorItemOwnerType.RegisterAccumulation, register));
+                        await OpenPageField(false, register.ResourcesFields, field, Owner);
                         break;
                     }
                 case "PropertyField" when row.Obj is ConfigurationField field:
                     {
-                        await OpenPageField(false, register.PropertyFields, field, new(ConfiguratorItemOwnerType.RegisterAccumulation, register));
+                        await OpenPageField(false, register.PropertyFields, field, Owner);
                         break;
                     }
                 case "TablePart" when row.Obj is ConfigurationTablePart tablePart:
                     {
-                        await OpenPageTablePart(false, register.TabularParts, tablePart);
+                        await OpenPageTablePart(false, register.TabularParts, tablePart, Owner);
                         break;
                     }
                 case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
@@ -79,12 +81,12 @@ public partial class RegisterAccumulationDataTree : DataTree
                     }
                 case "Form" when row.Obj is ConfigurationForms form:
                     {
-                        await OpenPageForm(false, register.Forms, form, new(ConfiguratorItemOwnerType.RegisterAccumulation, register));
+                        await OpenPageForm(false, register.Forms, form, Owner);
                         break;
                     }
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
                     {
-                        await OpenPageField(false, tablePart.Fields, field, new(ConfiguratorItemOwnerType.TablePart, tablePart));
+                        await OpenPageField(false, tablePart.Fields, field, new(ConfiguratorItemOwnerType.TablePart, tablePart, Owner));
                         break;
                     }
                 default:
@@ -98,22 +100,22 @@ public partial class RegisterAccumulationDataTree : DataTree
             {
                 case "DimensionFields" or "DimensionField":
                     {
-                        await OpenPageField(true, register.DimensionFields, null, new(ConfiguratorItemOwnerType.RegisterAccumulation, register));
+                        await OpenPageField(true, register.DimensionFields, null, Owner);
                         break;
                     }
                 case "ResourcesFields" or "ResourcesField":
                     {
-                        await OpenPageField(true, register.ResourcesFields, null, new(ConfiguratorItemOwnerType.RegisterAccumulation, register));
+                        await OpenPageField(true, register.ResourcesFields, null, Owner);
                         break;
                     }
                 case "PropertyFields" or "PropertyField":
                     {
-                        await OpenPageField(true, register.PropertyFields, null, new(ConfiguratorItemOwnerType.RegisterAccumulation, register));
+                        await OpenPageField(true, register.PropertyFields, null, Owner);
                         break;
                     }
                 case "TablePartGroup" or "TablePart":
                     {
-                        await OpenPageTablePart(true, register.TabularParts);
+                        await OpenPageTablePart(true, register.TabularParts, null, Owner);
                         break;
                     }
                 case "TabularListGroup" or "TabularList":
@@ -133,12 +135,12 @@ public partial class RegisterAccumulationDataTree : DataTree
                     }
                 case "FormGroup" or "Form":
                     {
-                        await OpenPageForm(true, register.Forms, null, new(ConfiguratorItemOwnerType.RegisterAccumulation, register));
+                        await OpenPageForm(true, register.Forms, null, Owner);
                         break;
                     }
                 case "TablePartField" when row.ParentObj is ConfigurationTablePart tablePart:
                     {
-                        await OpenPageField(true, tablePart.Fields, null, new(ConfiguratorItemOwnerType.TablePart, tablePart));
+                        await OpenPageField(true, tablePart.Fields, null, new(ConfiguratorItemOwnerType.TablePart, tablePart, Owner));
                         break;
                     }
                 default:
@@ -159,28 +161,28 @@ public partial class RegisterAccumulationDataTree : DataTree
                     {
                         ConfigurationField newField = field.Copy();
                         newField.Name += Configuration.GetNewRandomName();
-                        await OpenPageField(true, register.DimensionFields, newField, new(ConfiguratorItemOwnerType.RegisterAccumulation, register));
+                        await OpenPageField(true, register.DimensionFields, newField, Owner);
                         break;
                     }
                 case "ResourcesField" when row.Obj is ConfigurationField field:
                     {
                         ConfigurationField newField = field.Copy();
                         newField.Name += Configuration.GetNewRandomName();
-                        await OpenPageField(true, register.ResourcesFields, newField, new(ConfiguratorItemOwnerType.RegisterAccumulation, register));
+                        await OpenPageField(true, register.ResourcesFields, newField, Owner);
                         break;
                     }
                 case "PropertyField" when row.Obj is ConfigurationField field:
                     {
                         ConfigurationField newField = field.Copy();
                         newField.Name += Configuration.GetNewRandomName();
-                        await OpenPageField(true, register.PropertyFields, newField, new(ConfiguratorItemOwnerType.RegisterAccumulation, register));
+                        await OpenPageField(true, register.PropertyFields, newField, Owner);
                         break;
                     }
                 case "TablePart" when row.Obj is ConfigurationTablePart tablePart:
                     {
                         ConfigurationTablePart newTablePart = tablePart.Copy();
                         newTablePart.Name += Configuration.GetNewRandomName();
-                        await OpenPageTablePart(true, register.TabularParts, newTablePart);
+                        await OpenPageTablePart(true, register.TabularParts, newTablePart, Owner);
                         break;
                     }
                 case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
@@ -208,14 +210,14 @@ public partial class RegisterAccumulationDataTree : DataTree
                     {
                         ConfigurationForms newForm = form.Copy();
                         newForm.Name += Configuration.GetNewRandomName();
-                        await OpenPageForm(true, register.Forms, newForm, new(ConfiguratorItemOwnerType.RegisterAccumulation, register));
+                        await OpenPageForm(true, register.Forms, newForm, Owner);
                         break;
                     }
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
                     {
                         ConfigurationField newField = field.Copy();
                         newField.Name += Configuration.GetNewRandomName();
-                        await OpenPageField(true, tablePart.Fields, newField, new(ConfiguratorItemOwnerType.TablePart, tablePart));
+                        await OpenPageField(true, tablePart.Fields, newField, new(ConfiguratorItemOwnerType.TablePart, tablePart, Owner));
                         break;
                     }
                 default:

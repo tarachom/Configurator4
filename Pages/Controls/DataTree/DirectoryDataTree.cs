@@ -38,18 +38,20 @@ public partial class DirectoryDataTree : DataTree
 
     public void SetValue(ConfigurationDirectories directory)
     {
+        Owner = new(ConfiguratorItemOwnerType.Directory, directory);
+
         async void Activate(ConfiguratorItemRow row)
         {
             switch (row.Group)
             {
                 case "Field" when row.Obj is ConfigurationField field:
                     {
-                        await OpenPageField(false, directory.Fields, field, new(ConfiguratorItemOwnerType.Directory, directory));
+                        await OpenPageField(false, directory.Fields, field, Owner);
                         break;
                     }
                 case "TablePart" when row.Obj is ConfigurationTablePart tablePart:
                     {
-                        await OpenPageTablePart(false, directory.TabularParts, tablePart);
+                        await OpenPageTablePart(false, directory.TabularParts, tablePart, Owner);
                         break;
                     }
                 case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
@@ -59,12 +61,12 @@ public partial class DirectoryDataTree : DataTree
                     }
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
                     {
-                        await OpenPageField(false, tablePart.Fields, field, new(ConfiguratorItemOwnerType.TablePart, tablePart));
+                        await OpenPageField(false, tablePart.Fields, field, new(ConfiguratorItemOwnerType.TablePart, tablePart, Owner));
                         break;
                     }
                 case "Form" when row.Obj is ConfigurationForms form:
                     {
-                        await OpenPageForm(false, directory.Forms, form, new(ConfiguratorItemOwnerType.Directory, directory));
+                        await OpenPageForm(false, directory.Forms, form, Owner);
                         break;
                     }
                 default:
@@ -78,12 +80,12 @@ public partial class DirectoryDataTree : DataTree
             {
                 case "FieldGroup" or "Field":
                     {
-                        await OpenPageField(true, directory.Fields, null, new(ConfiguratorItemOwnerType.Directory, directory));
+                        await OpenPageField(true, directory.Fields, null, Owner);
                         break;
                     }
                 case "TablePartGroup" or "TablePart":
                     {
-                        await OpenPageTablePart(true, directory.TabularParts);
+                        await OpenPageTablePart(true, directory.TabularParts, null, Owner);
                         break;
                     }
                 case "TabularListGroup" or "TabularList":
@@ -93,12 +95,12 @@ public partial class DirectoryDataTree : DataTree
                     }
                 case "FormGroup" or "Form":
                     {
-                        await OpenPageForm(true, directory.Forms, null, new(ConfiguratorItemOwnerType.Directory, directory));
+                        await OpenPageForm(true, directory.Forms, null, Owner);
                         break;
                     }
                 case "TablePartField" when row.ParentObj is ConfigurationTablePart tablePart:
                     {
-                        await OpenPageField(true, tablePart.Fields, null, new(ConfiguratorItemOwnerType.TablePart, tablePart));
+                        await OpenPageField(true, tablePart.Fields, null, new(ConfiguratorItemOwnerType.TablePart, tablePart, Owner));
                         break;
                     }
                 default:
@@ -119,14 +121,14 @@ public partial class DirectoryDataTree : DataTree
                     {
                         ConfigurationField newField = field.Copy();
                         newField.Name += Configuration.GetNewRandomName();
-                        await OpenPageField(true, directory.Fields, newField, new(ConfiguratorItemOwnerType.Directory, directory));
+                        await OpenPageField(true, directory.Fields, newField, Owner);
                         break;
                     }
                 case "TablePart" when row.Obj is ConfigurationTablePart tablePart:
                     {
                         ConfigurationTablePart newTablePart = tablePart.Copy();
                         newTablePart.Name += Configuration.GetNewRandomName();
-                        await OpenPageTablePart(true, directory.TabularParts, newTablePart);
+                        await OpenPageTablePart(true, directory.TabularParts, newTablePart, Owner);
                         break;
                     }
                 case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
@@ -140,14 +142,14 @@ public partial class DirectoryDataTree : DataTree
                     {
                         ConfigurationForms newForm = form.Copy();
                         newForm.Name += Configuration.GetNewRandomName();
-                        await OpenPageForm(true, directory.Forms, newForm, new(ConfiguratorItemOwnerType.Directory, directory));
+                        await OpenPageForm(true, directory.Forms, newForm, Owner);
                         break;
                     }
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
                     {
                         ConfigurationField newField = field.Copy();
                         newField.Name += Configuration.GetNewRandomName();
-                        await OpenPageField(true, tablePart.Fields, newField, new(ConfiguratorItemOwnerType.TablePart, tablePart));
+                        await OpenPageField(true, tablePart.Fields, newField, new(ConfiguratorItemOwnerType.TablePart, tablePart, Owner));
                         break;
                     }
                 default:

@@ -245,7 +245,7 @@ static class <xsl:value-of select="$DirectoryName"/>_Функції
         }
         else
         {
-            Message.Error(Program.BasicForm, "Не вдалось прочитати!");
+            await Message.Info(Program.BasicForm, "Не вдалось прочитати!");
             return null;
         }
     }

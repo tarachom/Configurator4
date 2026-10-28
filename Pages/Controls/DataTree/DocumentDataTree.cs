@@ -38,18 +38,20 @@ public partial class DocumentDataTree : DataTree
 
     public void SetValue(ConfigurationDocuments document)
     {
+        Owner = new(ConfiguratorItemOwnerType.Document, document);
+
         async void Activate(ConfiguratorItemRow row)
         {
             switch (row.Group)
             {
                 case "Field" when row.Obj is ConfigurationField field:
                     {
-                        await OpenPageField(false, document.Fields, field, new(ConfiguratorItemOwnerType.Document, document));
+                        await OpenPageField(false, document.Fields, field, Owner);
                         break;
                     }
                 case "TablePart" when row.Obj is ConfigurationTablePart tablePart:
                     {
-                        await OpenPageTablePart(false, document.TabularParts, tablePart);
+                        await OpenPageTablePart(false, document.TabularParts, tablePart, Owner);
                         break;
                     }
                 case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
@@ -59,12 +61,12 @@ public partial class DocumentDataTree : DataTree
                     }
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
                     {
-                        await OpenPageField(false, tablePart.Fields, field, new(ConfiguratorItemOwnerType.TablePart, tablePart));
+                        await OpenPageField(false, tablePart.Fields, field, new(ConfiguratorItemOwnerType.TablePart, tablePart, Owner));
                         break;
                     }
                 case "Form" when row.Obj is ConfigurationForms form:
                     {
-                        await OpenPageForm(false, document.Forms, form, new(ConfiguratorItemOwnerType.Document, document));
+                        await OpenPageForm(false, document.Forms, form, Owner);
                         break;
                     }
                 default:
@@ -78,12 +80,12 @@ public partial class DocumentDataTree : DataTree
             {
                 case "FieldGroup" or "Field":
                     {
-                        await OpenPageField(true, document.Fields, null, new(ConfiguratorItemOwnerType.Document, document));
+                        await OpenPageField(true, document.Fields, null, Owner);
                         break;
                     }
                 case "TablePartGroup" or "TablePart":
                     {
-                        await OpenPageTablePart(true, document.TabularParts);
+                        await OpenPageTablePart(true, document.TabularParts, null, Owner);
                         break;
                     }
                 case "TabularListGroup" or "TabularList":
@@ -93,12 +95,12 @@ public partial class DocumentDataTree : DataTree
                     }
                 case "FormGroup" or "Form":
                     {
-                        await OpenPageForm(true, document.Forms, null, new(ConfiguratorItemOwnerType.Document, document));
+                        await OpenPageForm(true, document.Forms, null, Owner);
                         break;
                     }
                 case "TablePartField" when row.ParentObj is ConfigurationTablePart tablePart:
                     {
-                        await OpenPageField(true, tablePart.Fields, null, new(ConfiguratorItemOwnerType.TablePart, tablePart));
+                        await OpenPageField(true, tablePart.Fields, null, new(ConfiguratorItemOwnerType.TablePart, tablePart, Owner));
                         break;
                     }
                 default:
@@ -120,14 +122,14 @@ public partial class DocumentDataTree : DataTree
                     {
                         ConfigurationField newField = field.Copy();
                         newField.Name += Configuration.GetNewRandomName();
-                        await OpenPageField(true, document.Fields, newField, new(ConfiguratorItemOwnerType.Document, document));
+                        await OpenPageField(true, document.Fields, newField, Owner);
                         break;
                     }
                 case "TablePart" when row.Obj is ConfigurationTablePart tablePart:
                     {
                         ConfigurationTablePart newTablePart = tablePart.Copy();
                         newTablePart.Name += Configuration.GetNewRandomName();
-                        await OpenPageTablePart(true, document.TabularParts, newTablePart);
+                        await OpenPageTablePart(true, document.TabularParts, newTablePart, Owner);
                         break;
                     }
                 case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
@@ -141,14 +143,14 @@ public partial class DocumentDataTree : DataTree
                     {
                         ConfigurationForms newForm = form.Copy();
                         newForm.Name += Configuration.GetNewRandomName();
-                        await OpenPageForm(true, document.Forms, newForm, new(ConfiguratorItemOwnerType.Document, document));
+                        await OpenPageForm(true, document.Forms, newForm, Owner);
                         break;
                     }
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
                     {
                         ConfigurationField newField = field.Copy();
                         newField.Name += Configuration.GetNewRandomName();
-                        await OpenPageField(true, tablePart.Fields, newField, new(ConfiguratorItemOwnerType.TablePart, tablePart));
+                        await OpenPageField(true, tablePart.Fields, newField, new(ConfiguratorItemOwnerType.TablePart, tablePart, Owner));
                         break;
                     }
                 default:

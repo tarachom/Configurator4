@@ -36,20 +36,27 @@ public partial class TablePartDataTree : DataTree
 {
     public static TablePartDataTree New() => NewWithProperties([]);
 
-    public void SetValue(ConfigurationTablePart tablePart)
+    public void SetValue(ConfigurationTablePart tablePart, ConfiguratorItemOwner? owner = null)
     {
+        Owner = owner;
+
         async void Activate(ConfiguratorItemRow row)
         {
             switch (row.Group)
             {
                 case "Field" when row.Obj is ConfigurationField field:
                     {
-                        await OpenPageField(false, tablePart.Fields, field, new(ConfiguratorItemOwnerType.TablePart, tablePart));
+                        await OpenPageField(false, tablePart.Fields, field, new(ConfiguratorItemOwnerType.TablePart, tablePart, Owner));
                         break;
                     }
                 case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
                     {
                         await OpenPageTabularList(false, tablePart.TabularList, tablePart.Fields, tabularList);
+                        break;
+                    }
+                case "Form" when row.Obj is ConfigurationForms form:
+                    {
+                        await OpenPageForm(false, tablePart.Forms, form, new(ConfiguratorItemOwnerType.TablePart, tablePart, Owner));
                         break;
                     }
                 default:
@@ -63,7 +70,7 @@ public partial class TablePartDataTree : DataTree
             {
                 case "FieldGroup" or "Field":
                     {
-                        await OpenPageField(true, tablePart.Fields, null, new(ConfiguratorItemOwnerType.TablePart, tablePart));
+                        await OpenPageField(true, tablePart.Fields, null, new(ConfiguratorItemOwnerType.TablePart, tablePart, Owner));
                         break;
                     }
                 case "TabularListGroup" or "TabularList":
@@ -73,6 +80,7 @@ public partial class TablePartDataTree : DataTree
                     }
                 case "FormGroup" or "Form":
                     {
+                        await OpenPageForm(true, tablePart.Forms, null, new(ConfiguratorItemOwnerType.TablePart, tablePart, Owner));
                         break;
                     }
                 default:
@@ -93,7 +101,7 @@ public partial class TablePartDataTree : DataTree
                     {
                         ConfigurationField newField = field.Copy();
                         newField.Name += Configuration.GetNewRandomName();
-                        await OpenPageField(true, tablePart.Fields, newField, new(ConfiguratorItemOwnerType.TablePart, tablePart));
+                        await OpenPageField(true, tablePart.Fields, newField, new(ConfiguratorItemOwnerType.TablePart, tablePart, Owner));
                         break;
                     }
                 case "TabularList" when row.Obj is ConfigurationTabularList tabularList:
@@ -103,8 +111,11 @@ public partial class TablePartDataTree : DataTree
                         await OpenPageTabularList(true, tablePart.TabularList, tablePart.Fields, newTabularList);
                         break;
                     }
-                case "Form":
+                case "Form" when row.Obj is ConfigurationForms form:
                     {
+                        ConfigurationForms newForm = form.Copy();
+                        newForm.Name += Configuration.GetNewRandomName();
+                        await OpenPageForm(true, tablePart.Forms, newForm, new(ConfiguratorItemOwnerType.TablePart, tablePart, Owner));
                         break;
                     }
                 default:
@@ -126,8 +137,9 @@ public partial class TablePartDataTree : DataTree
                         tablePart.TabularList.Remove(tabularList.Name);
                         break;
                     }
-                case "Form":
+                case "Form" when row.Obj is ConfigurationForms form:
                     {
+                        tablePart.Forms.Remove(form.Name);
                         break;
                     }
                 default:

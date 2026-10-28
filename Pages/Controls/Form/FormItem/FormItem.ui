@@ -22,8 +22,7 @@
                 </child>
 
                 <child>
-                    <object class="GtkLabel" id="label_type_form">
-                        <property name="use-markup">true</property>
+                    <object class="DropDownControl" id="dropdown_type_form">
                         <property name="halign">start</property>
                     </object>
                 </child>
@@ -76,7 +75,7 @@
                 <child>
                     <object class="GtkStackPage">
                         <property name="name">page_element_settings</property>
-                        <property name="title">Налаштування елементу</property>
+                        <property name="title">Налаштування</property>
                         <property name="visible">false</property>
                         <property name="child">
                             <object class="GtkBox" id="box_element_settings">
@@ -97,7 +96,7 @@
                 <child>
                     <object class="GtkStackPage">
                         <property name="name">page_list_settings</property>
-                        <property name="title">Налаштування списку</property>
+                        <property name="title">Налаштування</property>
                         <property name="visible">false</property>
                         <property name="child">
                             <object class="GtkBox" id="box_list_settings">

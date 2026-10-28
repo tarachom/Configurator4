@@ -488,17 +488,28 @@ public partial class FormElementSettings
         Form = form;
 
         {
+            StoreFields.RemoveAll();
+
             int maxSortNum = Form.ElementFields.Count > 0 ? Form.ElementFields.Values.Max(x => x.SortNum) : 0;
             foreach (ConfigurationField field in fields.Values)
             {
                 ItemRowFields item = ItemRowFields.New();
-
-                item.Visible = Form.ElementFields.ContainsKey(field.Name);
                 item.Name = field.Name;
-                item.Caption = item.Visible ? (!string.IsNullOrEmpty(Form.ElementFields[field.Name].Caption) ? Form.ElementFields[field.Name].Caption : Configuration.CreateFullName(field.Name)) : Configuration.CreateFullName(field.Name);
-                item.Size = item.Visible ? Form.ElementFields[field.Name].Size : 0;
-                item.Height = item.Visible ? Form.ElementFields[field.Name].Height : 0;
-                item.SortNum = item.Visible ? Form.ElementFields[field.Name].SortNum : ++maxSortNum;
+
+                if (Form.ElementFields.TryGetValue(field.Name, out ConfigurationFormsElementField? elemField))
+                {
+                    item.Visible = true;
+                    item.Caption = !string.IsNullOrEmpty(elemField.Caption) ? elemField.Caption : Configuration.CreateFullName(field.Name);
+                    item.Size = elemField.Size;
+                    item.Height = elemField.Height;
+                    item.SortNum = elemField.SortNum;
+                }
+                else
+                {
+                    item.Caption = Configuration.CreateFullName(field.Name);
+                    item.SortNum = ++maxSortNum;
+                }
+
                 item.Type = field.Type == "pointer" || field.Type == "enum" ? field.Pointer : field.Type;
 
                 StoreFields.Append(item);
@@ -506,17 +517,27 @@ public partial class FormElementSettings
         }
 
         {
+            StoreTabularParts.RemoveAll();
+
             int maxSortNum = Form.ElementTableParts.Count > 0 ? Form.ElementTableParts.Values.Max(x => x.SortNum) : 0;
             foreach (ConfigurationTablePart tablePart in tabularParts.Values)
             {
                 ItemRow item = ItemRow.New();
-
-                item.Visible = Form.ElementTableParts.ContainsKey(tablePart.Name);
                 item.Name = tablePart.Name;
-                item.Caption = item.Visible ? (!string.IsNullOrEmpty(Form.ElementTableParts[tablePart.Name].Caption) ? Form.ElementTableParts[tablePart.Name].Caption : Configuration.CreateFullName(tablePart.Name)) : Configuration.CreateFullName(tablePart.Name);
-                item.Size = item.Visible ? Form.ElementTableParts[tablePart.Name].Size : 0;
-                item.Height = item.Visible ? Form.ElementTableParts[tablePart.Name].Height : 0;
-                item.SortNum = item.Visible ? Form.ElementTableParts[tablePart.Name].SortNum : ++maxSortNum;
+
+                if (Form.ElementTableParts.TryGetValue(tablePart.Name, out ConfigurationFormsElementTablePart? elemTablePart))
+                {
+                    item.Visible = true;
+                    item.Caption = !string.IsNullOrEmpty(elemTablePart.Caption) ? elemTablePart.Caption : Configuration.CreateFullName(tablePart.Name);
+                    item.Size = elemTablePart.Size;
+                    item.Height = elemTablePart.Height;
+                    item.SortNum = elemTablePart.SortNum;
+                }
+                else
+                {
+                    item.Caption = Configuration.CreateFullName(tablePart.Name);
+                    item.SortNum = ++maxSortNum;
+                }
 
                 StoreTabularParts.Append(item);
             }

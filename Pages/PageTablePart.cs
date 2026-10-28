@@ -76,7 +76,7 @@ partial class PageTablePart : FormPageConfigurator
         basicFields.TableOrColumn = ConfTablePart.Table;
         basicFields.Desc = ConfTablePart.Desc;
 
-        dataTree.SetValue(ConfTablePart);
+        dataTree.SetValue(ConfTablePart, Owner);
     }
 
     protected override async Task GetValue()

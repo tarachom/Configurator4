@@ -704,15 +704,24 @@ public partial class DataTabularList
         foreach (ConfigurationField field in fields.Values)
         {
             ItemRowFields item = ItemRowFields.New();
-
-            item.Visible = tabularList.Fields.ContainsKey(field.Name);
             item.Name = field.Name;
-            item.Caption = item.Visible ? (!string.IsNullOrEmpty(tabularList.Fields[field.Name].Caption) ? tabularList.Fields[field.Name].Caption : Configuration.CreateFullName(field.Name)) : Configuration.CreateFullName(field.Name);
-            item.Size = item.Visible ? tabularList.Fields[field.Name].Size : 0;
-            item.SortNum = item.Visible ? tabularList.Fields[field.Name].SortNum : isNew ? (int)StoreFields.GetNItems() + 1 : ++maxSortNum;
-            item.SortField = item.Visible && tabularList.Fields[field.Name].SortField;
-            item.SortDirection = item.Visible && tabularList.Fields[field.Name].SortDirection;
-            item.FilterField = item.Visible && tabularList.Fields[field.Name].FilterField;
+
+            if (tabularList.Fields.TryGetValue(field.Name, out var tabField))
+            {
+                item.Visible = true;
+                item.Caption = !string.IsNullOrEmpty(tabField.Caption) ? tabField.Caption : Configuration.CreateFullName(field.Name);
+                item.Size = tabField.Size;
+                item.SortNum = tabField.SortNum;
+                item.SortField = tabField.SortField;
+                item.SortDirection = tabField.SortDirection;
+                item.FilterField = tabField.FilterField;
+            }
+            else
+            {
+                item.Caption = Configuration.CreateFullName(field.Name);
+                item.SortNum = isNew ? (int)StoreFields.GetNItems() + 1 : ++maxSortNum;
+            }
+
             item.Type = field.Type == "pointer" || field.Type == "enum" ? field.Pointer : field.Type;
 
             StoreFields.Append(item);

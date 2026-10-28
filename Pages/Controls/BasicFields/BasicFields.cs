@@ -91,17 +91,6 @@ public partial class BasicFields
     /// </summary>
     public void HideTableOrColumn() => labelTableOrColumn.Visible = boxTableOrColumn.Visible = false;
 
-    /// <summary>
-    /// Зробити доступним поле ТаблицяЧиСтовпчик
-    /// </summary>
-    /*
-    public void NewTableOrColumn()
-    {
-        entryTableOrColumn.Sensitive = true;
-        RenameTableOrColumn.Visible = false;
-    }
-    */
-
     public string ItemName
     {
         get => entryItemName.GetText();

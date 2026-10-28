@@ -273,7 +273,7 @@ static class <xsl:value-of select="$DocumentName"/>_Функції
         }
         else
         {
-            Message.Error(Program.BasicForm, "Не вдалось прочитати!");
+            await Message.Info(Program.BasicForm, "Не вдалось прочитати!");
             return null;
         }
     }
