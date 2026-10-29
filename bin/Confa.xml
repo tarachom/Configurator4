@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>28.10.2026 17:34:00</DateTimeSave>
+  <DateTimeSave>29.10.2026 16:22:18</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -1279,6 +1279,13 @@ https://accounting.org.ua/storage_and_trade.html</Desc>
           <Type>integer</Type>
           <TabularParts />
         </Constant>
+        <Constant>
+          <Uid>vYehAUpoVXChS9keCP8ow</Uid>
+          <Name>ТестовийДок</Name>
+          <NameInTable>col_r1</NameInTable>
+          <Type>integer</Type>
+          <TabularParts />
+        </Constant>
       </Constants>
     </ConstantsBlock>
     <ConstantsBlock>
@@ -1596,6 +1603,20 @@ https://accounting.org.ua/storage_and_trade.html</Desc>
           <Uid>joKhAYNAM3eMEcMgaUQKIg</Uid>
           <Name>ТестовийДовідник</Name>
           <NameInTable>col_q9</NameInTable>
+          <Type>integer</Type>
+          <TabularParts />
+        </Constant>
+        <Constant>
+          <Uid>cIehAfFT1XSkRqJaRcwrRA</Uid>
+          <Name>Тестовий</Name>
+          <NameInTable>col_q7</NameInTable>
+          <Type>integer</Type>
+          <TabularParts />
+        </Constant>
+        <Constant>
+          <Uid>dYehAeBvq3CbaoXSd3b6gQ</Uid>
+          <Name>Тестовий2</Name>
+          <NameInTable>col_q8</NameInTable>
           <Type>integer</Type>
           <TabularParts />
         </Constant>
@@ -1937,8 +1958,6 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a01</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -2600,8 +2619,6 @@ https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange</Desc>
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a03</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -4503,8 +4520,6 @@ END]]></Value>
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a08</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -4747,8 +4762,6 @@ END]]></Value>
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a08</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -5284,8 +5297,6 @@ END]]></Value>
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a10</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -6298,8 +6309,6 @@ END]]></Value>
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a14</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -6777,8 +6786,6 @@ END]]></Value>
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a16</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -10530,8 +10537,6 @@ WHERE
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a45</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -14258,8 +14263,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_b04</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -18583,328 +18586,6 @@ FROM
         </Form>
       </Forms>
     </Directory>
-    <Directory>
-      <Uid>hYKhAYKgBXuPFh9Bn0Gq2Q</Uid>
-      <Name>ТестовийДовідник</Name>
-      <FullName>Тестовий довідник</FullName>
-      <Table>tab_c43</Table>
-      <Desc>Тестовий довідник</Desc>
-      <AutoNum>1</AutoNum>
-      <VersionsHistory>0</VersionsHistory>
-      <Type>Normal</Type>
-      <PredefinedFields>
-        <PredefinedField>
-          <Name>uid</Name>
-          <NameInTable>uid</NameInTable>
-          <Type>any_pointer</Type>
-          <IsPrimaryKey>1</IsPrimaryKey>
-          <IsIndex>0</IsIndex>
-          <IsNotNull>1</IsNotNull>
-        </PredefinedField>
-        <PredefinedField>
-          <Name>deletion_label</Name>
-          <NameInTable>deletion_label</NameInTable>
-          <Type>boolean</Type>
-          <IsPrimaryKey>0</IsPrimaryKey>
-          <IsIndex>1</IsIndex>
-          <IsNotNull>1</IsNotNull>
-        </PredefinedField>
-      </PredefinedFields>
-      <Fields>
-        <Field>
-          <Uid>hYKhAYKgznqcyhBCanRXYA</Uid>
-          <Name>Код</Name>
-          <FullName>Код</FullName>
-          <NameInTable>col_a1</NameInTable>
-          <Type>string</Type>
-          <Desc>Код</Desc>
-          <IsPresentation>0</IsPresentation>
-          <IsIndex>1</IsIndex>
-          <IsFullTextSearch>0</IsFullTextSearch>
-          <IsSearch>1</IsSearch>
-          <IsExport>0</IsExport>
-          <Multiline>0</Multiline>
-        </Field>
-        <Field>
-          <Uid>hYKhAYKgb3uIfyG3FnxccQ</Uid>
-          <Name>Назва</Name>
-          <FullName>Назва</FullName>
-          <NameInTable>col_a2</NameInTable>
-          <Type>string</Type>
-          <Desc>Назва</Desc>
-          <IsPresentation>1</IsPresentation>
-          <IsIndex>1</IsIndex>
-          <IsFullTextSearch>0</IsFullTextSearch>
-          <IsSearch>1</IsSearch>
-          <IsExport>0</IsExport>
-          <Multiline>0</Multiline>
-        </Field>
-        <Field>
-          <Uid>l4KhAdSqDnGAsFES2daxMw</Uid>
-          <Name>Номенклатура</Name>
-          <FullName>Номенклатура</FullName>
-          <NameInTable>col_a3</NameInTable>
-          <Type>pointer</Type>
-          <Pointer>Довідники.Номенклатура</Pointer>
-          <Desc>Номенклатура</Desc>
-          <IsPresentation>0</IsPresentation>
-          <IsIndex>1</IsIndex>
-          <IsFullTextSearch>0</IsFullTextSearch>
-          <IsSearch>0</IsSearch>
-          <IsExport>0</IsExport>
-          <ForeignKey>1</ForeignKey>
-          <References>tab_a03</References>
-        </Field>
-      </Fields>
-      <TabularParts>
-        <TablePart>
-          <Uid>nYKhAWWJXHqfNH6jQuUsg</Uid>
-          <Name>Контакти</Name>
-          <FullName>Контакти</FullName>
-          <Table>tab_c44</Table>
-          <Desc>Контакти</Desc>
-          <VersionsHistory>0</VersionsHistory>
-          <PredefinedFields>
-            <PredefinedField>
-              <Name>uid</Name>
-              <NameInTable>uid</NameInTable>
-              <Type>any_pointer</Type>
-              <IsPrimaryKey>1</IsPrimaryKey>
-              <IsIndex>0</IsIndex>
-              <IsNotNull>1</IsNotNull>
-            </PredefinedField>
-            <PredefinedField>
-              <Name>owner</Name>
-              <NameInTable>owner</NameInTable>
-              <Type>any_pointer</Type>
-              <IsPrimaryKey>0</IsPrimaryKey>
-              <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_c43</References>
-              <IsNotNull>1</IsNotNull>
-            </PredefinedField>
-          </PredefinedFields>
-          <Fields>
-            <Field>
-              <Uid>nYKhAWWJY3qVU9NLYN8vA</Uid>
-              <Name>НомерРядка</Name>
-              <FullName>Номер рядка</FullName>
-              <NameInTable>col_a1</NameInTable>
-              <Type>integer</Type>
-              <Desc>Номер рядка</Desc>
-              <IsIndex>0</IsIndex>
-              <IsFullTextSearch>0</IsFullTextSearch>
-              <IsSearch>0</IsSearch>
-              <IsExport>0</IsExport>
-              <AutomaticNumbering>1</AutomaticNumbering>
-            </Field>
-            <Field>
-              <Uid>nYKhAWWJXHCRogEYKA3gJg</Uid>
-              <Name>Значення</Name>
-              <FullName>Значення</FullName>
-              <NameInTable>col_a2</NameInTable>
-              <Type>string</Type>
-              <Desc>Значення</Desc>
-              <IsIndex>0</IsIndex>
-              <IsFullTextSearch>0</IsFullTextSearch>
-              <IsSearch>0</IsSearch>
-              <IsExport>0</IsExport>
-              <Multiline>0</Multiline>
-            </Field>
-          </Fields>
-          <TabularLists />
-          <TriggerFunctions>
-            <BeforeSave Action="0">BeforeSave</BeforeSave>
-            <AfterSave Action="0">AfterSave</AfterSave>
-          </TriggerFunctions>
-          <Forms>
-            <Form Modified="1">
-              <Name>ТабЧастина</Name>
-              <FullName>Таб частина</FullName>
-              <Desc>Таб частина</Desc>
-              <Type>TablePart</Type>
-              <GeneratedCode Zip="1">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</GeneratedCode>
-              <NotSaveToFile>0</NotSaveToFile>
-              <ElementFields>
-                <Field>
-                  <Name>НомерРядка</Name>
-                  <Caption>Номер рядка</Caption>
-                  <Size>0</Size>
-                  <Height>0</Height>
-                  <SortNum>1</SortNum>
-                  <ReadOnly>0</ReadOnly>
-                  <Type>integer</Type>
-                  <AutomaticNumbering>1</AutomaticNumbering>
-                </Field>
-                <Field>
-                  <Name>Значення</Name>
-                  <Caption>Значення</Caption>
-                  <Size>500</Size>
-                  <Height>0</Height>
-                  <SortNum>2</SortNum>
-                  <ReadOnly>0</ReadOnly>
-                  <Type>string</Type>
-                  <Multiline>0</Multiline>
-                </Field>
-              </ElementFields>
-              <IncludeIconColumn>0</IncludeIconColumn>
-            </Form>
-          </Forms>
-        </TablePart>
-      </TabularParts>
-      <TabularLists>
-        <TabularList>
-          <Name>Записи</Name>
-          <Fields>
-            <Field>
-              <Name>Код</Name>
-              <Caption>Код</Caption>
-              <Size>0</Size>
-              <SortNum>1</SortNum>
-              <SortField>False</SortField>
-              <SortDirection>False</SortDirection>
-              <FilterField>False</FilterField>
-              <Type>string</Type>
-              <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Назва</Name>
-              <Caption>Назва</Caption>
-              <Size>0</Size>
-              <SortNum>2</SortNum>
-              <SortField>True</SortField>
-              <SortDirection>False</SortDirection>
-              <FilterField>False</FilterField>
-              <Type>string</Type>
-              <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Номенклатура</Name>
-              <Caption>Номенклатура</Caption>
-              <Size>300</Size>
-              <SortNum>3</SortNum>
-              <SortField>False</SortField>
-              <SortDirection>False</SortDirection>
-              <FilterField>True</FilterField>
-              <Type>pointer</Type>
-              <Pointer>Довідники.Номенклатура</Pointer>
-            </Field>
-          </Fields>
-        </TabularList>
-      </TabularLists>
-      <TriggerFunctions>
-        <New Action="1">New</New>
-        <Copying Action="1">Copying</Copying>
-        <BeforeSave Action="0">BeforeSave</BeforeSave>
-        <AfterSave Action="0">AfterSave</AfterSave>
-        <SetDeletionLabel Action="0">SetDeletionLabel</SetDeletionLabel>
-        <BeforeDelete Action="0">BeforeDelete</BeforeDelete>
-      </TriggerFunctions>
-      <Forms>
-        <Form Modified="1">
-          <Name>Функції</Name>
-          <FullName>Функції</FullName>
-          <Desc>Функції</Desc>
-          <Type>Function</Type>
-          <GeneratedCode Zip="1">H4sIAAAAAAAACsVVT28TRxS/W/J3mHBykLVcegvBMg4JlkwSxaE9VBUaj5/NkvGMOzNbE0EkYqT20hOi6YlKoH6AEBHVGGK+wptvhGZ3vbu2Y2xQROf0dnben9/v/cvnblzP50h88A2e22PbxxGe4QDf40sn2RN8hxc4wOED/Nc+xwsc2t/tif3bYzqjO/Ern7t+I5/L5wLtizapCgOqRRlsmYMf1sa3ZcZkIIwv2nXZMj2qIPm1BQIUNdCsyCZ402HgYM3ZFrQDuksZkLqRirahLJr7ijadmXxOG2p8RhinWn8tsHzuSQSsGzS4z0hsq+Zrc/Onh6DgFsEXofZbHNlnOChoo1zcGqhiD/fhsVmNDMR23FFgAiXS759T0Z3065e1SD5yMGajoPpQMLJP9QHZ6YLYpW24w6EDwhQaUnJS1dvQK5L7wv81gOpGiQSxRNaJCDgvZlyVmfGluJm8vVUi9phyfpuygwc1SZt7wKRq6sWqE5o7og4cmNmVvst8rD1LyeK0/IUf8Bw/4jle2D7p0jaQ9a9V87ahV1iNSQ35pG3wKpfDvBT+XN1ZoHNJCItybMVvkUKYp5iTKV7coT3qm8jdAjiT1XOUisA1hK7SCogyQZ4+JSvzHewBbSY6q4tCvAdaOyNV0ZKFXSXbina821T7bFOqTpFcw1d4TvAM3+EpfsCRPbZ/Evxkn+HI/oED28dT28fByrVpTFHDZC6ThnBnxlPJ25YGGlIebAaCeRUF1IDrjkKcs64r2GKIOOsqw0MdzI+UB5DQu3wLutlQ+ELPVaRo+e1AURfEhq+AGal80N5dH5QbGj6jvCKFAWH2D7tQIpRz2XMTMLyLasmXIrGYOpNdEJuSN5NOK37vNn2Nn3Bgj3GEw+WbNKN0eYuW5zBA1ueRM21hJ8tMStP0s3E+DmMmqgY6ZD1J4pW3/zdV8UJCK1Jo423er9W2y/fuXHWh18FsAAfHco02gCfFntD0DYUzJg5f4BBP8T97gmfRL1eM0EunUAaH23Ilwl0QrhJCVLMGvK3pgLM23FQMLXh3qQ6pWJ1vaQb6SqQa6S3LYGbLkorsHl4JgTuNR8AMwX/wrX2JQ9uPeZvGGmNLni0945eO4NX4RZqT1FuI16iUrcmaxETZq9Pf0qqc7Rd3or2QVRozObkrxqJbg//vDgvn6mxwR/lcLH0GbuHpbocLAAA=</GeneratedCode>
-          <NotSaveToFile>0</NotSaveToFile>
-        </Form>
-        <Form Modified="0">
-          <Name>Тригери</Name>
-          <FullName>Тригери</FullName>
-          <Desc>Тригери</Desc>
-          <Type>Triggers</Type>
-          <GeneratedCode Zip="1">H4sIAAAAAAAACs2SwUoDMRCG7wv7DqGnVmV7FYoHreBF9NDeJZtOl+g2KUnWIlLQCl69SA+CCj5BrRWq2D7D5I0kuxVLRStY0VwyCck/38w/vud7xSXfI5OFd/hoT20Hx9jHIT7hpYtsFwc4wiE+71UVjyJQOmB6+pc9wSE+4KPbfW+p6Hu+l2guIrIFAhQ1UCvLGgR4hWMcpRl6OLIdHJbeHq4zJhNhuIgqsm5aVEHJqQjaAN2kDGaVZshSJd/ThhrOCIup1t+vxveOs2qaSRhzRiYqVB8JRqpUH5AdaOXnyu2G+8AM+YB2g/f2Ep9tp5BlmSRz6z3iwhCRNEJQZI3QFuWG4LU9w5e0qz17brv2YlbadrEfzOPKF0pTXn0Kl5kzIGskv9j0y8tZXYVCUJUVo7iI8rnN1dw01nQ32s7Ij26kPpRl88j9/7kXK+TbGrfubjK0fex95aICkyiRsgZl2WjGYKDmTqX5tW1AXSqo0EP4lVH7Cdp63YD6l2QVMJsQg+FSbNMQ4oVMRihlTGInt1jYzOGU98862c6iV3Lz1076BQAA</GeneratedCode>
-          <NotSaveToFile>0</NotSaveToFile>
-        </Form>
-        <Form Modified="0">
-          <Name>Реквізит вибору</Name>
-          <FullName>Реквізит вибору</FullName>
-          <Desc>Реквізит вибору</Desc>
-          <Type>PointerControl</Type>
-          <GeneratedCode Zip="1">H4sIAAAAAAAACp1U3W4bRRS+t+R3OFhcrEu1LaIXVdxN5GxTx1DiCLdUpaqiyezxeurJzGZ21pYbRSo8AkJ9AK64BRUpRYJnWL8Rmtl/OwGne+HxzPn/zndOu3XvDpiv3bIHAKS/pn+uflz9lP6T/pFepR/TX8y/1fv0Q/p3epX+dXIsmdCofCm0ktylcWXbFLVbd+61W+1WEjMRwkDPesX/odGaEIoDPXtQvvYplYnQTIRjOdELorAUDVCgIhoDXwborqeUXvVMHEHOMI4IRRhrqUiIfRE8UyQwbtqtV4PR6Ruk2h0np5STOH7UzHbX6TQfTt68/Gbafyl+IOJ8+Xb05dejIDkKO93X7VaUnHJGISJKM8LBurstcLCzAddFhiTOUWg4ML+HRAQc1aNtfe/ulU6nRIQY2NKN0yLXuWQBDAUzF/YWnW4mzkOb7wUL9PRYYYxCE82kAA++un+/V2n4JMrfP+9c/G9qvhSxdp88f/r0qP/tweVOp+apmSx84QGJl4KCc3IXokzWBW8X1tL5LJe5w/jgLNJLpwt7QBaE6cLKHaCuGzld2IFOEfqyRCVrZGyU6K07eIQLx6Z3hIsXzIAmI1SaYey8et0tod/WbZE7eCCM514jx6295OdGX0PUJtc8SK0JMerqUjOwwcuU5oQnZpLq0mb79tyhmMsZOiLhvOpfzeZyDf61NvhSTFiYKNuxx0wh1VIxjN1DhoooOmWUcAM+Cv1sGeEe9DmXC7MV7NsYOVJLkQtTbc9U1qs1W0mNVGMAco5KsQBzttmZGEUoMgfOfqK1FHBqj7vZJPZVGANRYbw5MMcyMg4hyk+veHEtQWr15xruGPUxUSi0k8W4TseO4Xd4nmCswYOHjQkslA6RhVNdaT1oaO3jRCr0OaMzU92TRNCyRxU9t6Jo+psVfDDLNv2Y/pxepb+v3q/eQURCBO/THWxiREJ0cwAzkMAr6l1XKziyzIk41Hhm4c92wHPBzhMcPl43u4k13k18Wndg0ZQ8sM2uLutqPuF8n9DZyShnVjGiHsTN++6NA1iZCFxsvQSchv86vObrTzSqLKMNTpSj2uDHtRT2p4wHjqn0Wo5PZdbYSkSyDW2gGaP+3iyUMuZ/TWk2n8LnSNTth/OT8KtXtA1cVscmeK3KZbuV775/AaV+K7tyCQAA</GeneratedCode>
-          <NotSaveToFile>0</NotSaveToFile>
-        </Form>
-        <Form Modified="0">
-          <Name>Реквізит вибору для таб частини</Name>
-          <FullName>Реквізит вибору для таб частини</FullName>
-          <Desc>Реквізит вибору для таб частини</Desc>
-          <Type>PointerTablePartCell</Type>
-          <GeneratedCode Zip="1">H4sIAAAAAAAACp1UzW7TQBC+W/I7LDk5FXJ7KBJqSaM0LWlAagIpVKiqqs16Ym/jrM16nKhClYBHQKgPwIkrqEgpEjzD5o2Qf+MkLmq7l/379puZb2ZW13RtfY1EQ9fiiRCivqlfs0+zz+qv+qmm6kZ9jVazK3Wt/qip+n3W9bhAkEe070KXSmyC65osmDOUAXRtbV3XwoALm7RwuJ2t2xFyQBm0cLiZn7ZAgKQIVtOzwFz2QE1zYIMxLxTIhd3zBjihErZ1TdcEHUHgUwakh56kNjSEdSSpldyetDr9c2Bo9sI+c2kQPCvzeMeolB2fnb976TR65+4BdJwXjckr9kTaleqprvlh3+WM+FQipy6JmR+mJtm6RcMPicippQApcvZAE4cwMaqkthMtjjk6Xen5IJFDYJycVmOd7lMNxE/nGhER8/aCp3dmSefkcRptNGzAyNfUSEoejQBwvik8iI3nLo2pG0a5L952JQQgIgk9QWoZ2DykoyLyMlleZnqkAdHgQjByRIMhaQEWqRJRl8gfZeztYH/k44VRJXVCJ5RjbneVZotUKnkeCgZTjZoOFTYYbwR/H0J7r0786ops3WJS7pwFwyf1evwiIzeqWUJjX2LHVxwuIDqiBy4wrJttMfaGkF/mOuZ6Sg+BIVjEG4OU3II01LHHLZKwGLshoidIP54ek/0xCGxIOyBU2kFZ1H5ERvx0rmUnZlz0BT9ThNkD7FIJAo3ERhnmmFvovIb3IQRIauTpxkYJ6AC47eActbmA2oWBJ6Hpcjbs+CCeh4ItKHSPT1h9jy+uo99Q3agvaqp+zK5mH4lPbSC1hxOsakRtMFMBE5Hibon3Sy219GiPS2DoyYu0rtoIo0KnZcW1bKtJXXeXsuFZVkXzKk5Kw4867NauT6pzsUn8YkDRaAwQZMK+koW89QvrYm4KRdN0uGsZkdelVeV4iZTLrROH2QN8G31Lq73x/55oukClsVr1ZXGL0HWLnt0l7BgTGymFXOpa+if+A7b5h6Q+CAAA</GeneratedCode>
-          <NotSaveToFile>0</NotSaveToFile>
-        </Form>
-        <Form Modified="0">
-          <Name>Швидкий вибір</Name>
-          <FullName>Швидкий вибір</FullName>
-          <Desc>Швидкий вибір</Desc>
-          <Type>ListSmallSelect</Type>
-          <GeneratedCode Zip="1">H4sIAAAAAAAACq2VUW8TORDH3yPlO1h92qJqQQKk40pAaUp6gSoNbBA6IVQ53mnixrGDPUvonZDgTrp7R6fyfOge7pEikEIRva/g/UYnO5t0t6SkFPZhbe+Mf/7PeOwtly5eIO4pl3xDCLGv7fv0RfqbPbJv7dh+sH+5Xrpv39lPdmwPt+2/3vDOHnrzSzu2B+l++jxkJkc5xalcunCxXCqXEsNll2xgf3Xab0gEvUMZbGD/yuxrlTGVSOSyG6kdHFENM9MGSNAUIa6pGMKTMu149Xgd+9q+sQf2ox2nf3rzB/u3/c+O0xf2yB6SykJWWCSk+7P5mXFByl7ZN5m/k5WJ+if93X6yh+kf6X76ilRIhErTLlRl3NbUyViILRB8vJIOwAwpg5M0b324sdXZBYZhlHSYoMZcX+caGCq9V1d6cFslWlIRDagQN4Il325yg9u7P9/pVePd0eWfOFe3L1+7u4Y/rN9dWn5ULg2pRk4F8bjzFw/5kZwqpVz6dVJY+fd03SeKx6QhuRvwXyBYnpizGe5p7w2hSQdAKovl1ZQ0GLa2Gs32rXurx4w74FRFgK4SSYUshV7ZUs7lyzUWVuO4pkQykAH2uFnOTYwAW7QLJqOb4OolZz52mPSeTT8Nk47gjBikyNk3ZLwJoznZOj9PcIOk4rAPOPZaWg1BIwcTPHyUD9e5hU2F0FGqX08kIxXS0qqr6SBco4Yzt/03Cx6FbGjAREuPWZ2fGfUEtOYxEGr2JCNtavpkU9H4HjClYzMnaDqiHBftYB6R38NnhbI8XcL9YUwRvlFEEXJCRiZBKwSGEJ9U4Y9KBBgB1awXGNSumI0fteEpfi7pQQ80uBvAnZ3CZRPal74mDuxR+tyOgxzlDHq8kjoXos4Fgg4mTU1J1EqQnfxoboV+KUM1DRQhA39dgvw2bQ1BuvPowg7uS/44gcb6TZJkPVIhMhHi1O0rZqkAmyJWSFUINXI/G4kgMQIBDLmSK37xuhIx6BVSo0KsUdbf3pITj5bi7h95znhuCRiAxKCjlCAN04TRCvle4U3ZGfY40FkMucPz3SKLANdBgMvcJu2AmO3WTMAZw/gMNJv/VYKuz9J5g9TUcO8serLbbK4sz5gjJbtw/gc2kZibvAkAAA==</GeneratedCode>
-          <NotSaveToFile>0</NotSaveToFile>
-          <TabularList>Записи</TabularList>
-        </Form>
-        <Form Modified="0">
-          <Name>Список</Name>
-          <FullName>Список</FullName>
-          <Desc>Список</Desc>
-          <Type>List</Type>
-          <GeneratedCode Zip="1">H4sIAAAAAAAACqVV3W7TMBS+r9R3sLjKpinjAgRiFLR16yibuop0QjBNk+uctaauXeyTlYEm8SPBPULjGsQDbAikMsR4BeeNUNK0S7puXUUuEtvn+PN3zvmOk8/Nz5L4yef6X0LsV/szfBO+taf2u+3ZX/ZTNAoP7Q/7x/bsictMyvmL/Wt74Rt7ak/yudn5fC6fCwyXDbKKrYXBuCwR9C5lsIqtG8PVRcZUIJHLhqd2sUs1DE2rIEFTBL+ofHBHGdjewtk59qs9ssf2t+2FH2LzrzQnUpiI5WYRwsPh/sR4aTZ27Gd7lPhHtBJS38J39o89Cd+Hh+FnUiAeKk0bsCj9mqYRjYmwGYQ4XknbYDqUwShabN1a3ag/A4auF9SZoMbcXeYaGCq9X1K6/VAFWlJRCoS451xb5wZ32k/WmotPmw9vPSg+Wdu7XUf9fLPdvTaznc91qEZOBYmBJipiJ5PxO+Sig/O5V33lpN+Do/YU90lZ8mjCX4Iz0zcnO6Kntt+BCm0DKUxmVFTSoFvdKFdqK48WMuK+RC3uou8XlQja0sEmNzOpjR5glTbAeICRYo1z83pkPnPojw4GS52gLjgjBilyNmUGK9AdE/50GIIbJIUI6jHHZlWrDmjkYJyt7XRYkZtbUQh1pVqlQDJSIFWtGpq23SVqOItKeD/jkYlaAwZaxjAL4zOg9kBr7gOhZl8yUqOmRdYV9R8BU9o3YwKlXcpxUqXSEOlaHWS0dTGFzY5PEf6TRBZkhEZCQSsEhuCPsoj17gF6QDVrOgZ1dHGYeFaDF3ie0uMmaIg6N2qAzPXg2o+xDo7tafja9pwUyhX4xExKXIgSFwja6X+KSqJWguymZ2NVeVmGihooQgI8XYLiMm10QEZ9tyKgDRKdulKClE0FunNkU/LnAZSX75MgGZECkYEQF1Yzm7RR7AR2ADZHilSIJcpaOymxpVY3pAcCGFYVj/5vU0bmAS6DAORKrtM6CGcQzpDAFcM4BzTcPxWhu8N03iNF1dm/Cp+k+8fSijHGUEka9B+jA42xeggAAA==</GeneratedCode>
-          <NotSaveToFile>0</NotSaveToFile>
-          <TabularList>Записи</TabularList>
-        </Form>
-        <Form Modified="1">
-          <Name>Елемент</Name>
-          <FullName>Елемент</FullName>
-          <Desc>Елемент</Desc>
-          <Type>Element</Type>
-          <GeneratedCode Zip="1">H4sIAAAAAAAACq1YW2sbRxR+F+g/DOqLHIyckvbFilJsVVJdWsdEImkJwYx2x/LU6xlldtaXmIAvEL8EAsV1oRAMpdBX1dhYtWv/hjP/qMzuaLW72rWsOPtgdmfO/XznIudzMw/yOWQe+BPO1Z7ahxs4hT78C0f6TR3DGVxDHy6X4Te4gnP4D87hWu2XLDfCG7vK5x7M5HP5nOdS1kENuVYevC8wScQKtkhDrn0Vns5ZFveYpKzT5CtyEwtSjrATRgSWxK5ym5SSRkG/fAvhpToY2JRNeALnahfO4Uodq0NNDNfqg28Aw+vE7WKLoKbkAnfIHLNbAtuBeS8bT9u/EEuWml7bcrDrPv6WCmJJLrbrXKzXHLJOmHxSLJi35e9/fro6Z3cWnJ+aS1a1blfrdK22WZh6lc91sZAUO8iXM2km0CxK05zP7QQJ6npth1rjpQbuJHKJdlCHyDKijMoyeosqiJHN4lQ5EB38/UKQDuUM1SlxbIOKGpNiG8EfcANnqBJ8lhYjrMnHMHyEHlzAKfTuxAQf4SawFC7hCnpqXx2oXegtL3GqoVblTAruZNKhyl1FpJph3CfMDiKgYRENSAu3PQeLJSykCcuQf2ZGZ6QH/8AV9NUhXEMPqUPo+Snq+58FP3wavD241KeFSao1IRz+jspeTopGIweVz64jFsOs2A1KYYNTGy0wqj/oG1KcCq53IiE0QNeWxjDrl2c8R9Go+5icjZ8Hh6UX1Jarz8hrj7ha7JcPH2YAL11yCN6k9PAiqeHriTWkgnVUXypZqYq7UgOzggpZNIUJSy3waEkQlzCJjfRHqW6NunOPAgizFgVYHAfwq2/oXoDWNJjcKmxsqkY4viO0syqHLI/GszwnW13MbFRBK9hx9WSJR+ttWBdBF3d1jO/QzBNd3K88U0GfPPIRCQtukWy+oDrtvEuEpMQtvnwV7Y6GsrTIJWlzvlb3mIUqaEnwjsDrpXnsUkvPqm9iFLHCFUR6gg0klRPhGLTYcKMYXGg5GoV1LsI7txQOyEHPCO9QJYOlzkXI5XctkwfBJbEksRHfIEJQmwStat6jjh2ypwR7rtslzC6GJKUfMWXzfCsatqogWJKmxEJGCFu86x+lEtdiMlu8W2N2hDAMmG9kVP4830IbmnLE0oyWGT8ORPkjv6jFTJtqPZstTBuGrKmdriPskeP1DPus1hV+TaovtZ+N0848x5nO5E4zITsROneTpOGe7TJQ2sJth+iVJJa2KJfJX+Qo6layEDO3HzhRu9BXe3AKN+oo2KvRDIILdQh9HTCdM3MMF9qDYP9W7xM9Lyw07G4zC7Wwu4bmXJd22HPseGm1ZsZ5k8gW2ZLFxC+X8eiMDOwsGXdCXebQNMvlyEwqZXGMHad4E1M5Ol9+4Nh+RiwubLc4Vb4vipIzKaMXNojMzExaKnQYgow1TLRvDWpWJoJtfpC4TxM16c+EQSbH133KqjsaviHCH7c5d56gJt5IC6O+RNTVt2m7gxTbw48Im37oCioasMS9D1QZXRnMtyBNs38+pMWDGLM/9FoKL+q0iXbKq4WltYqKtS2LBPsvGbTbFBfhL3Wgs6zeqWP1OxzBlfoAJ+FipFGgo3at3gf/ZDjTYIB+GolubcnG0SBSbz9ucWoamXV8WtsTcSRiuVmCjM/DmW5I/gfd4OMTwhEAAA==</GeneratedCode>
-          <NotSaveToFile>0</NotSaveToFile>
-          <ElementFields>
-            <Field>
-              <Name>Код</Name>
-              <Caption>Код</Caption>
-              <Size>100</Size>
-              <Height>0</Height>
-              <SortNum>1</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>string</Type>
-              <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Назва</Name>
-              <Caption>Назва</Caption>
-              <Size>500</Size>
-              <Height>0</Height>
-              <SortNum>2</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>string</Type>
-              <Multiline>0</Multiline>
-            </Field>
-            <Field>
-              <Name>Номенклатура</Name>
-              <Caption>Номенклатура</Caption>
-              <Size>300</Size>
-              <Height>0</Height>
-              <SortNum>3</SortNum>
-              <ReadOnly>0</ReadOnly>
-              <Type>pointer</Type>
-              <Pointer>Довідники.Номенклатура</Pointer>
-              <PresetntationFields Count="1">
-                <Field>Назва</Field>
-              </PresetntationFields>
-            </Field>
-          </ElementFields>
-          <ElementTableParts>
-            <TablePart>
-              <Name>Контакти</Name>
-              <Caption>Контакти</Caption>
-              <Size>0</Size>
-              <Height>0</Height>
-              <SortNum>1</SortNum>
-            </TablePart>
-          </ElementTableParts>
-        </Form>
-      </Forms>
-    </Directory>
   </Directories>
   <Documents>
     <Document>
@@ -19339,8 +19020,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a25</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -20629,8 +20308,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a32</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -21157,8 +20834,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a32</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -22569,8 +22244,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a34</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -23876,8 +23549,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a36</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -24290,8 +23961,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a36</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -25285,8 +24954,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a42</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -26062,8 +25729,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a44</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -26174,8 +25839,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a44</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -27219,8 +26882,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a48</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -27343,8 +27004,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a48</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -28421,8 +28080,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a31</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -28667,8 +28324,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a31</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -29756,8 +29411,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a51</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -30041,8 +29694,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a51</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -31140,8 +30791,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a53</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -31437,8 +31086,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a53</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -32479,8 +32126,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a81</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -32662,8 +32307,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a81</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -33631,8 +33274,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a83</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -33889,8 +33530,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a83</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -34004,8 +33643,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a83</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -34119,8 +33756,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a83</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -34286,8 +33921,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a83</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -35141,8 +34774,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a88</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -35762,8 +35393,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a90</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -36376,8 +36005,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a92</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -37093,8 +36720,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a94</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -37886,8 +37511,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_b07</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -38172,8 +37795,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_b07</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -39157,8 +38778,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_b10</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -39462,8 +39081,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_b10</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -40402,8 +40019,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a64</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -41096,8 +40711,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_b09</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -41820,8 +41433,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_b27</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -42509,8 +42120,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_b29</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -43101,8 +42710,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a65</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -43268,8 +42875,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a65</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -44092,8 +43697,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_a96</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -45015,8 +44618,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_b41</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -45926,8 +45527,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_b44</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -46802,8 +46401,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_b51</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -47575,8 +47172,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>acc_operations</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -48558,8 +48153,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_b72</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -48866,8 +48459,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_b72</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -50622,8 +50213,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_b76</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -50917,8 +50506,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_b76</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>
@@ -51234,8 +50821,6 @@ FROM
               <Type>any_pointer</Type>
               <IsPrimaryKey>0</IsPrimaryKey>
               <IsIndex>1</IsIndex>
-              <ForeignKey>1</ForeignKey>
-              <References>tab_b76</References>
               <IsNotNull>1</IsNotNull>
             </PredefinedField>
           </PredefinedFields>

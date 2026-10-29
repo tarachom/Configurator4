@@ -378,7 +378,7 @@ public partial class DataTabularList
                 if (listItem.Child is not CheckTablePartCell cell) return;
                 if (listItem.Item is not ItemRow row) return;
 
-                cell.OnСhanged = () => row.Visible = cell.Check.Active;
+                cell.OnСhanged = () => row.Visible = cell.Value;
                 (row.Сhanged_Visible = () => cell.Value = row.Visible).Invoke();
 
             };
@@ -519,7 +519,7 @@ public partial class DataTabularList
                 if (listItem.Child is not GroupSort cell) return;
                 if (listItem.Item is not ItemRowFields row) return;
 
-                cell.SortField.OnСhanged = () => row.SortField = cell.SortField.Check.Active;
+                cell.SortField.OnСhanged = () => row.SortField = cell.SortField.Value;
                 (row.Сhanged_SortField = () => cell.SortField.Value = row.SortField).Invoke();
 
                 cell.SortDirection.OnСhanged = () => row.SortDirection = cell.SortDirection.Value == "Desc";
@@ -549,7 +549,7 @@ public partial class DataTabularList
                 if (listItem.Child is not CheckTablePartCell cell) return;
                 if (listItem.Item is not ItemRowFields row) return;
 
-                cell.OnСhanged = () => row.FilterField = cell.Check.Active;
+                cell.OnСhanged = () => row.FilterField = cell.Value;
                 (row.Сhanged_FilterField = () => cell.Value = row.FilterField).Invoke();
 
             };

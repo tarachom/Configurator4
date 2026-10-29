@@ -13,7 +13,7 @@
 
         <xsl:choose>
 
-            <xsl:when test="$File = 'Triggers'">
+            <xsl:when test="$File = 'TriggersTablePart'">
                 <xsl:call-template name="TablePartTriggers" />
             </xsl:when>
             <xsl:when test="$File = 'TablePart'">
@@ -330,12 +330,8 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
                 </xsl:choose> cell) return;
                 if (listItem.Item is not ItemRow row) return;
                 <xsl:choose>
-                    <xsl:when test="(Type = 'string' or Type = 'integer' or Type = 'numeric') and ReadOnly = '0'">
+                    <xsl:when test="(Type = 'string' or Type = 'integer' or Type = 'numeric' or Type = 'boolean') and ReadOnly = '0'">
                 cell.OnСhanged = () =&gt; row.<xsl:value-of select="Name"/> = cell.Value;
-                (row.Сhanged_<xsl:value-of select="Name"/> = () =&gt; cell.Value = row.<xsl:value-of select="Name"/>).Invoke();
-                    </xsl:when>
-                    <xsl:when test="Type = 'boolean'">
-                cell.OnСhanged = () =&gt; row.<xsl:value-of select="Name"/> = cell.Check.Active;
                 (row.Сhanged_<xsl:value-of select="Name"/> = () =&gt; cell.Value = row.<xsl:value-of select="Name"/>).Invoke();
                     </xsl:when>
                     <xsl:when test="Type = 'pointer'">

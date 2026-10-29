@@ -861,9 +861,11 @@
                   <xsl:text>PRIMARY KEY(uid));</xsl:text>
                 </sql>
                 <xsl:if test="$IsCreateOwnerField = 'yes' and normalize-space($OwnerTableName) != ''">
-                  <sql_end>
+                  <!-- Відключено використання зовнішніх ключів для поля owner табличної частини
+                  <sql_end> 
                     <xsl:value-of select="concat('ALTER TABLE ', $TabularParts_TableName, ' ADD CONSTRAINT ', 'fk_', $TabularParts_TableName, '_owner_references FOREIGN KEY(owner) REFERENCES ', $OwnerTableName, '(uid) ON UPDATE NO ACTION ON DELETE NO ACTION NOT VALID;')"/>
                   </sql_end>
+                  -->
                 </xsl:if>
                 <xsl:for-each select="FieldCreate[ForeignKey = '1']">
                   <sql_end>

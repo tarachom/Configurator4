@@ -119,45 +119,45 @@ public static class Function
         if (confDirectory.Forms.Count == 0)
         {
             {
-                string name = "Функції";
-                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.Function);
-                confDirectory.AppendForms(forms);
+                var type = ConfigurationForms.TypeForms.Function;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confDirectory.AppendForms(new(name, name, name, type));
             }
 
             {
-                string name = "Тригери";
-                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.Triggers);
-                confDirectory.AppendForms(forms);
+                var type = ConfigurationForms.TypeForms.Triggers;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confDirectory.AppendForms(new(name, name, name, type));
             }
 
             {
-                string name = "Реквізит вибору";
-                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.PointerControl);
-                confDirectory.AppendForms(forms);
+                var type = ConfigurationForms.TypeForms.PointerControl;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confDirectory.AppendForms(new(name, name, name, type));
             }
 
             {
-                string name = "Реквізит вибору для таб частини";
-                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.PointerTablePartCell);
-                confDirectory.AppendForms(forms);
+                var type = ConfigurationForms.TypeForms.PointerTablePartCell;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confDirectory.AppendForms(new(name, name, name, type));
             }
 
             {
-                string name = "Швидкий вибір";
-                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.ListSmallSelect);
-                confDirectory.AppendForms(forms);
+                var type = ConfigurationForms.TypeForms.ListSmallSelect;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confDirectory.AppendForms(new(name, name, name, type));
             }
 
             {
-                string name = "Список";
-                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.List);
-                confDirectory.AppendForms(forms);
+                var type = ConfigurationForms.TypeForms.List;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confDirectory.AppendForms(new(name, name, name, type));
             }
 
             {
-                string name = "Елемент";
-                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.Element);
-                confDirectory.AppendForms(forms);
+                var type = ConfigurationForms.TypeForms.Element;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confDirectory.AppendForms(new(name, name, name, type));
             }
         }
 
@@ -208,10 +208,9 @@ public static class Function
         {
             ConfigurationTabularList list = new("Записи");
             int sortNum = 0;
-            string[] typesIgnor = ["composite_pointer"];
 
             //Заповнення полями списків (крім типів які ігноруються)
-            foreach (var item in confDocument.Fields.Values.Where(x => typesIgnor.Contains(x.Type)))
+            foreach (var item in confDocument.Fields.Values)
             {
                 string caption = item.Name switch { "ДатаДок" => "Дата", "НомерДок" => "Номер", _ => item.Name };
                 list.AppendField(new ConfigurationTabularListField(item.Name, caption, 0, ++sortNum, item.Name == "ДатаДок"));
@@ -225,51 +224,58 @@ public static class Function
         if (confDocument.Forms.Count == 0)
         {
             {
-                string name = "Функції";
-                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.Function);
-                confDocument.AppendForms(forms);
+                var type = ConfigurationForms.TypeForms.Function;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confDocument.AppendForms(new(name, name, name, type));
             }
 
             {
-                string name = "Тригери";
-                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.Triggers);
-                confDocument.AppendForms(forms);
+                var type = ConfigurationForms.TypeForms.Triggers;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confDocument.AppendForms(new(name, name, name, type));
             }
 
             {
-                string name = "Реквізит вибору";
-                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.PointerControl);
-                confDocument.AppendForms(forms);
+                var type = ConfigurationForms.TypeForms.SpendTheDocument;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confDocument.AppendForms(new(name, name, name, type));
             }
 
             {
-                string name = "Реквізит вибору для таб частини";
-                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.PointerTablePartCell);
-                confDocument.AppendForms(forms);
+                var type = ConfigurationForms.TypeForms.PointerControl;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confDocument.AppendForms(new(name, name, name, type));
             }
 
             {
-                string name = "Швидкий вибір";
-                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.ListSmallSelect);
-                confDocument.AppendForms(forms);
+                var type = ConfigurationForms.TypeForms.PointerTablePartCell;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confDocument.AppendForms(new(name, name, name, type));
             }
 
             {
-                string name = "Список";
-                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.List);
-                confDocument.AppendForms(forms);
+                var type = ConfigurationForms.TypeForms.ListSmallSelect;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confDocument.AppendForms(new(name, name, name, type));
             }
 
             {
-                string name = "Елемент";
-                ConfigurationForms forms = new(name, name, name, ConfigurationForms.TypeForms.Element);
-                confDocument.AppendForms(forms);
+                var type = ConfigurationForms.TypeForms.List;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confDocument.AppendForms(new(name, name, name, type));
+            }
+
+            {
+                var type = ConfigurationForms.TypeForms.Element;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confDocument.AppendForms(new(name, name, name, type));
             }
         }
 
         //Тригери
         confDocument.TriggerFunctions.NewAction = true;
         confDocument.TriggerFunctions.CopyingAction = true;
+        confDocument.TriggerFunctions.BeforeSaveAction = true;
 
         return true;
     }
@@ -309,6 +315,16 @@ public static class Function
                 }
         }
 
+        //Форми
+        if (confTablePart.Forms.Count == 0)
+        {
+            {
+                var type = ConfigurationForms.TypeForms.TablePart;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confTablePart.AppendForms(new(name, name, name, type));
+            }
+        }
+
         return true;
     }
 
@@ -339,6 +355,16 @@ public static class Function
                 confRegAccum.AppendPropertyField(field);
             }
 
+        //Форми
+        if (confRegAccum.Forms.Count == 0)
+        {
+            {
+                var type = ConfigurationForms.TypeForms.List;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confRegAccum.AppendForms(new(name, name, name, type));
+            }
+        }
+
         return true;
     }
 
@@ -368,6 +394,16 @@ public static class Function
                 field.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, confRegInfo.Table, allFields);
                 confRegInfo.AppendPropertyField(field);
             }
+
+        //Форми
+        if (confRegInfo.Forms.Count == 0)
+        {
+            {
+                var type = ConfigurationForms.TypeForms.List;
+                string name = ConfigurationForms.TypeForms_Dict()[$"{type}"];
+                confRegInfo.AppendForms(new(name, name, name, type));
+            }
+        }
 
         return true;
     }

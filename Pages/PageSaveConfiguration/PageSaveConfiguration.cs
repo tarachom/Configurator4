@@ -707,7 +707,7 @@ public partial class PageSaveConfiguration
                                         existAnyForm = true;
                                     }
 
-                                    string formPath = System.IO.Path.Combine(folderPathDirectory, directory.Name + "_" + form.Name + ".cs");
+                                    string formPath = System.IO.Path.Combine(folderPathDirectory, directory.Name + "_" + form.Name + "_" + tabularPart.Name + ".cs");
 
                                     TextWriter tw = System.IO.File.CreateText(formPath);
                                     tw.Write(form.GeneratedCode);
@@ -758,7 +758,7 @@ public partial class PageSaveConfiguration
                                         existAnyForm = true;
                                     }
 
-                                    string formPath = System.IO.Path.Combine(folderPathDocument, document.Name + "_" + form.Name + ".cs");
+                                    string formPath = System.IO.Path.Combine(folderPathDocument, document.Name + "_" + form.Name + "_" + tabularPart.Name + ".cs");
 
                                     TextWriter tw = System.IO.File.CreateText(formPath);
                                     tw.Write(form.GeneratedCode);

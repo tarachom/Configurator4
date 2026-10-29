@@ -144,6 +144,22 @@ public partial class FormElementSettings
     {
         public static new ItemRowFields New() => NewWithProperties([]);
 
+        /* Тільки читання */
+        public bool ReadOnly
+        {
+            get => ReadOnly_;
+            set
+            {
+                if (!ReadOnly_.Equals(value))
+                {
+                    ReadOnly_ = value;
+                    Сhanged_ReadOnly?.Invoke();
+                }
+            }
+        }
+        bool ReadOnly_ = false;
+        public Action? Сhanged_ReadOnly { get; set; } = null;
+
         /* Тип даних поля */
         public string Type
         {
@@ -180,7 +196,6 @@ public partial class FormElementSettings
     #endregion
 
     Dictionary<string, ConfigurationField> Fields { get; set; } = [];
-    ConfigurationForms Form { get; set; } = new();
 
     Gio.ListStore StoreFields { get; } = Gio.ListStore.New(ItemRowFields.GetGType());
     Gio.ListStore StoreTabularParts { get; } = Gio.ListStore.New(ItemRow.GetGType());
@@ -250,7 +265,7 @@ public partial class FormElementSettings
                 if (listItem.Child is not CheckTablePartCell cell) return;
                 if (listItem.Item is not ItemRow row) return;
 
-                cell.OnСhanged = () => row.Visible = cell.Check.Active;
+                cell.OnСhanged = () => row.Visible = cell.Value;
                 (row.Сhanged_Visible = () => cell.Value = row.Visible).Invoke();
 
             };
@@ -404,6 +419,33 @@ public partial class FormElementSettings
 
     static void ColumnFields(ColumnView columnView)
     {
+        //Тільки читання
+        {
+            SignalListItemFactory factory = SignalListItemFactory.New();
+            factory.OnSetup += (_, args) =>
+            {
+                if (args.Object is not ListItem listItem) return;
+                var cell = CheckTablePartCell.New();
+                cell.Halign = Align.Center;
+
+                listItem.Child = cell;
+            };
+            factory.OnBind += (_, args) =>
+            {
+                if (args.Object is not ListItem listItem) return;
+                if (listItem.Child is not CheckTablePartCell cell) return;
+                if (listItem.Item is not ItemRowFields row) return;
+
+                cell.OnСhanged = () => row.ReadOnly = cell.Value;
+                (row.Сhanged_ReadOnly = () => cell.Value = row.ReadOnly).Invoke();
+            };
+            ColumnViewColumn column = ColumnViewColumn.New("Читання", factory);
+            column.Resizable = true;
+            //column.FixedWidth = 65;
+
+            columnView.AppendColumn(column);
+        }
+
         //Тип
         {
             SignalListItemFactory factory = SignalListItemFactory.New();
@@ -485,24 +527,25 @@ public partial class FormElementSettings
     public void SetValue(Dictionary<string, ConfigurationField> fields, Dictionary<string, ConfigurationTablePart> tabularParts, ConfigurationForms form)
     {
         Fields = fields;
-        Form = form;
 
         {
             StoreFields.RemoveAll();
 
-            int maxSortNum = Form.ElementFields.Count > 0 ? Form.ElementFields.Values.Max(x => x.SortNum) : 0;
+            int maxSortNum = form.ElementFields.Count > 0 ? form.ElementFields.Values.Max(x => x.SortNum) : 0;
             foreach (ConfigurationField field in fields.Values)
             {
                 ItemRowFields item = ItemRowFields.New();
                 item.Name = field.Name;
 
-                if (Form.ElementFields.TryGetValue(field.Name, out ConfigurationFormsElementField? elemField))
+                if (form.ElementFields.TryGetValue(field.Name, out ConfigurationFormsElementField? elemField))
                 {
                     item.Visible = true;
                     item.Caption = !string.IsNullOrEmpty(elemField.Caption) ? elemField.Caption : Configuration.CreateFullName(field.Name);
                     item.Size = elemField.Size;
                     item.Height = elemField.Height;
                     item.SortNum = elemField.SortNum;
+                    item.ReadOnly = elemField.ReadOnly;
+                    Console.WriteLine(item.Name  + " " + item.ReadOnly);
                 }
                 else
                 {
@@ -519,13 +562,13 @@ public partial class FormElementSettings
         {
             StoreTabularParts.RemoveAll();
 
-            int maxSortNum = Form.ElementTableParts.Count > 0 ? Form.ElementTableParts.Values.Max(x => x.SortNum) : 0;
+            int maxSortNum = form.ElementTableParts.Count > 0 ? form.ElementTableParts.Values.Max(x => x.SortNum) : 0;
             foreach (ConfigurationTablePart tablePart in tabularParts.Values)
             {
                 ItemRow item = ItemRow.New();
                 item.Name = tablePart.Name;
 
-                if (Form.ElementTableParts.TryGetValue(tablePart.Name, out ConfigurationFormsElementTablePart? elemTablePart))
+                if (form.ElementTableParts.TryGetValue(tablePart.Name, out ConfigurationFormsElementTablePart? elemTablePart))
                 {
                     item.Visible = true;
                     item.Caption = !string.IsNullOrEmpty(elemTablePart.Caption) ? elemTablePart.Caption : Configuration.CreateFullName(tablePart.Name);
@@ -544,56 +587,59 @@ public partial class FormElementSettings
         }
     }
 
-    public void GetValue()
+    public void GetValue(ConfigurationForms form)
     {
-        Form.ElementFields.Clear();
-        Form.ElementTableParts.Clear();
+        form.ElementFields.Clear();
+        form.ElementTableParts.Clear();
 
-        SorterChangedOnOff = false;
-
-        //Поля
+        if (form.Type == ConfigurationForms.TypeForms.Element || form.Type == ConfigurationForms.TypeForms.TablePart)
         {
-            if (columnViewFields.GetModel() is SingleSelection model)
+            SorterChangedOnOff = false;
+
+            //Поля
             {
-                int counter = 0;
+                if (columnViewFields.GetModel() is SingleSelection model)
+                {
+                    int counter = 0;
 
-                //Обхід видимих полів
-                for (uint i = 0; i < model.GetNItems(); i++)
-                    if (model.GetObject(i) is ItemRowFields row && row.Visible)
-                    {
-                        row.SortNum = ++counter;
-                        Form.AppendElementField(new(row.Name, row.Caption, row.Size, row.Height, row.SortNum));
-                    }
+                    //Обхід видимих полів
+                    for (uint i = 0; i < model.GetNItems(); i++)
+                        if (model.GetObject(i) is ItemRowFields row && row.Visible)
+                        {
+                            row.SortNum = ++counter;
+                            form.AppendElementField(new(row.Name, row.Caption, row.Size, row.Height, row.SortNum, false, row.ReadOnly));
+                        }
 
-                //Додаткова нумерація невидимих полів
-                for (uint i = 0; i < model.GetNItems(); i++)
-                    if (model.GetObject(i) is ItemRowFields row && !row.Visible)
-                        row.SortNum = ++counter;
+                    //Додаткова нумерація невидимих полів
+                    for (uint i = 0; i < model.GetNItems(); i++)
+                        if (model.GetObject(i) is ItemRowFields row && !row.Visible)
+                            row.SortNum = ++counter;
+                }
             }
-        }
 
-        //Табличні частини
-        {
-            if (columnViewTabularParts.GetModel() is SingleSelection model)
+            //Табличні частини
             {
-                int counter = 0;
+                if (columnViewTabularParts.GetModel() is SingleSelection model)
+                {
+                    int counter = 0;
 
-                //Обхід видимих таб частин
-                for (uint i = 0; i <= model.GetNItems(); i++)
-                    if (model.GetObject(i) is ItemRow row && row.Visible)
-                    {
-                        row.SortNum = ++counter;
-                        Form.AppendElementTablePart(new(row.Name, row.Caption, row.Size, row.Height, row.SortNum));
-                    }
+                    //Обхід видимих таб частин
+                    for (uint i = 0; i <= model.GetNItems(); i++)
+                        if (model.GetObject(i) is ItemRow row && row.Visible)
+                        {
+                            row.SortNum = ++counter;
+                            form.AppendElementTablePart(new(row.Name, row.Caption, row.Size, row.Height, row.SortNum));
+                        }
 
-                //Додаткова нумерація невидимих полів
-                for (uint i = 0; i < model.GetNItems(); i++)
-                    if (model.GetObject(i) is ItemRow row && !row.Visible)
-                        row.SortNum = ++counter;
+                    //Додаткова нумерація невидимих полів
+                    for (uint i = 0; i < model.GetNItems(); i++)
+                        if (model.GetObject(i) is ItemRow row && !row.Visible)
+                            row.SortNum = ++counter;
+                }
             }
-        }
 
-        SorterChangedOnOff = true;
-        Sorter.Changed(SorterChange.Different);
+            SorterChangedOnOff = true;
+            Sorter.Changed(SorterChange.Different);
+        }
     }
 }

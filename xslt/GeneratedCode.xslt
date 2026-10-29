@@ -1817,7 +1817,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
         }
     }
       </xsl:for-each> <!-- TableParts -->
-    
+    <!--
     public static class <xsl:value-of select="$DocumentName"/>_Export
     {
         public static async Task ToXmlFile(<xsl:value-of select="$DocumentName"/>_Pointer <xsl:value-of select="$DocumentName"/>, string pathToSave)
@@ -1947,6 +1947,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
         </xsl:choose>
         }
     }
+    -->
 
     #endregion
     </xsl:for-each>
