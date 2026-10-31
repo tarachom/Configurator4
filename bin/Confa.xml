@@ -7,7 +7,7 @@
   <Author>Тарахомин Юрій Іванович, accounting.org.ua</Author>
   <Desc>Конфігурація "Зберігання та Торгівля"
 https://accounting.org.ua/storage_and_trade.html</Desc>
-  <DateTimeSave>31.10.2026 22:29:04</DateTimeSave>
+  <DateTimeSave>31.10.2026 23:06:33</DateTimeSave>
   <DictTSearch>simple</DictTSearch>
   <GtkVersion>Gtk4</GtkVersion>
   <ConstantsBlocks>
@@ -70569,36 +70569,42 @@ FROM
         <Field>
           <Name>Адрес</Name>
           <FullName>Адрес</FullName>
+          <LatinName>Adres</LatinName>
           <Value>1</Value>
           <Desc>Адрес</Desc>
         </Field>
         <Field>
           <Name>Телефон</Name>
           <FullName>Телефон</FullName>
+          <LatinName>Telefon</LatinName>
           <Value>2</Value>
           <Desc>Телефон</Desc>
         </Field>
         <Field>
           <Name>ЕлектроннаПошта</Name>
           <FullName>Електронна пошта</FullName>
+          <LatinName>ElektronnaPoshta</LatinName>
           <Value>3</Value>
           <Desc>Електронна пошта</Desc>
         </Field>
         <Field>
           <Name>Сайт</Name>
           <FullName>Сайт</FullName>
+          <LatinName>Sait</LatinName>
           <Value>4</Value>
           <Desc>Сайт</Desc>
         </Field>
         <Field>
           <Name>Skype</Name>
           <FullName>Skype</FullName>
+          <LatinName>Skype</LatinName>
           <Value>5</Value>
           <Desc>Skype</Desc>
         </Field>
         <Field>
           <Name>Інше</Name>
           <FullName>Інше</FullName>
+          <LatinName>Inshe</LatinName>
           <Value>6</Value>
           <Desc>Інше</Desc>
         </Field>
@@ -70613,26 +70619,31 @@ FROM
       <Fields>
         <Field>
           <Name>Товар</Name>
+          <LatinName>Товар</LatinName>
           <Value>1</Value>
           <Desc>Товар</Desc>
         </Field>
         <Field>
           <Name>Послуга</Name>
+          <LatinName>Послуга</LatinName>
           <Value>2</Value>
           <Desc>Послуга</Desc>
         </Field>
         <Field>
           <Name>Робота</Name>
+          <LatinName>Робота</LatinName>
           <Value>3</Value>
           <Desc>Робота</Desc>
         </Field>
         <Field>
           <Name>Тара</Name>
+          <LatinName>Тара</LatinName>
           <Value>4</Value>
           <Desc>Тара</Desc>
         </Field>
         <Field>
           <Name>Набір</Name>
+          <LatinName>Набір</LatinName>
           <Value>5</Value>
           <Desc>Набір</Desc>
         </Field>
@@ -70647,11 +70658,13 @@ FROM
       <Fields>
         <Field>
           <Name>Гуртовий</Name>
+          <LatinName>Гуртовий</LatinName>
           <Value>1</Value>
           <Desc>Гуртовий</Desc>
         </Field>
         <Field>
           <Name>Роздрібний</Name>
+          <LatinName>Роздрібний</LatinName>
           <Value>2</Value>
           <Desc>Роздрібний</Desc>
         </Field>
@@ -70666,12 +70679,14 @@ FROM
       <Fields>
         <Field>
           <Name>Чоловік</Name>
+          <LatinName>Чоловік</LatinName>
           <Value>1</Value>
           <Desc>
           </Desc>
         </Field>
         <Field>
           <Name>Жінка</Name>
+          <LatinName>Жінка</LatinName>
           <Value>2</Value>
           <Desc>
           </Desc>
@@ -70687,16 +70702,19 @@ FROM
       <Fields>
         <Field>
           <Name>НеУзгоджений</Name>
+          <LatinName>НеУзгоджений</LatinName>
           <Value>1</Value>
           <Desc>Не узгоджений</Desc>
         </Field>
         <Field>
           <Name>Діє</Name>
+          <LatinName>Діє</LatinName>
           <Value>2</Value>
           <Desc>Діє</Desc>
         </Field>
         <Field>
           <Name>Закритий</Name>
+          <LatinName>Закритий</LatinName>
           <Value>3</Value>
           <Desc>Закритий</Desc>
         </Field>
@@ -70711,126 +70729,151 @@ FROM
       <Fields>
         <Field>
           <Name>ЗамовленняВПостачальника</Name>
+          <LatinName>ЗамовленняВПостачальника</LatinName>
           <Value>1</Value>
           <Desc>Замовлення в постачальника</Desc>
         </Field>
         <Field>
           <Name>ОплатаПостачальнику</Name>
+          <LatinName>ОплатаПостачальнику</LatinName>
           <Value>2</Value>
           <Desc>Оплата постачальнику</Desc>
         </Field>
         <Field>
           <Name>ОприбуткуванняТоварів</Name>
+          <LatinName>ОприбуткуванняТоварів</LatinName>
           <Value>3</Value>
           <Desc>Оприбуткування товарів</Desc>
         </Field>
         <Field>
           <Name>ПереміщенняТоварів</Name>
+          <LatinName>ПереміщенняТоварів</LatinName>
           <Value>4</Value>
           <Desc>Переміщення товарів</Desc>
         </Field>
         <Field>
           <Name>НадходженняПослуг</Name>
+          <LatinName>НадходженняПослуг</LatinName>
           <Value>5</Value>
           <Desc>Надходження послуг</Desc>
         </Field>
         <Field>
           <Name>ІншеНадходженняТоварів</Name>
+          <LatinName>ІншеНадходженняТоварів</LatinName>
           <Value>6</Value>
           <Desc>Інше надходження товарів</Desc>
         </Field>
         <Field>
           <Name>ІншіДоходи</Name>
+          <LatinName>ІншіДоходи</LatinName>
           <Value>7</Value>
           <Desc>Інші доходи</Desc>
         </Field>
         <Field>
           <Name>ІншіВитрати</Name>
+          <LatinName>ІншіВитрати</LatinName>
           <Value>8</Value>
           <Desc>Інші витрати</Desc>
         </Field>
         <Field>
           <Name>РеалізаціяКлієнту</Name>
+          <LatinName>РеалізаціяКлієнту</LatinName>
           <Value>9</Value>
           <Desc>Реалізація клієнту</Desc>
         </Field>
         <Field>
           <Name>СписанняТоварів</Name>
+          <LatinName>СписанняТоварів</LatinName>
           <Value>10</Value>
           <Desc>Списання товарів</Desc>
         </Field>
         <Field>
           <Name>ПоступленняОплатиВідКлієнта</Name>
+          <LatinName>ПоступленняОплатиВідКлієнта</LatinName>
           <Value>11</Value>
           <Desc>Поступлення оплати від клієнта</Desc>
         </Field>
         <Field>
           <Name>ПоступленняКоштівЗІншоїКаси</Name>
+          <LatinName>ПоступленняКоштівЗІншоїКаси</LatinName>
           <Value>12</Value>
           <Desc>Поступлення коштів з іншої каси</Desc>
         </Field>
         <Field>
           <Name>ПоступленняКоштівЗБанку</Name>
+          <LatinName>ПоступленняКоштівЗБанку</LatinName>
           <Value>13</Value>
           <Desc>Поступлення коштів з банку</Desc>
         </Field>
         <Field>
           <Name>ПоверненняКоштівВідПостачальника</Name>
+          <LatinName>ПоверненняКоштівВідПостачальника</LatinName>
           <Value>14</Value>
           <Desc>Повернення коштів від постачальника</Desc>
         </Field>
         <Field>
           <Name>ПоверненняКоштівПостачальнику</Name>
+          <LatinName>ПоверненняКоштівПостачальнику</LatinName>
           <Value>15</Value>
           <Desc>Повернення коштів постачальнику</Desc>
         </Field>
         <Field>
           <Name>ЗдачаКоштівВБанк</Name>
+          <LatinName>ЗдачаКоштівВБанк</LatinName>
           <Value>16</Value>
           <Desc>Здача коштів в банк</Desc>
         </Field>
         <Field>
           <Name>ПоверненняОплатиКлієнту</Name>
+          <LatinName>ПоверненняОплатиКлієнту</LatinName>
           <Value>17</Value>
           <Desc>Повернення оплати клієнту</Desc>
         </Field>
         <Field>
           <Name>ВидачаКоштівВІншуКасу</Name>
+          <LatinName>ВидачаКоштівВІншуКасу</LatinName>
           <Value>18</Value>
           <Desc>Видача коштів в іншу касу</Desc>
         </Field>
         <Field>
           <Name>ЗакупівляВПостачальника</Name>
+          <LatinName>ЗакупівляВПостачальника</LatinName>
           <Value>19</Value>
           <Desc>Закупівля в постачальника</Desc>
         </Field>
         <Field>
           <Name>ПлануванняПоЗамовленнямПостачальнику</Name>
+          <LatinName>ПлануванняПоЗамовленнямПостачальнику</LatinName>
           <Value>20</Value>
           <Desc>Планування по замовленням постачальнику</Desc>
         </Field>
         <Field>
           <Name>ПлануванняПоЗамовленнямКлієнта</Name>
+          <LatinName>ПлануванняПоЗамовленнямКлієнта</LatinName>
           <Value>21</Value>
           <Desc>Планування по замовленням клієнта</Desc>
         </Field>
         <Field>
           <Name>ПоверненняТоварівВідКлієнта</Name>
+          <LatinName>ПоверненняТоварівВідКлієнта</LatinName>
           <Value>22</Value>
           <Desc>Повернення товарів від клієнта</Desc>
         </Field>
         <Field>
           <Name>ПоверненняТоварівПостачальнику</Name>
+          <LatinName>ПоверненняТоварівПостачальнику</LatinName>
           <Value>23</Value>
           <Desc>Повернення товарів постачальнику</Desc>
         </Field>
         <Field>
           <Name>ВведенняЗалишків</Name>
+          <LatinName>ВведенняЗалишків</LatinName>
           <Value>24</Value>
           <Desc>Введення залишків</Desc>
         </Field>
         <Field>
           <Name>ВнутрішнєСпоживанняТоварів</Name>
+          <LatinName>ВнутрішнєСпоживанняТоварів</LatinName>
           <Value>25</Value>
           <Desc>Внутрішнє споживання товарів</Desc>
         </Field>
@@ -70845,11 +70888,13 @@ FROM
       <Fields>
         <Field>
           <Name>ЗПокупцями</Name>
+          <LatinName>ЗПокупцями</LatinName>
           <Value>1</Value>
           <Desc>З покупцями</Desc>
         </Field>
         <Field>
           <Name>ЗПостачальниками</Name>
+          <LatinName>ЗПостачальниками</LatinName>
           <Value>2</Value>
           <Desc>З постачальниками</Desc>
         </Field>
@@ -70864,26 +70909,31 @@ FROM
       <Fields>
         <Field>
           <Name>Самовивіз</Name>
+          <LatinName>Самовивіз</LatinName>
           <Value>1</Value>
           <Desc>Самовивіз</Desc>
         </Field>
         <Field>
           <Name>ДоКлієнта</Name>
+          <LatinName>ДоКлієнта</LatinName>
           <Value>2</Value>
           <Desc>До клієнта</Desc>
         </Field>
         <Field>
           <Name>СиламиПеревізника</Name>
+          <LatinName>СиламиПеревізника</LatinName>
           <Value>3</Value>
           <Desc>Силами перевізника</Desc>
         </Field>
         <Field>
           <Name>НашимиСиламиЗАдресиВідправника</Name>
+          <LatinName>НашимиСиламиЗАдресиВідправника</LatinName>
           <Value>4</Value>
           <Desc>Нашими силами</Desc>
         </Field>
         <Field>
           <Name>ПорученняЕкспедитору</Name>
+          <LatinName>ПорученняЕкспедитору</LatinName>
           <Value>5</Value>
           <Desc>Поручення експедитору</Desc>
         </Field>
@@ -70898,16 +70948,19 @@ FROM
       <Fields>
         <Field>
           <Name>Готівка</Name>
+          <LatinName>Готівка</LatinName>
           <Value>1</Value>
           <Desc>Готівка</Desc>
         </Field>
         <Field>
           <Name>Безготівка</Name>
+          <LatinName>Безготівка</LatinName>
           <Value>2</Value>
           <Desc>Безготівка</Desc>
         </Field>
         <Field>
           <Name>Взаєморозрахунок</Name>
+          <LatinName>Взаєморозрахунок</LatinName>
           <Value>3</Value>
           <Desc>Взаєморозрахунок</Desc>
         </Field>
@@ -70922,24 +70975,28 @@ FROM
       <Fields>
         <Field>
           <Name>НеУзгоджений</Name>
+          <LatinName>НеУзгоджений</LatinName>
           <Value>1</Value>
           <Desc>
           </Desc>
         </Field>
         <Field>
           <Name>ДоЗабезпечення</Name>
+          <LatinName>ДоЗабезпечення</LatinName>
           <Value>2</Value>
           <Desc>
           </Desc>
         </Field>
         <Field>
           <Name>ДоВідгрузки</Name>
+          <LatinName>ДоВідгрузки</LatinName>
           <Value>3</Value>
           <Desc>
           </Desc>
         </Field>
         <Field>
           <Name>Закритий</Name>
+          <LatinName>Закритий</LatinName>
           <Value>4</Value>
           <Desc>
           </Desc>
@@ -70955,18 +71012,21 @@ FROM
       <Fields>
         <Field>
           <Name>ДоОплати</Name>
+          <LatinName>ДоОплати</LatinName>
           <Value>1</Value>
           <Desc>
           </Desc>
         </Field>
         <Field>
           <Name>ВДорозі</Name>
+          <LatinName>ВДорозі</LatinName>
           <Value>2</Value>
           <Desc>
           </Desc>
         </Field>
         <Field>
           <Name>Відгружено</Name>
+          <LatinName>Відгружено</LatinName>
           <Value>3</Value>
           <Desc>
           </Desc>
@@ -70982,16 +71042,19 @@ FROM
       <Fields>
         <Field>
           <Name>ОплатаПраці</Name>
+          <LatinName>ОплатаПраці</LatinName>
           <Value>1</Value>
           <Desc>Оплата праці</Desc>
         </Field>
         <Field>
           <Name>ПодатокНаПрибуток</Name>
+          <LatinName>ПодатокНаПрибуток</LatinName>
           <Value>2</Value>
           <Desc>Податок на прибуток</Desc>
         </Field>
         <Field>
           <Name>ОплатаОборотнихАктивів</Name>
+          <LatinName>ОплатаОборотнихАктивів</LatinName>
           <Value>3</Value>
           <Desc>Оплата оборотних активів</Desc>
         </Field>
@@ -71006,12 +71069,14 @@ FROM
       <Fields>
         <Field>
           <Name>Відгружено</Name>
+          <LatinName>Відгружено</LatinName>
           <Value>1</Value>
           <Desc>
           </Desc>
         </Field>
         <Field>
           <Name>Принято</Name>
+          <LatinName>Принято</LatinName>
           <Value>2</Value>
           <Desc>
           </Desc>
@@ -71027,24 +71092,28 @@ FROM
       <Fields>
         <Field>
           <Name>НеУзгоджений</Name>
+          <LatinName>НеУзгоджений</LatinName>
           <Value>1</Value>
           <Desc>
           </Desc>
         </Field>
         <Field>
           <Name>Узгоджений</Name>
+          <LatinName>Узгоджений</LatinName>
           <Value>2</Value>
           <Desc>
           </Desc>
         </Field>
         <Field>
           <Name>Підтверджений</Name>
+          <LatinName>Підтверджений</LatinName>
           <Value>3</Value>
           <Desc>
           </Desc>
         </Field>
         <Field>
           <Name>Закритий</Name>
+          <LatinName>Закритий</LatinName>
           <Value>4</Value>
           <Desc>
           </Desc>
@@ -71060,16 +71129,19 @@ FROM
       <Fields>
         <Field>
           <Name>ПоступленняТоварівТаПослуг</Name>
+          <LatinName>ПоступленняТоварівТаПослуг</LatinName>
           <Value>1</Value>
           <Desc>Поступлення товарів та послуг</Desc>
         </Field>
         <Field>
           <Name>ВведенняЗалишків</Name>
+          <LatinName>ВведенняЗалишків</LatinName>
           <Value>2</Value>
           <Desc>Введення залишків</Desc>
         </Field>
         <Field>
           <Name>ВиготовленняПродукції</Name>
+          <LatinName>ВиготовленняПродукції</LatinName>
           <Value>3</Value>
           <Desc>Виготовлення продукції</Desc>
         </Field>
@@ -71084,11 +71156,13 @@ FROM
       <Fields>
         <Field>
           <Name>Товар</Name>
+          <LatinName>Товар</LatinName>
           <Value>1</Value>
           <Desc>Товар</Desc>
         </Field>
         <Field>
           <Name>Послуга</Name>
+          <LatinName>Послуга</LatinName>
           <Value>2</Value>
           <Desc>
           </Desc>
@@ -71104,18 +71178,21 @@ FROM
       <Fields>
         <Field>
           <Name>ЗамовленняКлієнта</Name>
+          <LatinName>ЗамовленняКлієнта</LatinName>
           <Value>5</Value>
           <Desc>
           </Desc>
         </Field>
         <Field>
           <Name>АктВиконанихРобіт</Name>
+          <LatinName>АктВиконанихРобіт</LatinName>
           <Value>6</Value>
           <Desc>
           </Desc>
         </Field>
         <Field>
           <Name>РеалізаціяТоварівТаПослуг</Name>
+          <LatinName>РеалізаціяТоварівТаПослуг</LatinName>
           <Value>7</Value>
           <Desc>
           </Desc>
@@ -71131,21 +71208,25 @@ FROM
       <Fields>
         <Field>
           <Name>FIFO</Name>
+          <LatinName>FIFO</LatinName>
           <Value>1</Value>
           <Desc>FIFO (перший прийшов - перший пішов)</Desc>
         </Field>
         <Field>
           <Name>LIFO</Name>
+          <LatinName>LIFO</LatinName>
           <Value>2</Value>
           <Desc>LIFO (останнім прийшов - першим пішов)</Desc>
         </Field>
         <Field>
           <Name>FEFO</Name>
+          <LatinName>FEFO</LatinName>
           <Value>3</Value>
           <Desc>FEFO (перший закінчується, перший виходить)</Desc>
         </Field>
         <Field>
           <Name>СередняВартість</Name>
+          <LatinName>СередняВартість</LatinName>
           <Value>4</Value>
           <Desc>Середня вартість</Desc>
         </Field>
@@ -71161,11 +71242,13 @@ FROM
       <Fields>
         <Field>
           <Name>Постачальник</Name>
+          <LatinName>Постачальник</LatinName>
           <Value>1</Value>
           <Desc>Постачальник</Desc>
         </Field>
         <Field>
           <Name>Клієнт</Name>
+          <LatinName>Клієнт</LatinName>
           <Value>2</Value>
           <Desc>Клієнт</Desc>
         </Field>
@@ -71180,11 +71263,13 @@ FROM
       <Fields>
         <Field>
           <Name>НеВикористовувати</Name>
+          <LatinName>НеВикористовувати</LatinName>
           <Value>1</Value>
           <Desc>Не використовувати</Desc>
         </Field>
         <Field>
           <Name>Комірка</Name>
+          <LatinName>Комірка</LatinName>
           <Value>2</Value>
           <Desc>Комірка</Desc>
         </Field>
@@ -71199,16 +71284,19 @@ FROM
       <Fields>
         <Field>
           <Name>Приймання</Name>
+          <LatinName>Приймання</LatinName>
           <Value>1</Value>
           <Desc>Приймання</Desc>
         </Field>
         <Field>
           <Name>Відвантаження</Name>
+          <LatinName>Відвантаження</LatinName>
           <Value>2</Value>
           <Desc>Відвантаження</Desc>
         </Field>
         <Field>
           <Name>Зберігання</Name>
+          <LatinName>Зберігання</LatinName>
           <Value>3</Value>
           <Desc>Зберігання</Desc>
         </Field>
@@ -71223,12 +71311,14 @@ FROM
       <Fields>
         <Field>
           <Name>Відмова</Name>
+          <LatinName>Відмова</LatinName>
           <Value>1</Value>
           <Desc>
           </Desc>
         </Field>
         <Field>
           <Name>Інше</Name>
+          <LatinName>Інше</LatinName>
           <Value>2</Value>
           <Desc>
           </Desc>
@@ -71244,12 +71334,14 @@ FROM
       <Fields>
         <Field>
           <Name>Відмова</Name>
+          <LatinName>Відмова</LatinName>
           <Value>1</Value>
           <Desc>
           </Desc>
         </Field>
         <Field>
           <Name>Інше</Name>
+          <LatinName>Інше</LatinName>
           <Value>2</Value>
           <Desc>
           </Desc>
@@ -71265,12 +71357,14 @@ FROM
       <Fields>
         <Field>
           <Name>Відмова</Name>
+          <LatinName>Відмова</LatinName>
           <Value>1</Value>
           <Desc>
           </Desc>
         </Field>
         <Field>
           <Name>Інше</Name>
+          <LatinName>Інше</LatinName>
           <Value>2</Value>
           <Desc>
           </Desc>
@@ -71287,6 +71381,7 @@ FROM
       <Fields>
         <Field>
           <Name>Фіскальний</Name>
+          <LatinName>Фіскальний</LatinName>
           <Value>1</Value>
           <Desc>Фіскальний</Desc>
         </Field>
@@ -71302,11 +71397,13 @@ FROM
       <Fields>
         <Field>
           <Name>Дебет</Name>
+          <LatinName>Дебет</LatinName>
           <Value>1</Value>
           <Desc>Дт</Desc>
         </Field>
         <Field>
           <Name>Кредит</Name>
+          <LatinName>Кредит</LatinName>
           <Value>2</Value>
           <Desc>Кт</Desc>
         </Field>
