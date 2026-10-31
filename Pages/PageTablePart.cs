@@ -38,6 +38,7 @@ partial class PageTablePart : FormPageConfigurator
     Configuration Conf { get; } = Program.Kernel.Conf;
 
     BasicFields basicFields = BasicFields.New();
+    TriggersTablePart triggers = TriggersTablePart.New();
     TablePartDataTree dataTree = TablePartDataTree.New();
 
     partial void Initialize()
@@ -59,6 +60,9 @@ partial class PageTablePart : FormPageConfigurator
     {
         //Основні поля
         vBox.Append(basicFields);
+
+        //Тригери
+        vBox.Append(triggers);
     }
 
     protected override void CreateEnd(Box vBox)
@@ -75,7 +79,9 @@ partial class PageTablePart : FormPageConfigurator
         basicFields.FullName = ConfTablePart.FullName;
         basicFields.TableOrColumn = ConfTablePart.Table;
         basicFields.Desc = ConfTablePart.Desc;
+        basicFields.LatinName = ConfTablePart.LatinName;
 
+        triggers.SetValue(ConfTablePart.TriggerFunctions);
         dataTree.SetValue(ConfTablePart, Owner);
     }
 
@@ -85,6 +91,9 @@ partial class PageTablePart : FormPageConfigurator
         ConfTablePart.FullName = basicFields.FullName;
         ConfTablePart.Table = basicFields.TableOrColumn;
         ConfTablePart.Desc = basicFields.Desc;
+        ConfTablePart.LatinName = basicFields.LatinName;
+
+        ConfTablePart.TriggerFunctions = triggers.GetValue();
     }
 
     protected override async Task<bool> Save()

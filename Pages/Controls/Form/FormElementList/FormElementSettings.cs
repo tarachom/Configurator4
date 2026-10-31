@@ -545,7 +545,6 @@ public partial class FormElementSettings
                     item.Height = elemField.Height;
                     item.SortNum = elemField.SortNum;
                     item.ReadOnly = elemField.ReadOnly;
-                    Console.WriteLine(item.Name  + " " + item.ReadOnly);
                 }
                 else
                 {

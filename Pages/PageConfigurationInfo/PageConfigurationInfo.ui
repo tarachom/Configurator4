@@ -180,7 +180,7 @@
                     </object>
                 </child>
 
-                <!-- РЯДОК 6: Версія бібліотек Gtk (внизу форми) -->
+                <!-- РЯДОК 6: Версія бібліотек Gtk -->
                 <child>
                     <object class="GtkLabel">
                         <property name="label">Версія бібліотек Gtk:</property>

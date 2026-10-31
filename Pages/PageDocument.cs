@@ -90,6 +90,7 @@ partial class PageDocument : FormPageConfigurator
         basicFields.FullName = ConfDocument.FullName;
         basicFields.TableOrColumn = ConfDocument.Table;
         basicFields.Desc = ConfDocument.Desc;
+        basicFields.LatinName = ConfDocument.LatinName;
 
         autoNum.SetValue(ConfDocument);
 
@@ -106,6 +107,7 @@ partial class PageDocument : FormPageConfigurator
         ConfDocument.FullName = basicFields.FullName;
         ConfDocument.Table = basicFields.TableOrColumn;
         ConfDocument.Desc = basicFields.Desc;
+        ConfDocument.LatinName = basicFields.LatinName;
 
         autoNum.GetValue();
 

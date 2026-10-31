@@ -47,6 +47,7 @@ public partial class BasicFields
     [Connect("entry_table_or_column")] Entry entryTableOrColumn;
     [Connect("rename_table_or_column")] public RenameTableOrColumn RenameTableOrColumn;
     [Connect("textview_desc")] TextView textviewDesc;
+    [Connect("entry_latin_name")] Entry entryLatinName;
 
     partial void Initialize()
     {
@@ -55,11 +56,21 @@ public partial class BasicFields
             EventControllerFocus controller = EventControllerFocus.New();
             controller.OnLeave += (_, _) =>
             {
-                if (string.IsNullOrEmpty(FullName))
-                {
-                    FullName = Configuration.CreateFullName(ItemName);
-                    if (string.IsNullOrEmpty(Desc)) Desc = FullName;
-                }
+                if (string.IsNullOrEmpty(FullName)) FullName = Configuration.CreateFullName(ItemName);
+                if (string.IsNullOrEmpty(Desc)) Desc = FullName;
+
+                LatinName = Configuration.ToLatin(ItemName);
+            };
+            entryItemName.AddController(controller);
+        }
+
+        //Натискання Enter
+        {
+            EventControllerKey controller = EventControllerKey.New();
+            controller.OnKeyReleased += (_, args) =>
+            {
+                if (args.Keyval is Gdk.Constants.KEY_Return or Gdk.Constants.KEY_KP_Enter)
+                    entryFullName.GrabFocus();
             };
             entryItemName.AddController(controller);
         }
@@ -119,5 +130,11 @@ public partial class BasicFields
     {
         get => textviewDesc.Buffer?.Text ?? string.Empty;
         set => textviewDesc.Buffer?.Text = value;
+    }
+
+    public string LatinName
+    {
+        get => entryLatinName.GetText();
+        set => entryLatinName.SetText(value);
     }
 }

@@ -1050,7 +1050,8 @@ partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFo
     <!-- PointerControl -->
     <xsl:template name="DirectoryPointerControl">
         <xsl:variable name="DirectoryName" select="Directory/Name"/>
-        <xsl:variable name="SubclassName" select="concat('PointerControl_', Directory/Alias)"/>
+        <xsl:variable name="DirectoryLatinName" select="Directory/LatinName"/>
+        <xsl:variable name="SubclassName" select="concat('Directory_', Directory/Alias, '_PointerControl')"/>
 
         <!-- Додатова інформація про підпорядкування довідника -->
         <xsl:variable name="DirectoryOwner" select="Directory/DirectoryOwner"/>
@@ -1067,8 +1068,8 @@ using <xsl:value-of select="$NameSpaceGeneratedCode"/>.Довідники;
 
 namespace <xsl:value-of select="$NameSpace"/>;
 
-[GObject.Subclass&lt;PointerControl&gt;("<xsl:value-of select="$SubclassName"/>")]
-public partial class <xsl:value-of select="$DirectoryName"/>_PointerControl : PointerControl
+[GObject.Subclass&lt;PointerControl&gt;(nameof(<xsl:value-of select="$DirectoryLatinName"/>_PointerControl))]
+public partial class <xsl:value-of select="$DirectoryLatinName"/>_PointerControl : PointerControl
 {
     event EventHandler&lt;<xsl:value-of select="$DirectoryName"/>_Pointer&gt;? PointerChanged;
 
@@ -1079,7 +1080,7 @@ public partial class <xsl:value-of select="$DirectoryName"/>_PointerControl : Po
         PointerChanged += async (_, pointer) =&gt; Presentation = !pointer.IsEmpty() ? await pointer.GetPresentation() : "";
     }
 
-    public static <xsl:value-of select="$DirectoryName"/>_PointerControl New() =&gt; NewWithProperties([]);
+    public static <xsl:value-of select="$DirectoryLatinName"/>_PointerControl New() =&gt; NewWithProperties([]);
 
     <xsl:value-of select="$DirectoryName"/>_Pointer pointer = new();
     public <xsl:value-of select="$DirectoryName"/>_Pointer Pointer

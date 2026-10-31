@@ -60,9 +60,7 @@ public partial class PageConfigurationInfo
     partial void Initialize()
     {
         dropdownGtkVersion.AllowEmpty = false;
-
-        foreach (var name in Enum.GetNames<Configuration.GtkVersion>())
-            dropdownGtkVersion.Append(name);
+        dropdownGtkVersion.Append(Configuration.GtkVersion.Gtk4.ToString()); //Тільки 4 версія gtk на даний момент
 
         buttonSave.OnClicked += (_, _) => SaveSettings();
     }

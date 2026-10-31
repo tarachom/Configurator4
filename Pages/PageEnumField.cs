@@ -70,6 +70,7 @@ partial class PageEnumField : FormPageConfigurator
         basicFields.ItemName = ConfEnumField.Name;
         basicFields.FullName = ConfEnumField.FullName;
         basicFields.Desc = ConfEnumField.Desc;
+        basicFields.LatinName = ConfEnumField.LatinName;
 
         enumFieldValue.SetValue(ConfEnumField.Value);
     }
@@ -79,6 +80,7 @@ partial class PageEnumField : FormPageConfigurator
         ConfEnumField.Name = basicFields.ItemName;
         ConfEnumField.FullName = basicFields.FullName;
         ConfEnumField.Desc = basicFields.Desc;
+        ConfEnumField.LatinName = basicFields.LatinName;
     }
 
     protected override async Task<bool> Save()

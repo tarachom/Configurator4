@@ -87,7 +87,7 @@ partial class PageField : FormPageConfigurator
         {
             (ConfiguratorItemOwnerType.RegisterInformation, ConfigurationRegistersInformation x) => Configuration.CombineAllFieldForRegister(x),
             (ConfiguratorItemOwnerType.RegisterAccumulation, ConfigurationRegistersAccumulation x) => Configuration.CombineAllFieldForRegister(x),
-            (ConfiguratorItemOwnerType.RegisterInformation or ConfiguratorItemOwnerType.RegisterAccumulation, _)  => throw new InvalidOperationException($"Невідповідність типу: Owner.Obj не є очікуваним регістром для групи {Owner?.Group}."),
+            (ConfiguratorItemOwnerType.RegisterInformation or ConfiguratorItemOwnerType.RegisterAccumulation, _) => throw new InvalidOperationException($"Невідповідність типу: Owner.Obj не є очікуваним регістром для групи {Owner?.Group}."),
             _ => Fields
         };
 
@@ -98,6 +98,7 @@ partial class PageField : FormPageConfigurator
         basicFields.FullName = ConfField.FullName;
         basicFields.TableOrColumn = ConfField.NameInTable;
         basicFields.Desc = ConfField.Desc;
+        basicFields.LatinName = ConfField.LatinName;
 
         field.SetValue(ConfField);
     }
@@ -108,6 +109,7 @@ partial class PageField : FormPageConfigurator
         ConfField.FullName = basicFields.FullName;
         ConfField.NameInTable = basicFields.TableOrColumn;
         ConfField.Desc = basicFields.Desc;
+        ConfField.LatinName = basicFields.LatinName;
 
         field.GetValue();
     }

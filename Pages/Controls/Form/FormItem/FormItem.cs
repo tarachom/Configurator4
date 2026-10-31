@@ -185,14 +185,15 @@ public partial class FormItem
         XmlElement nodeOwner = xmlDoc.CreateElement(Owner.Group.ToString());
         root.AppendChild(nodeOwner);
 
-        nodeOwner.AppendChild(xmlDoc.CreateNode("Alias", Configuration.GetShortGuid()));
+        string name = "", latinName = "";
 
         //Довідник
         if (Owner.Group == ConfiguratorItemOwnerType.Directory && Owner.Obj is ConfigurationDirectories directory)
         {
             Configuration.SaveTriggerFunctions(directory.TriggerFunctions, xmlDoc, nodeOwner);
 
-            nodeOwner.AppendChild(xmlDoc.CreateNode("Name", directory.Name));
+            name = directory.Name;
+            latinName = directory.LatinName;
             nodeOwner.AppendChild(xmlDoc.CreateNode("AutomaticNumeration", directory.AutomaticNumeration ? "1" : "0")); //Нумерація
             nodeOwner.AppendChild(xmlDoc.CreateNode("Type", directory.TypeDirectory.ToString())); //Тип довідника
 
@@ -225,27 +226,27 @@ public partial class FormItem
             Configuration.SaveTriggerFunctions(document.TriggerFunctions, xmlDoc, nodeOwner);
             Configuration.SaveSpendFunctions(document.SpendFunctions, xmlDoc, nodeOwner);
 
-            nodeOwner.AppendChild(xmlDoc.CreateNode("Name", document.Name));
+            name = document.Name;
             nodeOwner.AppendChild(xmlDoc.CreateNode("AutomaticNumeration", document.AutomaticNumeration ? "1" : "0")); //Нумерація
         }
 
         //Регістр інформації
         if (Owner.Group == ConfiguratorItemOwnerType.RegisterInformation && Owner.Obj is ConfigurationRegistersInformation regInfo)
         {
-            nodeOwner.AppendChild(xmlDoc.CreateNode("Name", regInfo.Name));
+            name = regInfo.Name;
         }
 
         //Регістр накопичення
         if (Owner.Group == ConfiguratorItemOwnerType.RegisterAccumulation && Owner.Obj is ConfigurationRegistersAccumulation regAccum)
         {
-            nodeOwner.AppendChild(xmlDoc.CreateNode("Name", regAccum.Name));
+            name = regAccum.Name;
             nodeOwner.AppendChild(xmlDoc.CreateNode("Type", regAccum.TypeRegisters.ToString()));
         }
 
         //Таблична частина
         if (Owner.Group == ConfiguratorItemOwnerType.TablePart && Owner.Obj is ConfigurationTablePart tablePart)
         {
-            nodeOwner.AppendChild(xmlDoc.CreateNode("Name", tablePart.Name));
+            name = tablePart.Name;
 
             if (ConfForm.Type == ConfigurationForms.TypeForms.TablePart)
                 Configuration.SaveFormElementField(Conf, Fields, ConfForm.ElementFields, xmlDoc, nodeOwner);
@@ -274,6 +275,10 @@ public partial class FormItem
                 }
             }
         }
+
+        nodeOwner.AppendChild(xmlDoc.CreateNode("Name", name));
+        nodeOwner.AppendChild(xmlDoc.CreateNode("LatinName", latinName));
+        nodeOwner.AppendChild(xmlDoc.CreateNode("Alias", Configuration.GetShortGuid()));
 
         if (IsList())
         {

@@ -74,6 +74,7 @@ partial class PageRegisterInformation : FormPageConfigurator
         basicFields.FullName = ConfRegInfo.FullName;
         basicFields.TableOrColumn = ConfRegInfo.Table;
         basicFields.Desc = ConfRegInfo.Desc;
+        basicFields.LatinName = ConfRegInfo.LatinName;
 
         dataTree.SetValue(ConfRegInfo);
     }
@@ -84,11 +85,12 @@ partial class PageRegisterInformation : FormPageConfigurator
         ConfRegInfo.FullName = basicFields.FullName;
         ConfRegInfo.Table = basicFields.TableOrColumn;
         ConfRegInfo.Desc = basicFields.Desc;
+        ConfRegInfo.LatinName = basicFields.LatinName;
     }
 
     protected override async Task<bool> Save()
     {
-        (bool result, string name) =await IsValid(basicFields.ItemName, ConfRegInfo.Name, [.. Conf.Directories.Keys]);
+        (bool result, string name) = await IsValid(basicFields.ItemName, ConfRegInfo.Name, [.. Conf.Directories.Keys]);
         basicFields.ItemName = name;
 
         if (result)

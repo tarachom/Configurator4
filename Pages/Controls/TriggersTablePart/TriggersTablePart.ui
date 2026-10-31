@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="TriggersTablePart" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="spacing">10</property>
+        <property name="margin-start">5</property>
+        <property name="margin-end">5</property>
+        <property name="margin-top">5</property>
+        <property name="margin-bottom">5</property>
+
+        <child>
+            <object class="GtkExpander">
+                <property name="label">Тригери</property>
+                <property name="expanded">false</property>
+                
+                 <child>
+                    <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">10</property>
+                        <property name="margin-top">10</property>
+
+                        <!-- Заголовок -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="use-markup">true</property>
+                                <property name="label">&lt;b&gt;Тригери&lt;/b&gt;</property>
+                                <property name="halign">center</property>
+                            </object>
+                        </child>
+
+                        <!-- Таблиця з елементами -->
+                        <child>
+                            <object class="GtkGrid">
+                                <property name="column-spacing">10</property>
+                                <property name="row-spacing">10</property>
+
+                                <!-- Рядок 0: Перед записом -->
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="label">Перед записом:</property>
+                                        <property name="halign">end</property>
+                                        <layout>
+                                            <property name="column">0</property>
+                                            <property name="row">0</property>
+                                        </layout>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkEntry" id="entry_before_save">
+                                        <property name="text">BeforeSave</property>
+                                        <property name="hexpand">true</property>
+                                        <layout>
+                                            <property name="column">1</property>
+                                            <property name="row">0</property>
+                                        </layout>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkSwitch" id="switch_before_save">
+                                        <property name="active">true</property>
+                                        <property name="valign">center</property>
+                                        <layout>
+                                            <property name="column">2</property>
+                                            <property name="row">0</property>
+                                        </layout>
+                                    </object>
+                                </child>
+
+                                <!-- Рядок 1: Після запису -->
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="label">Після запису:</property>
+                                        <property name="halign">end</property>
+                                        <layout>
+                                            <property name="column">0</property>
+                                            <property name="row">1</property>
+                                        </layout>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkEntry" id="entry_after_save">
+                                        <property name="text">AfterSave</property>
+                                        <property name="hexpand">true</property>
+                                        <layout>
+                                            <property name="column">1</property>
+                                            <property name="row">1</property>
+                                        </layout>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkSwitch" id="switch_after_save">
+                                        <property name="active">true</property>
+                                        <property name="valign">center</property>
+                                        <layout>
+                                            <property name="column">2</property>
+                                            <property name="row">1</property>
+                                        </layout>
+                                    </object>
+                                </child>
+
+                            </object>
+                        </child>
+
+                    </object>
+                </child>
+
+            </object>
+        </child>
+
+    </template>
+</interface>

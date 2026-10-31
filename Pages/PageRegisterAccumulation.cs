@@ -82,6 +82,7 @@ partial class PageRegisterAccumulation : FormPageConfigurator
         basicFields.FullName = ConfRegAccum.FullName;
         basicFields.TableOrColumn = ConfRegAccum.Table;
         basicFields.Desc = ConfRegAccum.Desc;
+        basicFields.LatinName = ConfRegAccum.LatinName;
 
         regAccumType.SetValue(ConfRegAccum);
         allowDocumentSpend.SetValue(ConfRegAccum.AllowDocumentSpend);
@@ -94,6 +95,7 @@ partial class PageRegisterAccumulation : FormPageConfigurator
         ConfRegAccum.FullName = basicFields.FullName;
         ConfRegAccum.Table = basicFields.TableOrColumn;
         ConfRegAccum.Desc = basicFields.Desc;
+        ConfRegAccum.LatinName = basicFields.LatinName;
     }
 
     protected override async Task<bool> Save()

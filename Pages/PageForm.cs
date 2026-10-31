@@ -70,6 +70,7 @@ partial class PageForm : FormPageConfigurator
         basicFields.ItemName = ConfForm.Name;
         basicFields.FullName = ConfForm.FullName;
         basicFields.Desc = ConfForm.Desc;
+        basicFields.LatinName = ConfForm.LatinName;
 
         formItem.SetValue(ConfForm, Owner);
     }
@@ -79,6 +80,7 @@ partial class PageForm : FormPageConfigurator
         ConfForm.Name = basicFields.ItemName;
         ConfForm.FullName = basicFields.FullName;
         ConfForm.Desc = basicFields.Desc;
+        ConfForm.LatinName = basicFields.LatinName;
 
         formItem.GetValue();
     }

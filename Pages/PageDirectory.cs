@@ -37,10 +37,10 @@ partial class PageDirectory : FormPageConfigurator
     Configuration Conf { get; } = Program.Kernel.Conf;
 
     BasicFields basicFields = BasicFields.New();
-    Triggers triggers = Triggers.New();
     DirectoryHierarchy hierarchy = DirectoryHierarchy.New();
     DirectorySubordination subordination = DirectorySubordination.New();
     DirectoryAutomaticNumbering autoNum = DirectoryAutomaticNumbering.New();
+    Triggers triggers = Triggers.New();
     DirectoryDataTree dataTree = DirectoryDataTree.New();
 
     partial void Initialize()
@@ -90,12 +90,14 @@ partial class PageDirectory : FormPageConfigurator
         basicFields.FullName = ConfDirectory.FullName;
         basicFields.TableOrColumn = ConfDirectory.Table;
         basicFields.Desc = ConfDirectory.Desc;
+        basicFields.LatinName = ConfDirectory.LatinName;
 
-        triggers.SetValue(ConfDirectory.TriggerFunctions);
         hierarchy.SetValue(ConfDirectory);
         subordination.SetValue(ConfDirectory);
-        dataTree.SetValue(ConfDirectory);
         autoNum.SetValue(ConfDirectory);
+        triggers.SetValue(ConfDirectory.TriggerFunctions);
+
+        dataTree.SetValue(ConfDirectory);
     }
 
     protected override async Task GetValue()
@@ -104,11 +106,12 @@ partial class PageDirectory : FormPageConfigurator
         ConfDirectory.FullName = basicFields.FullName;
         ConfDirectory.Table = basicFields.TableOrColumn;
         ConfDirectory.Desc = basicFields.Desc;
+        ConfDirectory.LatinName = basicFields.LatinName;
 
-        ConfDirectory.TriggerFunctions = triggers.GetValue();
         hierarchy.GetValue();
         subordination.GetValue();
         autoNum.GetValue();
+        ConfDirectory.TriggerFunctions = triggers.GetValue();
     }
 
     protected override async Task<bool> Save()

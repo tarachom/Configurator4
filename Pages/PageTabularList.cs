@@ -72,6 +72,7 @@ partial class PageTabularList : FormPageConfigurator
         basicFields.ItemName = ConfTabularList.Name;
         basicFields.FullName = ConfTabularList.FullName;
         basicFields.Desc = ConfTabularList.Desc;
+        basicFields.LatinName = ConfTabularList.LatinName;
 
         dataTabularList.SetValue(IsNew, Fields, ConfTabularList);
     }
@@ -81,6 +82,7 @@ partial class PageTabularList : FormPageConfigurator
         ConfTabularList.Name = basicFields.ItemName;
         ConfTabularList.FullName = basicFields.FullName;
         ConfTabularList.Desc = basicFields.Desc;
+        ConfTabularList.LatinName = basicFields.LatinName;
 
         dataTabularList.GetValue();
     }

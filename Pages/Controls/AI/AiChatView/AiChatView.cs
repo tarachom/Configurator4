@@ -76,7 +76,6 @@ public partial class AiChatView
         if (FunctionForAI.Client != null)
         {
             string? prompt = textviewPrompt.Buffer?.Text;
-            //string? history = textviewHistory.Buffer?.Text;
             if (string.IsNullOrEmpty(prompt))
                 return;
 
@@ -122,9 +121,6 @@ public partial class AiChatView
             {
                 ApendLine($"Err: {ex.Message}");
             }
-
-            //await Task.Delay(500);
-            //ApendLine("");
         }
     }
 
@@ -172,8 +168,6 @@ public partial class AiChatView
             return [];
         }
     }
-
-
 
     [Description(@"Повертає список всіх довідників у форматі ключ та повна назва і опис в дужках для пояснення")]
     async Task<string[]> DirectoryList()

@@ -69,6 +69,7 @@ partial class PageEnum : FormPageConfigurator
         basicFields.ItemName = ConfEnums.Name;
         basicFields.FullName = ConfEnums.FullName;
         basicFields.Desc = ConfEnums.Desc;
+        basicFields.LatinName = ConfEnums.LatinName;
 
         dataTree.SetValue(ConfEnums);
     }
@@ -78,6 +79,7 @@ partial class PageEnum : FormPageConfigurator
         ConfEnums.Name = basicFields.ItemName;
         ConfEnums.FullName = basicFields.FullName;
         ConfEnums.Desc = basicFields.Desc;
+        ConfEnums.LatinName = basicFields.LatinName;
     }
 
     protected override async Task<bool> Save()
