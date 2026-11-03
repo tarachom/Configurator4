@@ -73,7 +73,9 @@ public static class Function
     /// <summary>
     /// Функція заповнює новий довідник початковими даними
     /// </summary>
-    /// <param name="confDirectory">Довідник</param>
+    /// <param name="confDirectory"></param>
+    /// <param name="otherFields"></param>
+    /// <returns></returns>
     public static async Task<bool> FillNewDirectory(ConfigurationDirectories confDirectory, List<ConfigurationField>? otherFields = null)
     {
         confDirectory.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
@@ -171,7 +173,9 @@ public static class Function
     /// <summary>
     /// Функція заповнює новий документ початковими даними
     /// </summary>
-    /// <param name="confDirectory">Документ</param>
+    /// <param name="confDocument"></param>
+    /// <param name="otherFields"></param>
+    /// <returns></returns>
     public static async Task<bool> FillNewDocument(ConfigurationDocuments confDocument, List<ConfigurationField>? otherFields = null)
     {
         confDocument.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
@@ -294,6 +298,12 @@ public static class Function
         return true;
     }
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="confTablePart"></param>
+/// <param name="otherFields"></param>
+/// <returns></returns>
     public static async Task<bool> FillNewTablePart(ConfigurationTablePart confTablePart, List<ConfigurationField>? otherFields = null)
     {
         confTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
@@ -328,6 +338,14 @@ public static class Function
         return true;
     }
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="confRegAccum"></param>
+/// <param name="dimensionFields"></param>
+/// <param name="resourcesFields"></param>
+/// <param name="propertyFields"></param>
+/// <returns></returns>
     public static async Task<bool> FillNewRegAccum(ConfigurationRegistersAccumulation confRegAccum,
         List<ConfigurationField>? dimensionFields = null, List<ConfigurationField>? resourcesFields = null, List<ConfigurationField>? propertyFields = null)
     {
@@ -368,6 +386,14 @@ public static class Function
         return true;
     }
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="confRegInfo"></param>
+/// <param name="dimensionFields"></param>
+/// <param name="resourcesFields"></param>
+/// <param name="propertyFields"></param>
+/// <returns></returns>
     public static async Task<bool> FillNewRegInfo(ConfigurationRegistersInformation confRegInfo,
         List<ConfigurationField>? dimensionFields = null, List<ConfigurationField>? resourcesFields = null, List<ConfigurationField>? propertyFields = null)
     {

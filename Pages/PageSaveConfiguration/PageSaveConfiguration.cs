@@ -686,7 +686,8 @@ public partial class PageSaveConfiguration
                                     existAnyForm = true;
                                 }
 
-                                string formPath = System.IO.Path.Combine(folderPathDirectory, form.Name + ".cs");
+                                string extension = form.Lang switch { ConfigurationForms.TypeLang.Xml => ".xml", ConfigurationForms.TypeLang.CSharp or _ => ".cs" };
+                                string formPath = System.IO.Path.Combine(folderPathDirectory, form.Name + extension);
 
                                 TextWriter tw = System.IO.File.CreateText(formPath);
                                 tw.Write(form.GeneratedCode);
@@ -737,7 +738,8 @@ public partial class PageSaveConfiguration
                                     existAnyForm = true;
                                 }
 
-                                string formPath = System.IO.Path.Combine(folderPathDocument, form.Name + ".cs");
+                                string extension = form.Lang switch { ConfigurationForms.TypeLang.Xml => ".xml", ConfigurationForms.TypeLang.CSharp or _ => ".cs" };
+                                string formPath = System.IO.Path.Combine(folderPathDocument, form.Name + extension);
 
                                 TextWriter tw = System.IO.File.CreateText(formPath);
                                 tw.Write(form.GeneratedCode);

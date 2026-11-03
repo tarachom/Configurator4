@@ -181,6 +181,8 @@ public partial class FormElementSettings
 
     #region Fields
 
+    [Connect("paned_main")] Paned panedMain;
+
     // Верхня секція
     [Connect("button_fields_action")] Button buttonFieldsAction;
     [Connect("button_fields_up")] Button buttonFieldsUp;
@@ -244,6 +246,8 @@ public partial class FormElementSettings
         ColumnEnd(columnViewFields);
         ColumnEnd(columnViewTabularParts);
     }
+
+    public void OnlyField() => panedMain.SetEndChild(null);
 
     static void ColumnStart(ColumnView columnView)
     {
@@ -591,7 +595,8 @@ public partial class FormElementSettings
         form.ElementFields.Clear();
         form.ElementTableParts.Clear();
 
-        if (form.Type == ConfigurationForms.TypeForms.Element || form.Type == ConfigurationForms.TypeForms.TablePart)
+        if (form.Type == ConfigurationForms.TypeForms.Element || form.Type == ConfigurationForms.TypeForms.TablePart ||
+            form.Type == ConfigurationForms.TypeForms.ElementFields || form.Type == ConfigurationForms.TypeForms.TemplateForElementFields)
         {
             SorterChangedOnOff = false;
 

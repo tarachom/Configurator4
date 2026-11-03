@@ -21,6 +21,9 @@
             <xsl:when test="$File = 'Element'">
                 <xsl:call-template name="DirectoryElement" />
             </xsl:when>
+            <xsl:when test="$File = 'ElementFields'">
+                <xsl:call-template name="DirectoryElementFields" />
+            </xsl:when>
             <xsl:when test="$File = 'List'">
                 <xsl:call-template name="DirectoryList" />
             </xsl:when>
@@ -254,15 +257,241 @@ static class <xsl:value-of select="$DirectoryName"/>_Функції
 
 <!--- 
 //
+// ============================ Поля елементу окремим класом із шаблоном  ============================
+//
+-->
+
+    <!-- Елемент -->
+    <xsl:template name="DirectoryElementFields">
+        <xsl:variable name="DirectoryName" select="Directory/Name"/>
+        <xsl:variable name="DirectoryLatinName" select="Directory/LatinName"/>
+        <xsl:variable name="FieldsTL" select="Directory/ElementFields/Field"/>
+        <xsl:variable name="TabularPartsTL" select="Directory/ElementTableParts/TablePart"/>
+
+        <!-- Додатова інформація для ієрархічного довідника -->
+        <xsl:variable name="DirectoryType" select="Directory/Type"/>
+        <xsl:variable name="ParentField" select="Directory/ParentField"/> <!-- Поле Родич (тільки для ієрархічного) -->
+
+        <!-- Додатова інформація про підпорядкування довідника -->
+        <xsl:variable name="DirectoryOwner" select="Directory/DirectoryOwner"/>
+        <xsl:variable name="PointerFieldOwner" select="Directory/PointerFieldOwner"/>
+/*
+        <xsl:value-of select="$DirectoryName"/>_ЕлементІзШаблоном.cs
+        Елемент
+*/
+
+using Gtk;
+using GObject;
+using InterfaceGtk4;
+using AccountingSoftware;
+
+using <xsl:value-of select="$NameSpaceGeneratedCode"/>.Довідники;
+using <xsl:value-of select="$NameSpaceGeneratedCode"/>.Документи;
+using <xsl:value-of select="$NameSpaceGeneratedCode"/>.Перелічення;
+
+namespace <xsl:value-of select="$NameSpace"/>;
+
+[Subclass&lt;Box&gt;("<xsl:value-of select="$DirectoryLatinName"/>_ElementFields")]
+[Template&lt;AssemblyResource&gt;("<xsl:value-of select="$DirectoryLatinName"/>_ElementFields.xml")]
+public partial class <xsl:value-of select="$DirectoryName"/>_ElementFields
+{
+    <xsl:for-each select="$FieldsTL">[Connect("<xsl:value-of select="Name"/>")] <xsl:choose>
+            <xsl:when test="Type = 'string'">
+                <xsl:choose>
+                    <xsl:when test="Multiline = '1'">
+                        <xsl:text>TextView </xsl:text><xsl:value-of select="Name"/>;
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>Entry </xsl:text><xsl:value-of select="Name"/>;
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:when test="Type = 'integer'">
+                <xsl:text>IntegerControl </xsl:text><xsl:value-of select="Name"/>;
+            </xsl:when>
+            <xsl:when test="Type = 'numeric'">
+                <xsl:text>NumericControl </xsl:text><xsl:value-of select="Name"/>;
+            </xsl:when>
+            <xsl:when test="Type = 'boolean'">
+                <xsl:text>CheckButton </xsl:text><xsl:value-of select="Name"/>;
+            </xsl:when>
+            <xsl:when test="Type = 'date' or Type = 'datetime'">
+                <xsl:text>DateTimeControl </xsl:text><xsl:value-of select="Name"/>;
+            </xsl:when>
+            <xsl:when test="Type = 'time'">
+                <xsl:text>TimeControl </xsl:text><xsl:value-of select="Name"/>;
+            </xsl:when>
+            <xsl:when test="Type = 'composite_pointer'">
+                <xsl:text>CompositePointerControl </xsl:text><xsl:value-of select="Name"/>;
+            </xsl:when>
+            <xsl:when test="Type = 'pointer'">
+                <xsl:variable name="namePointer" select="substring-after(Pointer, '.')" />
+                <xsl:value-of select="$namePointer"/>_PointerControl <xsl:value-of select="Name"/>;
+            </xsl:when>
+            <xsl:when test="Type = 'enum'">
+                <xsl:text>DropDownControl </xsl:text><xsl:value-of select="Name"/>;
+            </xsl:when>
+        </xsl:choose>
+    </xsl:for-each>
+
+    public <xsl:value-of select="$DirectoryName"/>_Object? ЕлементВласник { get; set; }
+
+    partial void Initialize()
+    {
+        <xsl:for-each select="$FieldsTL">
+            <xsl:variable name="Size">
+                <xsl:choose>
+                    <xsl:when test="Size != '0'"><xsl:value-of select="Size"/></xsl:when>
+                    <xsl:otherwise>300</xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsl:choose>
+                <xsl:when test="Type = 'date'">
+                    <xsl:value-of select="Name"/>.OnlyDate = true;
+                </xsl:when>
+                <xsl:when test="Type = 'composite_pointer'">
+                    <xsl:value-of select="Name"/>.Caption = "";
+                    <xsl:value-of select="Name"/>.BoundConfType = "Довідники.<xsl:value-of select="$DirectoryName"/>.<xsl:value-of select="Name"/>";
+                </xsl:when>
+                <xsl:when test="Type = 'pointer'">
+                    <xsl:value-of select="Name"/>.Caption = "";
+                    <xsl:value-of select="Name"/>.WidthPresentation = <xsl:value-of select="$Size"/>;
+                </xsl:when>
+                <xsl:when test="Type = 'enum'">
+                    <xsl:value-of select="Name"/>.Fill(ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_Dict());
+                </xsl:when>
+            </xsl:choose>
+        </xsl:for-each>
+    }
+
+    public static <xsl:value-of select="$DirectoryName"/>_ElementFields New()
+    {
+        //Реєстрація типів
+        <xsl:for-each select="$FieldsTL">
+            <xsl:choose>
+
+                <xsl:when test="Type = 'pointer' and not(preceding-sibling::*[Type = 'pointer' and Pointer = current()/Pointer])">
+                    <xsl:variable name="namePointer" select="substring-after(Pointer, '.')" />
+                    <xsl:value-of select="$namePointer"/>_PointerControl.GetGType();
+                </xsl:when>
+                
+                <xsl:when test="not(preceding-sibling::*[Type = current()/Type])">
+                    <xsl:choose>
+                        <xsl:when test="Type = 'integer'">
+                            <xsl:text>IntegerControl.GetGType()</xsl:text>;
+                        </xsl:when>
+                        <xsl:when test="Type = 'numeric'">
+                            <xsl:text>NumericControl.GetGType()</xsl:text>;
+                        </xsl:when>
+                        <xsl:when test="Type = 'date' or Type = 'datetime'">
+                            <xsl:text>DateTimeControl.GetGType()</xsl:text>;
+                        </xsl:when>
+                        <xsl:when test="Type = 'time'">
+                            <xsl:text>TimeControl.GetGType()</xsl:text>;
+                        </xsl:when>
+                        <xsl:when test="Type = 'composite_pointer'">
+                            <xsl:text>CompositePointerControl.GetGType()</xsl:text>;
+                        </xsl:when>
+                        <xsl:when test="Type = 'enum'">
+                            <xsl:text>DropDownControl.GetGType()</xsl:text>;
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:for-each>
+        return NewWithProperties([]);
+    }
+
+    public void AssignValue()
+    {
+        if (ЕлементВласник != null)
+        {
+        <xsl:for-each select="$FieldsTL">
+            <xsl:choose>
+                <xsl:when test="Type = 'string'">
+                    <xsl:choose>
+                        <xsl:when test="Multiline = '1'">
+                            <xsl:value-of select="Name"/>.Buffer?.Text = ЕлементВласник.<xsl:value-of select="Name"/>;
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="Name"/>.SetText(ЕлементВласник.<xsl:value-of select="Name"/>);
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
+                <xsl:when test="Type = 'integer' or Type = 'numeric' or Type = 'date' or Type = 'datetime' or Type = 'time'">
+                    <xsl:value-of select="Name"/>.Value = ЕлементВласник.<xsl:value-of select="Name"/>;
+                </xsl:when>
+                <xsl:when test="Type = 'boolean'">
+                    <xsl:value-of select="Name"/>.Active = ЕлементВласник.<xsl:value-of select="Name"/>;
+                </xsl:when>
+                <xsl:when test="Type = 'composite_pointer'">
+                    <xsl:value-of select="Name"/>.Pointer = ЕлементВласник.<xsl:value-of select="Name"/>;
+                </xsl:when>
+                <xsl:when test="Type = 'pointer'">
+                    <xsl:value-of select="Name"/>.Pointer = ЕлементВласник.<xsl:value-of select="Name"/>;
+                </xsl:when>
+                <xsl:when test="Type = 'enum'">
+                    <xsl:value-of select="Name"/>.Value = ЕлементВласник.<xsl:value-of select="Name"/>.ToString();
+                </xsl:when>
+                <xsl:when test="Type = 'any_pointer' or Type = 'composite_text' or Type = 'bytea' or Type = 'string[]' or Type = 'integer[]' or Type = 'numeric[]' or Type = 'uuid[]'">
+                    <xsl:text>//</xsl:text><xsl:value-of select="Name"/> = ЕлементВласник.<xsl:value-of select="Name"/>;
+                </xsl:when>
+            </xsl:choose>
+        </xsl:for-each>
+        }
+    }
+
+    public void GetValue()
+    {
+        if (ЕлементВласник != null)
+        {
+        <xsl:for-each select="$FieldsTL">
+            <xsl:choose>
+                <xsl:when test="Type = 'string'">
+                    <xsl:choose>
+                        <xsl:when test="Multiline = '1'">
+                    <xsl:text>ЕлементВласник.</xsl:text><xsl:value-of select="Name"/> = <xsl:value-of select="Name"/>.Buffer?.Text ?? "";
+                        </xsl:when>
+                        <xsl:otherwise>
+                    <xsl:text>ЕлементВласник.</xsl:text><xsl:value-of select="Name"/> = <xsl:value-of select="Name"/>.GetText();
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
+                <xsl:when test="Type = 'integer' or Type = 'numeric' or Type = 'date' or Type = 'datetime' or Type = 'time'">
+                    <xsl:text>ЕлементВласник.</xsl:text><xsl:value-of select="Name"/> = <xsl:value-of select="Name"/>.Value;
+                </xsl:when>
+                <xsl:when test="Type = 'boolean'">
+                    <xsl:text>ЕлементВласник.</xsl:text><xsl:value-of select="Name"/> = <xsl:value-of select="Name"/>.Active;
+                </xsl:when>
+                <xsl:when test="Type = 'composite_pointer'">
+                    <xsl:text>ЕлементВласник.</xsl:text><xsl:value-of select="Name"/> = <xsl:value-of select="Name"/>.Pointer;
+                </xsl:when>
+                <xsl:when test="Type = 'pointer'">
+                    <xsl:text>ЕлементВласник.</xsl:text><xsl:value-of select="Name"/> = <xsl:value-of select="Name"/>.Pointer;
+                </xsl:when>
+                <xsl:when test="Type = 'enum'">
+                    <xsl:text>ЕлементВласник.</xsl:text><xsl:value-of select="Name"/> = ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_FindByName(<xsl:value-of select="Name"/>.Value);
+                </xsl:when>
+                <xsl:when test="Type = 'any_pointer' or Type = 'composite_text' or Type = 'bytea' or Type = 'string[]' or Type = 'integer[]' or Type = 'numeric[]' or Type = 'uuid[]'">
+                    <xsl:text>//ЕлементВласник.</xsl:text><xsl:value-of select="Name"/> = <xsl:value-of select="Name"/>;
+                </xsl:when>
+            </xsl:choose>
+        </xsl:for-each>
+        }
+    }
+}
+    </xsl:template>
+
+<!--- 
+//
 // ============================ Елемент ============================
 //
 -->
 
     <!-- Елемент -->
     <xsl:template name="DirectoryElement">
-        <xsl:param name="IsTree" />
         <xsl:variable name="DirectoryName" select="Directory/Name"/>
-        <xsl:variable name="SubclassName" select="concat('Element_', Directory/Alias)"/>
+        <xsl:variable name="DirectoryLatinName" select="Directory/LatinName"/>
         <xsl:variable name="FieldsTL" select="Directory/ElementFields/Field"/>
         <xsl:variable name="TabularPartsTL" select="Directory/ElementTableParts/TablePart"/>
 
@@ -288,7 +517,7 @@ using <xsl:value-of select="$NameSpaceGeneratedCode"/>.Перелічення;
 
 namespace <xsl:value-of select="$NameSpace"/>;
 
-[GObject.Subclass&lt;DirectoryFormElement&gt;("<xsl:value-of select="$SubclassName"/>")]
+[GObject.Subclass&lt;DirectoryFormElement&gt;("<xsl:value-of select="$DirectoryLatinName"/>_Element")]
 partial class <xsl:value-of select="$DirectoryName"/>_Елемент : DirectoryFormElement
 {
     public <xsl:value-of select="$DirectoryName"/>_Object Елемент { get; init; } = new();
@@ -640,7 +869,7 @@ partial class <xsl:value-of select="$DirectoryName"/>_Елемент : Directory
     <!-- Список -->
     <xsl:template name="DirectoryList">
         <xsl:variable name="DirectoryName" select="Directory/Name"/>
-        <xsl:variable name="SubclassName" select="concat('List_', Directory/Alias)"/>
+        <xsl:variable name="DirectoryLatinName" select="Directory/LatinName"/>
         <xsl:variable name="TabularList" select="Directory/TabularList"/>
 
         <!-- Додатова інформація для ієрархічного довідника -->
@@ -665,7 +894,7 @@ using Функції = <xsl:value-of select="$NameSpace"/>.<xsl:value-of select=
 
 namespace <xsl:value-of select="$NameSpace"/>;
 
-[GObject.Subclass&lt;DirectoryFormJournalFull<xsl:if test="$DirectoryType = 'Hierarchical'">Tree</xsl:if>&gt;("<xsl:value-of select="$SubclassName"/>")]
+[GObject.Subclass&lt;DirectoryFormJournalFull<xsl:if test="$DirectoryType = 'Hierarchical'">Tree</xsl:if>&gt;("<xsl:value-of select="$DirectoryLatinName"/>_List")]
 partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFormJournalFull<xsl:if test="$DirectoryType = 'Hierarchical'">Tree</xsl:if>
 {
     <xsl:if test="normalize-space($DirectoryOwner) != ''">
@@ -758,7 +987,7 @@ partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFo
     <!-- ШвидкийВибір -->
     <xsl:template name="DirectoryListSmallSelect">
         <xsl:variable name="DirectoryName" select="Directory/Name"/>
-        <xsl:variable name="SubclassName" select="concat('SmallList_', Directory/Alias)"/>
+        <xsl:variable name="DirectoryLatinName" select="Directory/LatinName"/>
         <xsl:variable name="TabularList" select="Directory/TabularList"/>
 
         <!-- Додатова інформація для ієрархічного довідника -->
@@ -783,7 +1012,7 @@ using Функції = <xsl:value-of select="$NameSpace"/>.<xsl:value-of select=
 
 namespace <xsl:value-of select="$NameSpace"/>;
 
-[GObject.Subclass&lt;DirectoryFormJournalSmall<xsl:if test="$DirectoryType = 'Hierarchical'">Tree</xsl:if>&gt;("<xsl:value-of select="$SubclassName"/>")]
+[GObject.Subclass&lt;DirectoryFormJournalSmall<xsl:if test="$DirectoryType = 'Hierarchical'">Tree</xsl:if>&gt;("<xsl:value-of select="$DirectoryLatinName"/>_SmallSelect")]
 partial class <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір : DirectoryFormJournalSmall<xsl:if test="$DirectoryType = 'Hierarchical'">Tree</xsl:if>
 {
     <xsl:if test="normalize-space($DirectoryOwner) != ''">
@@ -882,7 +1111,7 @@ partial class <xsl:value-of select="$DirectoryName"/>_ШвидкийВибір :
     <!-- Список з Деревом-->
     <xsl:template name="DirectoryListAndTree">
         <xsl:variable name="DirectoryName" select="Directory/Name"/>
-        <xsl:variable name="SubclassName" select="concat('ListAndTree_', Directory/Alias)"/>
+        <xsl:variable name="DirectoryLatinName" select="Directory/LatinName"/>
         <!--<xsl:variable name="TabularParts" select="Directory/TabularParts/TablePart"/>-->
         <xsl:variable name="TabularList" select="Directory/TabularList"/>
 
@@ -916,7 +1145,7 @@ using Функції = <xsl:value-of select="$NameSpace"/>.<xsl:value-of select=
 
 namespace <xsl:value-of select="$NameSpace"/>;
 
-[GObject.Subclass&lt;DirectoryFormJournalFull&gt;("<xsl:value-of select="$SubclassName"/>")]
+[GObject.Subclass&lt;DirectoryFormJournalFull&gt;("<xsl:value-of select="$DirectoryLatinName"/>_List")]
 partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFormJournalFull
 {
     <xsl:value-of select="$PointerFolders"/>_Список Папки = <xsl:value-of select="$PointerFolders"/>_Список.New();
@@ -1051,7 +1280,6 @@ partial class <xsl:value-of select="$DirectoryName"/>_Список : DirectoryFo
     <xsl:template name="DirectoryPointerControl">
         <xsl:variable name="DirectoryName" select="Directory/Name"/>
         <xsl:variable name="DirectoryLatinName" select="Directory/LatinName"/>
-        <xsl:variable name="SubclassName" select="concat('Directory_', Directory/Alias, '_PointerControl')"/>
 
         <!-- Додатова інформація про підпорядкування довідника -->
         <xsl:variable name="DirectoryOwner" select="Directory/DirectoryOwner"/>
@@ -1068,9 +1296,11 @@ using <xsl:value-of select="$NameSpaceGeneratedCode"/>.Довідники;
 
 namespace <xsl:value-of select="$NameSpace"/>;
 
-[GObject.Subclass&lt;PointerControl&gt;(nameof(<xsl:value-of select="$DirectoryLatinName"/>_PointerControl))]
-public partial class <xsl:value-of select="$DirectoryLatinName"/>_PointerControl : PointerControl
+[GObject.Subclass&lt;PointerControl&gt;("<xsl:value-of select="$DirectoryLatinName"/>_PointerControl")]
+public partial class <xsl:value-of select="$DirectoryName"/>_PointerControl : PointerControl
 {
+    public static <xsl:value-of select="$DirectoryName"/>_PointerControl New() =&gt; NewWithProperties([]);
+
     event EventHandler&lt;<xsl:value-of select="$DirectoryName"/>_Pointer&gt;? PointerChanged;
 
     partial void Initialize()
@@ -1079,8 +1309,6 @@ public partial class <xsl:value-of select="$DirectoryLatinName"/>_PointerControl
         Caption = $"{<xsl:value-of select="$DirectoryName"/>_Const.FULLNAME}:";
         PointerChanged += async (_, pointer) =&gt; Presentation = !pointer.IsEmpty() ? await pointer.GetPresentation() : "";
     }
-
-    public static <xsl:value-of select="$DirectoryLatinName"/>_PointerControl New() =&gt; NewWithProperties([]);
 
     <xsl:value-of select="$DirectoryName"/>_Pointer pointer = new();
     public <xsl:value-of select="$DirectoryName"/>_Pointer Pointer
@@ -1147,7 +1375,7 @@ public partial class <xsl:value-of select="$DirectoryLatinName"/>_PointerControl
     <!-- PointerControl -->
     <xsl:template name="DirectoryPointerTablePartCell">
         <xsl:variable name="DirectoryName" select="Directory/Name"/>
-        <xsl:variable name="SubclassName" select="concat('PointerTablePartCell_', Directory/Alias)"/>
+        <xsl:variable name="DirectoryLatinName" select="Directory/LatinName"/>
 
         <!-- Додатова інформація для ієрархічного довідника -->
         <xsl:variable name="DirectoryType" select="Directory/Type"/>
@@ -1168,7 +1396,7 @@ using AccountingSoftware;
 
 namespace <xsl:value-of select="$NameSpace"/>;
 
-[GObject.Subclass&lt;PointerTablePartCell&gt;("<xsl:value-of select="$SubclassName"/>")]
+[GObject.Subclass&lt;PointerTablePartCell&gt;("<xsl:value-of select="$DirectoryLatinName"/>_PointerTablePartCell")]
 public partial class <xsl:value-of select="$DirectoryName"/>_PointerTablePartCell : PointerTablePartCell
 {
     public static <xsl:value-of select="$DirectoryName"/>_PointerTablePartCell New() =&gt; NewWithProperties([]);

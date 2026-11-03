@@ -37,6 +37,7 @@ namespace Configurator;
 public partial class FormItem
 {
     [Connect("dropdown_type_form")] DropDownControl dropdownTypeForm;
+    [Connect("dropdown_lang")] DropDownControl dropdownLang;
 
     [Connect("stack_main")] Stack stackMain;
     [Connect("box_element_settings")] Box boxElementSettings;
@@ -93,7 +94,8 @@ public partial class FormItem
                 dropdownTabularlist.Value = ConfForm.TabularList;
             }
             else if (ConfForm.Type == ConfigurationForms.TypeForms.Element || ConfForm.Type == ConfigurationForms.TypeForms.TablePart ||
-                ConfForm.Type == ConfigurationForms.TypeForms.Triggers || ConfForm.Type == ConfigurationForms.TypeForms.Function)
+                ConfForm.Type == ConfigurationForms.TypeForms.Triggers || ConfForm.Type == ConfigurationForms.TypeForms.Function ||
+                ConfForm.Type == ConfigurationForms.TypeForms.ElementFields || ConfForm.Type == ConfigurationForms.TypeForms.TemplateForElementFields)
             {
                 //Отримую із власника поля і табличні частини
                 (Fields, TabularParts) = (Owner.Group, Owner.Obj) switch
@@ -105,14 +107,33 @@ public partial class FormItem
                 };
 
                 //Налаштування
-                if (ConfForm.Type == ConfigurationForms.TypeForms.Element || ConfForm.Type == ConfigurationForms.TypeForms.TablePart)
+                if (ConfForm.Type == ConfigurationForms.TypeForms.Element || ConfForm.Type == ConfigurationForms.TypeForms.TablePart ||
+                    ConfForm.Type == ConfigurationForms.TypeForms.ElementFields || ConfForm.Type == ConfigurationForms.TypeForms.TemplateForElementFields)
                 {
                     pageListSettings.Visible = !(pageElementSettings.Visible = true);
                     formElementSettings.SetValue(Fields, TabularParts, ConfForm);
+
+                    //Для табличної частини залишити тільки поля
+                    if (ConfForm.Type == ConfigurationForms.TypeForms.TablePart || ConfForm.Type == ConfigurationForms.TypeForms.ElementFields ||
+                        ConfForm.Type == ConfigurationForms.TypeForms.TemplateForElementFields)
+                        formElementSettings.OnlyField();
                 }
             }
             else
                 pageListSettings.Visible = pageElementSettings.Visible = false;
+        };
+
+        dropdownLang.AllowEmpty = false;
+        dropdownLang.Fill(ConfigurationForms.TypeLang_Dict());
+        dropdownLang.OnСhanged = () =>
+        {
+            //Поточна мова форми
+            ConfForm.Lang = Enum.Parse<ConfigurationForms.TypeLang>(dropdownLang.Value);
+            codeviewCode.SetLanguage(ConfForm.Lang switch
+            {
+                ConfigurationForms.TypeLang.Xml => "xml",
+                ConfigurationForms.TypeLang.CSharp or _ => "c-sharp"
+            });
         };
 
         //Код
@@ -157,6 +178,7 @@ public partial class FormItem
         Owner = owner ?? throw new Exception("Для форми не вказаний власник!");
 
         dropdownTypeForm.Value = ConfForm.Type.ToString();
+        dropdownLang.Value = ConfForm.Lang.ToString();
         codeviewCode.Value = ConfForm.GeneratedCode;
     }
 
@@ -167,6 +189,7 @@ public partial class FormItem
         ConfFormOriginal.GeneratedCode = codeviewCode.Value;
         ConfFormOriginal.TabularList = dropdownTabularlist.Value;
         ConfFormOriginal.Type = ConfForm.Type;
+        ConfFormOriginal.Lang = ConfForm.Lang;
 
         formElementSettings.GetValue(ConfFormOriginal);
     }
@@ -284,7 +307,8 @@ public partial class FormItem
         {
             nodeOwner.AppendChild(xmlDoc.CreateNode("TabularList", ConfForm.TabularList));
         }
-        else if (ConfForm.Type == ConfigurationForms.TypeForms.Element)
+        else if (ConfForm.Type == ConfigurationForms.TypeForms.Element || 
+            ConfForm.Type == ConfigurationForms.TypeForms.ElementFields || ConfForm.Type == ConfigurationForms.TypeForms.TemplateForElementFields)
         {
             Configuration.SaveFormElementField(Conf, Fields, ConfForm.ElementFields, xmlDoc, nodeOwner);
             Configuration.SaveFormElementTablePart(TabularParts, ConfForm.ElementTableParts, xmlDoc, nodeOwner);
@@ -313,9 +337,16 @@ public partial class FormItem
 
         //xmlDoc.Save(Path.Combine(AppContext.BaseDirectory, "xml", $"{Guid.CreateVersion7()}.xml"));
 
+        //ХМЛ шаблони
+        string template = ConfForm.Type switch
+        {
+            ConfigurationForms.TypeForms.TemplateForElementFields => "_Template",
+            _ => ""
+        };
+
         codeviewCode.Value = Configuration.Transform
         (
-            xmlDoc, Path.Combine(AppContext.BaseDirectory, "xslt", $"Constructor{Owner.Group}4.xslt"),
+            xmlDoc, Path.Combine(AppContext.BaseDirectory, "xslt", $"Constructor{Owner.Group}4{template}.xslt"),
             new Dictionary<string, object>
             {
                 { "File",  ConfForm.Type.ToString() },
