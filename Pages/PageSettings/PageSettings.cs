@@ -25,6 +25,9 @@ using Gtk;
 using GObject;
 using AccountingSoftware;
 using InterfaceGtkLib;
+using InterfaceGtk4;
+using System.Runtime.InteropServices;
+using Microsoft.Extensions.AI;
 
 namespace Configurator;
 
@@ -45,6 +48,7 @@ public partial class PageSettings
     [Connect("entry_ai_key")] Entry entryAiKey;
     [Connect("switch_autostart")] Switch switchAutostart;
     [Connect("button_save")] Button buttonSave;
+    [Connect("button_start_and_test")] Button buttonStartAndTest;
 
     #endregion
 
@@ -52,7 +56,8 @@ public partial class PageSettings
 
     partial void Initialize()
     {
-        buttonSave.OnClicked += (_, _) => SaveSettings();
+        buttonSave.OnClicked += async (_, _) => await SaveSettings();
+        buttonStartAndTest.OnClicked += async (_, _) => await StartAndTest();
     }
 
     public void SetValue()
@@ -65,7 +70,7 @@ public partial class PageSettings
         }
     }
 
-    void SaveSettings()
+    async Task SaveSettings()
     {
         if (GlobalConfigurationParam != null)
         {
@@ -75,5 +80,43 @@ public partial class PageSettings
 
             ConfigurationParamCollection.SaveConfigurationParamFromXML(ConfigurationParamCollection.PathToXML);
         }
+    }
+
+    async Task StartAndTest()
+    {
+        buttonStartAndTest.Sensitive = false;
+
+        if (GlobalConfigurationParam != null)
+        {
+            //Створення клієнта
+            _ = FunctionForAI.CreateClient(entryAiKey.GetText(), entryAiModel.GetText());
+
+            //Перевірка
+            if (FunctionForAI.Client != null)
+            {
+                string prompt = "Працюєш?";
+                string result = "";
+
+                try
+                {
+                    await foreach (var update in FunctionForAI.Client.GetStreamingResponseAsync(prompt))
+                        result += update.ToString();
+                }
+                catch (Exception ex)
+                {
+                    result += $"Err: {ex.Message}";
+                }
+
+                Popover popover = Popover.New();
+                popover.SetParent(buttonStartAndTest);
+                popover.MarginStart = popover.MarginEnd = popover.MarginTop = popover.MarginBottom = 20;
+                popover.SetChild(Label.New($"Запитання: {prompt}\n\nВідповідь: {result}"));
+                popover.Show();
+            }
+            else
+                await Message.Info(Program.BasicForm, "Помилка", "Клієнта AI НЕ створено!");
+        }
+
+        buttonStartAndTest.Sensitive = true;
     }
 }

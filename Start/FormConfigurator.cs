@@ -82,6 +82,28 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
         await page.SetValue();
     }
 
+    public override async Task PageConstantBlock(bool isNew, ConfigurationConstantsBlock? block = null)
+    {
+        PageConstantBlock page = Configurator.PageConstantBlock.New();
+        page.IsNew = isNew;
+        if (block != null) page.ConfBlock = block;
+        page.Caption = isNew ? "*" : block?.Name ?? "";
+
+        NotebookFunc?.CreatePage(page.Caption, page);
+        await page.SetValue();
+    }
+
+    public override async Task PageConstant(bool isNew, ConfigurationConstants? constant = null)
+    {
+        PageConstant page = Configurator.PageConstant.New();
+        page.IsNew = isNew;
+        if (constant != null) page.ConfConstant = constant;
+        page.Caption = isNew ? "*" : constant?.Name ?? "";
+
+        NotebookFunc?.CreatePage(page.Caption, page);
+        await page.SetValue();
+    }
+
     public override async Task PageDirectory(bool isNew, ConfigurationDirectories? directory = null)
     {
         PageDirectory page = Configurator.PageDirectory.New();

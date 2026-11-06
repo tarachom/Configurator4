@@ -33,6 +33,8 @@ namespace Configurator;
 [GObject.Subclass<Form>]
 partial class PageHome : Form
 {
+    AiChatView? AiView { get; set; } = null;
+
     partial void Initialize()
     {
         {
@@ -45,11 +47,11 @@ partial class PageHome : Form
         }
 
         {
-            AiChatView view = AiChatView.New(800);
+            AiView = AiChatView.New(800);
 
             Box hBox = New(Orientation.Horizontal, 0);
             hBox.MarginBottom = 10;
-            hBox.Append(view);
+            hBox.Append(AiView);
             Append(hBox);
         }
 
@@ -76,13 +78,6 @@ partial class PageHome : Form
         //Автоматичний запуск AI клієнта
         GlobalConfigurationParam? globalConfigurationParam = Program.BasicForm?.GlobalConfigurationParam;
         if (globalConfigurationParam != null && globalConfigurationParam.AIStartOnRun)
-            try
-            {
-                bool result = FunctionForAI.CreateClient(globalConfigurationParam.AIKey, globalConfigurationParam.AIModel);
-            }
-            catch (Exception ex)
-            {
-                await Message.Info(Program.BasicForm, "Помилка", "Під час запуску AI клієнта виникла помилка:\n\n" + ex.Message);
-            }
+            AiView?.Start(globalConfigurationParam.AIKey, globalConfigurationParam.AIModel);
     }
 }

@@ -206,7 +206,7 @@ public partial class Field
 
     public void GetValue()
     {
-        ConfField.Type = string.IsNullOrEmpty(dropdownType.Value) ? "string" : dropdownType.Value;
+        ConfField.Type = dropdownType.Value;
         ConfField.Pointer = ConfField.Type switch { "pointer" => dropdownPointer.Value, "enum" => dropdownEnum.Value, _ => "" };
         ConfField.IsIndex = checkIndex.Active;
         ConfField.IsPresentation = checkPresentation.Active;

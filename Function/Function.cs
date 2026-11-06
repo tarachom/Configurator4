@@ -32,7 +32,7 @@ public static class Function
     /// </summary>
     /// <param name="conf">Конфігурація</param>
     /// <returns></returns>
-    public static Dictionary<string, ConfigurationField> GetConstantsAllFields(Configuration conf) //!!! Перевірити доцільність. Можливо винести в модуль конфігурації
+    public static Dictionary<string, ConfigurationField> GetConstantsAllFields(Configuration conf)
     {
         Dictionary<string, ConfigurationField> ConstantsAllFields = [];
 
@@ -44,6 +44,12 @@ public static class Function
             }
 
         return ConstantsAllFields;
+    }
+
+    public static bool FillNewConstant(Configuration conf, ConfigurationConstants confConstant)
+    {
+        confConstant.NameInTable = Configuration.GetNewUnigueColumnName(Program.Kernel, SpecialTables.Constants, GetConstantsAllFields(conf));
+        return true;
     }
 
     /// <summary>
@@ -298,12 +304,12 @@ public static class Function
         return true;
     }
 
-/// <summary>
-/// 
-/// </summary>
-/// <param name="confTablePart"></param>
-/// <param name="otherFields"></param>
-/// <returns></returns>
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="confTablePart"></param>
+    /// <param name="otherFields"></param>
+    /// <returns></returns>
     public static async Task<bool> FillNewTablePart(ConfigurationTablePart confTablePart, List<ConfigurationField>? otherFields = null)
     {
         confTablePart.Table = await Configuration.GetNewUnigueTableName(Program.Kernel);
@@ -338,14 +344,14 @@ public static class Function
         return true;
     }
 
-/// <summary>
-/// 
-/// </summary>
-/// <param name="confRegAccum"></param>
-/// <param name="dimensionFields"></param>
-/// <param name="resourcesFields"></param>
-/// <param name="propertyFields"></param>
-/// <returns></returns>
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="confRegAccum"></param>
+    /// <param name="dimensionFields"></param>
+    /// <param name="resourcesFields"></param>
+    /// <param name="propertyFields"></param>
+    /// <returns></returns>
     public static async Task<bool> FillNewRegAccum(ConfigurationRegistersAccumulation confRegAccum,
         List<ConfigurationField>? dimensionFields = null, List<ConfigurationField>? resourcesFields = null, List<ConfigurationField>? propertyFields = null)
     {
@@ -386,14 +392,14 @@ public static class Function
         return true;
     }
 
-/// <summary>
-/// 
-/// </summary>
-/// <param name="confRegInfo"></param>
-/// <param name="dimensionFields"></param>
-/// <param name="resourcesFields"></param>
-/// <param name="propertyFields"></param>
-/// <returns></returns>
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="confRegInfo"></param>
+    /// <param name="dimensionFields"></param>
+    /// <param name="resourcesFields"></param>
+    /// <param name="propertyFields"></param>
+    /// <returns></returns>
     public static async Task<bool> FillNewRegInfo(ConfigurationRegistersInformation confRegInfo,
         List<ConfigurationField>? dimensionFields = null, List<ConfigurationField>? resourcesFields = null, List<ConfigurationField>? propertyFields = null)
     {

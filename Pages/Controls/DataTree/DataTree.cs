@@ -40,6 +40,12 @@ public abstract partial class DataTree
     /// </summary>
     protected ConfiguratorItemOwner? Owner { get; set; } = null;
 
+    protected static async Task OpenPageConstant(bool isNew, ConfigurationConstants? constant = null)
+    {
+        if (Program.BasicForm != null)
+            await Program.BasicForm.PageConstant(isNew, constant);
+    }
+
     protected static async Task OpenPageField(bool isNew, Dictionary<string, ConfigurationField> fields, ConfigurationField? field = null, ConfiguratorItemOwner? owner = null)
     {
         if (Program.BasicForm != null)

@@ -50,11 +50,17 @@ public partial class AiChatView
         return w;
     }
 
+    public void Start(string key, string model)
+    {
+        if (!FunctionForAI.CreateClient(key, model))
+            ApendLine($"Err: Клієнт AI не запущений! Перейдіть на вкладку 'Налаштування'");
+    }
+
     partial void Initialize()
     {
         textviewPrompt.Buffer?.Text = "Покажи коротко списком операції які ти можеш виконати";
 
-        buttonSend.OnClicked += (_, _) => Send();
+        buttonSend.OnClicked += async (_, _) => await Send();
 
         var keyController = EventControllerKey.New();
         textviewPrompt.AddController(keyController);
@@ -64,14 +70,15 @@ public partial class AiChatView
             bool isCtrl = (args.State & Gdk.ModifierType.ControlMask) != 0;
             if (isEnter && isCtrl)
             {
-                Send();
+                async void f() => await Send();
+                f();
                 return true;
             }
             return false;
         };
     }
 
-    async void Send()
+    async Task Send()
     {
         if (FunctionForAI.Client != null)
         {
@@ -87,25 +94,27 @@ public partial class AiChatView
                 Temperature = 0,
                 ResponseFormat = ChatResponseFormat.Text,
                 Tools = [
+                    //Списки
                     AIFunctionFactory.Create(ConstantsBlockList, name: "ConstantsBlockList", description: "Повний список блоків констант у форматі ключ і опис в дужках. Завжди використовуй ключ, опис тільки для розуміння призначення блоку"),
                     AIFunctionFactory.Create(ConstantsList, name: "ConstantsList", description: "Повний список констант певного блоку у форматі ключ і опис в дужках. Завжди використовуй ключ, опис тільки для розуміння призначення константи"),
-
                     AIFunctionFactory.Create(DirectoryList, name: "DirectoryList", description: "Повний список довідників у форматі ключ і опис в дужках. Завжди використовуй ключ, опис тільки для розуміння призначення довідника"),
                     AIFunctionFactory.Create(DocumentsList, name: "DocumentsList", description: "Повний список документів у форматі ключ і опис в дужках. Завжди використовуй ключ, опис тільки для розуміння призначення документу"),
-
                     AIFunctionFactory.Create(EnumsList, name: "EnumsList", description: "Повний список перелічень у форматі ключ і опис в дужках. Завжди використовуй ключ, опис тільки для розуміння призначення перелічення"),
-
                     AIFunctionFactory.Create(RegistersInformationList, name: "RegistersInformationList", description: "Повний список регістрів інформації у форматі ключ і опис в дужках. Завжди використовуй ключ, опис тільки для розуміння призначення регістру"),
                     AIFunctionFactory.Create(RegistersAccumulationList, name: "RegistersAccumulationList", description: "Повний список регістрів накопичення у форматі ключ і опис в дужках. Завжди використовуй ключ, опис тільки для розуміння призначення регістру"),
 
+                    //Відкрити
                     AIFunctionFactory.Create(DirectoryOpen, name: "DirectoryOpen", description: "Відкрити довідник. Спочатку обов'язково потрібно отримати список довідників. Список всіх довідників повертає функція DirectoryList"),
                     AIFunctionFactory.Create(DocumentOpen, name: "DocumentOpen", description: "Відкрити документ. Спочатку обов'язково потрібно отримати список документів. Список всіх документів повертає функція DocumentsList"),
-
+                    AIFunctionFactory.Create(EnumOpen, name: "EnumOpen", description: "Відкрити перелічення. Спочатку обов'язково потрібно отримати список перелічень. Список всіх перелічень повертає функція EnumsList"),
                     AIFunctionFactory.Create(RegisterInformationOpen, name: "RegisterInformationOpen", description: "Відкрити регістр інформації. Спочатку обов'язково потрібно отримати список регістрів інформації. Список всіх регістрів інформації повертає функція RegistersInformationList"),
                     AIFunctionFactory.Create(RegisterAccumulationOpen, name: "RegisterAccumulationOpen", description: "Відкрити регістр накопичення. Спочатку обов'язково потрібно отримати список регістрів накопичення. Список всіх регістрів накопичення повертає функція RegistersAccumulationList"),
 
+                    //Новий
                     AIFunctionFactory.Create(NewDirectory, name: "NewDirectory",  description: "Додати новий довідник. Спочатку обов'язково потрібно отримати список довідників. Список всіх довідник повертає функція DirectoryList"),
                     AIFunctionFactory.Create(NewDocument, name: "NewDocument",  description: "Додати новий документ. Спочатку обов'язково потрібно отримати список документів. Список всіх документів повертає функція DocumentsList"),
+                    AIFunctionFactory.Create(NewRegistersInformation, name: "NewRegistersInformation",  description: "Додати новий регістр інформації. Спочатку обов'язково потрібно отримати список регістрів інформації. Список всіх регістрів інформації повертає функція RegistersInformationList"),
+                    AIFunctionFactory.Create(NewRegistersAccumulation, name: "NewRegistersAccumulation",  description: "Додати новий регістр накопичення. Спочатку обов'язково потрібно отримати список регістрів накопичення. Список всіх регістрів накопичення повертає функція RegistersAccumulationList"),
                 ]
             };
 
@@ -122,6 +131,8 @@ public partial class AiChatView
                 ApendLine($"Err: {ex.Message}");
             }
         }
+        else
+            await Message.Info(Program.BasicForm, "Помилка", "Клієнт AI не запущений! Перейдіть на вкладку 'Налаштування'");
     }
 
     void ApendLine(string message)
@@ -230,6 +241,17 @@ public partial class AiChatView
                 ApendLine($"[F] Не знайдено документ з назвою: {documentKey} в колекції");
     }
 
+    [Description(@"Відкриває перелічення. Спочатку потрібно отримати список всіх перелічень функцією EnumsList. Потрібно перевірити чи є ключ перелічення в списку перелічень")]
+    async Task EnumOpen([Description(@"Ключ перелічення отриманий із списку перелічень який повертає функція EnumsList. Використовуй тільки ключ для цього параметру.")] string enumKey)
+    {
+        ApendLine($"[F] Відкрити перелічення: {enumKey}");
+        if (Program.BasicForm != null)
+            if (Conf.Enums.TryGetValue(enumKey, out ConfigurationEnums? enums))
+                await Program.BasicForm.PageEnum(false, enums);
+            else
+                ApendLine($"[F] Не знайдено перелічення з назвою: {enumKey} в колекції");
+    }
+
     [Description(@"Відкриває регістр накопичення. Спочатку потрібно отримати список всіх регістрів накопичення функцією RegistersAccumulationList. Потрібно перевірити чи є ключ регістру накопичення в списку регістрів")]
     async Task RegisterAccumulationOpen([Description(@"Ключ регістру накопичення отриманий із списку регістрів який повертає функція RegistersAccumulationList. Використовуй тільки ключ для цього параметру.")] string regKey)
     {
@@ -257,11 +279,8 @@ public partial class AiChatView
     #region New
 
     async Task NewDirectory(
-        [Description(@"Ключ довідника. Спочатку вибери список довідників функцією DirectoryList і перевір чи не має вже такого.")]
-        string directoryKey,
-        [Description(@"Повна назва довідника")]
-        string directoryName
-            )
+        [Description(@"Ключ довідника. Спочатку вибери список довідників функцією DirectoryList і перевір чи не має вже такого.")] string directoryKey,
+        [Description(@"Повна назва довідника")] string directoryName)
     {
         ApendLine($"[F] Новий довідник: {directoryKey}, {directoryName}");
         if (Program.BasicForm != null)
@@ -278,11 +297,8 @@ public partial class AiChatView
     }
 
     async Task NewDocument(
-        [Description(@"Ключ документу. Спочатку вибери список документів функцією DocumentsList і перевір чи не має вже такого.")]
-        string documentKey,
-        [Description(@"Повна назва документу")]
-        string documentName
-        )
+        [Description(@"Ключ документу. Спочатку вибери список документів функцією DocumentsList і перевір чи не має вже такого.")] string documentKey,
+        [Description(@"Повна назва документу")] string documentName)
     {
         ApendLine($"[F] Новий документ : {documentKey}, {documentName}");
         if (Program.BasicForm != null)
@@ -295,6 +311,42 @@ public partial class AiChatView
             };
 
             await Program.BasicForm.PageDocument(true, document);
+        }
+    }
+
+    async Task NewRegistersInformation(
+        [Description(@"Ключ регістру інформації. Спочатку вибери список регістрів інформації функцією RegistersInformationList і перевір чи не має вже такого.")] string regKey,
+        [Description(@"Повна регістру інформації")] string regName)
+    {
+        ApendLine($"[F] Новий регістр інформації: {regKey}, {regName}");
+        if (Program.BasicForm != null)
+        {
+            ConfigurationRegistersInformation reg = new()
+            {
+                Name = regKey,
+                FullName = regName,
+                Desc = regName
+            };
+
+            await Program.BasicForm.PageRegisterInformation(true, reg);
+        }
+    }
+
+    async Task NewRegistersAccumulation(
+        [Description(@"Ключ регістру накопичення. Спочатку вибери список регістрів накопичення функцією RegistersAccumulationList і перевір чи не має вже такого.")] string regKey,
+        [Description(@"Повна назва регістру накопичення")] string regName)
+    {
+        ApendLine($"[F] Новий регістр накопичення: {regKey}, {regName}");
+        if (Program.BasicForm != null)
+        {
+            ConfigurationRegistersAccumulation reg = new()
+            {
+                Name = regKey,
+                FullName = regName,
+                Desc = regName
+            };
+
+            await Program.BasicForm.PageRegisterAccumulation(true, reg);
         }
     }
 

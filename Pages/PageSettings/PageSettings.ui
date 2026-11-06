@@ -8,7 +8,6 @@
         <property name="margin-top">10</property>
         <property name="margin-bottom">10</property>
 
-        <!-- Кнопка "Зберегти" -->
         <child>
             <object class="GtkButton" id="button_save">
                 <property name="label">Зберегти</property>
@@ -16,7 +15,7 @@
                 <property name="margin-top">4</property>
             </object>
         </child>
-
+        
         <child>
             <object class="GtkExpander">
                 <property name="label">Штучний інтелект Google</property>
@@ -138,6 +137,18 @@
                                         <layout>
                                             <property name="column">2</property>
                                             <property name="row">2</property>
+                                        </layout>
+                                    </object>
+                                </child>
+
+                                <!-- РЯДОК 3: Кнопка перевірки окремим рядком -->
+                                <child>
+                                    <object class="GtkButton" id="button_start_and_test">
+                                        <property name="label">Запустити і перевірити</property>
+                                        <property name="halign">start</property>
+                                        <layout>
+                                            <property name="column">1</property>
+                                            <property name="row">3</property>
                                         </layout>
                                     </object>
                                 </child>

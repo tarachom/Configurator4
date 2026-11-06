@@ -257,7 +257,7 @@ static class <xsl:value-of select="$DirectoryName"/>_Функції
 
 <!--- 
 //
-// ============================ Поля елементу окремим класом із шаблоном  ============================
+// ============================ Поля елементу окремим класом  ============================
 //
 -->
 
@@ -276,7 +276,7 @@ static class <xsl:value-of select="$DirectoryName"/>_Функції
         <xsl:variable name="DirectoryOwner" select="Directory/DirectoryOwner"/>
         <xsl:variable name="PointerFieldOwner" select="Directory/PointerFieldOwner"/>
 /*
-        <xsl:value-of select="$DirectoryName"/>_ЕлементІзШаблоном.cs
+        <xsl:value-of select="$DirectoryName"/>_ElementFields.cs
         Елемент
 */
 

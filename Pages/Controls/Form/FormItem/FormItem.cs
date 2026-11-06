@@ -194,9 +194,6 @@ public partial class FormItem
         formElementSettings.GetValue(ConfFormOriginal);
     }
 
-    bool IsList() => ConfForm.Type == ConfigurationForms.TypeForms.List || ConfForm.Type == ConfigurationForms.TypeForms.ListSmall ||
-        ConfForm.Type == ConfigurationForms.TypeForms.ListSmallSelect || ConfForm.Type == ConfigurationForms.TypeForms.ListAndTree;
-
     void GenerateCode()
     {
         XmlDocument xmlDoc = new();
@@ -250,6 +247,7 @@ public partial class FormItem
             Configuration.SaveSpendFunctions(document.SpendFunctions, xmlDoc, nodeOwner);
 
             name = document.Name;
+            latinName = document.LatinName;
             nodeOwner.AppendChild(xmlDoc.CreateNode("AutomaticNumeration", document.AutomaticNumeration ? "1" : "0")); //Нумерація
         }
 
@@ -257,12 +255,14 @@ public partial class FormItem
         if (Owner.Group == ConfiguratorItemOwnerType.RegisterInformation && Owner.Obj is ConfigurationRegistersInformation regInfo)
         {
             name = regInfo.Name;
+            latinName = regInfo.LatinName;
         }
 
         //Регістр накопичення
         if (Owner.Group == ConfiguratorItemOwnerType.RegisterAccumulation && Owner.Obj is ConfigurationRegistersAccumulation regAccum)
         {
             name = regAccum.Name;
+            latinName = regAccum.LatinName;
             nodeOwner.AppendChild(xmlDoc.CreateNode("Type", regAccum.TypeRegisters.ToString()));
         }
 
@@ -270,6 +270,7 @@ public partial class FormItem
         if (Owner.Group == ConfiguratorItemOwnerType.TablePart && Owner.Obj is ConfigurationTablePart tablePart)
         {
             name = tablePart.Name;
+            latinName = tablePart.LatinName;
 
             if (ConfForm.Type == ConfigurationForms.TypeForms.TablePart)
                 Configuration.SaveFormElementField(Conf, Fields, ConfForm.ElementFields, xmlDoc, nodeOwner);
@@ -307,7 +308,7 @@ public partial class FormItem
         {
             nodeOwner.AppendChild(xmlDoc.CreateNode("TabularList", ConfForm.TabularList));
         }
-        else if (ConfForm.Type == ConfigurationForms.TypeForms.Element || 
+        else if (ConfForm.Type == ConfigurationForms.TypeForms.Element ||
             ConfForm.Type == ConfigurationForms.TypeForms.ElementFields || ConfForm.Type == ConfigurationForms.TypeForms.TemplateForElementFields)
         {
             Configuration.SaveFormElementField(Conf, Fields, ConfForm.ElementFields, xmlDoc, nodeOwner);
@@ -355,6 +356,9 @@ public partial class FormItem
             }
         ) ?? "";
     }
+
+    bool IsList() => ConfForm.Type == ConfigurationForms.TypeForms.List || ConfForm.Type == ConfigurationForms.TypeForms.ListSmall ||
+            ConfForm.Type == ConfigurationForms.TypeForms.ListSmallSelect || ConfForm.Type == ConfigurationForms.TypeForms.ListAndTree;
 }
 
 /*void A(ConfiguratorItemOwner? o)
