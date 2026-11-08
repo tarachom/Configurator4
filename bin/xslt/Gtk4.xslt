@@ -152,8 +152,10 @@ limitations under the License.
                 factory.OnBind += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
-                    <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)listItem.Item;
-                    listItem.SetChild(ImageTablePartCell.NewFromPixbuf((row?.DeletionLabel ?? false) ? InterfaceGtk4.Icon.ForTabularLists.Delete : InterfaceGtk4.Icon.ForTabularLists.Normal));
+                    if (listItem.Item is <xsl:value-of select="$RowType"/> row)
+                        (row.Update["#image"] = ()=&gt; <!-- Назва поля починається з #, так як це службове поле. Реальне поле не може так називатися -->
+                            listItem.SetChild(ImageTablePartCell.NewFromPixbuf((row?.DeletionLabel ?? false) ? InterfaceGtk4.Icon.ForTabularLists.Delete : InterfaceGtk4.Icon.ForTabularLists.Normal))
+                        ).Invoke();
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("", factory);
                 form.Grid.AppendColumn(column);
@@ -167,8 +169,10 @@ limitations under the License.
                 factory.OnBind += (_, args) =&gt;
                 {
                     ListItem listItem = (ListItem)args.Object;
-                    DocumentRowJournal? row = (DocumentRowJournal?)listItem.Item;
-                    listItem.SetChild(ImageTablePartCell.NewFromPixbuf((row?.Spend ?? false) ? InterfaceGtk4.Icon.ForInformation.Check : null));
+                    if (listItem.Item is DocumentRowJournal row)
+                        (row.Update["#spend"] = ()=&gt; <!-- Назва поля починається з #, так як це службове поле. Реальне поле не може так називатися -->
+                            listItem.SetChild(ImageTablePartCell.NewFromPixbuf((row?.Spend ?? false) ? InterfaceGtk4.Icon.ForInformation.Check : null))
+                        ).Invoke();
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("", factory);
                 form.Grid.AppendColumn(column);
@@ -333,7 +337,7 @@ limitations under the License.
                     LabelTablePartCell? cell = (LabelTablePartCell?)listItem.Child;
                     <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)listItem.Item;
                     if (cell != null &amp;&amp; row != null)
-                        cell.SetText(row.Fields["<xsl:value-of select="Name"/>"]);
+                        (row.Update["<xsl:value-of select="Name"/>"] = ()=&gt; cell.SetText(row.Fields["<xsl:value-of select="Name"/>"])).Invoke();
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("<xsl:value-of select="Caption"/>", factory);
                 column.Resizable = true;
@@ -365,7 +369,7 @@ limitations under the License.
                         LabelTablePartCell? cell = (LabelTablePartCell?)listItem.Child;
                         <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)treeRow.Item;
                         if (cell != null &amp;&amp; row != null)
-                            cell.SetText(row.Fields["<xsl:value-of select="Name"/>"]);
+                            (row.Update["<xsl:value-of select="Name"/>"] = ()=&gt; cell.SetText(row.Fields["<xsl:value-of select="Name"/>"])).Invoke();
                     }
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("<xsl:value-of select="Caption"/>", factory);
@@ -399,12 +403,15 @@ limitations under the License.
                         ImageTablePartCell? cell = (ImageTablePartCell?)expander.GetChild();
                         <xsl:value-of select="$RowType"/>? row = (<xsl:value-of select="$RowType"/>?)treeRow.Item;
                         if (cell != null &amp;&amp; row != null &amp;&amp; !row.UniqueID.IsEmpty()) <!-- Для пустого рядка (InsertEmptyFirstRow) не виводиться іконка -->
-                            if (row.IsLoading)
-                                cell.SetSpinner();
-                            else
-                                cell.SetImage(row.IsFolder? 
-                                    (row.DeletionLabel ? InterfaceGtk4.Icon.ForTree.Delete : InterfaceGtk4.Icon.ForTree.Normal) : 
-                                    (row.DeletionLabel ? InterfaceGtk4.Icon.ForTabularLists.Delete : InterfaceGtk4.Icon.ForTabularLists.Normal));
+                            (row.Update["#tree-image"] = ()=&gt; <!-- Назва поля починається з #, так як це службове поле. Реальне поле не може так називатися -->
+                            {
+                                if (row.IsLoading)
+                                    cell.SetSpinner();
+                                else
+                                    cell.SetImage(row.IsFolder? 
+                                        (row.DeletionLabel ? InterfaceGtk4.Icon.ForTree.Delete : InterfaceGtk4.Icon.ForTree.Normal) : 
+                                        (row.DeletionLabel ? InterfaceGtk4.Icon.ForTabularLists.Delete : InterfaceGtk4.Icon.ForTabularLists.Normal));
+                            }).Invoke();
                     }
                 };
                 ColumnViewColumn column = ColumnViewColumn.New("", factory);
@@ -564,7 +571,7 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
         static readonly ConfigurationDirectories.HierarchicalContentType AllowedContent = Configuration.GetAllowedContent("<xsl:value-of select="$DirectoryAllowedContent"/>");
         </xsl:if>
         public static void AddColumn(DirectoryFormJournalBase form)
-        {
+        { 
             <xsl:choose>
                 <xsl:when test="$DirectoryType = 'Hierarchical'">
                     <xsl:call-template name="AddColumnTreeExpander">
@@ -614,7 +621,6 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
 
         public static async Task UpdateRecords(DirectoryFormJournalBase form)
         {
-            <xsl:if test="$DirectoryType != 'Hierarchical'">
             List&lt;ObjectChanged&gt; records = [];
             lock (form.Loсked)
             {
@@ -625,12 +631,19 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
             if (records.Count == 0) return;
 
             //Словник для швидкого пошуку
-            Dictionary&lt;Guid, uint&gt; storeMap = [];
-            for (uint i = 0; i &lt; form.Store.GetNItems(); i++)
-            {
-                <xsl:value-of select="$RowType"/>? item = (<xsl:value-of select="$RowType"/>?)form.Store.GetObject(i);
-                if (item != null) storeMap.Add(item.UniqueID.UGuid, i);
-            }
+            Dictionary&lt;Guid, <xsl:value-of select="$RowType"/>&gt; storeMap = [];
+            MultiSelection model = (MultiSelection)form.Grid.Model;
+            for (uint i = 0; i &lt; model.GetNItems(); i++)
+            {<xsl:choose>
+                <xsl:when test="$DirectoryType = 'Hierarchical'">
+                if (model.GetObject(i) is TreeListRow row &amp;&amp; row.GetItem() is <xsl:value-of select="$RowType"/> item) 
+                    storeMap.Add(item.UniqueID.UGuid, item);
+                </xsl:when>
+                <xsl:otherwise>
+                if (model.GetObject(i) is <xsl:value-of select="$RowType"/> item) 
+                    storeMap.Add(item.UniqueID.UGuid, item);
+                </xsl:otherwise>
+            </xsl:choose>}
             
             /* Вибірка */
             <xsl:call-template name="Select">
@@ -663,17 +676,22 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Дові
                     <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
                         <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", Fields["<xsl:value-of select="Name"/>"].ToString());
                     </xsl:for-each>
-                    if (storeMap.TryGetValue(curr.UniqueID.UGuid, out uint index))
+                    <xsl:if test="$DirectoryType = 'Hierarchical'">
+                        row.AllowedContent = AllowedContent;
+                        <xsl:if test="$DirectoryAllowedContent = 'FoldersAndElements'">
+                            row.IsFolder = (bool)Fields[Довідники.<xsl:value-of select="concat($DirectoryName, '_Const.', $DirectoryIsFolderField)"/>];
+                        </xsl:if>
+                    </xsl:if>
+                    if (storeMap.TryGetValue(curr.UniqueID.UGuid, out <xsl:value-of select="$RowType"/>? rowUp))
                     {
-                        bool sel = form.Grid.Model.IsSelected(index);
-                        form.Store.Splice(index, 1, [row], 1);
-                        if (sel) form.Grid.Model.SelectItem(index, false);
+                        rowUp.DeletionLabel = row.DeletionLabel;
+                        rowUp.Fields = row.Fields;
+                        rowUp.OnUpdate();
                     }
                     else if (records.Find(x =&gt; x.Uid.Equals(curr.UniqueID.UGuid))?.Type == TypeObjectChanged.Add)
                         form.Store.Append(row);
                 }
             }
-            </xsl:if>
         }
 
         <xsl:if test="$DirectoryType = 'Hierarchical'">
@@ -911,6 +929,13 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
                 while(form.RecordsChangedQueue.Count &gt; 0)
                     records.AddRange(form.RecordsChangedQueue.Dequeue());
             }
+
+            if (records.Count == 0) return;
+
+            //Словник для швидкого пошуку
+            Dictionary&lt;Guid, DocumentRowJournal&gt; storeMap = [];
+            for (uint i = 0; i &lt; form.Store.GetNItems(); i++)
+                if (form.Store.GetObject(i) is DocumentRowJournal item) storeMap.Add(item.UniqueID.UGuid, item);
             
             /* Вибірка */
             <xsl:call-template name="Select">
@@ -940,25 +965,15 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Доку
                     <xsl:for-each select="Fields/AdditionalField[Visible = 'True']">
                         <xsl:text>row.Fields.Add("</xsl:text><xsl:value-of select="Name"/>", Fields["<xsl:value-of select="Name"/>"].ToString() ?? "");
                     </xsl:for-each>
-                    ObjectChanged? objCh = records.Find(x =&gt; x.Uid.Equals(curr.UniqueID.UGuid));
-                    if (objCh != null)
+                    if (storeMap.TryGetValue(curr.UniqueID.UGuid, out DocumentRowJournal? rowUp))
                     {
-                        bool exist = false;
-                        for (uint i = 0; i &lt; form.Store.GetNItems(); i++)
-                        {
-                            DocumentRowJournal? item = (DocumentRowJournal?)form.Store.GetObject(i);
-                            if (item != null &amp;&amp; item.UniqueID.Equals(curr.UniqueID))
-                            {
-                                bool sel = form.Grid.Model.IsSelected(i);
-                                form.Store.Splice(i, 1, [row], 1);
-                                if (sel) form.Grid.Model.SelectItem(i, false);
-                                exist = true;
-                                break;
-                            }
-                        }
-                        if (!exist &amp;&amp; objCh.Type == TypeObjectChanged.Add)
-                            form.Store.Append(row);
+                        rowUp.DeletionLabel = row.DeletionLabel;
+                        rowUp.Spend = row.Spend;
+                        rowUp.Fields = row.Fields;
+                        rowUp.OnUpdate();
                     }
+                    else if (records.Find(x =&gt; x.Uid.Equals(curr.UniqueID.UGuid))?.Type == TypeObjectChanged.Add)
+                        form.Store.Append(row);
                 }
             }
         }
