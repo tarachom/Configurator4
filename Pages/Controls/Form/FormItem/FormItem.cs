@@ -284,18 +284,28 @@ public partial class FormItem
                 var parent = Owner.Parent;
                 if (parent != null)
                 {
-                    string ownerName = (parent.Group, parent.Obj) switch
+                    (string ownerName, string ownerLatinName) = (parent.Group, parent.Obj) switch
                     {
-                        (ConfiguratorItemOwnerType.Directory, ConfigurationDirectories x) => x.Name,
-                        (ConfiguratorItemOwnerType.Document, ConfigurationDocuments x) => x.Name,
-                        (ConfiguratorItemOwnerType.RegisterAccumulation, ConfigurationRegistersAccumulation x) => x.Name,
-                        _ => ""
+                        (ConfiguratorItemOwnerType.Constant, ConfigurationConstants x) => (x.Name, x.LatinName),
+                        (ConfiguratorItemOwnerType.Directory, ConfigurationDirectories x) => (x.Name, x.LatinName),
+                        (ConfiguratorItemOwnerType.Document, ConfigurationDocuments x) => (x.Name, x.LatinName),
+                        (ConfiguratorItemOwnerType.RegisterAccumulation, ConfigurationRegistersAccumulation x) => (x.Name, x.LatinName),
+                        _ => ("", "")
+                    };
+
+                    //З константи витягую blockName
+                    (string blockName, string blockLatinName) = (parent.Group, parent.Obj) switch
+                    {
+                        (ConfiguratorItemOwnerType.Constant, ConfigurationConstants x) => (x.Block.Name, x.Block.LatinName),
+                        _ => ("", ""),
                     };
 
                     nodeOwner.AppendChild(xmlDoc.CreateNode("OwnerExist", "1"));
                     nodeOwner.AppendChild(xmlDoc.CreateNode("OwnerType", parent.Group.ToString()));
                     nodeOwner.AppendChild(xmlDoc.CreateNode("OwnerName", ownerName));
-                    nodeOwner.AppendChild(xmlDoc.CreateNode("OwnerBlockName", ""));
+                    nodeOwner.AppendChild(xmlDoc.CreateNode("OwnerLatinName", ownerLatinName));
+                    nodeOwner.AppendChild(xmlDoc.CreateNode("OwnerBlockName", blockName));
+                    nodeOwner.AppendChild(xmlDoc.CreateNode("OwnerBlockLatinName", blockLatinName));
                 }
             }
         }

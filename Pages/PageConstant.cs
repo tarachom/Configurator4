@@ -38,7 +38,7 @@ partial class PageConstant : FormPageConfigurator
 
     BasicFields basicFields = BasicFields.New();
     ConstantField field = ConstantField.New();
-    //ConstantsBlockDataTree dataTree = ConstantsBlockDataTree.New();
+    ConstantsDataTree dataTree = ConstantsDataTree.New();
 
     partial void Initialize()
     {
@@ -58,11 +58,14 @@ partial class PageConstant : FormPageConfigurator
     {
         //Основні поля
         vBox.Append(basicFields);
+
+        //Тип даних
+        vBox.Append(field);
     }
 
     protected override void CreateEnd(Box vBox)
     {
-        vBox.Append(field);
+        vBox.Append(dataTree);
     }
 
     public override async Task AssignValue()
@@ -76,7 +79,7 @@ partial class PageConstant : FormPageConfigurator
         basicFields.LatinName = ConfConstant.LatinName;
 
         field.SetValue(ConfConstant);
-        //dataTree.SetValue(ConfBlock);
+        dataTree.SetValue(ConfConstant);
     }
 
     protected override async Task GetValue()
@@ -103,6 +106,13 @@ partial class PageConstant : FormPageConfigurator
             return false;
 
         await GetValue();
+
+        if ((ConfConstant.Type == "pointer" || ConfConstant.Type == "enum") && string.IsNullOrEmpty(ConfConstant.Pointer))
+        {
+            await Message.Info(Program.BasicForm, "Не заповненні поля", "Потрібна деталізація для типів [ pointer ] або [ enum ]\nВиберіть із списків вказівник або перелічення!");
+            return false;
+        }
+
         ConfConstant.Block.AppendConstant(ConfConstant);
 
         Caption = ConfConstant.Name;

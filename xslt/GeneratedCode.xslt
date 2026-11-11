@@ -612,6 +612,38 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Конс
             public List&lt;Record&gt; Records { get; set; } = [];
 
             public event EventHandler? Saved;
+
+            public void FillJoin(string[]? orderFields = null)
+            {
+                QuerySelect.Clear();
+
+                if (orderFields != null)
+                {
+                  foreach(string field in orderFields)
+                    QuerySelect.Order.Add(field, SelectOrder.ASC);
+                }
+                <xsl:if test="Fields/Field[Type = 'integer' and AutomaticNumbering = '1']">
+                else
+                { <!-- Автоматичне сортування по полях -->
+                  <xsl:for-each select="Fields/Field[Type = 'integer' and AutomaticNumbering = '1']">
+                  QuerySelect.Order.Add(<xsl:value-of select="Name"/>, SelectOrder.ASC);
+                  </xsl:for-each>
+                }
+                </xsl:if>
+
+                <xsl:for-each select="Fields/Field">
+                    <xsl:choose>
+                      <xsl:when test="Type = 'pointer'">
+                          /* pointer */
+                          <xsl:value-of select="substring-before(Pointer, '.')"/>.<xsl:value-of select="substring-after(Pointer, '.')"/>_Pointer.GetJoin(QuerySelect, <xsl:value-of select="Name"/>, $"{TABLE}", "join_tab_<xsl:value-of select="position()"/>", "<xsl:value-of select="Name"/>");
+                      </xsl:when>
+                      <xsl:when test="Type = 'composite_pointer'">
+                          /* composite_pointer */
+                          QuerySelect.FieldAndAlias.Add(new ValueName&lt;string&gt;($"{SpecialFunc.CompisitePresentation}({TABLE}.{<xsl:value-of select="Name"/>})", "<xsl:value-of select="Name"/>"));
+                      </xsl:when>
+                    </xsl:choose>
+                </xsl:for-each>
+            }
         
             public async Task Read()
             {
@@ -632,12 +664,23 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Конс
                         </xsl:for-each>
                     };
                     Records.Add(record);
+                    <xsl:if test="count(Fields/Field[Type = 'pointer' or Type = 'composite_pointer']) != 0">
+                    if (JoinValue.TryGetValue(record.UID.ToString(), out var ItemValue))
+                    {
+                      record.JoinItemValue = ItemValue;
+                      <xsl:for-each select="Fields/Field">
+                          <xsl:if test="Type = 'pointer' or Type = 'composite_pointer'">
+                            <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>.Name = ItemValue["<xsl:value-of select="Name"/>"];
+                          </xsl:if>
+                      </xsl:for-each>
+                    }
+                    </xsl:if>
                 }
             
                 base.BaseClear();
             }
         
-            public async Task Save(bool clear_all_before_save /*= true*/) 
+            public async Task Save(bool clear_all_before_save) 
             {
                 await base.BaseBeginTransaction();
                 
@@ -658,9 +701,15 @@ namespace <xsl:value-of select="Configuration/NameSpaceGeneratedCode"/>.Конс
                         <xsl:for-each select="Fields/Field">
                             <xsl:text>{"</xsl:text>
                             <xsl:value-of select="NameInTable"/><xsl:text>", </xsl:text>
-                            <xsl:if test="Type = 'enum'">
+                            <xsl:choose>
+                              <xsl:when test="Type = 'enum'">
                                 <xsl:text>(int)</xsl:text>
-                            </xsl:if>
+                              </xsl:when>
+                              <xsl:when test="Type = 'pointer'">
+                                  <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
+                                  <xsl:text>.IsEmpty() ? DBNull.Value : </xsl:text>
+                              </xsl:when>
+                            </xsl:choose>
                             <xsl:text>record.</xsl:text><xsl:value-of select="Name"/>
                             <xsl:choose>
                                 <xsl:when test="Type = 'pointer'">

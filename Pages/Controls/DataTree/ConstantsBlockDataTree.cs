@@ -29,7 +29,7 @@ using InterfaceGtk4;
 namespace Configurator;
 
 /// <summary>
-/// Дерево даних для довідника
+/// Дерево даних для блоків констант
 /// </summary>
 [Subclass<DataTree>()]
 public partial class ConstantsBlockDataTree : DataTree
@@ -56,7 +56,7 @@ public partial class ConstantsBlockDataTree : DataTree
                     }
                 case "TablePartField" when row.Obj is ConfigurationField field && row.ParentObj is ConfigurationTablePart tablePart:
                     {
-                        await OpenPageField(false, tablePart.Fields, field, new(ConfiguratorItemOwnerType.TablePart, tablePart /*, Owner*/));
+                        await OpenPageField(false, tablePart.Fields, field, new(ConfiguratorItemOwnerType.TablePart, tablePart));
                         break;
                     }
                 default:
@@ -85,7 +85,7 @@ public partial class ConstantsBlockDataTree : DataTree
                     }
                 case "TablePartField" when row.ParentObj is ConfigurationTablePart tablePart:
                     {
-                        await OpenPageField(true, tablePart.Fields, null, new(ConfiguratorItemOwnerType.TablePart, tablePart/*, Owner*/));
+                        await OpenPageField(true, tablePart.Fields, null, new(ConfiguratorItemOwnerType.TablePart, tablePart));
                         break;
                     }
                 default:
@@ -120,7 +120,7 @@ public partial class ConstantsBlockDataTree : DataTree
                     {
                         ConfigurationField newField = field.Copy();
                         newField.Name += Configuration.GetNewRandomName();
-                        await OpenPageField(true, tablePart.Fields, newField, new(ConfiguratorItemOwnerType.TablePart, tablePart/*, Owner*/));
+                        await OpenPageField(true, tablePart.Fields, newField, new(ConfiguratorItemOwnerType.TablePart, tablePart));
                         break;
                     }
                 default:

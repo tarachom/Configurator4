@@ -162,6 +162,29 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
         await page.SetValue();
     }
 
+    public async Task PageJournalField(bool isNew, Dictionary<string, ConfigurationJournalField> fields, ConfigurationJournalField? field = null)
+    {
+        PageJournalField page = Configurator.PageJournalField.New();
+        page.IsNew = isNew;
+        page.Fields = fields;
+        if (field != null) page.ConfField = field;
+        page.Caption = isNew ? "*" : field?.Name ?? "";
+
+        Program.BasicForm?.NotebookFunc.CreatePage(page.Caption, page);
+        await page.SetValue();
+    }
+
+    public async Task PageJournalFieldMapping(ConfigurationJournalFieldMapping fieldMapping, Dictionary<string, ConfigurationJournalField> fields)
+    {
+        PageJournalFieldMapping page = Configurator.PageJournalFieldMapping.New();
+        page.Fields = fields;
+        page.ConfFieldMapping = fieldMapping;
+        page.Caption = fieldMapping.Name;
+
+        Program.BasicForm?.NotebookFunc.CreatePage(page.Caption, page);
+        await page.SetValue();
+    }
+
     public override async Task PageTablePart(bool isNew, Dictionary<string, ConfigurationTablePart> tabularParts, ConfigurationTablePart? tablePart = null, ConfiguratorItemOwner? owner = null)
     {
         PageTablePart page = Configurator.PageTablePart.New();
@@ -170,6 +193,17 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
         if (tablePart != null) page.ConfTablePart = tablePart;
         page.Caption = isNew ? "*" : tablePart?.Name ?? "";
         page.Owner = owner;
+
+        Program.BasicForm?.NotebookFunc.CreatePage(page.Caption, page);
+        await page.SetValue();
+    }
+
+    public override async Task PageJournal(bool isNew = false, ConfigurationJournals? journal = null)
+    {
+        PageJournal page = Configurator.PageJournal.New();
+        page.IsNew = isNew;
+        if (journal != null) page.ConfJournals = journal;
+        page.Caption = isNew ? "*" : journal?.Name ?? "";
 
         Program.BasicForm?.NotebookFunc.CreatePage(page.Caption, page);
         await page.SetValue();

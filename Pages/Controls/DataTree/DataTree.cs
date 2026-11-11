@@ -52,6 +52,18 @@ public abstract partial class DataTree
             await Program.BasicForm.PageField(isNew, fields, field, owner);
     }
 
+    protected static async Task OpenPageJournalField(bool isNew, Dictionary<string, ConfigurationJournalField> fields, ConfigurationJournalField? field = null)
+    {
+        if (Program.BasicForm != null)
+            await Program.BasicForm.PageJournalField(isNew, fields, field);
+    }
+
+    protected static async Task OpenPageJournalFieldMapping(ConfigurationJournalFieldMapping fieldMapping, Dictionary<string, ConfigurationJournalField> fields)
+    {
+        if (Program.BasicForm != null)
+            await Program.BasicForm.PageJournalFieldMapping(fieldMapping, fields);
+    }
+
     protected static async Task OpenPageEnumField(bool isNew, Dictionary<string, ConfigurationEnumField> fields, ConfigurationEnumField? field = null)
     {
         if (Program.BasicForm != null)
