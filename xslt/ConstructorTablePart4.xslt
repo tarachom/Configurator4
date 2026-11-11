@@ -300,23 +300,29 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
         </xsl:if>
         -->
         <xsl:for-each select="$FieldsTL">
+            <xsl:variable name="CellName">
+                <xsl:choose>
+                    <xsl:when test="Type = 'string' and ReadOnly = '0'">TextTablePartCell</xsl:when>
+                    <xsl:when test="Type = 'integer' and ReadOnly = '0'">IntegerTablePartCell</xsl:when>
+                    <xsl:when test="Type = 'numeric' and ReadOnly = '0'">NumericTablePartCell</xsl:when>
+                    <xsl:when test="Type = 'boolean'">CheckTablePartCell</xsl:when>
+                    <xsl:when test="Type = 'pointer'"><xsl:value-of select="substring-after(Pointer, '.')"/>_PointerTablePartCell</xsl:when>
+                    <xsl:when test="Type = 'enum'">DropDownTablePartCell</xsl:when>
+                    <xsl:when test="Type = 'date' or Type = 'datetime'">DateTimeTablePartCell</xsl:when>
+                    <xsl:when test="Type = 'time'">TimeTablePartCell</xsl:when>
+                    <xsl:when test="Type = 'composite_pointer'">CompositePointerControlTablePartCell</xsl:when>
+                    <xsl:otherwise>LabelTablePartCell</xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
         //<xsl:value-of select="Name"/>
         {
             SignalListItemFactory factory = SignalListItemFactory.New();
             factory.OnSetup += (_, args) =&gt;
             {
                 if (args.Object is not ListItem listItem) return;
-                var cell = <xsl:choose>
-                    <xsl:when test="Type = 'string' and ReadOnly = '0'">TextTablePartCell.New()</xsl:when>
-                    <xsl:when test="Type = 'integer' and ReadOnly = '0'">IntegerTablePartCell.New()</xsl:when>
-                    <xsl:when test="Type = 'numeric' and ReadOnly = '0'">NumericTablePartCell.New()</xsl:when>
-                    <xsl:when test="Type = 'boolean'">CheckTablePartCell.New()</xsl:when>
-                    <xsl:when test="Type = 'pointer'"><xsl:value-of select="substring-after(Pointer, '.')"/>_PointerTablePartCell.New()</xsl:when>
-                    <xsl:when test="Type = 'enum'">DropDownTablePartCell.NewWithValues(ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_Dict())</xsl:when>
-                    <xsl:when test="Type = 'date' or Type = 'datetime'">DateTimeTablePartCell.New()</xsl:when>
-                    <xsl:when test="Type = 'time'">TimeTablePartCell.New()</xsl:when>
-                    <xsl:when test="Type = 'composite_pointer'">CompositePointerControlTablePartCell.New()</xsl:when>
-                    <xsl:otherwise>LabelTablePartCell.New()</xsl:otherwise>
+                var cell = <xsl:value-of select="$CellName"/>.<xsl:choose>
+                    <xsl:when test="Type = 'enum'">NewWithValues(ПсевдонімиПерелічення.<xsl:value-of select="substring-after(Pointer, '.')"/>_Dict())</xsl:when>
+                    <xsl:otherwise>New()</xsl:otherwise>
                 </xsl:choose>;
                 <xsl:choose>
                     <xsl:when test="(Type = 'integer' or Type = 'numeric') and ReadOnly = '1'">
@@ -337,18 +343,7 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
             factory.OnBind += (_, args) =&gt;
             {
                 if (args.Object is not ListItem listItem) return;
-                if (listItem.Child is not <xsl:choose>
-                    <xsl:when test="Type = 'string' and ReadOnly = '0'">TextTablePartCell</xsl:when>
-                    <xsl:when test="Type = 'integer' and ReadOnly = '0'">IntegerTablePartCell</xsl:when>
-                    <xsl:when test="Type = 'numeric' and ReadOnly = '0'">NumericTablePartCell</xsl:when>
-                    <xsl:when test="Type = 'boolean'">CheckTablePartCell</xsl:when>
-                    <xsl:when test="Type = 'pointer'"><xsl:value-of select="substring-after(Pointer, '.')"/>_PointerTablePartCell</xsl:when>
-                    <xsl:when test="Type = 'enum'">DropDownTablePartCell</xsl:when>
-                    <xsl:when test="Type = 'date' or Type = 'datetime'">DateTimeTablePartCell</xsl:when>
-                    <xsl:when test="Type = 'time'">TimeTablePartCell</xsl:when>
-                    <xsl:when test="Type = 'composite_pointer'">CompositePointerControlTablePartCell</xsl:when>
-                    <xsl:otherwise>LabelTablePartCell</xsl:otherwise>
-                </xsl:choose> cell) return;
+                if (listItem.Child is not <xsl:value-of select="$CellName"/> cell) return;
                 if (listItem.Item is not ItemRow row) return;
                 <xsl:choose>
                     <xsl:when test="(Type = 'string' or Type = 'integer' or Type = 'numeric' or Type = 'boolean') and ReadOnly = '0'">
@@ -401,6 +396,30 @@ partial class <xsl:value-of select="$OwnerName"/>_ТабличнаЧастина
                 (row.Сhanged_<xsl:value-of select="Name"/> = () =&gt; cell.SetText(row.<xsl:value-of select="Name"/>)).Invoke(); //&lt;- Із моделі в комірку 
                     </xsl:otherwise>
                 </xsl:choose>
+            };
+            factory.OnUnbind += (_, args) =&gt;
+            {
+                if (args.Object is not ListItem listItem) return;
+                if (listItem.Child is not <xsl:value-of select="$CellName"/> cell) return;
+                if (listItem.Item is not ItemRow row) return;
+                <xsl:choose>
+                    <xsl:when test="(Type = 'string' or Type = 'integer' or Type = 'numeric' or Type = 'boolean') and ReadOnly = '0'">
+                cell.OnСhanged = null;
+                    </xsl:when>
+                    <xsl:when test="Type = 'pointer' or Type = 'composite_pointer'">
+                        <xsl:if test="Type = 'pointer' and normalize-space(DirectoryOwner) != ''">
+                            <xsl:variable name="DirectoryOwner" select="substring-after(DirectoryOwner, '.')"/>
+                            <xsl:if test="count($FieldsTL[Name = $DirectoryOwner]) = 1">
+                cell.BeforeClickOpenFunc = null;
+                            </xsl:if>
+                        </xsl:if>
+                cell.OnSelect = null;   
+                    </xsl:when>
+                    <xsl:when test="Type = 'enum' or Type = 'date' or Type = 'datetime' or Type = 'time'">
+                cell.OnСhanged = null;
+                    </xsl:when>
+                </xsl:choose>    
+                row.Сhanged_<xsl:value-of select="Name"/> = null;
             };
             ColumnViewColumn column = ColumnViewColumn.New("<xsl:value-of select="Caption"/>", factory);
             column.Resizable = true;
