@@ -370,13 +370,3 @@ public partial class FormItem
     bool IsList() => ConfForm.Type == ConfigurationForms.TypeForms.List || ConfForm.Type == ConfigurationForms.TypeForms.ListSmall ||
             ConfForm.Type == ConfigurationForms.TypeForms.ListSmallSelect || ConfForm.Type == ConfigurationForms.TypeForms.ListAndTree;
 }
-
-/*void A(ConfiguratorItemOwner? o)
-{
-    Console.WriteLine("o is null " + o is null);
-    Console.WriteLine("o group " + o?.Group);
-    Console.WriteLine("o obj " + o?.Obj);
-
-    if (o?.Parent != null)
-        A(o?.Parent);
-}*/

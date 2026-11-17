@@ -94,7 +94,7 @@ public partial class PageSettings
             //Перевірка
             if (FunctionForAI.Client != null)
             {
-                string prompt = "Працюєш?";
+                string prompt = "Працюєш? Як називається модель";
                 string result = "";
 
                 try

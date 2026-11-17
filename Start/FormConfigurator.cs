@@ -293,6 +293,14 @@ public partial class FormConfigurator : InterfaceGtk4.FormConfigurator
         page.SetValue();
     }
 
+    protected override async Task Processing()
+    {
+        PageProcessing page = Configurator.PageProcessing.New();
+        NotebookFunc?.CreatePage("Обробки", page);
+
+        page.SetValue();
+    }
+
     #region TopMenu
 
     protected override async Task PageSaveConfiguration()
